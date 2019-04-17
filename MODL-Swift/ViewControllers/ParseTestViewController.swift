@@ -10,21 +10,54 @@ import UIKit
 
 class ParseTestViewController: UIViewController {
 
+    @IBOutlet weak var inputModlField: UITextView!
+    @IBOutlet weak var resultView: UITextView!
+    /*
+     //basic pair
+     testKey=testValue
+     
+     //group of pairs
+     one=1;two=2;three=3
+     
+     //basic array
+     test=[zero;one]
+     
+     // multiple pairs
+     one=1;two=2;three=3
+     */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func didPressTest1(_ sender: Any) {
+        inputModlField.text = "testKey=testValue"
+        didPressSubmit(sender)
     }
-    */
 
+    @IBAction func didPressTest2(_ sender: Any) {
+        inputModlField.text = "one=1;two=2;three=3"
+        didPressSubmit(sender)
+    }
+
+    @IBAction func didPressTest3(_ sender: Any) {
+        inputModlField.text = "test=[zero;one]"
+        didPressSubmit(sender)
+    }
+
+    @IBAction func didPressTest4(_ sender: Any) {
+        inputModlField.text = ""
+        didPressSubmit(sender)
+    }
+    
+    @IBAction func didPressSubmit(_ sender: Any) {
+        guard let modl = inputModlField.text else {
+            resultView.text = "Enter MODL to test"
+            return
+        }
+        let p = ModlParser()
+        let result = p.parse(modl)
+        resultView.text = result
+    }
 }
