@@ -1,0 +1,107 @@
+//
+//  ModlObject.swift
+//  MODL-Swift
+//
+//  Created by Nicholas Jones on 17/04/2019.
+//  Copyright © 2019 Touchsoft Ltd. All rights reserved.
+//
+
+import Foundation
+
+
+class ModlObject: Encodable {
+    
+    class ModlValue: Codable {
+    }
+    
+    class ModlStructure: ModlValue {
+    }
+
+    //MARK: - Structures
+    //MARK: Pair
+    class ModlPair: ModlStructure {
+        var key: String? = nil
+        var value: ModlValue? = nil
+        
+        var dict: [String: ModlValue] {
+            guard let uwKey = key, let uwV = value else {
+                return [:]
+            }
+            return [uwKey: uwV]
+        }
+        
+        //    enum CodingKeys: String, CodingKey {
+        //        case value
+        //    }
+        
+        private struct CodingKeys: CodingKey {
+            var intValue: Int?
+            var stringValue: String
+            
+            init?(intValue: Int) { self.intValue = intValue; self.stringValue = "\(intValue)" }
+            init?(stringValue: String) { self.stringValue = stringValue }
+            
+            static let name = CodingKeys.make(key: "categoryName")
+            static func make(key: String) -> CodingKeys {
+                return CodingKeys(stringValue: key)!
+            }
+        }
+        
+        override func encode(to encoder: Encoder) throws {
+            guard let uwKey = key, let uwV = value else {
+                return
+            }
+            
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(uwV, forKey: .make(key: uwKey))
+        }
+    }
+    
+    //MARK: Array
+    class ModlArray: ModlStructure {
+        var values: [ModlValue] = []
+        override func encode(to encoder: Encoder) throws {
+            var container = encoder.unkeyedContainer()
+            try container.encode(contentsOf: values)
+        }
+    }
+    
+    //MARK: Map
+    class ModlMap: ModlStructure {
+        //TODO: rest of map
+    }
+    
+    class ModlNull: ModlStructure {
+        override func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encodeNil()
+        }
+    }
+    
+    class ModlTerminal: ModlValue {
+        var terminalValue: Any? = nil
+        
+        override func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            if let uwString = terminalValue as? String {
+                try container.encode(uwString)
+            } else if let uwBool = terminalValue as? Bool {
+                try container.encode(uwBool)
+            } else if let uwNumber = terminalValue as? Double {
+                try container.encode(uwNumber)
+            }
+        }
+    }
+
+    
+    var structures: [ModlStructure] = []
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        try container.encode(contentsOf: structures)
+    }
+    
+    func addStructure(_ structure: ModlStructure) {
+        structures.append(structure)
+    }
+}
