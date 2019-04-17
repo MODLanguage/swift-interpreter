@@ -21,8 +21,11 @@
 		3E7743D122674865006AA9AF /* MODLLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C722674865006AA9AF /* MODLLexer.tokens */; };
 		3E7743D222674865006AA9AF /* MODLParser.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C822674865006AA9AF /* MODLParser.tokens */; };
 		3E7743D322674865006AA9AF /* MODLParserParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C922674865006AA9AF /* MODLParserParserATN.swift */; };
+		3E7743D622674ABE006AA9AF /* DemoOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743D522674ABE006AA9AF /* DemoOptionsViewController.swift */; };
+		3E7743D922674AE3006AA9AF /* DNSTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743D822674AE3006AA9AF /* DNSTestViewController.swift */; };
+		3E7743DB22674AEC006AA9AF /* ParseTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */; };
+		3E7743DE22675E59006AA9AF /* DNSTxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */; };
 		3EFABA46226737760029EACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFABA45226737760029EACC /* AppDelegate.swift */; };
-		3EFABA48226737760029EACC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFABA47226737760029EACC /* ViewController.swift */; };
 		3EFABA4B226737760029EACC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA49226737760029EACC /* Main.storyboard */; };
 		3EFABA4D226737790029EACC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA4C226737790029EACC /* Assets.xcassets */; };
 		3EFABA50226737790029EACC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA4E226737790029EACC /* LaunchScreen.storyboard */; };
@@ -75,9 +78,12 @@
 		3E7743C722674865006AA9AF /* MODLLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLLexer.tokens; sourceTree = "<group>"; };
 		3E7743C822674865006AA9AF /* MODLParser.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.tokens; sourceTree = "<group>"; };
 		3E7743C922674865006AA9AF /* MODLParserParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserParserATN.swift; sourceTree = "<group>"; };
+		3E7743D522674ABE006AA9AF /* DemoOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOptionsViewController.swift; sourceTree = "<group>"; };
+		3E7743D822674AE3006AA9AF /* DNSTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTestViewController.swift; sourceTree = "<group>"; };
+		3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTestViewController.swift; sourceTree = "<group>"; };
+		3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTxtRecord.swift; sourceTree = "<group>"; };
 		3EFABA42226737760029EACC /* MODL-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MODL-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EFABA45226737760029EACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3EFABA47226737760029EACC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3EFABA4A226737760029EACC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3EFABA4C226737790029EACC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EFABA4F226737790029EACC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -150,6 +156,24 @@
 			path = generated;
 			sourceTree = "<group>";
 		};
+		3E7743D722674AC3006AA9AF /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3E7743D522674ABE006AA9AF /* DemoOptionsViewController.swift */,
+				3E7743D822674AE3006AA9AF /* DNSTestViewController.swift */,
+				3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3E7743DC22675E1C006AA9AF /* DNS */ = {
+			isa = PBXGroup;
+			children = (
+				3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */,
+			);
+			path = DNS;
+			sourceTree = "<group>";
+		};
 		3EFABA39226737760029EACC = {
 			isa = PBXGroup;
 			children = (
@@ -174,8 +198,9 @@
 			children = (
 				3E5ABB6622674541007419CC /* Antlr4.xcodeproj */,
 				3EFABA45226737760029EACC /* AppDelegate.swift */,
-				3EFABA47226737760029EACC /* ViewController.swift */,
+				3E7743D722674AC3006AA9AF /* ViewControllers */,
 				3E5ABB612267402A007419CC /* MODL */,
+				3E7743DC22675E1C006AA9AF /* DNS */,
 				3EFABA49226737760029EACC /* Main.storyboard */,
 				3EFABA4C226737790029EACC /* Assets.xcassets */,
 				3EFABA4E226737790029EACC /* LaunchScreen.storyboard */,
@@ -325,13 +350,16 @@
 				3E7743CC22674865006AA9AF /* MODLLexerATN.swift in Sources */,
 				3E7743CB22674865006AA9AF /* MODLParserListener.swift in Sources */,
 				3E5ABB722267459E007419CC /* ModlParser.swift in Sources */,
+				3E7743DE22675E59006AA9AF /* DNSTxtRecord.swift in Sources */,
 				3E7743CE22674865006AA9AF /* MODLParserBaseListener.swift in Sources */,
-				3EFABA48226737760029EACC /* ViewController.swift in Sources */,
 				3E7743CD22674865006AA9AF /* MODLParser.swift in Sources */,
+				3E7743D622674ABE006AA9AF /* DemoOptionsViewController.swift in Sources */,
 				3E7743CF22674865006AA9AF /* MODLLexer.swift in Sources */,
 				3E5ABB6522674513007419CC /* ModlListener.swift in Sources */,
 				3E5ABB7E226745FB007419CC /* ModlObject.swift in Sources */,
+				3E7743DB22674AEC006AA9AF /* ParseTestViewController.swift in Sources */,
 				3E7743D322674865006AA9AF /* MODLParserParserATN.swift in Sources */,
+				3E7743D922674AE3006AA9AF /* DNSTestViewController.swift in Sources */,
 				3EFABA46226737760029EACC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
