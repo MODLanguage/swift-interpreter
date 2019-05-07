@@ -14,7 +14,7 @@ struct ModlParser {
         let lexer = MODLLexer(ANTLRInputStream(input))
         do {
             let parser = try MODLParser(CommonTokenStream(lexer))
-            //            parser.removeErrorListeners()
+            parser.removeErrorListeners()
             let base = ModlListener()
             try parser.modl().enterRule(base)
             let object = base.object

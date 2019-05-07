@@ -41,12 +41,7 @@ class ModlListener: MODLParserBaseListener {
         if let terminalString = ctx.STRING() {
             pair.key = getString(terminalString.getText())
         } else if let terminalQuote = ctx.QUOTED() {
-            var quoted = getString(terminalQuote.getText())
-            if quoted.count > 0 {
-                quoted.removeFirst()
-                quoted.removeLast()
-            }
-            pair.key = quoted
+            pair.key = getString(processQuotedString(terminalQuote.getText()))
         }
         
         //check value
@@ -64,11 +59,10 @@ class ModlListener: MODLParserBaseListener {
     func processValueItem(_ ctx: MODLParser.Modl_value_itemContext) -> ModlObject.ModlValue? {
         if let value = ctx.modl_value() {
             if let nbArray = value.modl_nb_array() {
-                //TODO: do this instead
-                return nil
+                return processNBArray(nbArray)
             }
             return processValue(value)
-        } else if let condtional = ctx.modl_value_conditional() {
+        } else if let conditional = ctx.modl_value_conditional() {
             //TODO: process conditional
         }
         return nil
@@ -81,14 +75,19 @@ class ModlListener: MODLParserBaseListener {
             return ModlObject.ModlArray()
         }
         let arr = ModlObject.ModlArray()
+        arr.values = processArrayChildren(children)
+        return arr
+    }
+    
+    func processArrayChildren(_ children: [ParseTree]) -> [ModlObject.ModlValue] {
+        var output: [ModlObject.ModlValue] = []
         var previous: ParseTree? = nil
-        
         for child in children {
             if let itemContext = child as? MODLParser.Modl_array_itemContext, let item = processArrayItem(itemContext) {
-                arr.values.append(item)
+                output.append(item)
             } else if let itemContext = child as? MODLParser.Modl_nb_arrayContext, let item = processNBArray(itemContext) {
-                arr.values.append(item)
-            } else if let itemContext = child as? TerminalNode, let uwPrev = previous as? TerminalNode, let uwChild = child as? TerminalNode {
+                output.append(item)
+            } else if let uwPrev = previous as? TerminalNode, let uwChild = child as? TerminalNode {
                 //We have two terminal nodes in a row, so output something UNLESS terminal symbols are new lines
                 let prevSym = uwPrev.getSymbol()?.getType()
                 let currSym = uwChild.getSymbol()?.getType()
@@ -98,25 +97,12 @@ class ModlListener: MODLParserBaseListener {
                 }
                 if prevSym == MODLLexer.NEWLINE && currSym == MODLLexer.NEWLINE {
                     let null = ModlObject.ModlNull()
-                    arr.values.append(null)
+                    output.append(null)
                 }
             }
             previous = child
-            
         }
-//
-//            if child.getChildCount() == 0 {
-//                //TODO:
-//                continue
-//            } else if let item = child as? MODLParser.Modl_array_itemContext {
-//                if let arrayItem = processArrayItem(item) {
-//                    arr.values.append(arrayItem)
-//                }
-//            } else if let item = child as? MODLParser.Modl_nb_arrayContext {
-//                //TODO: handle nb array
-//            }
-//        }
-        return arr
+        return output
     }
     
     func processArrayItem(_ ctx: MODLParser.Modl_array_itemContext) -> ModlObject.ModlValue? {
@@ -131,7 +117,14 @@ class ModlListener: MODLParserBaseListener {
     }
     
     func processNBArray(_ ctx: MODLParser.Modl_nb_arrayContext) -> ModlObject.ModlValue? {
-        return nil
+        print("processing: NB array")
+        guard let children = ctx.children else {
+            //TODO: is this real? or should I return nil
+            return ModlObject.ModlArray()
+        }
+        let arr = ModlObject.ModlArray()
+        arr.values = processArrayChildren(children)
+        return arr
     }
     
     func processMap(_ ctx: MODLParser.Modl_mapContext) -> ModlObject.ModlMap {
@@ -162,12 +155,14 @@ class ModlListener: MODLParserBaseListener {
     func processValue(_ ctx: MODLValueContext) -> ModlObject.ModlValue? {
         if let value = ctx.modl_array() {
             return processArray(value)
+        } else if let value = ctx.modl_map() {
+            return processMap(value)
         } else if let value = ctx.modl_pair() {
             return processPair(value)
         } else if let value = ctx.STRING() {
             return getTerminalString(value)
         }  else if let value = ctx.QUOTED() {
-            return getTerminalString(value)
+            return getTerminalQuoted(value)
         } else if let value = ctx.NUMBER() {
             return getTerminalNumber(value)
         } else if ctx.NULL() != nil {
@@ -181,6 +176,17 @@ class ModlListener: MODLParserBaseListener {
         return nil
     }
     
+    func processQuotedString(_ quoted: String?) -> String? {
+        guard var output = quoted else {
+            return nil
+        }
+        if output.count > 1 {
+            output.removeFirst()
+            output.removeLast()
+        }
+        return output
+    }
+    
     func getTerminalString(_ ctx: TerminalNode?) -> ModlObject.ModlTerminal {
         //TODO: escape
         let terminal = ModlObject.ModlTerminal()
@@ -188,6 +194,12 @@ class ModlListener: MODLParserBaseListener {
         return terminal
     }
     
+    func getTerminalQuoted(_ ctx: TerminalNode?) -> ModlObject.ModlTerminal {
+        let terminal = ModlObject.ModlTerminal()
+        terminal.terminalValue = getString(processQuotedString(ctx?.getText()))
+        return terminal
+    }
+
     func getTerminalBool(_ ctx: TerminalNode?, value: Bool) -> ModlObject.ModlTerminal {
         let terminal = ModlObject.ModlTerminal()
         terminal.terminalValue = value
