@@ -48,7 +48,7 @@ class BasicTests: XCTestCase {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
                     let stringOutput = String(data: dataOutput, encoding: .utf8)
-                    XCTAssert(result == stringOutput, "\nExpected: \(stringOutput)\nGot: \(result)")
+                    XCTAssert(result == stringOutput, "\nExpected: \(stringOutput ?? "")\nGot: \(result)")
                 } catch {
                     print("Failed to load: \(error.localizedDescription)")
                     XCTFail("ERROR: could not process \(expected)")

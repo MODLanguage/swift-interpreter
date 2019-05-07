@@ -18,7 +18,6 @@ class ModlListener: MODLParserBaseListener {
                 object.addStructure(structure)
             }
         }
-        print("MODL: \(object)")
     }
     
     func processStructure(_ ctx: MODLParser.Modl_structureContext) -> ModlObject.ModlStructure? {
@@ -95,7 +94,7 @@ class ModlListener: MODLParserBaseListener {
                     //allows empty arrays
                     continue
                 }
-                if prevSym == MODLLexer.NEWLINE && currSym == MODLLexer.NEWLINE {
+                if prevSym != MODLLexer.NEWLINE && currSym != MODLLexer.NEWLINE {
                     let null = ModlObject.ModlNull()
                     output.append(null)
                 }
