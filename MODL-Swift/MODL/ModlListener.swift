@@ -141,7 +141,7 @@ class ModlListener: MODLParserBaseListener {
     
     func getTerminalNumber(_ ctx: TerminalNode?) -> ModlObject.ModlTerminal {
         let terminal = ModlObject.ModlTerminal()
-        terminal.terminalValue = ctx?.getText() ?? ""
+        terminal.terminalValue = Double(ctx?.getText() ?? "")
         return terminal
     }
     
