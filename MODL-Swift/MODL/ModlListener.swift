@@ -213,8 +213,11 @@ class ModlListener: MODLParserBaseListener {
     }
     
     func getString(_ input: String?) -> String {
-        //TODO: escape
-        return input ?? ""
+        guard let uwInput = input else {
+            return ""
+        }
+        //remove graves
+        return uwInput.replacingOccurrences(of: "`", with: "")
     }
     
 }
