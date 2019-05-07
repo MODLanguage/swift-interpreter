@@ -30,10 +30,12 @@ class ModlObject: Encodable {
             return [uwKey: uwV]
         }
         
-        //    enum CodingKeys: String, CodingKey {
-        //        case value
-        //    }
-        
+        convenience init(key: String?, value: ModlValue?) {
+            self.init()
+            self.key = key
+            self.value = value
+        }
+
         private struct CodingKeys: CodingKey {
             var intValue: Int?
             var stringValue: String
@@ -60,6 +62,7 @@ class ModlObject: Encodable {
     //MARK: Array
     class ModlArray: ModlStructure {
         var values: [ModlValue] = []
+        
         override func encode(to encoder: Encoder) throws {
             var container = encoder.unkeyedContainer()
             try container.encode(contentsOf: values)
@@ -68,10 +71,18 @@ class ModlObject: Encodable {
     
     //MARK: Map
     class ModlMap: ModlStructure {
-        //TODO: rest of map
+        var values: [ModlValue] = []
+
+        override func encode(to encoder: Encoder) throws {
+            var container = encoder.unkeyedContainer()
+            try container.encode(values)
+        }
     }
     
     class ModlNull: ModlStructure {
+        //TODO: check null works as null (not omitted)
+        let nullValue: String? = nil
+
         override func encode(to encoder: Encoder) throws {
             var container = encoder.singleValueContainer()
             try container.encodeNil()

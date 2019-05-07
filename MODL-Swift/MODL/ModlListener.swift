@@ -80,26 +80,43 @@ class ModlListener: MODLParserBaseListener {
             //TODO: is this real? or should I return nil
             return ModlObject.ModlArray()
         }
-        var arr = ModlObject.ModlArray()
+        let arr = ModlObject.ModlArray()
+        var previous: ParseTree? = nil
+        
         for child in children {
-            if child.getChildCount() == 0 {
-                //TODO:
-                continue
-            } else if let item = child as? MODLParser.Modl_array_itemContext {
-                if let arrayItem = processArrayItem(item) {
-                    arr.values.append(arrayItem)
+            if let itemContext = child as? MODLParser.Modl_array_itemContext, let item = processArrayItem(itemContext) {
+                arr.values.append(item)
+            } else if let itemContext = child as? MODLParser.Modl_nb_arrayContext, let item = processNBArray(itemContext) {
+                arr.values.append(item)
+            } else if let itemContext = child as? TerminalNode, let uwPrev = previous as? TerminalNode, let uwChild = child as? TerminalNode {
+                //We have two terminal nodes in a row, so output something UNLESS terminal symbols are new lines
+                let prevSym = uwPrev.getSymbol()?.getType()
+                let currSym = uwChild.getSymbol()?.getType()
+                if prevSym == MODLLexer.LSBRAC && currSym == MODLLexer.RSBRAC {
+                    //allows empty arrays
+                    continue
                 }
-            } else if let item = child as? MODLParser.Modl_nb_arrayContext {
-                //TODO: handle nb array
+                if prevSym == MODLLexer.NEWLINE && currSym == MODLLexer.NEWLINE {
+                    let null = ModlObject.ModlNull()
+                    arr.values.append(null)
+                }
             }
+            previous = child
+            
         }
+//
+//            if child.getChildCount() == 0 {
+//                //TODO:
+//                continue
+//            } else if let item = child as? MODLParser.Modl_array_itemContext {
+//                if let arrayItem = processArrayItem(item) {
+//                    arr.values.append(arrayItem)
+//                }
+//            } else if let item = child as? MODLParser.Modl_nb_arrayContext {
+//                //TODO: handle nb array
+//            }
+//        }
         return arr
-    }
-    
-    func processMap(_ ctx: MODLParser.Modl_mapContext) -> ModlObject.ModlMap {
-        print("Processing: Map")
-        var map = ModlObject.ModlMap()
-        return map
     }
     
     func processArrayItem(_ ctx: MODLParser.Modl_array_itemContext) -> ModlObject.ModlValue? {
@@ -112,6 +129,35 @@ class ModlListener: MODLParserBaseListener {
         }
         return nil
     }
+    
+    func processNBArray(_ ctx: MODLParser.Modl_nb_arrayContext) -> ModlObject.ModlValue? {
+        return nil
+    }
+    
+    func processMap(_ ctx: MODLParser.Modl_mapContext) -> ModlObject.ModlMap {
+        print("Processing: Map")
+        let map = ModlObject.ModlMap()
+        for item in ctx.modl_map_item() {
+            if let item = processMapItemPair(item) {
+                map.values.append(item)
+            } else {
+                //TODO: process conditional
+            }
+        }
+        return map
+    }
+    
+    func processMapItemPair(_ ctx: MODLParser.Modl_map_itemContext) -> ModlObject.ModlPair? {
+        if let pair = ctx.modl_pair() {
+            return processPair(pair)
+        }
+        return nil
+    }
+    
+    func processMapItemConditional(_ ctx: MODLParser.Modl_map_itemContext) -> ModlObject.ModlPair? {
+        return nil
+    }
+
     
     func processValue(_ ctx: MODLValueContext) -> ModlObject.ModlValue? {
         if let value = ctx.modl_array() {
