@@ -208,7 +208,8 @@ class ModlListener: MODLParserBaseListener {
     
     func getTerminalNumber(_ ctx: TerminalNode?) -> ModlObject.ModlTerminal {
         let terminal = ModlObject.ModlTerminal()
-        terminal.terminalValue = Double(ctx?.getText() ?? "")
+        let numText = ctx?.getText() ?? ""
+        terminal.terminalValue = Decimal(string: numText)  // Decimal(numText)
         return terminal
     }
     

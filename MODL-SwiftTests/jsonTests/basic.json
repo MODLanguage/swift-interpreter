@@ -88,11 +88,7 @@
   "input": "test=[zero;one]",
   "minimised_modl": "test=zero:one",
   "expected_output": "{\n \"test\" : [ \"zero\", \"one\" ]\n}\n"
-},  {
-  "input": "_co=gb\ntest=123",
-  "minimised_modl": "_co=gb;test=123",
-  "expected_output": "{\n \"test\" : 123\n}\n"
-},  {
+}, {
   "input": "o=[test;test;t=Customer Service:44123]",
   "minimised_modl": "o[test;test;t=Customer Service:44123]",
   "expected_output": "{\n \"o\" : [ \"test\", \"test\", {\n   \"t\" : [ \"Customer Service\", 44123 ]\n } ]\n}\n"

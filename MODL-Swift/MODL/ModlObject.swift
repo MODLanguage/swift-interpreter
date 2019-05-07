@@ -98,7 +98,11 @@ class ModlObject: Encodable {
                 try container.encode(uwString)
             } else if let uwBool = terminalValue as? Bool {
                 try container.encode(uwBool)
-            } else if let uwNumber = terminalValue as? Double {
+            } else if let uwNumber = terminalValue as? Decimal {
+                try container.encode(uwNumber)
+            } else if let uwNumber = terminalValue as? Float {
+                try container.encode(uwNumber)
+            } else if let uwNumber = terminalValue as? Int64 {
                 try container.encode(uwNumber)
             }
         }
