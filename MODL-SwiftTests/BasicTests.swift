@@ -34,10 +34,11 @@ class BasicTests: XCTestCase {
         }
         for test in json {
             print("******TEST START********\n************")
+            print("Test: \(test.modl)")
             let p = ModlParser()
             let result = p.parse(test.modl)
             let expected = test.expectedJson.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")
-            XCTAssert(result == expected, "\nTest: \(test.modl)\nExpected: \(expected)\nGot: \(result ?? "NA")")
+            XCTAssert(result == expected, "\nExpected: \(expected)\nGot: \(result)")
             print("******TEST END********\n************")
         }
         print("TOTAL TESTS: \(jsonTests?.count ?? 0)")

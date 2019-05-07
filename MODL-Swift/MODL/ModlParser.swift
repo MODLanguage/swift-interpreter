@@ -21,8 +21,10 @@ struct ModlParser {
             var jsonData: Data? = nil
             if object.structures.count > 1 {
                 jsonData = try JSONEncoder().encode(object.structures)
+            } else if let first = object.structures.first {
+                jsonData = try JSONEncoder().encode(first)
             } else {
-                jsonData = try JSONEncoder().encode(object.structures.first)
+                return ""
             }
             if let data = jsonData {
                 return String(data: data, encoding: .utf8) ?? ""
