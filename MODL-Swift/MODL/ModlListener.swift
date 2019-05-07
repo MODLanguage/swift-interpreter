@@ -14,20 +14,24 @@ class ModlListener: MODLParserBaseListener {
     
     override func enterModl(_ ctx: MODLParser.ModlContext) {
         for mStructure in ctx.modl_structure() {
-            if let pair = mStructure.modl_pair() {
-                let mPair = processPair(pair)
-                object.addStructure(mPair)
-            } else if let conditional = mStructure.modl_top_level_conditional() {
-                print("is conditional")
-            } else if let map = mStructure.modl_map() {
-                let map = processMap(map)
-                object.addStructure(map)
-            } else if let array = mStructure.modl_array() {
-                let arr = processArray(array)
-                object.addStructure(arr)
+            if let structure = processStructure(mStructure) {
+                object.addStructure(structure)
             }
         }
         print("MODL: \(object)")
+    }
+    
+    func processStructure(_ ctx: MODLParser.Modl_structureContext) -> ModlObject.ModlStructure? {
+        if let pair = ctx.modl_pair() {
+            return processPair(pair)
+        } else if let conditional = ctx.modl_top_level_conditional() {
+            print("is conditional")
+        } else if let map = ctx.modl_map() {
+            return processMap(map)
+        } else if let array = ctx.modl_array() {
+            return processArray(array)
+        }
+        return nil
     }
     
     func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlObject.ModlPair {
@@ -37,7 +41,12 @@ class ModlListener: MODLParserBaseListener {
         if let terminalString = ctx.STRING() {
             pair.key = getString(terminalString.getText())
         } else if let terminalQuote = ctx.QUOTED() {
-            pair.key = getString(terminalQuote.getText())
+            var quoted = getString(terminalQuote.getText())
+            if quoted.count > 0 {
+                quoted.removeFirst()
+                quoted.removeLast()
+            }
+            pair.key = quoted
         }
         
         //check value
