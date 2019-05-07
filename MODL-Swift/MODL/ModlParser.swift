@@ -10,7 +10,7 @@ import Foundation
 import Antlr4
 
 struct ModlParser {
-    func parse(_ input: String) -> String? {
+    func parse(_ input: String) -> String {
         let lexer = MODLLexer(ANTLRInputStream(input))
         do {
             let parser = try MODLParser(CommonTokenStream(lexer))
@@ -25,12 +25,12 @@ struct ModlParser {
                 jsonData = try JSONEncoder().encode(object.structures.first)
             }
             if let data = jsonData {
-                return String(data: data, encoding: .utf8)
+                return String(data: data, encoding: .utf8) ?? ""
             }
-            return nil
+            return ""
         } catch {
             print("Parser fail : \(error)")
-            return nil
+            return ""
         }
     }
 }
