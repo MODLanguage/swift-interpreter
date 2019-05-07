@@ -180,7 +180,7 @@ class ModlListener: MODLParserBaseListener {
         guard var output = quoted else {
             return nil
         }
-        if output.count > 1 {
+        if output.starts(with: "\"") && output.last == "\""{
             output.removeFirst()
             output.removeLast()
         }
