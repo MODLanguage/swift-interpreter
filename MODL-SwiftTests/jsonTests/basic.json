@@ -1,4 +1,9 @@
-[  
+[
+    {
+        "input": "test=\u0021",
+        "minimised_modl": "test=\u0021",
+        "expected_output": "{\n \"test\" : \"!\"\n}\n"
+    }, 
 {"comment": "Blank input should produce blank output.",
     "input":  "",
     "minimised_modl":  "",
@@ -80,11 +85,7 @@
   "input": "test=`test`",
   "minimised_modl": "test=`test`",
   "expected_output": "{\n \"test\" : \"test\"\n}\n"
-}, {
-  "input": "test=\u0021",
-  "minimised_modl": "test=\u0021",
-  "expected_output": "{\n \"test\" : \"!\"\n}\n"
-}, {
+},{
   "input": "test=[zero;one]",
   "minimised_modl": "test=zero:one",
   "expected_output": "{\n \"test\" : [ \"zero\", \"one\" ]\n}\n"

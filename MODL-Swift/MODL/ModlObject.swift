@@ -71,11 +71,15 @@ class ModlObject: Encodable {
     
     //MARK: Map
     class ModlMap: ModlStructure {
-        var values: [ModlValue] = []
+        var values: [String: ModlValue] = [:]
 
         override func encode(to encoder: Encoder) throws {
             var container = encoder.unkeyedContainer()
+//            if values.count == 1, let first = values.first {
+//                try container.encode(first)
+//            } else {
             try container.encode(values)
+//            }
         }
     }
     

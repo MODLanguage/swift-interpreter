@@ -14,15 +14,17 @@ struct ModlParser {
         let lexer = MODLLexer(ANTLRInputStream(input))
         do {
             let parser = try MODLParser(CommonTokenStream(lexer))
-            parser.removeErrorListeners()
+//            parser.removeErrorListeners()
             let base = ModlListener()
             try parser.modl().enterRule(base)
             let object = base.object
             var jsonData: Data? = nil
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .sortedKeys
             if object.structures.count > 1 {
-                jsonData = try JSONEncoder().encode(object.structures)
+                jsonData = try encoder.encode(object.structures)
             } else if let first = object.structures.first {
-                jsonData = try JSONEncoder().encode(first)
+                jsonData = try encoder.encode(first)
             } else {
                 return ""
             }

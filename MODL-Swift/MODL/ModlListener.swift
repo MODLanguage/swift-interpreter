@@ -131,8 +131,8 @@ class ModlListener: MODLParserBaseListener {
         print("Processing: Map")
         let map = ModlObject.ModlMap()
         for item in ctx.modl_map_item() {
-            if let item = processMapItemPair(item) {
-                map.values.append(item)
+            if let pair = processMapItemPair(item), let key = pair.key {
+                map.values[key] = pair.value
             } else {
                 //TODO: process conditional
             }
