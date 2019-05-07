@@ -72,15 +72,37 @@ class ModlObject: Encodable {
     //MARK: Map
     class ModlMap: ModlStructure {
         var values: [String: ModlValue] = [:]
-
-        override func encode(to encoder: Encoder) throws {
-            var container = encoder.unkeyedContainer()
-//            if values.count == 1, let first = values.first {
-//                try container.encode(first)
-//            } else {
-            try container.encode(values)
-//            }
+        
+        private struct CodingKeys: CodingKey {
+            var intValue: Int?
+            var stringValue: String
+            
+            init?(intValue: Int) { self.intValue = intValue; self.stringValue = "\(intValue)" }
+            init?(stringValue: String) { self.stringValue = stringValue }
+            
+            static let name = CodingKeys.make(key: "categoryName")
+            static func make(key: String) -> CodingKeys {
+                return CodingKeys(stringValue: key)!
+            }
         }
+        
+        override func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            for (key, child) in values {
+                try container.encode(child, forKey: .make(key: key))
+            }
+            
+        }
+//        override func encode(to encoder: Encoder) throws {
+//            var container = encoder.unkeyedContainer()
+//
+//
+////            if values.count == 1, let first = values.first {
+////                try container.encode(first)
+////            } else {
+//            try container.encode(values)
+////            }
+//        }
     }
     
     class ModlNull: ModlStructure {
