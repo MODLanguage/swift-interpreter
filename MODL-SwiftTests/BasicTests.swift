@@ -1,22 +1,21 @@
 //
-//  MODL_SwiftTests.swift
+//  BasicTests.swift
 //  MODL-SwiftTests
 //
-//  Created by Nicholas Jones on 17/04/2019.
+//  Created by Nicholas Jones on 07/05/2019.
 //  Copyright © 2019 Touchsoft Ltd. All rights reserved.
 //
 
 import XCTest
-@testable import MODL_Swift
 
-class MODL_SwiftTests: XCTestCase {
+class BasicTests: XCTestCase {
 
     var jsonTests: [MODLTest]?
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         let bundle = Bundle(for: type(of: self))
-        guard let fileUrl = bundle.url(forResource: "base_tests", withExtension: "json") else {
+        guard let fileUrl = bundle.url(forResource: "basic", withExtension: "json") else {
             return
         }
         do {
@@ -27,9 +26,6 @@ class MODL_SwiftTests: XCTestCase {
         }
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
     
     func testAllJSONExamples() {
         guard let json = jsonTests else {
@@ -37,10 +33,14 @@ class MODL_SwiftTests: XCTestCase {
             return
         }
         for test in json {
+            print("******TEST START********\n************")
             let p = ModlParser()
             let result = p.parse(test.modl)
             let expected = test.expectedJson.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")
-            XCTAssert(result == expected, "Test: \(test.modl)\nExpected: \(expected)\nGot: \(result ?? "NA")")
+            XCTAssert(result == expected, "\nTest: \(test.modl)\nExpected: \(expected)\nGot: \(result ?? "NA")")
+            print("******TEST END********\n************")
         }
+        print("TOTAL TESTS: \(jsonTests?.count ?? 0)")
     }
+
 }

@@ -21,6 +21,27 @@
 		3E63154922816FCD008BDC14 /* base_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153B22816FCD008BDC14 /* base_tests.json */; };
 		3E63154A22816FCD008BDC14 /* error_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153C22816FCD008BDC14 /* error_tests.json */; };
 		3E63154B22816FCD008BDC14 /* 1.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153D22816FCD008BDC14 /* 1.modl */; };
+		3E63155222819EF0008BDC14 /* class.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154C22819EF0008BDC14 /* class.json */; };
+		3E63155322819EF0008BDC14 /* misc.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154D22819EF0008BDC14 /* misc.json */; };
+		3E63155422819EF0008BDC14 /* conditional.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154E22819EF0008BDC14 /* conditional.json */; };
+		3E63155522819EF0008BDC14 /* replacement.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154F22819EF0008BDC14 /* replacement.json */; };
+		3E63155622819EF0008BDC14 /* methods.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63155022819EF0008BDC14 /* methods.json */; };
+		3E63155722819EF0008BDC14 /* basic.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63155122819EF0008BDC14 /* basic.json */; };
+		3E63155922819F31008BDC14 /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155822819F31008BDC14 /* BasicTests.swift */; };
+		3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155A22819F62008BDC14 /* MODLTest.swift */; };
+		3E63155C22819FDD008BDC14 /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
+		3E63155D22819FDD008BDC14 /* ModlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* ModlParser.swift */; };
+		3E63155E22819FDD008BDC14 /* ModlObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlObject.swift */; };
+		3E63155F22819FE2008BDC14 /* MODLLexer.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C622674865006AA9AF /* MODLLexer.interp */; };
+		3E63156022819FE2008BDC14 /* MODLLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C522674865006AA9AF /* MODLLexer.swift */; };
+		3E63156122819FE2008BDC14 /* MODLLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C722674865006AA9AF /* MODLLexer.tokens */; };
+		3E63156222819FE2008BDC14 /* MODLLexerATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C222674865006AA9AF /* MODLLexerATN.swift */; };
+		3E63156322819FE2008BDC14 /* MODLParser.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C022674865006AA9AF /* MODLParser.interp */; };
+		3E63156422819FE2008BDC14 /* MODLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C322674865006AA9AF /* MODLParser.swift */; };
+		3E63156522819FE2008BDC14 /* MODLParser.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C822674865006AA9AF /* MODLParser.tokens */; };
+		3E63156622819FE2008BDC14 /* MODLParserBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C422674865006AA9AF /* MODLParserBaseListener.swift */; };
+		3E63156722819FE2008BDC14 /* MODLParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C122674865006AA9AF /* MODLParserListener.swift */; };
+		3E63156822819FE2008BDC14 /* MODLParserParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C922674865006AA9AF /* MODLParserParserATN.swift */; };
 		3E7743BE226747E1006AA9AF /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7743B92267479D006AA9AF /* Antlr4.framework */; };
 		3E7743CA22674865006AA9AF /* MODLParser.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C022674865006AA9AF /* MODLParser.interp */; };
 		3E7743CB22674865006AA9AF /* MODLParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C122674865006AA9AF /* MODLParserListener.swift */; };
@@ -90,6 +111,14 @@
 		3E63153B22816FCD008BDC14 /* base_tests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = base_tests.json; sourceTree = "<group>"; };
 		3E63153C22816FCD008BDC14 /* error_tests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error_tests.json; sourceTree = "<group>"; };
 		3E63153D22816FCD008BDC14 /* 1.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.modl; sourceTree = "<group>"; };
+		3E63154C22819EF0008BDC14 /* class.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = class.json; sourceTree = "<group>"; };
+		3E63154D22819EF0008BDC14 /* misc.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = misc.json; sourceTree = "<group>"; };
+		3E63154E22819EF0008BDC14 /* conditional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conditional.json; sourceTree = "<group>"; };
+		3E63154F22819EF0008BDC14 /* replacement.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = replacement.json; sourceTree = "<group>"; };
+		3E63155022819EF0008BDC14 /* methods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = methods.json; sourceTree = "<group>"; };
+		3E63155122819EF0008BDC14 /* basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = basic.json; sourceTree = "<group>"; };
+		3E63155822819F31008BDC14 /* BasicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTests.swift; sourceTree = "<group>"; };
+		3E63155A22819F62008BDC14 /* MODLTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MODLTest.swift; sourceTree = "<group>"; };
 		3E7743C022674865006AA9AF /* MODLParser.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.interp; sourceTree = "<group>"; };
 		3E7743C122674865006AA9AF /* MODLParserListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserListener.swift; sourceTree = "<group>"; };
 		3E7743C222674865006AA9AF /* MODLLexerATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLLexerATN.swift; sourceTree = "<group>"; };
@@ -155,6 +184,12 @@
 		3E63153122816FCD008BDC14 /* jsonTests */ = {
 			isa = PBXGroup;
 			children = (
+				3E63155122819EF0008BDC14 /* basic.json */,
+				3E63154C22819EF0008BDC14 /* class.json */,
+				3E63154E22819EF0008BDC14 /* conditional.json */,
+				3E63155022819EF0008BDC14 /* methods.json */,
+				3E63154D22819EF0008BDC14 /* misc.json */,
+				3E63154F22819EF0008BDC14 /* replacement.json */,
 				3E63153222816FCD008BDC14 /* 3.modl */,
 				3E63153322816FCD008BDC14 /* 2.modl */,
 				3E63153422816FCD008BDC14 /* test_import_dir */,
@@ -262,6 +297,8 @@
 			children = (
 				3E63153122816FCD008BDC14 /* jsonTests */,
 				3EFABA5A226737790029EACC /* MODL_SwiftTests.swift */,
+				3E63155A22819F62008BDC14 /* MODLTest.swift */,
+				3E63155822819F31008BDC14 /* BasicTests.swift */,
 				3EFABA5C226737790029EACC /* Info.plist */,
 			);
 			path = "MODL-SwiftTests";
@@ -387,13 +424,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E63154522816FCD008BDC14 /* c.modl in Resources */,
+				3E63156522819FE2008BDC14 /* MODLParser.tokens in Resources */,
+				3E63155322819EF0008BDC14 /* misc.json in Resources */,
 				3E63154722816FCD008BDC14 /* a.modl in Resources */,
+				3E63155522819EF0008BDC14 /* replacement.json in Resources */,
 				3E63154322816FCD008BDC14 /* test_import.txt in Resources */,
 				3E63154922816FCD008BDC14 /* base_tests.json in Resources */,
 				3E63154622816FCD008BDC14 /* import_config.modl in Resources */,
 				3E63154822816FCD008BDC14 /* demo_config.modl in Resources */,
+				3E63155622819EF0008BDC14 /* methods.json in Resources */,
 				3E63154A22816FCD008BDC14 /* error_tests.json in Resources */,
+				3E63156322819FE2008BDC14 /* MODLParser.interp in Resources */,
+				3E63155422819EF0008BDC14 /* conditional.json in Resources */,
 				3E63154222816FCD008BDC14 /* 2.modl in Resources */,
+				3E63155722819EF0008BDC14 /* basic.json in Resources */,
+				3E63156122819FE2008BDC14 /* MODLLexer.tokens in Resources */,
+				3E63155222819EF0008BDC14 /* class.json in Resources */,
+				3E63155F22819FE2008BDC14 /* MODLLexer.interp in Resources */,
 				3E63154422816FCD008BDC14 /* b.modl in Resources */,
 				3E63154122816FCD008BDC14 /* 3.modl in Resources */,
 				3E63154B22816FCD008BDC14 /* 1.modl in Resources */,
@@ -428,7 +475,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E63155E22819FDD008BDC14 /* ModlObject.swift in Sources */,
+				3E63156822819FE2008BDC14 /* MODLParserParserATN.swift in Sources */,
+				3E63155D22819FDD008BDC14 /* ModlParser.swift in Sources */,
+				3E63156422819FE2008BDC14 /* MODLParser.swift in Sources */,
+				3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */,
+				3E63155922819F31008BDC14 /* BasicTests.swift in Sources */,
+				3E63156222819FE2008BDC14 /* MODLLexerATN.swift in Sources */,
 				3EFABA5B226737790029EACC /* MODL_SwiftTests.swift in Sources */,
+				3E63156622819FE2008BDC14 /* MODLParserBaseListener.swift in Sources */,
+				3E63156722819FE2008BDC14 /* MODLParserListener.swift in Sources */,
+				3E63156022819FE2008BDC14 /* MODLLexer.swift in Sources */,
+				3E63155C22819FDD008BDC14 /* ModlListener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
