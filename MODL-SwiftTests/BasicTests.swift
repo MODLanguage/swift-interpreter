@@ -45,13 +45,13 @@ class BasicTests: XCTestCase {
                 //import and export JSON so format matches parser
                 do {
                     let data = Data(expected.utf8)
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                        let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
-                        let stringOutput = String(data: dataOutput, encoding: .utf8)
-                        XCTAssert(result == stringOutput, "\nExpected: \(stringOutput)\nGot: \(result)")
-                    }
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
+                    let stringOutput = String(data: dataOutput, encoding: .utf8)
+                    XCTAssert(result == stringOutput, "\nExpected: \(stringOutput)\nGot: \(result)")
                 } catch {
                     print("Failed to load: \(error.localizedDescription)")
+                    XCTFail("ERROR: could not process \(expected)")
                 }
             }
             print("******TEST END********\n************")
