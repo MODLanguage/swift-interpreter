@@ -10,6 +10,17 @@
 		3E5ABB6522674513007419CC /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
 		3E5ABB722267459E007419CC /* ModlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* ModlParser.swift */; };
 		3E5ABB7E226745FB007419CC /* ModlObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlObject.swift */; };
+		3E63154122816FCD008BDC14 /* 3.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153222816FCD008BDC14 /* 3.modl */; };
+		3E63154222816FCD008BDC14 /* 2.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153322816FCD008BDC14 /* 2.modl */; };
+		3E63154322816FCD008BDC14 /* test_import.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153522816FCD008BDC14 /* test_import.txt */; };
+		3E63154422816FCD008BDC14 /* b.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153622816FCD008BDC14 /* b.modl */; };
+		3E63154522816FCD008BDC14 /* c.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153722816FCD008BDC14 /* c.modl */; };
+		3E63154622816FCD008BDC14 /* import_config.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153822816FCD008BDC14 /* import_config.modl */; };
+		3E63154722816FCD008BDC14 /* a.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153922816FCD008BDC14 /* a.modl */; };
+		3E63154822816FCD008BDC14 /* demo_config.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153A22816FCD008BDC14 /* demo_config.modl */; };
+		3E63154922816FCD008BDC14 /* base_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153B22816FCD008BDC14 /* base_tests.json */; };
+		3E63154A22816FCD008BDC14 /* error_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153C22816FCD008BDC14 /* error_tests.json */; };
+		3E63154B22816FCD008BDC14 /* 1.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153D22816FCD008BDC14 /* 1.modl */; };
 		3E7743BE226747E1006AA9AF /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7743B92267479D006AA9AF /* Antlr4.framework */; };
 		3E7743CA22674865006AA9AF /* MODLParser.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C022674865006AA9AF /* MODLParser.interp */; };
 		3E7743CB22674865006AA9AF /* MODLParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C122674865006AA9AF /* MODLParserListener.swift */; };
@@ -68,6 +79,17 @@
 		3E5ABB6622674541007419CC /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = ../antlr/Antlr4.xcodeproj; sourceTree = "<group>"; };
 		3E5ABB712267459E007419CC /* ModlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlParser.swift; sourceTree = "<group>"; };
 		3E5ABB7D226745FB007419CC /* ModlObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlObject.swift; sourceTree = "<group>"; };
+		3E63153222816FCD008BDC14 /* 3.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3.modl; sourceTree = "<group>"; };
+		3E63153322816FCD008BDC14 /* 2.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2.modl; sourceTree = "<group>"; };
+		3E63153522816FCD008BDC14 /* test_import.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_import.txt; sourceTree = "<group>"; };
+		3E63153622816FCD008BDC14 /* b.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = b.modl; sourceTree = "<group>"; };
+		3E63153722816FCD008BDC14 /* c.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = c.modl; sourceTree = "<group>"; };
+		3E63153822816FCD008BDC14 /* import_config.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = import_config.modl; sourceTree = "<group>"; };
+		3E63153922816FCD008BDC14 /* a.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = a.modl; sourceTree = "<group>"; };
+		3E63153A22816FCD008BDC14 /* demo_config.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demo_config.modl; sourceTree = "<group>"; };
+		3E63153B22816FCD008BDC14 /* base_tests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = base_tests.json; sourceTree = "<group>"; };
+		3E63153C22816FCD008BDC14 /* error_tests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error_tests.json; sourceTree = "<group>"; };
+		3E63153D22816FCD008BDC14 /* 1.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.modl; sourceTree = "<group>"; };
 		3E7743C022674865006AA9AF /* MODLParser.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.interp; sourceTree = "<group>"; };
 		3E7743C122674865006AA9AF /* MODLParserListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserListener.swift; sourceTree = "<group>"; };
 		3E7743C222674865006AA9AF /* MODLLexerATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLLexerATN.swift; sourceTree = "<group>"; };
@@ -128,6 +150,32 @@
 				3E5ABB7D226745FB007419CC /* ModlObject.swift */,
 			);
 			path = MODL;
+			sourceTree = "<group>";
+		};
+		3E63153122816FCD008BDC14 /* jsonTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E63153222816FCD008BDC14 /* 3.modl */,
+				3E63153322816FCD008BDC14 /* 2.modl */,
+				3E63153422816FCD008BDC14 /* test_import_dir */,
+				3E63153622816FCD008BDC14 /* b.modl */,
+				3E63153722816FCD008BDC14 /* c.modl */,
+				3E63153822816FCD008BDC14 /* import_config.modl */,
+				3E63153922816FCD008BDC14 /* a.modl */,
+				3E63153A22816FCD008BDC14 /* demo_config.modl */,
+				3E63153B22816FCD008BDC14 /* base_tests.json */,
+				3E63153C22816FCD008BDC14 /* error_tests.json */,
+				3E63153D22816FCD008BDC14 /* 1.modl */,
+			);
+			path = jsonTests;
+			sourceTree = "<group>";
+		};
+		3E63153422816FCD008BDC14 /* test_import_dir */ = {
+			isa = PBXGroup;
+			children = (
+				3E63153522816FCD008BDC14 /* test_import.txt */,
+			);
+			path = test_import_dir;
 			sourceTree = "<group>";
 		};
 		3E7743B22267479D006AA9AF /* Products */ = {
@@ -212,6 +260,7 @@
 		3EFABA59226737790029EACC /* MODL-SwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				3E63153122816FCD008BDC14 /* jsonTests */,
 				3EFABA5A226737790029EACC /* MODL_SwiftTests.swift */,
 				3EFABA5C226737790029EACC /* Info.plist */,
 			);
@@ -337,6 +386,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E63154522816FCD008BDC14 /* c.modl in Resources */,
+				3E63154722816FCD008BDC14 /* a.modl in Resources */,
+				3E63154322816FCD008BDC14 /* test_import.txt in Resources */,
+				3E63154922816FCD008BDC14 /* base_tests.json in Resources */,
+				3E63154622816FCD008BDC14 /* import_config.modl in Resources */,
+				3E63154822816FCD008BDC14 /* demo_config.modl in Resources */,
+				3E63154A22816FCD008BDC14 /* error_tests.json in Resources */,
+				3E63154222816FCD008BDC14 /* 2.modl in Resources */,
+				3E63154422816FCD008BDC14 /* b.modl in Resources */,
+				3E63154122816FCD008BDC14 /* 3.modl in Resources */,
+				3E63154B22816FCD008BDC14 /* 1.modl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
