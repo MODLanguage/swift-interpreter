@@ -1,0 +1,269 @@
+[  
+{"comment": "Blank input should produce blank output.",
+    "input":  "",
+    "minimised_modl":  "",
+    "expected_output":   ""},
+{"input":  "[\none;\ntwo;\nthree;\n]",
+    "minimised_modl":  "[one;two;three;]",
+    "expected_output":   "[\"one\",\"two\",\"three\"]"},
+{"input":  "[\none;\ntwo;\nthree\n]",
+    "minimised_modl":  "[one;two;three]",
+    "expected_output":   "[\"one\",\"two\",\"three\"]"},
+  {"input":  "a=1:2:3;b=4:5:6\n\n;",
+    "minimised_modl":  "a=1:2:3;b=4:5:6\n\n;",
+    "expected_output":   "[ {\n  \"a\" : [ 1, 2, 3 ]\n}, {\n  \"b\" : [ 4, 5, 6 ]\n} ]"},
+  {"input":  "a=1:2:3;b=4:5:6;",
+    "minimised_modl":  "a=1:2:3;b=4:5:6;",
+    "expected_output":   "[ {\n  \"a\" : [ 1, 2, 3 ]\n}, {\n  \"b\" : [ 4, 5, 6 ]\n} ]"},
+  {"input":  "a=1:2:3;b=4:5:6",
+    "minimised_modl":  "a=1:2:3;b=4:5:6",
+    "expected_output":   "[ {\n  \"a\" : [ 1, 2, 3 ]\n}, {\n  \"b\" : [ 4, 5, 6 ]\n} ]"},
+  {"input": "a=1:2:3;\nb=4:5:6",
+    "minimised_modl": "a=1:2:3;\nb=4:5:6",
+    "expected_output":  "[ {\n  \"a\" : [ 1, 2, 3 ]\n}, {\n  \"b\" : [ 4, 5, 6 ]\n} ]"},
+  {"input": "a=1:2:3\nb=4:5:6",
+    "minimised_modl": "a=1:2:3\nb=4:5:6",
+    "expected_output":  "[ {\n  \"a\" : [ 1, 2, 3 ]\n}, {\n  \"b\" : [ 4, 5, 6 ]\n} ]"},
+  {"input": "a=1:2:3\n;\nb=4:5:6\n;\n",
+    "minimised_modl": "a=1:2:3\n;\nb=4:5:6\n;\n",
+    "expected_output": "[ {\n  \"a\" : [ 1, 2, 3 ]\n}, {\n\"b\" : [ 4, 5, 6 ]\n} ]"},
+  {"input": "a=\nb\n=c\nd=e",
+    "minimised_modl": "a=\nb\n=c\nd=e",
+    "expected_output": "[ {\"a\" : {\"b\" : \"c\"}}, {\"d\" : \"e\"} ]"},
+  {"input": "test=this is a #hashtag test;test2=#testing 123",
+    "minimised_modl": "test=this is a #hashtag test;test2=#testing 123",
+    "expected_output": "[ {\"test\" : \"this is a #hashtag test\"}, {\"test2\" : \"#testing 123\"} ]"},
+  {"input": "a=(b=c=d=e=f)",
+    "minimised_modl": "a=(b=c=d=e=f)",
+    "expected_output": "{\"a\": {\"b\": {\"c\": {\"d\": {\"e\": \"f\"}}}}}"},
+  {"input": "a=b=c=d=e=f",
+    "minimised_modl": "a=b=c=d=e=f",
+    "expected_output": "{\"a\": {\"b\": {\"c\": {\"d\": {\"e\": \"f\"}}}}}"},
+  {"input": "a=(b=(c=(d=(e=f))))",
+    "minimised_modl": "a=(b=(c=(d=(e=f))))",
+    "expected_output": "{\"a\": {\"b\": {\"c\": {\"d\": {\"e\": \"f\"}}}}}"},
+ {
+  "input": "test(\n map(\n   array[]\n )\n array[\n   map()\n   array[1;2;3]\n ]\n)\n",
+  "minimised_modl": "test(map(array[]);array[map();array=1:2:3])",
+  "expected_output": "{\n \"test\" : {\n   \"map\" : {\n     \"array\" : [ ]\n   },\n   \"array\" : [ {\n     \"map\" : { }\n   }, {\n     \"array\" : [ 1, 2, 3 ]\n   } ]\n }\n}\n"
+}, 
+ {
+  "input": "test=()",
+  "minimised_modl": "test()",
+  "expected_output": "{\n \"test\" : { }\n}\n"
+},
+ {
+  "input": "test=[zero;one]:[a;b]",
+  "minimised_modl": "test=[zero;one]:[a;b]",
+  "expected_output": "{\n \"test\" : [ [ \"zero\", \"one\" ], [ \"a\", \"b\" ] ]\n}\n"
+}, {
+  "input": "test=[zero;one]:[a;b]",
+  "minimised_modl": "test=[zero;one]:[a;b]",
+  "expected_output": "{\n \"test\" : [ [ \"zero\", \"one\" ], [ \"a\", \"b\" ] ]\n}\n"
+},  {
+  "input": "alex=1.2345",
+  "minimised_modl": "alex=1.2345",
+  "expected_output": "{\n \"alex\" : 1.2345\n}\n"
+}, {
+  "input": "test=[]",
+  "minimised_modl": "test[]",
+  "expected_output": "{\n \"test\" : [ ]\n}\n"
+}, {
+  "input": "test(\n empty_array=[]\n empty_map=()\n)\n",
+  "minimised_modl": "test(empty_array[];empty_map())",
+  "expected_output": "{\n \"test\" : {\n   \"empty_array\" : [ ],\n   \"empty_map\" : { }\n }\n}\n"
+},{
+  "input": "test=100%",
+  "minimised_modl": "test=100%",
+  "expected_output": "{\n \"test\" : \"100%\"\n}\n"
+}, {
+  "input": "test=`test`",
+  "minimised_modl": "test=`test`",
+  "expected_output": "{\n \"test\" : \"test\"\n}\n"
+}, {
+  "input": "test=\u0021",
+  "minimised_modl": "test=\u0021",
+  "expected_output": "{\n \"test\" : \"!\"\n}\n"
+}, {
+  "input": "test=[zero;one]",
+  "minimised_modl": "test=zero:one",
+  "expected_output": "{\n \"test\" : [ \"zero\", \"one\" ]\n}\n"
+},  {
+  "input": "_co=gb\ntest=123",
+  "minimised_modl": "_co=gb;test=123",
+  "expected_output": "{\n \"test\" : 123\n}\n"
+},  {
+  "input": "o=[test;test;t=Customer Service:44123]",
+  "minimised_modl": "o[test;test;t=Customer Service:44123]",
+  "expected_output": "{\n \"o\" : [ \"test\", \"test\", {\n   \"t\" : [ \"Customer Service\", 44123 ]\n } ]\n}\n"
+}, {
+  "input": "test[number=1;number=2;number=3]",
+  "minimised_modl": "test[number=1;number=2;number=3]",
+  "expected_output": "{\n \"test\" : [ {\n   \"number\" : 1\n }, {\n   \"number\" : 2\n }, {\n   \"number\" : 3\n } ]\n}\n"
+}, {
+  "input": "test(one=1;two=2;three=3)",
+  "minimised_modl": "test(one=1;two=2;three=3)",
+  "expected_output": "{\n \"test\" : {\n   \"one\" : 1,\n   \"two\" : 2,\n   \"three\" : 3\n }\n}\n"
+}, {
+  "input": "test=test",
+  "minimised_modl": "test=test",
+  "expected_output": "{\n \"test\" : \"test\"\n}\n"
+}, {
+  "input": "one=1;two=2;three=3",
+  "minimised_modl": "one=1;two=2;three=3",
+  "expected_output": "[ {\n \"one\" : 1\n}, {\n \"two\" : 2\n}, {\n \"three\" : 3\n} ]\n"
+}, {
+  "input": "[o(n=test);o(n=test2)]",
+  "minimised_modl": "[o(n=test);o(n=test2)]",
+  "expected_output": "[ {\n \"o\" : {\n   \"n\" : \"test\"\n }\n}, {\n \"o\" : {\n   \"n\" : \"test2\"\n }\n} ]\n"
+}, {
+  "input": "R=0\nnumber=1;number=2;number=3",
+  "minimised_modl": "R=0;number=1;number=2;number=3",
+  "expected_output": "[ {\n \"R\" : 0\n}, {\n \"number\" : 1\n}, {\n \"number\" : 2\n}, {\n \"number\" : 3\n} ]\n"
+}, {
+  "input": "test=(one=1)",
+  "minimised_modl": "test(one=1)",
+  "expected_output": "{\n \"test\" : {\n   \"one\" : 1\n }\n}\n"
+}, {
+  "input": "test(one=1)",
+  "minimised_modl": "test(one=1)",
+  "expected_output": "{\n \"test\" : {\n   \"one\" : 1\n }\n}\n"
+}, {
+  "input": "test=[1;2;3]",
+  "minimised_modl": "test=1:2:3",
+  "expected_output": "{\n \"test\" : [ 1, 2, 3 ]\n}\n"
+}, {
+  "input": "test[1;2;3]",
+  "minimised_modl": "test=1:2:3",
+  "expected_output": "{\n \"test\" : [ 1, 2, 3 ]\n}\n"
+}, {
+  "input": "o(n=Tesco;s=Every Little Helps)",
+  "minimised_modl": "o(n=Tesco;s=Every Little Helps)",
+  "expected_output": "{\n \"o\" : {\n   \"n\" : \"Tesco\",\n   \"s\" : \"Every Little Helps\"\n }\n}\n"
+}, {
+  "input": "o(n=test)",
+  "minimised_modl": "o(n=test)",
+  "expected_output": "{\n \"o\" : {\n   \"n\" : \"test\"\n }\n}\n"
+}, {
+  "input": "o(n=test);\n",
+  "minimised_modl": "o(n=test)",
+  "expected_output": "{\n \"o\" : {\n   \"n\" : \"test\"\n }\n}\n"
+}, {
+  "input": "o(\nn=test\n)",
+  "minimised_modl": "o(n=test)",
+  "expected_output": "{\n \"o\" : {\n   \"n\" : \"test\"\n }\n}\n"
+}, {
+  "input": "o(n=test);",
+  "minimised_modl": "o(n=test)",
+  "expected_output": "{\n \"o\" : {\n   \"n\" : \"test\"\n }\n}\n"
+}, {
+  "input": "o(n=test)\no(n=test2)",
+  "minimised_modl": "o(n=test);o(n=test2)",
+  "expected_output": "[ {\n \"o\" : {\n   \"n\" : \"test\"\n }\n}, {\n \"o\" : {\n   \"n\" : \"test2\"\n }\n} ]\n"
+}, {
+  "input": "o(n=test);o(n=test2)",
+  "minimised_modl": "o(n=test);o(n=test2)",
+  "expected_output": "[ {\n \"o\" : {\n   \"n\" : \"test\"\n }\n}, {\n \"o\" : {\n   \"n\" : \"test2\"\n }\n} ]\n"
+}, {
+  "input": "o=[test;test]",
+  "minimised_modl": "o=test:test",
+  "expected_output": "{\n \"o\" : [ \"test\", \"test\" ]\n}\n"
+}, {
+  "input": "o=test",
+  "minimised_modl": "o=test",
+  "expected_output": "{\n \"o\" : \"test\"\n}\n"
+}, {
+  "input": "o=[1;2]",
+  "minimised_modl": "o=1:2",
+  "expected_output": "{\n \"o\" : [ 1, 2 ]\n}\n"
+}, {
+  "input": "o=[test1;test2]",
+  "minimised_modl": "o=test1:test2",
+  "expected_output": "{\n \"o\" : [ \"test1\", \"test2\" ]\n}\n"
+}, {
+  "input": "o(t=test1;t2=test2)",
+  "minimised_modl": "o(t=test1;t2=test2)",
+  "expected_output": "{\n \"o\" : {\n   \"t\" : \"test1\",\n   \"t2\" : \"test2\"\n }\n}\n"
+}, {
+  "input": "o(t(a=test;b=test2);t2(c=test;d=test2))",
+  "minimised_modl": "o(t(a=test;b=test2);t2(c=test;d=test2))",
+  "expected_output": "{\n \"o\" : {\n   \"t\" : {\n     \"a\" : \"test\",\n     \"b\" : \"test2\"\n   },\n   \"t2\" : {\n     \"c\" : \"test\",\n     \"d\" : \"test2\"\n   }\n }\n}"
+}, {
+  "input": "o=1:2::4:5",
+  "minimised_modl": "5",
+  "expected_output": "{\n  \"o\" : [ 1, 2, null, 4, 5 ]\n}"
+}, {
+  "input": "o=[1;2;;4;5]",
+  "minimised_modl": "o=1:2::4:5",
+  "expected_output": "{\n  \"o\" : [ 1, 2, null, 4, 5 ]\n}"
+}, {
+  "input": "o=[1\n2\n\n3\n4\n5]",
+  "minimised_modl": "o=1:2:3:4:5",
+  "expected_output": "{\n  \"o\" : [ 1, 2, 3, 4, 5 ]\n}"
+}, {
+  "input": "o=[1 2 3 4 5]",
+  "minimised_modl": "o=1 2 3 4 5",
+  "expected_output": "{\n  \"o\" : [ \"1 2 3 4 5\" ]\n}"
+}, {
+  "input": "o=`ok`",
+  "minimised_modl": "o=`ok`",
+  "expected_output": "{\n  \"o\" : \"ok\"\n}"
+}, {
+  "input": "o=``",
+  "minimised_modl": "o=``",
+  "expected_output": "{\n  \"o\" : \"\"\n}"
+},
+  {"input" : "o=1:2:3:4:5",
+    "minimised_modl" : "o=1:2:3:4:5",
+    "expected_output" : "{\n \"o\" : [ 1, 2, 3, 4, 5 ]\n}"
+  },
+  {"input" : "o=1:2::4:5",
+    "minimised_modl" : "o=1:2::4:5",
+    "expected_output" : "{\n  \"o\" : [ 1, 2, null, 4, 5 ]\n}"
+  },
+  {"input" : "o=[1;2;3;4;5]",
+    "minimised_modl" : "o=[1;2;3;4;5]",
+    "expected_output" : "{\n \"o\" : [ 1, 2, 3, 4, 5 ]\n}"
+  },
+  {"input" : "o=[1;2;;4;5]",
+    "minimised_modl" : "o=[1;2;;4;5]",
+    "expected_output" : "{\n \"o\" : [ 1, 2, null, 4, 5 ]\n}"
+  },
+  {"input" : "o=[1\n2\n3\n4\n5]",
+    "minimised_modl" : "o=[1\n2\n3\n4\n5]",
+    "expected_output" : "{\n  \"o\" : [ 1, 2, 3, 4, 5 ]\n}"
+  },
+  {"input" : "o=[1\n2\n\n3\n4\n5]",
+    "minimised_modl" : "o=[1\n2\n\n3\n4\n5]",
+    "expected_output" : "{\n \"o\" : [ 1, 2, 3, 4, 5 ]\n}"
+  },
+  {"input" : "o=[1 2 3 4 5]",
+    "minimised_modl" : "o=[1 2 3 4 5]",
+    "expected_output" : "{\n  \"o\" : [ \"1 2 3 4 5\" ]\n}"
+  },
+  {"input" : "o=`ok`",
+    "minimised_modl" : "o=ok",
+    "expected_output" : "{\n  \"o\" : \"ok\"}"
+  },
+  {"input" : "o=``",
+    "minimised_modl" : "o=``",
+    "expected_output" : "{\n  \"o\" : \"\"\n}"
+  },
+  {"input" : "o=\"ok\"",
+    "minimised_modl" : "o=ok",
+    "expected_output" : "{\n  \"o\" : \"ok\"}"
+  },
+  {"input" : "o=\"\"",
+    "minimised_modl" : "o=\"\"",
+    "expected_output" : "{\n  \"o\" : \"\"\n}"
+  },
+
+  {"input": "x=[1;2:3:4]",
+    "minimised_modl": "x=[1;2:3:4]",
+    "expected_output": "{\"x\": [1,[2,3,4]]}"},
+      {"input": "x=[1;;;;;;;2:::::::::3;;;;;;;;;;4:::::::::5]",
+    "minimised_modl": "x=[1;;;;;;;2:::::::::3;;;;;;;;;;4:::::::::5]",
+    "expected_output": "{\"x\" : [ 1, null, null, null, null, null, null, [2, null, null, null, null, null, null, null, null, 3], null, null, null, null, null, null, null, null, null, [4, null, null, null, null, null, null, null, null, 5] ]}"}
+
+]
+  

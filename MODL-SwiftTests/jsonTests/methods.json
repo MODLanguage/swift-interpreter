@@ -1,0 +1,12 @@
+[
+{
+  "input": "*method(\n ## The method can be called by it's ID or name\n *id=cn\n *name=company_name\n ## The value of the object that the method is called on is transformed using the following methods:\n *transform=`replace(-, ).trim(.).initcap`\n)\n\n_domain = smiths-limited.com\nfriendly_name = %domain.cn ## The value \"Smiths Limited\" is assigned to the key \"friendly_name\"",
+  "minimised_modl": "*m(*i=cn;*n=company_name;*transform=`replace(-, ).trim(.).initcap`);_domain=smiths-limited.com;friendly_name=%domain.cn",
+  "expected_output": "{\n \"friendly_name\" : \"Smiths Limited\"\n}\n"
+}, {
+  "input": "*method(\n *id=rt\n *name=remove_two\n *transform=`replace(two,)`\n)\n\n_numbers = one two three\nname = %numbers.rt",
+  "minimised_modl": "*m(*i=rt;*n=remove_two;*transform=`replace(two,)`);_numbers=one two three;name=%numbers.rt",
+  "expected_output": "{\n \"name\" : \"one  three\"\n}\n"
+},
+
+]

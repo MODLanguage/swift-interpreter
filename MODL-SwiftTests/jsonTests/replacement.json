@@ -1,0 +1,180 @@
+[
+  {"input":  "_name = John\n%name = \"123\"",
+    "minimised_modl":  "_name = John;%name = \"123\"",
+    "expected_output":   "{\"John\":\"123\"}"},
+  {"input":  "_country = gb\nsupport_contact = {\ncountry=gb?\n}",
+    "minimised_modl":  "_country=gb;support_contact={country=gb?}",
+    "expected_output":   "{\"support_contact\": true}"},
+  
+    {"input": "?[[a;b;c]];letters=%0",
+    "minimised_modl": "?[[a;b;c]];letters=%0",
+    "expected_output": "{\"letters\": [ \"a\", \"b\", \"c\"]}"
+  },
+  {"input":  "_test=123;object(print_test = %test.test)",
+    "minimised_modl":  "_test=123;object(print_test = %test.test)",
+    "expected_output":   "{\"object\":{\"print_test\":\"123.test\"}}"},
+    
+  {"input":  "?=one:two:three;test1=%0;test2=%1;test3=%2;test4=%3;test5=%4;test6=%5;test7=%6;test8=%7;test9=%8",
+    "minimised_modl":  "?=one:two:three;test1=%0;test2=%1;test3=%2;test4=%3;test5=%4;test6=%5;test7=%6;test8=%7;test9=%8",
+    "expected_output":   "[{\"test1\": \"one\"},{\"test2\": \"two\"},{\"test3\": \"three\"},{\"test4\": \"%3\"},{\"test5\": \"%4\"},{\"test6\": \"%5\"},{\"test7\": \"%6\"},{\"test8\": \"%7\"},{\"test9\": \"%8\"}]"},
+{
+  "input": "_branch=\"alex.\";_root=d;namespace=`%branch`blah.`%root`",
+  "minimised_modl": "_branch=alex.;_root=d;namespace=`%branch`blah.`%root`",
+  "expected_output": "{\n \"namespace\" : \"alex.blah.d\"\n}\n"
+}, {
+  "input": "namespace=`%branch`blah.`%root`",
+  "minimised_modl": "namespace=`%branch`blah.`%root`",
+  "expected_output": "{\n \"namespace\" : \"%branchblah.%root\"\n}\n"
+}, {
+  "input": "_root=tesco.com\n_branch=direct.\nnamespace1=`%branch`numrecord.`%root`\nnamespace2=`%branch`_`%root`.numq.net",
+  "minimised_modl": "_root=tesco.com;_branch=direct.;namespace1=`%branch`numrecord.`%root`;namespace2=`%branch`_`%root`.numq.net",
+  "expected_output": "[ {\n \"namespace1\" : \"direct.numrecord.tesco.com\"\n}, {\n \"namespace2\" : \"direct._tesco.com.numq.net\"\n} ]\n"
+}, {
+  "input": "_branch=\"\"\n_root=\"\"\nnamespace=`%branch`numrecord.`%root`",
+  "minimised_modl": "_branch=\"\";_root=\"\";namespace=`%branch`numrecord.`%root`",
+  "expected_output": "{\n \"namespace\" : \"numrecord.\"\n}\n"
+}, 
+  {
+  "input": "?=[one;two]\ntest=Blah `%0.s` %1.s",
+  "minimised_modl": "?=one:two;test=Blah `%0.s` %1.s",
+  "expected_output": "{\n \"test\" : \"Blah One Two\"\n}\n"
+}, {
+  "input": "?=one:two\ntest=Blah `%0.r(o,huzzah)` `%1.t(w)`",
+  "minimised_modl": "?=one:two;test=Blah `%0.r(o,huzzah)` `%1.t(w)`",
+  "expected_output": "{\n \"test\" : \"Blah huzzahne t\"\n}\n"
+}, {
+  "input": "_test=\"123\"\nobject(\n print_test = %test.test\n)",
+  "minimised_modl": "_test=\"123\";object(print_test=%test.test)",
+  "expected_output": "{\n \"object\" : {\n   \"print_test\" : \"123.test\"\n }\n}\n"
+}, {
+  "input": "_var = NotThisOne;_var=`%var`blah;out=`%var`deblah",
+  "minimised_modl": "_var=NotThisOne;_var=`%var`blah;out=`%var`deblah",
+  "expected_output": "{\n \"out\" : \"NotThisOneblahdeblah\"\n}\n"
+}, {
+  "input": "_var = NotThisOne;_var=blah;out=`%var`deblah",
+  "minimised_modl": "_var=NotThisOne;_var=blah;out=`%var`deblah",
+  "expected_output": "{\n \"out\" : \"blahdeblah\"\n}\n"
+},{
+  "input": "?=[a;b;c;d]:[1;2;3;4;5]\ntest=%1",
+  "minimised_modl": "?=[a;b;c;d]:[1;2;3;4;5];test=%1",
+  "expected_output": "{\n \"test\" : [ 1, 2, 3, 4, 5 ]\n}\n"
+}, {
+  "input": "_test=123\nprint=%_test",
+  "minimised_modl": "_test=123;print=%_test",
+  "expected_output": "{\n \"print\" : 123\n}\n"
+},
+{
+  "input": "?[[a;b;c];[one;two;three]];letters=%0;numbers=%1",
+  "minimised_modl": "?=[a;b;c]:[one;two;three];letters=%0;numbers=%1",
+  "expected_output": "[ {\n \"letters\" : [ \"a\", \"b\", \"c\" ]\n}, {\n \"numbers\" : [ \"one\", \"two\", \"three\" ]\n} ]\n"
+}, {
+  "input": "?=[a;b;c]:[one;two;three];letters=%0;numbers=%1",
+  "minimised_modl": "?=[a;b;c]:[one;two;three];letters=%0;numbers=%1",
+  "expected_output": "[ {\n \"letters\" : [ \"a\", \"b\", \"c\" ]\n}, {\n \"numbers\" : [ \"one\", \"two\", \"three\" ]\n} ]\n"
+}, {
+  "input": "?[a;b;c];letters=%0",
+  "minimised_modl": "?=a:b:c;letters=%0",
+  "expected_output": "{\n \"letters\" : \"a\"\n}\n"
+}, {
+  "input": "?=[a;b;c]:[one;two;three];letters=%0;numbers=%1",
+  "minimised_modl": "?=[a;b;c]:[one;two;three];letters=%0;numbers=%1",
+  "expected_output": "[ {\n \"letters\" : [ \"a\", \"b\", \"c\" ]\n}, {\n \"numbers\" : [ \"one\", \"two\", \"three\" ]\n} ]\n"
+},
+{
+  "input": "?[zero;one;two]\nfirst_var=%0\nsecond_var=%1\nthird_var=%2",
+  "minimised_modl": "?=zero:one:two;first_var=%0;second_var=%1;third_var=%2",
+  "expected_output": "[ {\n \"first_var\" : \"zero\"\n}, {\n \"second_var\" : \"one\"\n}, {\n \"third_var\" : \"two\"\n} ]\n"
+}, {
+  "input": "_C=gb\no(\n{C=gb?test1=123}\ntest2=456\n)",
+  "minimised_modl": "_C=gb;o({C=gb?test1=123};test2=456)",
+  "expected_output": "{\n \"o\" : {\n   \"test1\" : 123,\n   \"test2\" : 456\n }\n}\n"
+}, {
+  "input": "_test[a;b;c];alex=%test",
+  "minimised_modl": "_test=a:b:c;alex=%test",
+  "expected_output": "{\n \"alex\" : [ \"a\", \"b\", \"c\" ]\n}\n"
+}, {
+  "input": "?[a;b;c];alex=%0",
+  "minimised_modl": "?=a:b:c;alex=%0",
+  "expected_output": "{\n \"alex\" : \"a\"\n}\n"
+}, {
+  "input": "?=zero:one:two\ndiscount=%30",
+  "minimised_modl": "?=zero:one:two;discount=%30",
+  "expected_output": "{\n \"discount\" : \"%30\"\n}\n"
+},{
+  "input": "?=0:1:2\nzero=%0\none=%1\ntwo=%2",
+  "minimised_modl": "?=0:1:2;zero=%0;one=%1;two=%2",
+  "expected_output": "[ {\n \"zero\" : 0\n}, {\n \"one\" : 1\n}, {\n \"two\" : 2\n} ]\n"
+}, {
+  "input": "?=a:b:c\nzero=%0\none=%1\ntwo=%2\n",
+  "minimised_modl": "?=a:b:c;zero=%0;one=%1;two=%2",
+  "expected_output": "[ {\n \"zero\" : \"a\"\n}, {\n \"one\" : \"b\"\n}, {\n \"two\" : \"c\"\n} ]\n"
+}, {
+  "input": "?=\"A\":B:C\nfirst_letter=%0",
+  "minimised_modl": "?=A:B:C;first_letter=%0",
+  "expected_output": "{\n \"first_letter\" : \"A\"\n}\n"
+},  {
+  "input": "_COUNTRY=gb\ncountry=The country is %COUNTRY",
+  "minimised_modl": "_COUNTRY=gb;country=The country is %COUNTRY",
+  "expected_output": "{\n \"country\" : \"The country is gb\"\n}\n"
+}, {
+  "input": "COUNTRY=gb\ncountry=The country is %COUNTRY",
+  "minimised_modl": "COUNTRY=gb;country=The country is %COUNTRY",
+  "expected_output": "[ {\n \"COUNTRY\" : \"gb\"\n}, {\n \"country\" : \"The country is gb\"\n} ]\n"
+}, {
+  "input": "_co=gb\ncountry=The country is %co",
+  "minimised_modl": "_co=gb;country=The country is %co",
+  "expected_output": "{\n \"country\" : \"The country is gb\"\n}\n"
+}, {
+  "input": "_test = 123\n_test2 = abc",
+  "minimised_modl": "_test=123;_test2=abc",
+  "expected_output": "\n"
+},{
+  "input": "*L=\"https://www.modl.uk/tests/message-thread.txt\"\n\nm=out:2018-03-22 15\\:25:Hi\nm=in:2018-03-22 15\\:26:Hello, how are you?\nm=out:2018-03-22 15\\:25:Hi, good thanks\nm=out:2018-03-22 15\\:26:How about you?\nm=in:2018-03-22 15\\:26:Yes, fine thanks. What are you up to?\nm=out:2018-03-22 15\\:25:Just testing out MODL\nm=in:2018-03-22 15\\:26:Cool!",
+  "minimised_modl": "*L=https://config.modl.uk/demo/message-thread.txt;m=out:2018-03-22 15~:25:Hi;m=in:2018-03-22 15~:26:Hello, how are you?;m=out:2018-03-22 15~:25:Hi, good thanks;m=out:2018-03-22 15~:26:How about you?;m=in:2018-03-22 15~:26:Yes, fine thanks. What are you up to?;m=out:2018-03-22 15~:25:Just testing out MODL;m=in:2018-03-22 15~:26:Cool!",
+  "expected_output": "[ {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Hi\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Hello, how are you?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Hi, good thanks\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"How about you?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Yes, fine thanks. What are you up to?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Just testing out MODL\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Cool!\",\n   \"method\" : \"sms\"\n }\n} ]\n"
+},{
+  "input": "_T=grammar_tests/demo\n*L=`%T`_config",
+  "minimised_modl": "_T=grammar_tests/demo;*L=`%T`_config",
+  "expected_output": "\n"
+}, {
+  "input": "*l=grammar_tests/1;*L=grammar_tests/1;a=1",
+  "minimised_modl": "*l=grammar_tests/1;*L=grammar_tests/1;a=1",
+  "expected_output": "{\n \"a\" : 1\n}\n"
+}, {
+  "input": "*l=grammar_tests/1;*l=grammar_tests/1;a=1",
+  "minimised_modl": "*L=grammar_tests/1;*l=grammar_tests/1;a=1",
+  "expected_output": "{\n \"a\" : 1\n}\n"
+}, {
+  "input": "*L=grammar_tests/1:grammar_tests/2:grammar_tests/3\nthe_number=%number",
+  "minimised_modl": "*L=grammar_tests/1:grammar_tests/2:grammar_tests/3;the_number=%number",
+  "expected_output": "{\n \"the_number\" : 3\n}\n"
+}, {
+  "input": "*L=grammar_tests/1:grammar_tests/2:grammar_tests/3:grammar_tests/1\nthe_number=%number",
+  "minimised_modl": "*L=grammar_tests/1:grammar_tests/2:grammar_tests/3:grammar_tests/1;the_number=%number",
+  "expected_output": "{\n \"the_number\" : 1\n}\n"
+}, {
+  "input": "*L[grammar_tests/1;grammar_tests/2;grammar_tests/3;grammar_tests/1]\nthe_number=%number",
+  "minimised_modl": "*L=grammar_tests/1:grammar_tests/2:grammar_tests/3:grammar_tests/1;the_number=%number",
+  "expected_output": "{\n \"the_number\" : 1\n}\n"
+}, {
+  "input": "*L=grammar_tests/a:grammar_tests/b:grammar_tests/c\nvar=%var",
+  "minimised_modl": "*L=grammar_tests/a:grammar_tests/b:grammar_tests/c;var=%var",
+  "expected_output": "{\n \"var\" : \"abc\"\n}\n"
+}, {
+  "input": "*L=grammar_tests/demo_config\n\nm=out:2018-03-22 15\\:25:Hi\nm=in:2018-03-22 15\\:26:Hello, how are you?\nm=out:2018-03-22 15\\:25:Hi, good thanks\nm=out:2018-03-22 15\\:26:How about you?\nm=in:2018-03-22 15\\:26:Yes, fine thanks. What are you up to?\nm=out:2018-03-22 15\\:25:Just testing out MODL\nm=in:2018-03-22 15\\:26:Cool!",
+  "minimised_modl": "*L=grammar_tests/demo_config;m=out:2018-03-22 15~:25:Hi;m=in:2018-03-22 15~:26:Hello, how are you?;m=out:2018-03-22 15~:25:Hi, good thanks;m=out:2018-03-22 15~:26:How about you?;m=in:2018-03-22 15~:26:Yes, fine thanks. What are you up to?;m=out:2018-03-22 15~:25:Just testing out MODL;m=in:2018-03-22 15~:26:Cool!",
+  "expected_output": "[ {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Hi\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Hello, how are you?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Hi, good thanks\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"How about you?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Yes, fine thanks. What are you up to?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Just testing out MODL\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Cool!\",\n   \"method\" : \"sms\"\n }\n} ]\n"
+}, {
+  "input": "## country\n_c = us\n## language\n_l = en\n\n*L=grammar_tests/import_config.modl\n\ncountry = %c\nlanguage = %l\ntime_zone = %tz",
+  "minimised_modl": "_c=us;_l=en;*L=grammar_tests/import_config.modl;country=%c;language=%l;time_zone=%tz",
+  "expected_output": "[ {\n \"country\" : \"us\"\n}, {\n \"language\" : \"en\"\n}, {\n \"time_zone\" : \"EST\"\n} ]\n"
+}, {
+  "input": "*L=grammar_tests/test_import_dir/test_import.txt\n\nm=out:2018-03-22 15\\:25:Hi\nm=in:2018-03-22 15\\:26:Hello, how are you?\nm=out:2018-03-22 15\\:25:Hi, good thanks\nm=out:2018-03-22 15\\:26:How about you?\nm=in:2018-03-22 15\\:26:Yes, fine thanks. What are you up to?\nm=out:2018-03-22 15\\:25:Just testing out MODL\nm=in:2018-03-22 15\\:26:Cool!",
+  "minimised_modl": "*L=grammar_tests/test_import_dir/test_import.txt;m=out:2018-03-22 15~:25:Hi;m=in:2018-03-22 15~:26:Hello, how are you?;m=out:2018-03-22 15~:25:Hi, good thanks;m=out:2018-03-22 15~:26:How about you?;m=in:2018-03-22 15~:26:Yes, fine thanks. What are you up to?;m=out:2018-03-22 15~:25:Just testing out MODL;m=in:2018-03-22 15~:26:Cool!",
+  "expected_output": "[ {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Hi\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Hello, how are you?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Hi, good thanks\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"How about you?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Yes, fine thanks. What are you up to?\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"out\",\n   \"date_time\" : \"2018-03-22 15:25\",\n   \"message\" : \"Just testing out MODL\",\n   \"method\" : \"sms\"\n }\n}, {\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22 15:26\",\n   \"message\" : \"Cool!\",\n   \"method\" : \"sms\"\n }\n} ]\n"
+},
+  {"input": "b=2;c=2;d=2;e=2;a={{b=c & d=e}?v1:v2:v3/?v4:v5:v6}",
+    "minimised_modl": "b=2;c=2;d=2;e=2;a={{b=c & d=e}?v1:v2:v3/?v4:v5:v6}",
+    "expected_output": "[{\"b\": 2},{\"c\": 2},{\"d\": 2},{\"e\": 2}, {\"a\": [\"v1\",\"v2\",\"v3\"]}]"},
+
+  ]  
