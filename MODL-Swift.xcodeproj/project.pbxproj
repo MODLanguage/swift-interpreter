@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E3896D922830D63005533B9 /* conditional.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D322830D62005533B9 /* conditional.json */; };
+		3E3896DA22830D63005533B9 /* misc.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D422830D62005533B9 /* misc.json */; };
+		3E3896DB22830D63005533B9 /* replacement.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D522830D62005533B9 /* replacement.json */; };
+		3E3896DC22830D63005533B9 /* class.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D622830D62005533B9 /* class.json */; };
+		3E3896DD22830D63005533B9 /* methods.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D722830D62005533B9 /* methods.json */; };
+		3E3896DE22830D63005533B9 /* basic.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D822830D62005533B9 /* basic.json */; };
 		3E5ABB6522674513007419CC /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
 		3E5ABB722267459E007419CC /* ModlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* ModlParser.swift */; };
 		3E5ABB7E226745FB007419CC /* ModlObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlObject.swift */; };
@@ -21,12 +27,6 @@
 		3E63154922816FCD008BDC14 /* base_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153B22816FCD008BDC14 /* base_tests.json */; };
 		3E63154A22816FCD008BDC14 /* error_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153C22816FCD008BDC14 /* error_tests.json */; };
 		3E63154B22816FCD008BDC14 /* 1.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153D22816FCD008BDC14 /* 1.modl */; };
-		3E63155222819EF0008BDC14 /* class.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154C22819EF0008BDC14 /* class.json */; };
-		3E63155322819EF0008BDC14 /* misc.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154D22819EF0008BDC14 /* misc.json */; };
-		3E63155422819EF0008BDC14 /* conditional.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154E22819EF0008BDC14 /* conditional.json */; };
-		3E63155522819EF0008BDC14 /* replacement.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63154F22819EF0008BDC14 /* replacement.json */; };
-		3E63155622819EF0008BDC14 /* methods.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63155022819EF0008BDC14 /* methods.json */; };
-		3E63155722819EF0008BDC14 /* basic.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63155122819EF0008BDC14 /* basic.json */; };
 		3E63155922819F31008BDC14 /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155822819F31008BDC14 /* BasicTests.swift */; };
 		3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155A22819F62008BDC14 /* MODLTest.swift */; };
 		3E63155C22819FDD008BDC14 /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
@@ -97,6 +97,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E3896D322830D62005533B9 /* conditional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conditional.json; sourceTree = "<group>"; };
+		3E3896D422830D62005533B9 /* misc.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = misc.json; sourceTree = "<group>"; };
+		3E3896D522830D62005533B9 /* replacement.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = replacement.json; sourceTree = "<group>"; };
+		3E3896D622830D62005533B9 /* class.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = class.json; sourceTree = "<group>"; };
+		3E3896D722830D62005533B9 /* methods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = methods.json; sourceTree = "<group>"; };
+		3E3896D822830D62005533B9 /* basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = basic.json; sourceTree = "<group>"; };
 		3E5ABB6422674513007419CC /* ModlListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListener.swift; sourceTree = "<group>"; };
 		3E5ABB6622674541007419CC /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = ../antlr/Antlr4.xcodeproj; sourceTree = "<group>"; };
 		3E5ABB712267459E007419CC /* ModlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlParser.swift; sourceTree = "<group>"; };
@@ -112,12 +118,6 @@
 		3E63153B22816FCD008BDC14 /* base_tests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = base_tests.json; sourceTree = "<group>"; };
 		3E63153C22816FCD008BDC14 /* error_tests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error_tests.json; sourceTree = "<group>"; };
 		3E63153D22816FCD008BDC14 /* 1.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.modl; sourceTree = "<group>"; };
-		3E63154C22819EF0008BDC14 /* class.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = class.json; sourceTree = "<group>"; };
-		3E63154D22819EF0008BDC14 /* misc.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = misc.json; sourceTree = "<group>"; };
-		3E63154E22819EF0008BDC14 /* conditional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conditional.json; sourceTree = "<group>"; };
-		3E63154F22819EF0008BDC14 /* replacement.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = replacement.json; sourceTree = "<group>"; };
-		3E63155022819EF0008BDC14 /* methods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = methods.json; sourceTree = "<group>"; };
-		3E63155122819EF0008BDC14 /* basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = basic.json; sourceTree = "<group>"; };
 		3E63155822819F31008BDC14 /* BasicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTests.swift; sourceTree = "<group>"; };
 		3E63155A22819F62008BDC14 /* MODLTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MODLTest.swift; sourceTree = "<group>"; };
 		3E6315692282D980008BDC14 /* LongInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongInputTests.swift; sourceTree = "<group>"; };
@@ -172,6 +172,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3E3896D222830D62005533B9 /* old */ = {
+			isa = PBXGroup;
+			children = (
+				3E3896D322830D62005533B9 /* conditional.json */,
+				3E3896D422830D62005533B9 /* misc.json */,
+				3E3896D522830D62005533B9 /* replacement.json */,
+				3E3896D622830D62005533B9 /* class.json */,
+				3E3896D722830D62005533B9 /* methods.json */,
+				3E3896D822830D62005533B9 /* basic.json */,
+			);
+			path = old;
+			sourceTree = "<group>";
+		};
 		3E5ABB612267402A007419CC /* MODL */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,12 +199,6 @@
 		3E63153122816FCD008BDC14 /* jsonTests */ = {
 			isa = PBXGroup;
 			children = (
-				3E63155122819EF0008BDC14 /* basic.json */,
-				3E63154C22819EF0008BDC14 /* class.json */,
-				3E63154E22819EF0008BDC14 /* conditional.json */,
-				3E63155022819EF0008BDC14 /* methods.json */,
-				3E63154D22819EF0008BDC14 /* misc.json */,
-				3E63154F22819EF0008BDC14 /* replacement.json */,
 				3E63153222816FCD008BDC14 /* 3.modl */,
 				3E63153322816FCD008BDC14 /* 2.modl */,
 				3E63153422816FCD008BDC14 /* test_import_dir */,
@@ -199,6 +206,7 @@
 				3E63153722816FCD008BDC14 /* c.modl */,
 				3E63153822816FCD008BDC14 /* import_config.modl */,
 				3E63153922816FCD008BDC14 /* a.modl */,
+				3E3896D222830D62005533B9 /* old */,
 				3E63153A22816FCD008BDC14 /* demo_config.modl */,
 				3E63153B22816FCD008BDC14 /* base_tests.json */,
 				3E63153C22816FCD008BDC14 /* error_tests.json */,
@@ -428,25 +436,25 @@
 			files = (
 				3E63154522816FCD008BDC14 /* c.modl in Resources */,
 				3E63156522819FE2008BDC14 /* MODLParser.tokens in Resources */,
-				3E63155322819EF0008BDC14 /* misc.json in Resources */,
 				3E63154722816FCD008BDC14 /* a.modl in Resources */,
-				3E63155522819EF0008BDC14 /* replacement.json in Resources */,
+				3E3896DC22830D63005533B9 /* class.json in Resources */,
 				3E63154322816FCD008BDC14 /* test_import.txt in Resources */,
 				3E63154922816FCD008BDC14 /* base_tests.json in Resources */,
 				3E63154622816FCD008BDC14 /* import_config.modl in Resources */,
 				3E63154822816FCD008BDC14 /* demo_config.modl in Resources */,
-				3E63155622819EF0008BDC14 /* methods.json in Resources */,
 				3E63154A22816FCD008BDC14 /* error_tests.json in Resources */,
 				3E63156322819FE2008BDC14 /* MODLParser.interp in Resources */,
-				3E63155422819EF0008BDC14 /* conditional.json in Resources */,
 				3E63154222816FCD008BDC14 /* 2.modl in Resources */,
-				3E63155722819EF0008BDC14 /* basic.json in Resources */,
 				3E63156122819FE2008BDC14 /* MODLLexer.tokens in Resources */,
-				3E63155222819EF0008BDC14 /* class.json in Resources */,
+				3E3896DD22830D63005533B9 /* methods.json in Resources */,
 				3E63155F22819FE2008BDC14 /* MODLLexer.interp in Resources */,
+				3E3896DB22830D63005533B9 /* replacement.json in Resources */,
+				3E3896D922830D63005533B9 /* conditional.json in Resources */,
 				3E63154422816FCD008BDC14 /* b.modl in Resources */,
+				3E3896DA22830D63005533B9 /* misc.json in Resources */,
 				3E63154122816FCD008BDC14 /* 3.modl in Resources */,
 				3E63154B22816FCD008BDC14 /* 1.modl in Resources */,
+				3E3896DE22830D63005533B9 /* basic.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

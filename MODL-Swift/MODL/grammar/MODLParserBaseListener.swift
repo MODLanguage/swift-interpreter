@@ -15,52 +15,52 @@ open class MODLParserBaseListener: MODLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl(_ ctx: MODLParser.ModlContext) { print("HIT enter")}
+	open func enterModl(_ ctx: MODLParser.ModlContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl(_ ctx: MODLParser.ModlContext) { print("HIT exit") }
+	open func exitModl(_ ctx: MODLParser.ModlContext) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl_structure(_ ctx: MODLParser.Modl_structureContext) { print("HIT enter structure") }
+	open func enterModl_structure(_ ctx: MODLParser.Modl_structureContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl_structure(_ ctx: MODLParser.Modl_structureContext) {print("HIT exit structure") }
+	open func exitModl_structure(_ ctx: MODLParser.Modl_structureContext) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl_map(_ ctx: MODLParser.Modl_mapContext) {print("HIT enter map") }
+	open func enterModl_map(_ ctx: MODLParser.Modl_mapContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl_map(_ ctx: MODLParser.Modl_mapContext) {print("HIT exit map") }
+	open func exitModl_map(_ ctx: MODLParser.Modl_mapContext) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl_array(_ ctx: MODLParser.Modl_arrayContext) {print("HIT enter array") }
+	open func enterModl_array(_ ctx: MODLParser.Modl_arrayContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl_array(_ ctx: MODLParser.Modl_arrayContext) {print("HIT exit array") }
+	open func exitModl_array(_ ctx: MODLParser.Modl_arrayContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -80,39 +80,39 @@ open class MODLParserBaseListener: MODLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl_pair(_ ctx: MODLParser.Modl_pairContext) {print("HIT enter pair") }
+	open func enterModl_pair(_ ctx: MODLParser.Modl_pairContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl_pair(_ ctx: MODLParser.Modl_pairContext) { print("HIT exit pair")}
+	open func exitModl_pair(_ ctx: MODLParser.Modl_pairContext) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl_value_item(_ ctx: MODLParser.Modl_value_itemContext) {print("HIT enter value item") }
+	open func enterModl_value_item(_ ctx: MODLParser.Modl_value_itemContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl_value_item(_ ctx: MODLParser.Modl_value_itemContext) { print("HIT exit value item")}
+	open func exitModl_value_item(_ ctx: MODLParser.Modl_value_itemContext) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl_top_level_conditional(_ ctx: MODLParser.Modl_top_level_conditionalContext) {print("HIT enter toplevelconditional") }
+	open func enterModl_top_level_conditional(_ ctx: MODLParser.Modl_top_level_conditionalContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl_top_level_conditional(_ ctx: MODLParser.Modl_top_level_conditionalContext) { print("HIT exit toplevelconditional")}
+	open func exitModl_top_level_conditional(_ ctx: MODLParser.Modl_top_level_conditionalContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -288,13 +288,13 @@ open class MODLParserBaseListener: MODLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterModl_value(_ ctx: MODLParser.Modl_valueContext) {print("HIT enter value") }
+	open func enterModl_value(_ ctx: MODLParser.Modl_valueContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitModl_value(_ ctx: MODLParser.Modl_valueContext) {print("HIT exit value") }
+	open func exitModl_value(_ ctx: MODLParser.Modl_valueContext) { }
 
 	/**
 	 * {@inheritDoc}
@@ -314,13 +314,26 @@ open class MODLParserBaseListener: MODLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterEveryRule(_ ctx: ParserRuleContext) { print("HIT enter every rule")}
+	open func enterModl_primitive(_ ctx: MODLParser.Modl_primitiveContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitEveryRule(_ ctx: ParserRuleContext) { print("HIT exit every rule")}
+	open func exitModl_primitive(_ ctx: MODLParser.Modl_primitiveContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func enterEveryRule(_ ctx: ParserRuleContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitEveryRule(_ ctx: ParserRuleContext) { }
 	/**
 	 * {@inheritDoc}
 	 *

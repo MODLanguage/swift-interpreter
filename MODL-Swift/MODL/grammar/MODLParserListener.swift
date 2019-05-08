@@ -282,4 +282,16 @@ public protocol MODLParserListener: ParseTreeListener {
 	   - ctx: the parse tree
 	 */
 	func exitModl_array_value_item(_ ctx: MODLParser.Modl_array_value_itemContext)
+	/**
+	 * Enter a parse tree produced by {@link MODLParser#modl_primitive}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func enterModl_primitive(_ ctx: MODLParser.Modl_primitiveContext)
+	/**
+	 * Exit a parse tree produced by {@link MODLParser#modl_primitive}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func exitModl_primitive(_ ctx: MODLParser.Modl_primitiveContext)
 }

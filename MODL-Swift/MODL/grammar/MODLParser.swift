@@ -16,8 +16,8 @@ open class MODLParser: Parser {
 
 	public
 	enum Tokens: Int {
-		case EOF = -1, WS = 1, NULL = 2, TRUE = 3, FALSE = 4, NEWLINE = 5, COLON = 6, 
-                 EQUALS = 7, SC = 8, LBRAC = 9, RBRAC = 10, LSBRAC = 11, 
+		case EOF = -1, WS = 1, NULL = 2, TRUE = 3, FALSE = 4, COLON = 5, EQUALS = 6, 
+                 STRUCT_SEP = 7, ARR_SEP = 8, LBRAC = 9, RBRAC = 10, LSBRAC = 11, 
                  RSBRAC = 12, NUMBER = 13, COMMENT = 14, STRING = 15, HASH_PREFIX = 16, 
                  QUOTED = 17, GRAVED = 18, LCBRAC = 19, CWS = 20, QMARK = 21, 
                  FSLASH = 22, GTHAN = 23, LTHAN = 24, ASTERISK = 25, AMP = 26, 
@@ -33,7 +33,7 @@ open class MODLParser: Parser {
             RULE_modl_array_item = 14, RULE_modl_value_conditional = 15, 
             RULE_modl_value_conditional_return = 16, RULE_modl_condition_test = 17, 
             RULE_modl_operator = 18, RULE_modl_condition = 19, RULE_modl_condition_group = 20, 
-            RULE_modl_value = 21, RULE_modl_array_value_item = 22
+            RULE_modl_value = 21, RULE_modl_array_value_item = 22, RULE_modl_primitive = 23
 
 	public
 	static let ruleNames: [String] = [
@@ -43,16 +43,16 @@ open class MODLParser: Parser {
 		"modl_array_conditional", "modl_array_conditional_return", "modl_array_item", 
 		"modl_value_conditional", "modl_value_conditional_return", "modl_condition_test", 
 		"modl_operator", "modl_condition", "modl_condition_group", "modl_value", 
-		"modl_array_value_item"
+		"modl_array_value_item", "modl_primitive"
 	]
 
 	private static let _LITERAL_NAMES: [String?] = [
-		nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 
+		nil, nil, nil, nil, nil, nil, nil, nil, "','", nil, nil, nil, nil, nil, 
 		nil, nil, nil, nil, nil, "'{'", nil, "'?'", "'/'", "'>'", "'<'", "'*'", 
 		"'&'", "'|'", "'!'", nil, "'}'"
 	]
 	private static let _SYMBOLIC_NAMES: [String?] = [
-		nil, "WS", "NULL", "TRUE", "FALSE", "NEWLINE", "COLON", "EQUALS", "SC", 
+		nil, "WS", "NULL", "TRUE", "FALSE", "COLON", "EQUALS", "STRUCT_SEP", "ARR_SEP", 
 		"LBRAC", "RBRAC", "LSBRAC", "RSBRAC", "NUMBER", "COMMENT", "STRING", "HASH_PREFIX", 
 		"QUOTED", "GRAVED", "LCBRAC", "CWS", "QMARK", "FSLASH", "GTHAN", "LTHAN", 
 		"ASTERISK", "AMP", "PIPE", "EXCLAM", "CCOMMENT", "RCBRAC"
@@ -88,10 +88,6 @@ open class MODLParser: Parser {
 
 	public class ModlContext: ParserRuleContext {
 			open
-			func EOF() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.EOF.rawValue, 0)
-			}
-			open
 			func modl_structure() -> [Modl_structureContext] {
 				return getRuleContexts(Modl_structureContext.self)
 			}
@@ -100,20 +96,16 @@ open class MODLParser: Parser {
 				return getRuleContext(Modl_structureContext.self, i)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
+			func EOF() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.EOF.rawValue, 0)
 			}
 			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
+			func STRUCT_SEP() -> [TerminalNode] {
+				return getTokens(MODLParser.Tokens.STRUCT_SEP.rawValue)
 			}
 			open
-			func SC() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.SC.rawValue)
-			}
-			open
-			func SC(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.SC.rawValue, i)
+			func STRUCT_SEP(_ i:Int) -> TerminalNode? {
+				return getToken(MODLParser.Tokens.STRUCT_SEP.rawValue, i)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -142,150 +134,70 @@ open class MODLParser: Parser {
 	    }
 		do {
 			var _alt:Int
-		 	try enterOuterAlt(_localctx, 1)
-		 	setState(80)
+		 	setState(64)
 		 	try _errHandler.sync(self)
-		 	switch (try getInterpreter().adaptivePredict(_input,6,_ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,3, _ctx)) {
 		 	case 1:
+		 		try enterOuterAlt(_localctx, 1)
 		 		setState(49)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
-		 		while (//closure
+		 		if (//closure
 		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
+		 		      let testSet: Bool = {  () -> Bool in
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
+		 		}()
 		 		      return testSet
 		 		 }()) {
-		 			setState(46)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
+		 			setState(48)
+		 			try modl_structure()
 
-
-		 			setState(51)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
 		 		}
-		 		setState(52)
+
+
+
+		 		break
+		 	case 2:
+		 		try enterOuterAlt(_localctx, 2)
+		 		setState(51)
 		 		try modl_structure()
-		 		setState(77)
+		 		setState(56)
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,5,_ctx)
+		 		_alt = try getInterpreter().adaptivePredict(_input,1,_ctx)
 		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
 		 			if ( _alt==1 ) {
-		 				setState(56)
-		 				try _errHandler.sync(self)
-		 				_alt = try getInterpreter().adaptivePredict(_input,1,_ctx)
-		 				while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 					if ( _alt==1 ) {
-		 						setState(53)
-		 						try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 				 
-		 					}
-		 					setState(58)
-		 					try _errHandler.sync(self)
-		 					_alt = try getInterpreter().adaptivePredict(_input,1,_ctx)
-		 				}
-		 				setState(60)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				if (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.SC.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(59)
-		 					try match(MODLParser.Tokens.SC.rawValue)
-
-		 				}
-
-		 				setState(65)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				while (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(62)
-		 					try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 					setState(67)
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 				}
-		 				setState(68)
+		 				setState(52)
+		 				try match(MODLParser.Tokens.STRUCT_SEP.rawValue)
+		 				setState(53)
 		 				try modl_structure()
-		 				setState(72)
-		 				try _errHandler.sync(self)
-		 				_alt = try getInterpreter().adaptivePredict(_input,4,_ctx)
-		 				while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 					if ( _alt==1 ) {
-		 						setState(69)
-		 						try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 				 
-		 					}
-		 					setState(74)
-		 					try _errHandler.sync(self)
-		 					_alt = try getInterpreter().adaptivePredict(_input,4,_ctx)
-		 				}
 
 		 		 
 		 			}
-		 			setState(79)
+		 			setState(58)
 		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,5,_ctx)
+		 			_alt = try getInterpreter().adaptivePredict(_input,1,_ctx)
 		 		}
+
+		 		setState(60)
+		 		try _errHandler.sync(self)
+		 		_la = try _input.LA(1)
+		 		if (//closure
+		 		 { () -> Bool in
+		 		      let testSet: Bool = _la == MODLParser.Tokens.STRUCT_SEP.rawValue
+		 		      return testSet
+		 		 }()) {
+		 			setState(59)
+		 			try match(MODLParser.Tokens.STRUCT_SEP.rawValue)
+
+		 		}
+
+		 		setState(62)
+		 		try match(MODLParser.Tokens.EOF.rawValue)
 
 		 		break
 		 	default: break
 		 	}
-		 	setState(85)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,7,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(82)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(87)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,7,_ctx)
-		 	}
-		 	setState(89)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	if (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.SC.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(88)
-		 		try match(MODLParser.Tokens.SC.rawValue)
-
-		 	}
-
-		 	setState(94)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(91)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(96)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(97)
-		 	try match(MODLParser.Tokens.EOF.rawValue)
-
 		}
 		catch ANTLRException.recognition(let re) {
 			_localctx.exception = re
@@ -338,33 +250,37 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(103)
+		 	setState(70)
 		 	try _errHandler.sync(self)
 		 	switch (MODLParser.Tokens(rawValue: try _input.LA(1))!) {
 		 	case .LBRAC:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(99)
+		 		setState(66)
 		 		try modl_map()
 
 		 		break
 
 		 	case .LSBRAC:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(100)
+		 		setState(67)
 		 		try modl_array()
 
 		 		break
 
 		 	case .LCBRAC:
 		 		try enterOuterAlt(_localctx, 3)
-		 		setState(101)
+		 		setState(68)
 		 		try modl_top_level_conditional()
 
 		 		break
+		 	case .NULL:fallthrough
+		 	case .TRUE:fallthrough
+		 	case .FALSE:fallthrough
+		 	case .NUMBER:fallthrough
 		 	case .STRING:fallthrough
 		 	case .QUOTED:
 		 		try enterOuterAlt(_localctx, 4)
-		 		setState(102)
+		 		setState(69)
 		 		try modl_pair()
 
 		 		break
@@ -391,14 +307,6 @@ open class MODLParser: Parser {
 				return getToken(MODLParser.Tokens.RBRAC.rawValue, 0)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
-			open
 			func modl_map_item() -> [Modl_map_itemContext] {
 				return getRuleContexts(Modl_map_itemContext.self)
 			}
@@ -407,12 +315,12 @@ open class MODLParser: Parser {
 				return getRuleContext(Modl_map_itemContext.self, i)
 			}
 			open
-			func SC() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.SC.rawValue)
+			func STRUCT_SEP() -> [TerminalNode] {
+				return getTokens(MODLParser.Tokens.STRUCT_SEP.rawValue)
 			}
 			open
-			func SC(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.SC.rawValue, i)
+			func STRUCT_SEP(_ i:Int) -> TerminalNode? {
+				return getToken(MODLParser.Tokens.STRUCT_SEP.rawValue, i)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -440,102 +348,44 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(105)
+		 	setState(72)
 		 	try match(MODLParser.Tokens.LBRAC.rawValue)
-		 	setState(109)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(106)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(111)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(134)
+		 	setState(81)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(112)
+		 		setState(73)
 		 		try modl_map_item()
-		 		setState(125)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,14,_ctx)
-		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 			if ( _alt==1 ) {
-		 				setState(114)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				if (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.SC.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(113)
-		 					try match(MODLParser.Tokens.SC.rawValue)
-
-		 				}
-
-		 				setState(119)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				while (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(116)
-		 					try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 					setState(121)
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 				}
-		 				setState(122)
-		 				try modl_map_item()
-
-		 		 
-		 			}
-		 			setState(127)
-		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,14,_ctx)
-		 		}
-		 		setState(131)
+		 		setState(78)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		while (//closure
 		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
+		 		      let testSet: Bool = _la == MODLParser.Tokens.STRUCT_SEP.rawValue
 		 		      return testSet
 		 		 }()) {
-		 			setState(128)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
+		 			setState(74)
+		 			try match(MODLParser.Tokens.STRUCT_SEP.rawValue)
+		 			setState(75)
+		 			try modl_map_item()
 
 
-		 			setState(133)
+		 			setState(80)
 		 			try _errHandler.sync(self)
 		 			_la = try _input.LA(1)
 		 		}
 
 		 	}
 
-		 	setState(136)
+		 	setState(83)
 		 	try match(MODLParser.Tokens.RBRAC.rawValue)
 
 		}
@@ -558,14 +408,6 @@ open class MODLParser: Parser {
 				return getToken(MODLParser.Tokens.RSBRAC.rawValue, 0)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
-			open
 			func modl_array_item() -> [Modl_array_itemContext] {
 				return getRuleContexts(Modl_array_itemContext.self)
 			}
@@ -582,12 +424,12 @@ open class MODLParser: Parser {
 				return getRuleContext(Modl_nb_arrayContext.self, i)
 			}
 			open
-			func SC() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.SC.rawValue)
+			func STRUCT_SEP() -> [TerminalNode] {
+				return getTokens(MODLParser.Tokens.STRUCT_SEP.rawValue)
 			}
 			open
-			func SC(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.SC.rawValue, i)
+			func STRUCT_SEP(_ i:Int) -> TerminalNode? {
+				return getToken(MODLParser.Tokens.STRUCT_SEP.rawValue, i)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -617,25 +459,9 @@ open class MODLParser: Parser {
 		do {
 			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(138)
+		 	setState(85)
 		 	try match(MODLParser.Tokens.LSBRAC.rawValue)
-		 	setState(142)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(139)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(144)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(176)
+		 	setState(110)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -646,113 +472,84 @@ open class MODLParser: Parser {
 		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(147)
+		 		setState(88)
 		 		try _errHandler.sync(self)
-		 		switch(try getInterpreter().adaptivePredict(_input,18, _ctx)) {
+		 		switch(try getInterpreter().adaptivePredict(_input,7, _ctx)) {
 		 		case 1:
-		 			setState(145)
+		 			setState(86)
 		 			try modl_array_item()
 
 		 			break
 		 		case 2:
-		 			setState(146)
+		 			setState(87)
 		 			try modl_nb_array()
 
 		 			break
 		 		default: break
 		 		}
-		 		setState(167)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,23,_ctx)
-		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 			if ( _alt==1 ) {
-		 				setState(159)
-		 				try _errHandler.sync(self)
-		 				switch (MODLParser.Tokens(rawValue: try _input.LA(1))!) {
-		 				case .SC:
-		 					setState(150) 
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 					repeat {
-		 						setState(149)
-		 						try match(MODLParser.Tokens.SC.rawValue)
-
-
-		 						setState(152); 
-		 						try _errHandler.sync(self)
-		 						_la = try _input.LA(1)
-		 					} while (//closure
-		 					 { () -> Bool in
-		 					      let testSet: Bool = _la == MODLParser.Tokens.SC.rawValue
-		 					      return testSet
-		 					 }())
-
-		 					break
-
-		 				case .NEWLINE:
-		 					setState(155) 
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 					repeat {
-		 						setState(154)
-		 						try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 						setState(157); 
-		 						try _errHandler.sync(self)
-		 						_la = try _input.LA(1)
-		 					} while (//closure
-		 					 { () -> Bool in
-		 					      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 					      return testSet
-		 					 }())
-
-		 					break
-		 				default:
-		 					throw ANTLRException.recognition(e: NoViableAltException(self))
-		 				}
-		 				setState(163)
-		 				try _errHandler.sync(self)
-		 				switch(try getInterpreter().adaptivePredict(_input,22, _ctx)) {
-		 				case 1:
-		 					setState(161)
-		 					try modl_array_item()
-
-		 					break
-		 				case 2:
-		 					setState(162)
-		 					try modl_nb_array()
-
-		 					break
-		 				default: break
-		 				}
-
-		 		 
-		 			}
-		 			setState(169)
-		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,23,_ctx)
-		 		}
-		 		setState(173)
+		 		setState(107)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		while (//closure
 		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
+		 		      let testSet: Bool = _la == MODLParser.Tokens.STRUCT_SEP.rawValue
 		 		      return testSet
 		 		 }()) {
-		 			setState(170)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
+		 			setState(91) 
+		 			try _errHandler.sync(self)
+		 			_la = try _input.LA(1)
+		 			repeat {
+		 				setState(90)
+		 				try match(MODLParser.Tokens.STRUCT_SEP.rawValue)
 
 
-		 			setState(175)
+		 				setState(93); 
+		 				try _errHandler.sync(self)
+		 				_la = try _input.LA(1)
+		 			} while (//closure
+		 			 { () -> Bool in
+		 			      let testSet: Bool = _la == MODLParser.Tokens.STRUCT_SEP.rawValue
+		 			      return testSet
+		 			 }())
+		 			setState(97)
+		 			try _errHandler.sync(self)
+		 			switch(try getInterpreter().adaptivePredict(_input,9, _ctx)) {
+		 			case 1:
+		 				setState(95)
+		 				try modl_array_item()
+
+		 				break
+		 			case 2:
+		 				setState(96)
+		 				try modl_nb_array()
+
+		 				break
+		 			default: break
+		 			}
+		 			setState(102)
+		 			try _errHandler.sync(self)
+		 			_alt = try getInterpreter().adaptivePredict(_input,10,_ctx)
+		 			while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
+		 				if ( _alt==1 ) {
+		 					setState(99)
+		 					try match(MODLParser.Tokens.STRUCT_SEP.rawValue)
+
+		 			 
+		 				}
+		 				setState(104)
+		 				try _errHandler.sync(self)
+		 				_alt = try getInterpreter().adaptivePredict(_input,10,_ctx)
+		 			}
+
+
+		 			setState(109)
 		 			try _errHandler.sync(self)
 		 			_la = try _input.LA(1)
 		 		}
 
 		 	}
 
-		 	setState(178)
+		 	setState(112)
 		 	try match(MODLParser.Tokens.RSBRAC.rawValue)
 
 		}
@@ -773,14 +570,6 @@ open class MODLParser: Parser {
 			open
 			func modl_array_item(_ i: Int) -> Modl_array_itemContext? {
 				return getRuleContext(Modl_array_itemContext.self, i)
-			}
-			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
 			}
 			open
 			func COLON() -> [TerminalNode] {
@@ -811,81 +600,72 @@ open class MODLParser: Parser {
 	 open func modl_nb_array() throws -> Modl_nb_arrayContext {
 		var _localctx: Modl_nb_arrayContext = Modl_nb_arrayContext(_ctx, getState())
 		try enterRule(_localctx, 8, MODLParser.RULE_modl_nb_array)
-		var _la: Int = 0
 		defer {
 	    		try! exitRule()
 	    }
 		do {
 			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(180)
-		 	try modl_array_item()
-		 	setState(199); 
+		 	setState(120); 
 		 	try _errHandler.sync(self)
 		 	_alt = 1;
 		 	repeat {
 		 		switch (_alt) {
 		 		case 1:
-		 			setState(184)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 			while (//closure
-		 			 { () -> Bool in
-		 			      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 			      return testSet
-		 			 }()) {
-		 				setState(181)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 				setState(186)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 			}
-		 			setState(188) 
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 			repeat {
-		 				setState(187)
-		 				try match(MODLParser.Tokens.COLON.rawValue)
-
-
-		 				setState(190); 
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 			} while (//closure
-		 			 { () -> Bool in
-		 			      let testSet: Bool = _la == MODLParser.Tokens.COLON.rawValue
-		 			      return testSet
-		 			 }())
-		 			setState(195)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 			while (//closure
-		 			 { () -> Bool in
-		 			      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 			      return testSet
-		 			 }()) {
-		 				setState(192)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 				setState(197)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 			}
-		 			setState(198)
+		 			setState(114)
 		 			try modl_array_item()
+		 			setState(116); 
+		 			try _errHandler.sync(self)
+		 			_alt = 1;
+		 			repeat {
+		 				switch (_alt) {
+		 				case 1:
+		 					setState(115)
+		 					try match(MODLParser.Tokens.COLON.rawValue)
+
+
+		 					break
+		 				default:
+		 					throw ANTLRException.recognition(e: NoViableAltException(self))
+		 				}
+		 				setState(118); 
+		 				try _errHandler.sync(self)
+		 				_alt = try getInterpreter().adaptivePredict(_input,13,_ctx)
+		 			} while (_alt != 2 && _alt !=  ATN.INVALID_ALT_NUMBER)
 
 
 		 			break
 		 		default:
 		 			throw ANTLRException.recognition(e: NoViableAltException(self))
 		 		}
-		 		setState(201); 
+		 		setState(122); 
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,29,_ctx)
+		 		_alt = try getInterpreter().adaptivePredict(_input,14,_ctx)
 		 	} while (_alt != 2 && _alt !=  ATN.INVALID_ALT_NUMBER)
+		 	setState(127)
+		 	try _errHandler.sync(self)
+		 	_alt = try getInterpreter().adaptivePredict(_input,15,_ctx)
+		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
+		 		if ( _alt==1 ) {
+		 			setState(124)
+		 			try modl_array_item()
+
+		 	 
+		 		}
+		 		setState(129)
+		 		try _errHandler.sync(self)
+		 		_alt = try getInterpreter().adaptivePredict(_input,15,_ctx)
+		 	}
+		 	setState(131)
+		 	try _errHandler.sync(self)
+		 	switch (try getInterpreter().adaptivePredict(_input,16,_ctx)) {
+		 	case 1:
+		 		setState(130)
+		 		try match(MODLParser.Tokens.COLON.rawValue)
+
+		 		break
+		 	default: break
+		 	}
 
 		}
 		catch ANTLRException.recognition(let re) {
@@ -915,12 +695,20 @@ open class MODLParser: Parser {
 				return getToken(MODLParser.Tokens.QUOTED.rawValue, 0)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
+			func NUMBER() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.NUMBER.rawValue, 0)
 			}
 			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
+			func NULL() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.NULL.rawValue, 0)
+			}
+			open
+			func TRUE() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.TRUE.rawValue, 0)
+			}
+			open
+			func FALSE() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.FALSE.rawValue, 0)
 			}
 			open
 			func modl_map() -> Modl_mapContext? {
@@ -956,16 +744,19 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(222)
+		 	setState(140)
 		 	try _errHandler.sync(self)
-		 	switch(try getInterpreter().adaptivePredict(_input,32, _ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,17, _ctx)) {
 		 	case 1:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(203)
+		 		setState(133)
 		 		_la = try _input.LA(1)
 		 		if (!(//closure
 		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.STRING.rawValue || _la == MODLParser.Tokens.QUOTED.rawValue
+		 		      let testSet: Bool = {  () -> Bool in
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue]
+		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
+		 		}()
 		 		      return testSet
 		 		 }())) {
 		 		try _errHandler.recoverInline(self)
@@ -974,57 +765,25 @@ open class MODLParser: Parser {
 		 			_errHandler.reportMatch(self)
 		 			try consume()
 		 		}
-		 		setState(207)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(204)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(209)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(210)
+		 		setState(134)
 		 		try match(MODLParser.Tokens.EQUALS.rawValue)
-		 		setState(214)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(211)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(216)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(217)
+		 		setState(135)
 		 		try modl_value_item()
 
 		 		break
 		 	case 2:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(218)
+		 		setState(136)
 		 		try match(MODLParser.Tokens.STRING.rawValue)
-		 		setState(219)
+		 		setState(137)
 		 		try modl_map()
 
 		 		break
 		 	case 3:
 		 		try enterOuterAlt(_localctx, 3)
-		 		setState(220)
+		 		setState(138)
 		 		try match(MODLParser.Tokens.STRING.rawValue)
-		 		setState(221)
+		 		setState(139)
 		 		try modl_array()
 
 		 		break
@@ -1075,16 +834,16 @@ open class MODLParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(226)
+		 	setState(144)
 		 	try _errHandler.sync(self)
-		 	switch(try getInterpreter().adaptivePredict(_input,33, _ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,18, _ctx)) {
 		 	case 1:
-		 		setState(224)
+		 		setState(142)
 		 		try modl_value()
 
 		 		break
 		 	case 2:
-		 		setState(225)
+		 		setState(143)
 		 		try modl_value_conditional()
 
 		 		break
@@ -1135,14 +894,6 @@ open class MODLParser: Parser {
 				return getToken(MODLParser.Tokens.RCBRAC.rawValue, 0)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
-			open
 			func FSLASH() -> [TerminalNode] {
 				return getTokens(MODLParser.Tokens.FSLASH.rawValue)
 			}
@@ -1176,61 +927,16 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(228)
+		 	setState(146)
 		 	try match(MODLParser.Tokens.LCBRAC.rawValue)
-		 	setState(232)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,34,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(229)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(234)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,34,_ctx)
-		 	}
-		 	setState(235)
+		 	setState(147)
 		 	try modl_condition_test()
-		 	setState(236)
+		 	setState(148)
 		 	try match(MODLParser.Tokens.QMARK.rawValue)
-		 	setState(240)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(237)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(242)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(243)
+		 	setState(149)
 		 	try modl_top_level_conditional_return()
-		 	setState(247)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,36,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(244)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(249)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,36,_ctx)
-		 	}
-		 	setState(270)
+		 	setState(158)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	while (//closure
@@ -1238,81 +944,35 @@ open class MODLParser: Parser {
 		 	      let testSet: Bool = _la == MODLParser.Tokens.FSLASH.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(250)
+		 		setState(150)
 		 		try match(MODLParser.Tokens.FSLASH.rawValue)
-		 		setState(254)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,37,_ctx)
-		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 			if ( _alt==1 ) {
-		 				setState(251)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 		 
-		 			}
-		 			setState(256)
-		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,37,_ctx)
-		 		}
-		 		setState(258)
+		 		setState(152)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		if (//closure
 		 		 { () -> Bool in
 		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NEWLINE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
 		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 		}()
 		 		      return testSet
 		 		 }()) {
-		 			setState(257)
+		 			setState(151)
 		 			try modl_condition_test()
 
 		 		}
 
-		 		setState(260)
+		 		setState(154)
 		 		try match(MODLParser.Tokens.QMARK.rawValue)
-		 		setState(264)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(261)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(266)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(267)
+		 		setState(155)
 		 		try modl_top_level_conditional_return()
 
 
-		 		setState(272)
+		 		setState(160)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 	}
-		 	setState(276)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(273)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(278)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(279)
+		 	setState(161)
 		 	try match(MODLParser.Tokens.RCBRAC.rawValue)
 
 		}
@@ -1333,22 +993,6 @@ open class MODLParser: Parser {
 			open
 			func modl_structure(_ i: Int) -> Modl_structureContext? {
 				return getRuleContext(Modl_structureContext.self, i)
-			}
-			open
-			func SC() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.SC.rawValue)
-			}
-			open
-			func SC(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.SC.rawValue, i)
-			}
-			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -1376,72 +1020,25 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(281)
-		 	try modl_structure()
-		 	setState(291)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,43,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(286)
-		 			try _errHandler.sync(self)
-		 			switch(try getInterpreter().adaptivePredict(_input,42, _ctx)) {
-		 			case 1:
-		 				setState(282)
-		 				try match(MODLParser.Tokens.SC.rawValue)
-
-		 				break
-		 			case 2:
-		 				setState(283)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 				break
-		 			case 3:
-		 				setState(284)
-		 				try match(MODLParser.Tokens.SC.rawValue)
-		 				setState(285)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 				break
-		 			default: break
-		 			}
-		 			setState(288)
-		 			try modl_structure()
-
-		 	 
-		 		}
-		 		setState(293)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,43,_ctx)
-		 	}
-		 	setState(295)
+		 	setState(166)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
-		 	if (//closure
+		 	while (//closure
 		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.SC.rawValue
+		 	      let testSet: Bool = {  () -> Bool in
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
+		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(294)
-		 		try match(MODLParser.Tokens.SC.rawValue)
+		 		setState(163)
+		 		try modl_structure()
 
-		 	}
 
-		 	setState(300)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,45,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(297)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(302)
+		 		setState(168)
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,45,_ctx)
+		 		_la = try _input.LA(1)
 		 	}
 
 		}
@@ -1488,14 +1085,6 @@ open class MODLParser: Parser {
 				return getToken(MODLParser.Tokens.RCBRAC.rawValue, 0)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
-			open
 			func FSLASH() -> [TerminalNode] {
 				return getTokens(MODLParser.Tokens.FSLASH.rawValue)
 			}
@@ -1529,61 +1118,16 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(303)
+		 	setState(169)
 		 	try match(MODLParser.Tokens.LCBRAC.rawValue)
-		 	setState(307)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,46,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(304)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(309)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,46,_ctx)
-		 	}
-		 	setState(310)
+		 	setState(170)
 		 	try modl_condition_test()
-		 	setState(311)
+		 	setState(171)
 		 	try match(MODLParser.Tokens.QMARK.rawValue)
-		 	setState(315)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(312)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(317)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(318)
+		 	setState(172)
 		 	try modl_map_conditional_return()
-		 	setState(322)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,48,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(319)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(324)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,48,_ctx)
-		 	}
-		 	setState(345)
+		 	setState(181)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	while (//closure
@@ -1591,81 +1135,35 @@ open class MODLParser: Parser {
 		 	      let testSet: Bool = _la == MODLParser.Tokens.FSLASH.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(325)
+		 		setState(173)
 		 		try match(MODLParser.Tokens.FSLASH.rawValue)
-		 		setState(329)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,49,_ctx)
-		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 			if ( _alt==1 ) {
-		 				setState(326)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 		 
-		 			}
-		 			setState(331)
-		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,49,_ctx)
-		 		}
-		 		setState(333)
+		 		setState(175)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		if (//closure
 		 		 { () -> Bool in
 		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NEWLINE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
 		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 		}()
 		 		      return testSet
 		 		 }()) {
-		 			setState(332)
+		 			setState(174)
 		 			try modl_condition_test()
 
 		 		}
 
-		 		setState(335)
+		 		setState(177)
 		 		try match(MODLParser.Tokens.QMARK.rawValue)
-		 		setState(339)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(336)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(341)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(342)
+		 		setState(178)
 		 		try modl_map_conditional_return()
 
 
-		 		setState(347)
+		 		setState(183)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 	}
-		 	setState(351)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(348)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(353)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(354)
+		 	setState(184)
 		 	try match(MODLParser.Tokens.RCBRAC.rawValue)
 
 		}
@@ -1686,22 +1184,6 @@ open class MODLParser: Parser {
 			open
 			func modl_map_item(_ i: Int) -> Modl_map_itemContext? {
 				return getRuleContext(Modl_map_itemContext.self, i)
-			}
-			open
-			func SC() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.SC.rawValue)
-			}
-			open
-			func SC(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.SC.rawValue, i)
-			}
-			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -1729,101 +1211,26 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(356)
-		 	try modl_map_item()
-		 	setState(376)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,57,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(371)
-		 			try _errHandler.sync(self)
-		 			switch(try getInterpreter().adaptivePredict(_input,56, _ctx)) {
-		 			case 1:
-		 				setState(357)
-		 				try match(MODLParser.Tokens.SC.rawValue)
-
-		 				break
-		 			case 2:
-		 				setState(361)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				while (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(358)
-		 					try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 					setState(363)
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 				}
-
-		 				break
-		 			case 3:
-		 				setState(364)
-		 				try match(MODLParser.Tokens.SC.rawValue)
-		 				setState(368)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				while (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(365)
-		 					try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 					setState(370)
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 				}
-
-		 				break
-		 			default: break
-		 			}
-		 			setState(373)
-		 			try modl_map_item()
-
-		 	 
-		 		}
-		 		setState(378)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,57,_ctx)
-		 	}
-		 	setState(380)
+		 	setState(187) 
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
-		 	if (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.SC.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(379)
-		 		try match(MODLParser.Tokens.SC.rawValue)
+		 	repeat {
+		 		setState(186)
+		 		try modl_map_item()
 
-		 	}
 
-		 	setState(385)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,59,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(382)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(387)
+		 		setState(189); 
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,59,_ctx)
-		 	}
+		 		_la = try _input.LA(1)
+		 	} while (//closure
+		 	 { () -> Bool in
+		 	      let testSet: Bool = {  () -> Bool in
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
+		 	}()
+		 	      return testSet
+		 	 }())
 
 		}
 		catch ANTLRException.recognition(let re) {
@@ -1869,20 +1276,24 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(390)
+		 	setState(193)
 		 	try _errHandler.sync(self)
 		 	switch (MODLParser.Tokens(rawValue: try _input.LA(1))!) {
+		 	case .NULL:fallthrough
+		 	case .TRUE:fallthrough
+		 	case .FALSE:fallthrough
+		 	case .NUMBER:fallthrough
 		 	case .STRING:fallthrough
 		 	case .QUOTED:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(388)
+		 		setState(191)
 		 		try modl_pair()
 
 		 		break
 
 		 	case .LCBRAC:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(389)
+		 		setState(192)
 		 		try modl_map_conditional()
 
 		 		break
@@ -1933,14 +1344,6 @@ open class MODLParser: Parser {
 				return getToken(MODLParser.Tokens.RCBRAC.rawValue, 0)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
-			open
 			func FSLASH() -> [TerminalNode] {
 				return getTokens(MODLParser.Tokens.FSLASH.rawValue)
 			}
@@ -1974,61 +1377,16 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(392)
+		 	setState(195)
 		 	try match(MODLParser.Tokens.LCBRAC.rawValue)
-		 	setState(396)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,61,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(393)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(398)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,61,_ctx)
-		 	}
-		 	setState(399)
+		 	setState(196)
 		 	try modl_condition_test()
-		 	setState(400)
+		 	setState(197)
 		 	try match(MODLParser.Tokens.QMARK.rawValue)
-		 	setState(404)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(401)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(406)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(407)
+		 	setState(198)
 		 	try modl_array_conditional_return()
-		 	setState(411)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,63,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(408)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(413)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,63,_ctx)
-		 	}
-		 	setState(434)
+		 	setState(207)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	while (//closure
@@ -2036,81 +1394,35 @@ open class MODLParser: Parser {
 		 	      let testSet: Bool = _la == MODLParser.Tokens.FSLASH.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(414)
+		 		setState(199)
 		 		try match(MODLParser.Tokens.FSLASH.rawValue)
-		 		setState(418)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,64,_ctx)
-		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 			if ( _alt==1 ) {
-		 				setState(415)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 		 
-		 			}
-		 			setState(420)
-		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,64,_ctx)
-		 		}
-		 		setState(422)
+		 		setState(201)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		if (//closure
 		 		 { () -> Bool in
 		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NEWLINE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
 		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 		}()
 		 		      return testSet
 		 		 }()) {
-		 			setState(421)
+		 			setState(200)
 		 			try modl_condition_test()
 
 		 		}
 
-		 		setState(424)
+		 		setState(203)
 		 		try match(MODLParser.Tokens.QMARK.rawValue)
-		 		setState(428)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(425)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(430)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(431)
+		 		setState(204)
 		 		try modl_array_conditional_return()
 
 
-		 		setState(436)
+		 		setState(209)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 	}
-		 	setState(440)
-		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(437)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(442)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(443)
+		 	setState(210)
 		 	try match(MODLParser.Tokens.RCBRAC.rawValue)
 
 		}
@@ -2131,22 +1443,6 @@ open class MODLParser: Parser {
 			open
 			func modl_array_item(_ i: Int) -> Modl_array_itemContext? {
 				return getRuleContext(Modl_array_itemContext.self, i)
-			}
-			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
-			open
-			func SC() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.SC.rawValue)
-			}
-			open
-			func SC(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.SC.rawValue, i)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -2174,88 +1470,26 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(445)
-		 	try modl_array_item()
-		 	setState(464)
+		 	setState(213) 
 		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,72,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(459)
-		 			try _errHandler.sync(self)
-		 			switch(try getInterpreter().adaptivePredict(_input,71, _ctx)) {
-		 			case 1:
-		 				setState(446)
-		 				try match(MODLParser.Tokens.SC.rawValue)
-
-		 				break
-		 			case 2:
-		 				setState(448) 
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				repeat {
-		 					setState(447)
-		 					try match(MODLParser.Tokens.NEWLINE.rawValue)
+		 	_la = try _input.LA(1)
+		 	repeat {
+		 		setState(212)
+		 		try modl_array_item()
 
 
-		 					setState(450); 
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 				} while (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 				      return testSet
-		 				 }())
-
-		 				break
-		 			case 3:
-		 				setState(452)
-		 				try match(MODLParser.Tokens.SC.rawValue)
-		 				setState(456)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				while (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(453)
-		 					try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 					setState(458)
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 				}
-
-		 				break
-		 			default: break
-		 			}
-		 			setState(461)
-		 			try modl_array_item()
-
-		 	 
-		 		}
-		 		setState(466)
+		 		setState(215); 
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,72,_ctx)
-		 	}
-		 	setState(470)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,73,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(467)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(472)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,73,_ctx)
-		 	}
+		 		_la = try _input.LA(1)
+		 	} while (//closure
+		 	 { () -> Bool in
+		 	      let testSet: Bool = {  () -> Bool in
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
+		 	}()
+		 	      return testSet
+		 	 }())
 
 		}
 		catch ANTLRException.recognition(let re) {
@@ -2301,7 +1535,7 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(475)
+		 	setState(219)
 		 	try _errHandler.sync(self)
 		 	switch (MODLParser.Tokens(rawValue: try _input.LA(1))!) {
 		 	case .NULL:fallthrough
@@ -2313,14 +1547,14 @@ open class MODLParser: Parser {
 		 	case .STRING:fallthrough
 		 	case .QUOTED:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(473)
+		 		setState(217)
 		 		try modl_array_value_item()
 
 		 		break
 
 		 	case .LCBRAC:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(474)
+		 		setState(218)
 		 		try modl_array_conditional()
 
 		 		break
@@ -2361,14 +1595,6 @@ open class MODLParser: Parser {
 			open
 			func RCBRAC() -> TerminalNode? {
 				return getToken(MODLParser.Tokens.RCBRAC.rawValue, 0)
-			}
-			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
 			}
 			open
 			func modl_value_conditional_return() -> [Modl_value_conditional_returnContext] {
@@ -2414,195 +1640,57 @@ open class MODLParser: Parser {
 		do {
 			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(477)
+		 	setState(221)
 		 	try match(MODLParser.Tokens.LCBRAC.rawValue)
-		 	setState(481)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,75,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(478)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 	 
-		 		}
-		 		setState(483)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,75,_ctx)
-		 	}
-		 	setState(484)
+		 	setState(222)
 		 	try modl_condition_test()
-		 	setState(485)
+		 	setState(223)
 		 	try match(MODLParser.Tokens.QMARK.rawValue)
-		 	setState(549)
+		 	setState(239)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NEWLINE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(489)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(486)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(491)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(492)
+		 		setState(224)
 		 		try modl_value_conditional_return()
-		 		setState(496)
+		 		setState(232)
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,77,_ctx)
+		 		_alt = try getInterpreter().adaptivePredict(_input,30,_ctx)
 		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
 		 			if ( _alt==1 ) {
-		 				setState(493)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 		 
-		 			}
-		 			setState(498)
-		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,77,_ctx)
-		 		}
-		 		setState(518)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,80,_ctx)
-		 		while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 			if ( _alt==1 ) {
-		 				setState(499)
+		 				setState(225)
 		 				try match(MODLParser.Tokens.FSLASH.rawValue)
-		 				setState(503)
-		 				try _errHandler.sync(self)
-		 				_alt = try getInterpreter().adaptivePredict(_input,78,_ctx)
-		 				while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 					if ( _alt==1 ) {
-		 						setState(500)
-		 						try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-		 				 
-		 					}
-		 					setState(505)
-		 					try _errHandler.sync(self)
-		 					_alt = try getInterpreter().adaptivePredict(_input,78,_ctx)
-		 				}
-		 				setState(506)
+		 				setState(226)
 		 				try modl_condition_test()
-		 				setState(507)
+		 				setState(227)
 		 				try match(MODLParser.Tokens.QMARK.rawValue)
-		 				setState(511)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 				while (//closure
-		 				 { () -> Bool in
-		 				      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 				      return testSet
-		 				 }()) {
-		 					setState(508)
-		 					try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 					setState(513)
-		 					try _errHandler.sync(self)
-		 					_la = try _input.LA(1)
-		 				}
-		 				setState(514)
+		 				setState(228)
 		 				try modl_value_conditional_return()
 
 		 		 
 		 			}
-		 			setState(520)
+		 			setState(234)
 		 			try _errHandler.sync(self)
-		 			_alt = try getInterpreter().adaptivePredict(_input,80,_ctx)
-		 		}
-		 		setState(524)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(521)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(526)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
+		 			_alt = try getInterpreter().adaptivePredict(_input,30,_ctx)
 		 		}
 
-		 		setState(527)
+		 		setState(235)
 		 		try match(MODLParser.Tokens.FSLASH.rawValue)
-		 		setState(531)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(528)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(533)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(534)
+		 		setState(236)
 		 		try match(MODLParser.Tokens.QMARK.rawValue)
-		 		setState(538)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(535)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(540)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
-		 		setState(541)
+		 		setState(237)
 		 		try modl_value_conditional_return()
 
-		 		setState(546)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 		while (//closure
-		 		 { () -> Bool in
-		 		      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 		      return testSet
-		 		 }()) {
-		 			setState(543)
-		 			try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 			setState(548)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 		}
 
 		 	}
 
-		 	setState(551)
+		 	setState(241)
 		 	try match(MODLParser.Tokens.RCBRAC.rawValue)
 
 		}
@@ -2632,14 +1720,6 @@ open class MODLParser: Parser {
 			func COLON(_ i:Int) -> TerminalNode? {
 				return getToken(MODLParser.Tokens.COLON.rawValue, i)
 			}
-			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
 		override open
 		func getRuleIndex() -> Int {
 			return MODLParser.RULE_modl_value_conditional_return
@@ -2666,41 +1746,26 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(553)
+		 	setState(243)
 		 	try modl_value_item()
-		 	setState(564)
+		 	setState(248)
 		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,87,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(557)
-		 			try _errHandler.sync(self)
-		 			_la = try _input.LA(1)
-		 			while (//closure
-		 			 { () -> Bool in
-		 			      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 			      return testSet
-		 			 }()) {
-		 				setState(554)
-		 				try match(MODLParser.Tokens.NEWLINE.rawValue)
+		 	_la = try _input.LA(1)
+		 	while (//closure
+		 	 { () -> Bool in
+		 	      let testSet: Bool = _la == MODLParser.Tokens.COLON.rawValue
+		 	      return testSet
+		 	 }()) {
+		 		setState(244)
+		 		try match(MODLParser.Tokens.COLON.rawValue)
+		 		setState(245)
+		 		try modl_value_item()
 
 
-		 				setState(559)
-		 				try _errHandler.sync(self)
-		 				_la = try _input.LA(1)
-		 			}
-		 			setState(560)
-		 			try match(MODLParser.Tokens.COLON.rawValue)
-		 			setState(561)
-		 			try modl_value_item()
-
-		 	 
-		 		}
-		 		setState(566)
+		 		setState(250)
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,87,_ctx)
+		 		_la = try _input.LA(1)
 		 	}
 
 		}
@@ -2782,37 +1847,37 @@ open class MODLParser: Parser {
 		do {
 			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(568)
+		 	setState(252)
 		 	try _errHandler.sync(self)
-		 	switch (try getInterpreter().adaptivePredict(_input,88,_ctx)) {
+		 	switch (try getInterpreter().adaptivePredict(_input,33,_ctx)) {
 		 	case 1:
-		 		setState(567)
+		 		setState(251)
 		 		try match(MODLParser.Tokens.EXCLAM.rawValue)
 
 		 		break
 		 	default: break
 		 	}
-		 	setState(572)
+		 	setState(256)
 		 	try _errHandler.sync(self)
-		 	switch(try getInterpreter().adaptivePredict(_input,89, _ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,34, _ctx)) {
 		 	case 1:
-		 		setState(570)
+		 		setState(254)
 		 		try modl_condition()
 
 		 		break
 		 	case 2:
-		 		setState(571)
+		 		setState(255)
 		 		try modl_condition_group()
 
 		 		break
 		 	default: break
 		 	}
-		 	setState(584)
+		 	setState(268)
 		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,92,_ctx)
+		 	_alt = try getInterpreter().adaptivePredict(_input,37,_ctx)
 		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
 		 		if ( _alt==1 ) {
-		 			setState(574)
+		 			setState(258)
 		 			_la = try _input.LA(1)
 		 			if (!(//closure
 		 			 { () -> Bool in
@@ -2825,26 +1890,26 @@ open class MODLParser: Parser {
 		 				_errHandler.reportMatch(self)
 		 				try consume()
 		 			}
-		 			setState(576)
+		 			setState(260)
 		 			try _errHandler.sync(self)
-		 			switch (try getInterpreter().adaptivePredict(_input,90,_ctx)) {
+		 			switch (try getInterpreter().adaptivePredict(_input,35,_ctx)) {
 		 			case 1:
-		 				setState(575)
+		 				setState(259)
 		 				try match(MODLParser.Tokens.EXCLAM.rawValue)
 
 		 				break
 		 			default: break
 		 			}
-		 			setState(580)
+		 			setState(264)
 		 			try _errHandler.sync(self)
-		 			switch(try getInterpreter().adaptivePredict(_input,91, _ctx)) {
+		 			switch(try getInterpreter().adaptivePredict(_input,36, _ctx)) {
 		 			case 1:
-		 				setState(578)
+		 				setState(262)
 		 				try modl_condition()
 
 		 				break
 		 			case 2:
-		 				setState(579)
+		 				setState(263)
 		 				try modl_condition_group()
 
 		 				break
@@ -2853,9 +1918,9 @@ open class MODLParser: Parser {
 
 		 	 
 		 		}
-		 		setState(586)
+		 		setState(270)
 		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,92,_ctx)
+		 		_alt = try getInterpreter().adaptivePredict(_input,37,_ctx)
 		 	}
 
 		}
@@ -2910,48 +1975,48 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(596)
+		 	setState(280)
 		 	try _errHandler.sync(self)
-		 	switch(try getInterpreter().adaptivePredict(_input,93, _ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,38, _ctx)) {
 		 	case 1:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(587)
+		 		setState(271)
 		 		try match(MODLParser.Tokens.EQUALS.rawValue)
 
 		 		break
 		 	case 2:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(588)
+		 		setState(272)
 		 		try match(MODLParser.Tokens.GTHAN.rawValue)
 
 		 		break
 		 	case 3:
 		 		try enterOuterAlt(_localctx, 3)
-		 		setState(589)
+		 		setState(273)
 		 		try match(MODLParser.Tokens.GTHAN.rawValue)
-		 		setState(590)
+		 		setState(274)
 		 		try match(MODLParser.Tokens.EQUALS.rawValue)
 
 		 		break
 		 	case 4:
 		 		try enterOuterAlt(_localctx, 4)
-		 		setState(591)
+		 		setState(275)
 		 		try match(MODLParser.Tokens.LTHAN.rawValue)
 
 		 		break
 		 	case 5:
 		 		try enterOuterAlt(_localctx, 5)
-		 		setState(592)
+		 		setState(276)
 		 		try match(MODLParser.Tokens.LTHAN.rawValue)
-		 		setState(593)
+		 		setState(277)
 		 		try match(MODLParser.Tokens.EQUALS.rawValue)
 
 		 		break
 		 	case 6:
 		 		try enterOuterAlt(_localctx, 6)
-		 		setState(594)
+		 		setState(278)
 		 		try match(MODLParser.Tokens.EXCLAM.rawValue)
-		 		setState(595)
+		 		setState(279)
 		 		try match(MODLParser.Tokens.EQUALS.rawValue)
 
 		 		break
@@ -2977,14 +2042,6 @@ open class MODLParser: Parser {
 				return getRuleContext(Modl_valueContext.self, i)
 			}
 			open
-			func NEWLINE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.NEWLINE.rawValue)
-			}
-			open
-			func NEWLINE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NEWLINE.rawValue, i)
-			}
-			open
 			func STRING() -> TerminalNode? {
 				return getToken(MODLParser.Tokens.STRING.rawValue, 0)
 			}
@@ -2993,12 +2050,12 @@ open class MODLParser: Parser {
 				return getRuleContext(Modl_operatorContext.self, 0)
 			}
 			open
-			func PIPE() -> [TerminalNode] {
-				return getTokens(MODLParser.Tokens.PIPE.rawValue)
+			func FSLASH() -> [TerminalNode] {
+				return getTokens(MODLParser.Tokens.FSLASH.rawValue)
 			}
 			open
-			func PIPE(_ i:Int) -> TerminalNode? {
-				return getToken(MODLParser.Tokens.PIPE.rawValue, i)
+			func FSLASH(_ i:Int) -> TerminalNode? {
+				return getToken(MODLParser.Tokens.FSLASH.rawValue, i)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -3026,35 +2083,18 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-			var _alt:Int
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(601)
+		 	setState(283)
 		 	try _errHandler.sync(self)
-		 	_la = try _input.LA(1)
-		 	while (//closure
-		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
-		 	      return testSet
-		 	 }()) {
-		 		setState(598)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
-
-
-		 		setState(603)
-		 		try _errHandler.sync(self)
-		 		_la = try _input.LA(1)
-		 	}
-		 	setState(605)
-		 	try _errHandler.sync(self)
-		 	switch (try getInterpreter().adaptivePredict(_input,95,_ctx)) {
+		 	switch (try getInterpreter().adaptivePredict(_input,39,_ctx)) {
 		 	case 1:
-		 		setState(604)
+		 		setState(282)
 		 		try match(MODLParser.Tokens.STRING.rawValue)
 
 		 		break
 		 	default: break
 		 	}
-		 	setState(608)
+		 	setState(286)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	if (//closure
@@ -3065,42 +2105,28 @@ open class MODLParser: Parser {
 		 	}()
 		 	      return testSet
 		 	 }()) {
-		 		setState(607)
+		 		setState(285)
 		 		try modl_operator()
 
 		 	}
 
-		 	setState(610)
+		 	setState(288)
 		 	try modl_value()
-		 	setState(615)
-		 	try _errHandler.sync(self)
-		 	_alt = try getInterpreter().adaptivePredict(_input,97,_ctx)
-		 	while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
-		 		if ( _alt==1 ) {
-		 			setState(611)
-		 			try match(MODLParser.Tokens.PIPE.rawValue)
-		 			setState(612)
-		 			try modl_value()
-
-		 	 
-		 		}
-		 		setState(617)
-		 		try _errHandler.sync(self)
-		 		_alt = try getInterpreter().adaptivePredict(_input,97,_ctx)
-		 	}
-		 	setState(621)
+		 	setState(293)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	while (//closure
 		 	 { () -> Bool in
-		 	      let testSet: Bool = _la == MODLParser.Tokens.NEWLINE.rawValue
+		 	      let testSet: Bool = _la == MODLParser.Tokens.FSLASH.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(618)
-		 		try match(MODLParser.Tokens.NEWLINE.rawValue)
+		 		setState(289)
+		 		try match(MODLParser.Tokens.FSLASH.rawValue)
+		 		setState(290)
+		 		try modl_value()
 
 
-		 		setState(623)
+		 		setState(295)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 	}
@@ -3175,11 +2201,11 @@ open class MODLParser: Parser {
 	    }
 		do {
 		 	try enterOuterAlt(_localctx, 1)
-		 	setState(624)
+		 	setState(296)
 		 	try match(MODLParser.Tokens.LCBRAC.rawValue)
-		 	setState(625)
+		 	setState(297)
 		 	try modl_condition_test()
-		 	setState(630)
+		 	setState(302)
 		 	try _errHandler.sync(self)
 		 	_la = try _input.LA(1)
 		 	while (//closure
@@ -3187,7 +2213,7 @@ open class MODLParser: Parser {
 		 	      let testSet: Bool = _la == MODLParser.Tokens.AMP.rawValue || _la == MODLParser.Tokens.PIPE.rawValue
 		 	      return testSet
 		 	 }()) {
-		 		setState(626)
+		 		setState(298)
 		 		_la = try _input.LA(1)
 		 		if (!(//closure
 		 		 { () -> Bool in
@@ -3200,15 +2226,15 @@ open class MODLParser: Parser {
 		 			_errHandler.reportMatch(self)
 		 			try consume()
 		 		}
-		 		setState(627)
+		 		setState(299)
 		 		try modl_condition_test()
 
 
-		 		setState(632)
+		 		setState(304)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 	}
-		 	setState(633)
+		 	setState(305)
 		 	try match(MODLParser.Tokens.RCBRAC.rawValue)
 
 		}
@@ -3239,28 +2265,8 @@ open class MODLParser: Parser {
 				return getRuleContext(Modl_pairContext.self, 0)
 			}
 			open
-			func QUOTED() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.QUOTED.rawValue, 0)
-			}
-			open
-			func NUMBER() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NUMBER.rawValue, 0)
-			}
-			open
-			func STRING() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.STRING.rawValue, 0)
-			}
-			open
-			func TRUE() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.TRUE.rawValue, 0)
-			}
-			open
-			func FALSE() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.FALSE.rawValue, 0)
-			}
-			open
-			func NULL() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NULL.rawValue, 0)
+			func modl_primitive() -> Modl_primitiveContext? {
+				return getRuleContext(Modl_primitiveContext.self, 0)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -3287,67 +2293,37 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(645)
+		 	setState(312)
 		 	try _errHandler.sync(self)
-		 	switch(try getInterpreter().adaptivePredict(_input,100, _ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,43, _ctx)) {
 		 	case 1:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(635)
+		 		setState(307)
 		 		try modl_map()
 
 		 		break
 		 	case 2:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(636)
+		 		setState(308)
 		 		try modl_array()
 
 		 		break
 		 	case 3:
 		 		try enterOuterAlt(_localctx, 3)
-		 		setState(637)
+		 		setState(309)
 		 		try modl_nb_array()
 
 		 		break
 		 	case 4:
 		 		try enterOuterAlt(_localctx, 4)
-		 		setState(638)
+		 		setState(310)
 		 		try modl_pair()
 
 		 		break
 		 	case 5:
 		 		try enterOuterAlt(_localctx, 5)
-		 		setState(639)
-		 		try match(MODLParser.Tokens.QUOTED.rawValue)
-
-		 		break
-		 	case 6:
-		 		try enterOuterAlt(_localctx, 6)
-		 		setState(640)
-		 		try match(MODLParser.Tokens.NUMBER.rawValue)
-
-		 		break
-		 	case 7:
-		 		try enterOuterAlt(_localctx, 7)
-		 		setState(641)
-		 		try match(MODLParser.Tokens.STRING.rawValue)
-
-		 		break
-		 	case 8:
-		 		try enterOuterAlt(_localctx, 8)
-		 		setState(642)
-		 		try match(MODLParser.Tokens.TRUE.rawValue)
-
-		 		break
-		 	case 9:
-		 		try enterOuterAlt(_localctx, 9)
-		 		setState(643)
-		 		try match(MODLParser.Tokens.FALSE.rawValue)
-
-		 		break
-		 	case 10:
-		 		try enterOuterAlt(_localctx, 10)
-		 		setState(644)
-		 		try match(MODLParser.Tokens.NULL.rawValue)
+		 		setState(311)
+		 		try modl_primitive()
 
 		 		break
 		 	default: break
@@ -3376,28 +2352,8 @@ open class MODLParser: Parser {
 				return getRuleContext(Modl_arrayContext.self, 0)
 			}
 			open
-			func QUOTED() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.QUOTED.rawValue, 0)
-			}
-			open
-			func NUMBER() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NUMBER.rawValue, 0)
-			}
-			open
-			func STRING() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.STRING.rawValue, 0)
-			}
-			open
-			func TRUE() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.TRUE.rawValue, 0)
-			}
-			open
-			func FALSE() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.FALSE.rawValue, 0)
-			}
-			open
-			func NULL() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NULL.rawValue, 0)
+			func modl_primitive() -> Modl_primitiveContext? {
+				return getRuleContext(Modl_primitiveContext.self, 0)
 			}
 		override open
 		func getRuleIndex() -> Int {
@@ -3424,65 +2380,114 @@ open class MODLParser: Parser {
 	    		try! exitRule()
 	    }
 		do {
-		 	setState(656)
+		 	setState(318)
 		 	try _errHandler.sync(self)
-		 	switch(try getInterpreter().adaptivePredict(_input,101, _ctx)) {
+		 	switch(try getInterpreter().adaptivePredict(_input,44, _ctx)) {
 		 	case 1:
 		 		try enterOuterAlt(_localctx, 1)
-		 		setState(647)
+		 		setState(314)
 		 		try modl_map()
 
 		 		break
 		 	case 2:
 		 		try enterOuterAlt(_localctx, 2)
-		 		setState(648)
+		 		setState(315)
 		 		try modl_pair()
 
 		 		break
 		 	case 3:
 		 		try enterOuterAlt(_localctx, 3)
-		 		setState(649)
+		 		setState(316)
 		 		try modl_array()
 
 		 		break
 		 	case 4:
 		 		try enterOuterAlt(_localctx, 4)
-		 		setState(650)
-		 		try match(MODLParser.Tokens.QUOTED.rawValue)
-
-		 		break
-		 	case 5:
-		 		try enterOuterAlt(_localctx, 5)
-		 		setState(651)
-		 		try match(MODLParser.Tokens.NUMBER.rawValue)
-
-		 		break
-		 	case 6:
-		 		try enterOuterAlt(_localctx, 6)
-		 		setState(652)
-		 		try match(MODLParser.Tokens.STRING.rawValue)
-
-		 		break
-		 	case 7:
-		 		try enterOuterAlt(_localctx, 7)
-		 		setState(653)
-		 		try match(MODLParser.Tokens.TRUE.rawValue)
-
-		 		break
-		 	case 8:
-		 		try enterOuterAlt(_localctx, 8)
-		 		setState(654)
-		 		try match(MODLParser.Tokens.FALSE.rawValue)
-
-		 		break
-		 	case 9:
-		 		try enterOuterAlt(_localctx, 9)
-		 		setState(655)
-		 		try match(MODLParser.Tokens.NULL.rawValue)
+		 		setState(317)
+		 		try modl_primitive()
 
 		 		break
 		 	default: break
 		 	}
+		}
+		catch ANTLRException.recognition(let re) {
+			_localctx.exception = re
+			_errHandler.reportError(self, re)
+			try _errHandler.recover(self, re)
+		}
+
+		return _localctx
+	}
+
+	public class Modl_primitiveContext: ParserRuleContext {
+			open
+			func QUOTED() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.QUOTED.rawValue, 0)
+			}
+			open
+			func NUMBER() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.NUMBER.rawValue, 0)
+			}
+			open
+			func STRING() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.STRING.rawValue, 0)
+			}
+			open
+			func TRUE() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.TRUE.rawValue, 0)
+			}
+			open
+			func FALSE() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.FALSE.rawValue, 0)
+			}
+			open
+			func NULL() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.NULL.rawValue, 0)
+			}
+		override open
+		func getRuleIndex() -> Int {
+			return MODLParser.RULE_modl_primitive
+		}
+		override open
+		func enterRule(_ listener: ParseTreeListener) {
+			if let listener = listener as? MODLParserListener {
+				listener.enterModl_primitive(self)
+			}
+		}
+		override open
+		func exitRule(_ listener: ParseTreeListener) {
+			if let listener = listener as? MODLParserListener {
+				listener.exitModl_primitive(self)
+			}
+		}
+	}
+	@discardableResult
+	 open func modl_primitive() throws -> Modl_primitiveContext {
+		var _localctx: Modl_primitiveContext = Modl_primitiveContext(_ctx, getState())
+		try enterRule(_localctx, 46, MODLParser.RULE_modl_primitive)
+		var _la: Int = 0
+		defer {
+	    		try! exitRule()
+	    }
+		do {
+		 	try enterOuterAlt(_localctx, 1)
+		 	setState(320)
+		 	_la = try _input.LA(1)
+		 	if (!(//closure
+		 	 { () -> Bool in
+		 	      let testSet: Bool = {  () -> Bool in
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue]
+		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
+		 	}()
+		 	      return testSet
+		 	 }())) {
+		 	try _errHandler.recoverInline(self)
+		 	}
+		 	else {
+		 		_errHandler.reportMatch(self)
+		 		try consume()
+		 	}
+
 		}
 		catch ANTLRException.recognition(let re) {
 			_localctx.exception = re

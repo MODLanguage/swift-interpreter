@@ -15,11 +15,11 @@ open class MODLLexer: Lexer {
 	internal static let _sharedContextCache = PredictionContextCache()
 
 	public
-	static let WS=1, NULL=2, TRUE=3, FALSE=4, NEWLINE=5, COLON=6, EQUALS=7, 
-            SC=8, LBRAC=9, RBRAC=10, LSBRAC=11, RSBRAC=12, NUMBER=13, COMMENT=14, 
-            STRING=15, HASH_PREFIX=16, QUOTED=17, GRAVED=18, LCBRAC=19, 
-            CWS=20, QMARK=21, FSLASH=22, GTHAN=23, LTHAN=24, ASTERISK=25, 
-            AMP=26, PIPE=27, EXCLAM=28, CCOMMENT=29, RCBRAC=30
+	static let WS=1, NULL=2, TRUE=3, FALSE=4, COLON=5, EQUALS=6, STRUCT_SEP=7, 
+            ARR_SEP=8, LBRAC=9, RBRAC=10, LSBRAC=11, RSBRAC=12, NUMBER=13, 
+            COMMENT=14, STRING=15, HASH_PREFIX=16, QUOTED=17, GRAVED=18, 
+            LCBRAC=19, CWS=20, QMARK=21, FSLASH=22, GTHAN=23, LTHAN=24, 
+            ASTERISK=25, AMP=26, PIPE=27, EXCLAM=28, CCOMMENT=29, RCBRAC=30
 
 	public
 	static let CONDITIONAL=1
@@ -35,24 +35,24 @@ open class MODLLexer: Lexer {
 
 	public
 	static let ruleNames: [String] = [
-		"WS", "NULL", "TRUE", "FALSE", "NEWLINE", "COLON", "EQUALS", "SC", "LBRAC", 
-		"RBRAC", "LSBRAC", "RSBRAC", "NUMBER", "INT", "EXP", "COMMENT", "INSIDE_COMMENT", 
-		"STRING", "UNRESERVED", "RESERVED_CHARS", "ESCAPED", "UNICODE", "HEX", 
-		"HASH_PREFIX", "QUOTED", "INSIDE_QUOTES", "GRAVED", "INSIDE_GRAVES", "LCBRAC", 
-		"CWS", "CNULL", "CTRUE", "CFALSE", "CNEWLINE", "CCOLON", "CEQUALS", "CSC", 
-		"CLBRAC", "CRBRAC", "CLSBRAC", "CRSBRAC", "CNUMBER", "QMARK", "FSLASH", 
-		"GTHAN", "LTHAN", "ASTERISK", "AMP", "PIPE", "EXCLAM", "CLCBRAC", "CSTRING", 
-		"CUNRESERVED", "CRESERVED_CHARS", "CESCAPED", "CCOMMENT", "CQUOTED", "CGRAVED", 
-		"RCBRAC"
+		"WS", "NULL", "TRUE", "FALSE", "COLON", "EQUALS", "STRUCT_SEP", "ARR_SEP", 
+		"LBRAC", "RBRAC", "LSBRAC", "RSBRAC", "NUMBER", "INT", "EXP", "COMMENT", 
+		"INSIDE_COMMENT", "STRING", "UNRESERVED", "RESERVED_CHARS", "ESCAPED", 
+		"UNICODE", "HEX", "HASH_PREFIX", "QUOTED", "INSIDE_QUOTES", "GRAVED", 
+		"INSIDE_GRAVES", "LCBRAC", "CWS", "CNULL", "CTRUE", "CFALSE", "CCOLON", 
+		"CEQUALS", "CSTRUCT_SEP", "CLBRAC", "CRBRAC", "CLSBRAC", "CRSBRAC", "CNUMBER", 
+		"QMARK", "FSLASH", "GTHAN", "LTHAN", "ASTERISK", "AMP", "PIPE", "EXCLAM", 
+		"CLCBRAC", "CSTRING", "CUNRESERVED", "CRESERVED_CHARS", "CESCAPED", "CCOMMENT", 
+		"CQUOTED", "CGRAVED", "RCBRAC"
 	]
 
 	private static let _LITERAL_NAMES: [String?] = [
-		nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 
+		nil, nil, nil, nil, nil, nil, nil, nil, "','", nil, nil, nil, nil, nil, 
 		nil, nil, nil, nil, nil, "'{'", nil, "'?'", "'/'", "'>'", "'<'", "'*'", 
 		"'&'", "'|'", "'!'", nil, "'}'"
 	]
 	private static let _SYMBOLIC_NAMES: [String?] = [
-		nil, "WS", "NULL", "TRUE", "FALSE", "NEWLINE", "COLON", "EQUALS", "SC", 
+		nil, "WS", "NULL", "TRUE", "FALSE", "COLON", "EQUALS", "STRUCT_SEP", "ARR_SEP", 
 		"LBRAC", "RBRAC", "LSBRAC", "RSBRAC", "NUMBER", "COMMENT", "STRING", "HASH_PREFIX", 
 		"QUOTED", "GRAVED", "LCBRAC", "CWS", "QMARK", "FSLASH", "GTHAN", "LTHAN", 
 		"ASTERISK", "AMP", "PIPE", "EXCLAM", "CCOMMENT", "RCBRAC"
