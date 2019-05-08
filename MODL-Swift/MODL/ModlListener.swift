@@ -60,7 +60,7 @@ class ModlListener: MODLParserBaseListener {
             if let nbArray = value.modl_nb_array() {
                 return processNBArray(nbArray)
             }
-            return processValue(value)
+//            return processValue(value)
         } else if let conditional = ctx.modl_value_conditional() {
             //TODO: process conditional
         }
@@ -94,10 +94,6 @@ class ModlListener: MODLParserBaseListener {
                     //allows empty arrays
                     continue
                 }
-                if prevSym != MODLLexer.NEWLINE && currSym != MODLLexer.NEWLINE {
-                    let null = ModlObject.ModlNull()
-                    output.append(null)
-                }
             }
             previous = child
         }
@@ -110,7 +106,7 @@ class ModlListener: MODLParserBaseListener {
             return nil
         } else if let value = ctx.modl_array_value_item() {
             //TODO: Should this be a array specific method? or can I piggyback of existing value parser
-            return processValue(value)
+//            return processValue(value)
         }
         return nil
     }
@@ -232,10 +228,4 @@ protocol MODLValueContext {
     func TRUE() -> TerminalNode?
     func FALSE() -> TerminalNode?
     func NULL() -> TerminalNode?
-}
-
-extension MODLParser.Modl_valueContext: MODLValueContext {
-}
-
-extension MODLParser.Modl_array_value_itemContext: MODLValueContext {
 }
