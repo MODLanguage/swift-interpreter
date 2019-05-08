@@ -15,14 +15,14 @@ class BasicTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         let bundle = Bundle(for: type(of: self))
-        guard let fileUrl = bundle.url(forResource: "basic", withExtension: "json") else {
+        guard let fileUrl = bundle.url(forResource: "base_tests", withExtension: "json") else {
             return
         }
         do {
             let data = try Data(contentsOf: fileUrl)
             jsonTests = try JSONDecoder().decode([MODLTest].self, from: data)
         } catch {
-            XCTFail("Fail creating tests from json input")
+            XCTFail("Fail creating tests from json input: \(error)")
         }
     }
     
@@ -32,7 +32,10 @@ class BasicTests: XCTestCase {
             XCTFail("Fail creating tests from json input")
             return
         }
-        for test in json {
+        let basic = json.filter { (modl) -> Bool in
+            modl.isBasicTest()
+        }
+        for test in basic {
             print("******TEST START********\n************")
             print("Test: \(test.modl)")
             let p = ModlParser()
