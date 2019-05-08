@@ -12,10 +12,27 @@ enum FeatureTestTypes: String {
     case conditional
     case load
     case classes = "class"
+    case assign 
     case method
+    case puny
+    case stringMethod = "string_method"
+    case objectReference = "object_ref"
+    case array
+    case map
+    case pair
+    case nbArray
+    case version
+    case graves
+    case bool
+    case null
+    case comments
     
     static var advancedFeatures: [FeatureTestTypes] {
-        return [.conditional, .load, .classes, .method]
+        return [.conditional, .load, .classes, .assign, .method, .objectReference, .puny, .stringMethod]
+    }
+    
+    static var basicFeatures: [FeatureTestTypes] {
+        return [.array, .map, .pair, .nbArray, .bool, .null]
     }
 }
 
