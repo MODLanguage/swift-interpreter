@@ -59,7 +59,7 @@ class BasicTests: XCTestCase {
             }
             print("******TEST END********\n************")
         }
-        print("TOTAL TESTS: \(jsonTests?.count ?? 0)")
+        print("TOTAL TESTS: \(basic.count)")
     }
 
 }
