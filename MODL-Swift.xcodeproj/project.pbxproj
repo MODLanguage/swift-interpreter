@@ -42,6 +42,7 @@
 		3E63156622819FE2008BDC14 /* MODLParserBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C422674865006AA9AF /* MODLParserBaseListener.swift */; };
 		3E63156722819FE2008BDC14 /* MODLParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C122674865006AA9AF /* MODLParserListener.swift */; };
 		3E63156822819FE2008BDC14 /* MODLParserParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C922674865006AA9AF /* MODLParserParserATN.swift */; };
+		3E63156A2282D980008BDC14 /* LongInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6315692282D980008BDC14 /* LongInputTests.swift */; };
 		3E7743BE226747E1006AA9AF /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7743B92267479D006AA9AF /* Antlr4.framework */; };
 		3E7743CA22674865006AA9AF /* MODLParser.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C022674865006AA9AF /* MODLParser.interp */; };
 		3E7743CB22674865006AA9AF /* MODLParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C122674865006AA9AF /* MODLParserListener.swift */; };
@@ -119,6 +120,7 @@
 		3E63155122819EF0008BDC14 /* basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = basic.json; sourceTree = "<group>"; };
 		3E63155822819F31008BDC14 /* BasicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTests.swift; sourceTree = "<group>"; };
 		3E63155A22819F62008BDC14 /* MODLTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MODLTest.swift; sourceTree = "<group>"; };
+		3E6315692282D980008BDC14 /* LongInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongInputTests.swift; sourceTree = "<group>"; };
 		3E7743C022674865006AA9AF /* MODLParser.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.interp; sourceTree = "<group>"; };
 		3E7743C122674865006AA9AF /* MODLParserListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserListener.swift; sourceTree = "<group>"; };
 		3E7743C222674865006AA9AF /* MODLLexerATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLLexerATN.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 			children = (
 				3E63153122816FCD008BDC14 /* jsonTests */,
 				3EFABA5A226737790029EACC /* MODL_SwiftTests.swift */,
+				3E6315692282D980008BDC14 /* LongInputTests.swift */,
 				3E63155A22819F62008BDC14 /* MODLTest.swift */,
 				3E63155822819F31008BDC14 /* BasicTests.swift */,
 				3EFABA5C226737790029EACC /* Info.plist */,
@@ -479,6 +482,7 @@
 				3E63156822819FE2008BDC14 /* MODLParserParserATN.swift in Sources */,
 				3E63155D22819FDD008BDC14 /* ModlParser.swift in Sources */,
 				3E63156422819FE2008BDC14 /* MODLParser.swift in Sources */,
+				3E63156A2282D980008BDC14 /* LongInputTests.swift in Sources */,
 				3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */,
 				3E63155922819F31008BDC14 /* BasicTests.swift in Sources */,
 				3E63156222819FE2008BDC14 /* MODLLexerATN.swift in Sources */,
