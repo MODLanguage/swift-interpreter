@@ -24,7 +24,7 @@ class ModlListener: MODLParserBaseListener {
         if let pair = ctx.modl_pair() {
             return processPair(pair)
         } else if let conditional = ctx.modl_top_level_conditional() {
-            print("is conditional")
+//            print("is conditional")
         } else if let map = ctx.modl_map() {
             return processMap(map)
         } else if let array = ctx.modl_array() {
@@ -34,7 +34,7 @@ class ModlListener: MODLParserBaseListener {
     }
     
     func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlObject.ModlPair {
-        print("Processing: Pair")
+//        print("Processing: Pair")
         let pair = ModlObject.ModlPair()
         //Check key
         if let terminalString = ctx.STRING() {
@@ -60,7 +60,7 @@ class ModlListener: MODLParserBaseListener {
             if let nbArray = value.modl_nb_array() {
                 return processNBArray(nbArray)
             }
-//            return processValue(value)
+            return processValue(value)
         } else if let conditional = ctx.modl_value_conditional() {
             //TODO: process conditional
         }
@@ -68,7 +68,7 @@ class ModlListener: MODLParserBaseListener {
     }
     
     func processArray(_ ctx: MODLParser.Modl_arrayContext) -> ModlObject.ModlArray {
-        print("Processing: Array")
+//        print("Processing: Array")
         guard let children = ctx.children else {
             //TODO: is this real? or should I return nil
             return ModlObject.ModlArray()
@@ -94,6 +94,11 @@ class ModlListener: MODLParserBaseListener {
                     //allows empty arrays
                     continue
                 }
+                if prevSym == MODLLexer.COLON && currSym == MODLLexer.COLON {
+                    output.append(ModlObject.ModlNull())
+                } else if prevSym == MODLLexer.STRUCT_SEP && currSym == MODLLexer.STRUCT_SEP {
+                    output.append(ModlObject.ModlNull())
+                }
             }
             previous = child
         }
@@ -106,13 +111,13 @@ class ModlListener: MODLParserBaseListener {
             return nil
         } else if let value = ctx.modl_array_value_item() {
             //TODO: Should this be a array specific method? or can I piggyback of existing value parser
-//            return processValue(value)
+            return processValue(value)
         }
         return nil
     }
     
     func processNBArray(_ ctx: MODLParser.Modl_nb_arrayContext) -> ModlObject.ModlValue? {
-        print("processing: NB array")
+//        print("processing: NB array")
         guard let children = ctx.children else {
             //TODO: is this real? or should I return nil
             return ModlObject.ModlArray()
@@ -123,11 +128,11 @@ class ModlListener: MODLParserBaseListener {
     }
     
     func processMap(_ ctx: MODLParser.Modl_mapContext) -> ModlObject.ModlMap {
-        print("Processing: Map")
+//        print("Processing: Map")
         let map = ModlObject.ModlMap()
         for item in ctx.modl_map_item() {
-            if let pair = processMapItemPair(item), let key = pair.key {
-                map.values[key] = pair.value
+            if let pair = processMapItemPair(item), let key = pair.key, let value = pair.value {
+                map.addValue(key: key, value: value)
             } else {
                 //TODO: process conditional
             }
@@ -146,7 +151,6 @@ class ModlListener: MODLParserBaseListener {
         return nil
     }
 
-    
     func processValue(_ ctx: MODLValueContext) -> ModlObject.ModlValue? {
         if let value = ctx.modl_array() {
             return processArray(value)
@@ -154,7 +158,14 @@ class ModlListener: MODLParserBaseListener {
             return processMap(value)
         } else if let value = ctx.modl_pair() {
             return processPair(value)
-        } else if let value = ctx.STRING() {
+        } else if let value = ctx.modl_primitive() {
+            return processPrimitive(value)
+        }
+        return nil
+    }
+    
+    func processPrimitive(_ ctx: MODLParser.Modl_primitiveContext) -> ModlObject.ModlValue? {
+        if let value = ctx.STRING() {
             return getTerminalString(value)
         }  else if let value = ctx.QUOTED() {
             return getTerminalQuoted(value)
@@ -167,7 +178,6 @@ class ModlListener: MODLParserBaseListener {
         } else if let value = ctx.FALSE() {
             return getTerminalBool(value, value: false)
         }
-        //TODO: process the rest of the terminal types
         return nil
     }
     
@@ -222,10 +232,11 @@ protocol MODLValueContext {
     func modl_map() -> MODLParser.Modl_mapContext?
     func modl_array() -> MODLParser.Modl_arrayContext?
     func modl_pair() -> MODLParser.Modl_pairContext?
-    func QUOTED() -> TerminalNode?
-    func NUMBER() -> TerminalNode?
-    func STRING() -> TerminalNode?
-    func TRUE() -> TerminalNode?
-    func FALSE() -> TerminalNode?
-    func NULL() -> TerminalNode?
+    func modl_primitive() -> MODLParser.Modl_primitiveContext?
+}
+
+extension MODLParser.Modl_array_value_itemContext: MODLValueContext {
+}
+
+extension MODLParser.Modl_valueContext: MODLValueContext {
 }

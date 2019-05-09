@@ -71,7 +71,14 @@ class ModlObject: Encodable {
     
     //MARK: Map
     class ModlMap: ModlStructure {
-        var values: [String: ModlValue] = [:]
+        private var values: [String: ModlValue] = [:]
+        private var orderedKeys: [String] = []
+        
+        func addValue(key: String, value: ModlValue) {
+            print("Map key added: \(key)")
+            values[key] = value
+            orderedKeys.append(key)
+        }
         
         private struct CodingKeys: CodingKey {
             var intValue: Int?
@@ -87,9 +94,12 @@ class ModlObject: Encodable {
         }
         
         override func encode(to encoder: Encoder) throws {
+            print("Encode map ordered: \(orderedKeys)")
             var container = encoder.container(keyedBy: CodingKeys.self)
-            for (key, child) in values {
-                try container.encode(child, forKey: .make(key: key))
+            for key in orderedKeys {
+                if let uwValue = values[key]{
+                    try container.encode(uwValue, forKey: .make(key: key))
+                }
             }
             
         }
