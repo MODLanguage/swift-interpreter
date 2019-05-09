@@ -21,8 +21,12 @@ class LongInputTests: XCTestCase {
     func testlongInput() {
         let modl = LongTest.text
         let p = ModlParser()
-        let result = p.parse(modl)
-        print(result)
+        do {
+            let result = try p.parse(modl)
+            print(result)
+        } catch {
+            XCTFail("Parse error: \(error.localizedDescription)")
+        }
     }
 
     func testPerformanceExample() {

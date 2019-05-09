@@ -9,10 +9,16 @@
 import Foundation
 import Antlr4
 
+
 class ModlListener: MODLParserBaseListener {
+    
+    static let ModlVersion = 1.0 // included version of MODL grammer
+    
     var object: ModlObject = ModlObject()
+    var parseError: Error?
     
     override func enterModl(_ ctx: MODLParser.ModlContext) {
+        parseError = nil
         for mStructure in ctx.modl_structure() {
             if let structure = processStructure(mStructure) {
                 object.addStructure(structure)
@@ -33,12 +39,16 @@ class ModlListener: MODLParserBaseListener {
         return nil
     }
     
-    func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlObject.ModlPair {
+    func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlObject.ModlPair? {
 //        print("Processing: Pair")
         let pair = ModlObject.ModlPair()
         //Check key
         if let terminalString = ctx.STRING() {
-            pair.key = getString(terminalString.getText())
+            let key = getString(terminalString.getText())
+            if processReservedPairKey(ctx) {
+                return nil
+            }
+            pair.key = key
         } else if let terminalQuote = ctx.QUOTED() {
             pair.key = getString(processQuotedString(terminalQuote.getText()))
         }
@@ -51,8 +61,25 @@ class ModlListener: MODLParserBaseListener {
         } else if let value = ctx.modl_value_item() {
             pair.value = processValueItem(value)
         }
-        //TODO: handling the rest for the conversion i.e. methods and classes
         return pair
+    }
+    
+    //returns bool for existence of special reserved key
+    func processReservedPairKey(_ ctx: MODLParser.Modl_pairContext) -> Bool {
+        guard let terminalString = ctx.STRING()?.getText() else {
+            return false
+        }
+        switch terminalString {
+        case "*VERSION", "*V":
+            //Could raise an error here for non-matching version.... although json test implies it just continues
+            return true
+        case "*C", "*c", "*CLASS", "*class":
+            //TODO: process class
+            return true
+        default:
+            return false
+        }
+
     }
     
     func processValueItem(_ ctx: MODLParser.Modl_value_itemContext) -> ModlObject.ModlValue? {
@@ -222,8 +249,8 @@ class ModlListener: MODLParserBaseListener {
         guard let uwInput = input else {
             return ""
         }
-        //remove graves
-        return uwInput.replacingOccurrences(of: "`", with: "")
+        // do not remove graves
+        return uwInput //.replacingOccurrences(of: "`", with: "")
     }
     
 }

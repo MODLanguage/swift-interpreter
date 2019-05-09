@@ -38,9 +38,13 @@ class MODL_SwiftTests: XCTestCase {
         }
         for test in json {
             let p = ModlParser()
-            let result = p.parse(test.modl)
-            let expected = test.expectedJson.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")
-            XCTAssert(result == expected, "Test: \(test.modl)\nExpected: \(expected)\nGot: \(result ?? "NA")")
+            do {
+                let result = try p.parse(test.modl)
+                let expected = test.expectedJson.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")
+                XCTAssert(result == expected, "Test: \(test.modl)\nExpected: \(expected)\nGot: \(result ?? "NA")")
+            } catch {
+                XCTFail("Error: \(error.localizedDescription)")
+            }
         }
     }
 }

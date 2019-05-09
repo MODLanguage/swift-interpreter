@@ -9,14 +9,21 @@
 import Foundation
 import Antlr4
 
+enum ModlParserError: Error {
+    case invalidVersion
+}
+
 struct ModlParser {
-    func parse(_ input: String) -> String {
+    func parse(_ input: String) throws -> String {
         let lexer = MODLLexer(ANTLRInputStream(input))
         do {
             let parser = try MODLParser(CommonTokenStream(lexer))
 //            parser.removeErrorListeners()
             let base = ModlListener()
             try parser.modl().enterRule(base)
+            if let error = base.parseError {
+                throw error
+            }
             let object = base.object
             var jsonData: Data? = nil
             let encoder = JSONEncoder()

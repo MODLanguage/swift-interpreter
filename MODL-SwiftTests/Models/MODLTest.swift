@@ -28,7 +28,7 @@ enum FeatureTestTypes: String {
     case comments
     
     static var advancedFeatures: [FeatureTestTypes] {
-        return [.conditional, .load, .classes, .assign, .method, .objectReference, .puny, .stringMethod, .version]
+        return [.conditional, .load, .classes, .assign, .method, .objectReference, .puny, .stringMethod]
     }
     
     static var basicFeatures: [FeatureTestTypes] {

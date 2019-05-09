@@ -39,23 +39,22 @@ class BasicTests: XCTestCase {
             print("******TEST START********\n************")
             print("Test: \(test.modl)")
             let p = ModlParser()
-            let result = p.parse(test.modl)
-            let expected = test.expectedJson
-            if expected.count == 0 {
-                //empty test
-                XCTAssert(result == expected, "\nExpected: \(expected)\nGot: \(result)")
-            } else {
-                //import and export JSON so format matches parser
-                do {
+            do {
+                let result = try p.parse(test.modl)
+                let expected = test.expectedJson
+                if expected.count == 0 {
+                    //empty test
+                    XCTAssert(result == expected, "\nExpected: \(expected)\nGot: \(result)")
+                } else {
+                    //import and export JSON so format matches parser
                     let data = Data(expected.utf8)
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
                     let stringOutput = String(data: dataOutput, encoding: .utf8)
                     XCTAssert(result == stringOutput, "\nExpected: \(stringOutput ?? "")\nGot: \(result)")
-                } catch {
-                    print("Failed to load: \(error.localizedDescription)")
-                    XCTFail("ERROR: could not process \(expected)")
                 }
+            } catch {
+                XCTFail("Error caught \(error.localizedDescription)")
             }
             print("******TEST END********\n************")
         }

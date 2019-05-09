@@ -57,7 +57,11 @@ class ParseTestViewController: UIViewController {
             return
         }
         let p = ModlParser()
-        let result = p.parse(modl)
-        resultView.text = result
+        do {
+            let result = try p.parse(modl)
+            resultView.text = result
+        } catch {
+            print("Parse error: \(error)")
+        }
     }
 }
