@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XCTest
 
 enum FeatureTestTypes: String {
     case conditional
@@ -64,5 +65,27 @@ struct MODLTest: Codable {
             return false
         }
         return !isBasicTest()
+    }
+    
+    static func getAllTests(_ testObject: XCTestCase) -> [MODLTest]? {
+        let bundle = Bundle(for: type(of: testObject))
+        guard let fileUrl = bundle.url(forResource: "base_tests", withExtension: "json") else {
+            return nil
+        }
+        do {
+            let data = try Data(contentsOf: fileUrl)
+            let tests = try JSONDecoder().decode([MODLTest].self, from: data)
+            let testCleared = tests.map { (test) -> MODLTest in
+                let value = NSMutableString(string: test.expectedJson.replacingOccurrences(of: "\n", with: ""))
+                let pattern = "\\s(?=(\"[^\"]*\"|[^\"])*$)"
+                let regex = try? NSRegularExpression(pattern: pattern)
+                regex?.replaceMatches(in: value, options: .reportProgress, range: NSRange(location: 0,length: value.length), withTemplate: "")
+                let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: value as String, comment: test.comment, testedFeatures: test.testedFeatures)
+                return newTest
+            }
+            return testCleared
+        } catch {
+            return nil
+        }
     }
 }

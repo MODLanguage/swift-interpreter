@@ -11,6 +11,7 @@ import Antlr4
 
 enum ModlParserError: Error {
     case invalidVersion
+    case invalidClass
 }
 
 struct ModlParser {
@@ -24,20 +25,23 @@ struct ModlParser {
             if let error = base.parseError {
                 throw error
             }
-            let object = base.object
-            var jsonData: Data? = nil
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .sortedKeys
-            if object.structures.count > 1 {
-                jsonData = try encoder.encode(object.structures)
-            } else if let first = object.structures.first {
-                jsonData = try encoder.encode(first)
-            } else {
-                return ""
-            }
-            if let data = jsonData {
-                return String(data: data, encoding: .utf8) ?? ""
-            }
+            let initialObject = base.object
+            let converter = ModlObjectCreator()
+            let output = converter.createOutput(initialObject)
+            return output?.asJson() ?? ""
+//            var jsonData: Data? = nil
+//            let encoder = JSONEncoder()
+//            encoder.outputFormatting = .sortedKeys
+//            if object.structures.count > 1 {
+//                jsonData = try encoder.encode(object.structures)
+//            } else if let first = object.structures.first {
+//                jsonData = try encoder.encode(first)
+//            } else {
+//                return ""
+//            }
+//            if let data = jsonData {
+//                return String(data: data, encoding: .utf8) ?? ""
+//            }
             return ""
         } catch {
             print("Parser fail : \(error)")

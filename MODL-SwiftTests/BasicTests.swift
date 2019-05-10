@@ -13,17 +13,7 @@ class BasicTests: XCTestCase {
     var jsonTests: [MODLTest]?
     
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        let bundle = Bundle(for: type(of: self))
-        guard let fileUrl = bundle.url(forResource: "base_tests", withExtension: "json") else {
-            return
-        }
-        do {
-            let data = try Data(contentsOf: fileUrl)
-            jsonTests = try JSONDecoder().decode([MODLTest].self, from: data)
-        } catch {
-            XCTFail("Fail creating tests from json input: \(error)")
-        }
+        jsonTests = MODLTest.getAllTests(self)
     }
     
     
@@ -46,12 +36,7 @@ class BasicTests: XCTestCase {
                     //empty test
                     XCTAssert(result == expected, "\nExpected: \(expected)\nGot: \(result)")
                 } else {
-                    //import and export JSON so format matches parser
-                    let data = Data(expected.utf8)
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
-                    let stringOutput = String(data: dataOutput, encoding: .utf8)
-                    XCTAssert(result == stringOutput, "\nExpected: \(stringOutput ?? "")\nGot: \(result)")
+                    XCTAssert(result == test.expectedJson, "\nExpected: \(test.expectedJson)\nGot: \(result)")
                 }
             } catch {
                 XCTFail("Error caught \(error.localizedDescription)")
