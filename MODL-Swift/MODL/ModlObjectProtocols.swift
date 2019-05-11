@@ -39,7 +39,16 @@ protocol ModlPrimitive: ModlValue {
 
 extension ModlPrimitive {
     func asString() -> String? {
-        return value as? String
+        switch value {
+        case let int as Int:
+            return String(int)
+        case let dec as Decimal:
+            return "\(dec)"
+        case let str as String:
+            return str
+        default:
+            return nil
+        }
     }
 }
 

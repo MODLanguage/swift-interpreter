@@ -15,7 +15,7 @@
 		3E3896DE22830D63005533B9 /* basic.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D822830D62005533B9 /* basic.json */; };
 		3E5ABB6522674513007419CC /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
 		3E5ABB722267459E007419CC /* ModlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* ModlParser.swift */; };
-		3E5ABB7E226745FB007419CC /* ModlInitialObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlInitialObject.swift */; };
+		3E5ABB7E226745FB007419CC /* ModlListenerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */; };
 		3E63154122816FCD008BDC14 /* 3.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153222816FCD008BDC14 /* 3.modl */; };
 		3E63154222816FCD008BDC14 /* 2.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153322816FCD008BDC14 /* 2.modl */; };
 		3E63154322816FCD008BDC14 /* test_import.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153522816FCD008BDC14 /* test_import.txt */; };
@@ -31,7 +31,7 @@
 		3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155A22819F62008BDC14 /* MODLTest.swift */; };
 		3E63155C22819FDD008BDC14 /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
 		3E63155D22819FDD008BDC14 /* ModlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* ModlParser.swift */; };
-		3E63155E22819FDD008BDC14 /* ModlInitialObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlInitialObject.swift */; };
+		3E63155E22819FDD008BDC14 /* ModlListenerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */; };
 		3E63155F22819FE2008BDC14 /* MODLLexer.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C622674865006AA9AF /* MODLLexer.interp */; };
 		3E63156022819FE2008BDC14 /* MODLLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C522674865006AA9AF /* MODLLexer.swift */; };
 		3E63156122819FE2008BDC14 /* MODLLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C722674865006AA9AF /* MODLLexer.tokens */; };
@@ -115,7 +115,7 @@
 		3E5ABB6422674513007419CC /* ModlListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListener.swift; sourceTree = "<group>"; };
 		3E5ABB6622674541007419CC /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = ../antlr/Antlr4.xcodeproj; sourceTree = "<group>"; };
 		3E5ABB712267459E007419CC /* ModlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlParser.swift; sourceTree = "<group>"; };
-		3E5ABB7D226745FB007419CC /* ModlInitialObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlInitialObject.swift; sourceTree = "<group>"; };
+		3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListenerObject.swift; sourceTree = "<group>"; };
 		3E63153222816FCD008BDC14 /* 3.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3.modl; sourceTree = "<group>"; };
 		3E63153322816FCD008BDC14 /* 2.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2.modl; sourceTree = "<group>"; };
 		3E63153522816FCD008BDC14 /* test_import.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_import.txt; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 				3E7743BF22674829006AA9AF /* grammar */,
 				3E5ABB712267459E007419CC /* ModlParser.swift */,
 				3E5ABB6422674513007419CC /* ModlListener.swift */,
-				3E5ABB7D226745FB007419CC /* ModlInitialObject.swift */,
+				3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */,
 				3E6315782285C59B008BDC14 /* ModlObjectCreator.swift */,
 				3E63157B2285C639008BDC14 /* ModlOutputObject.swift */,
 				3E63157D2285D8DB008BDC14 /* ModlObjectProtocols.swift */,
@@ -511,7 +511,7 @@
 				3E7743D622674ABE006AA9AF /* DemoOptionsViewController.swift in Sources */,
 				3E7743CF22674865006AA9AF /* MODLLexer.swift in Sources */,
 				3E5ABB6522674513007419CC /* ModlListener.swift in Sources */,
-				3E5ABB7E226745FB007419CC /* ModlInitialObject.swift in Sources */,
+				3E5ABB7E226745FB007419CC /* ModlListenerObject.swift in Sources */,
 				3E7743DB22674AEC006AA9AF /* ParseTestViewController.swift in Sources */,
 				3E7743D322674865006AA9AF /* MODLParserParserATN.swift in Sources */,
 				3E63157E2285D8DB008BDC14 /* ModlObjectProtocols.swift in Sources */,
@@ -525,7 +525,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E63155E22819FDD008BDC14 /* ModlInitialObject.swift in Sources */,
+				3E63155E22819FDD008BDC14 /* ModlListenerObject.swift in Sources */,
 				3E63156822819FE2008BDC14 /* MODLParserParserATN.swift in Sources */,
 				3E63155D22819FDD008BDC14 /* ModlParser.swift in Sources */,
 				3E63157122847E04008BDC14 /* AdvancedTests.swift in Sources */,

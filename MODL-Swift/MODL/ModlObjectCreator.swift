@@ -9,7 +9,10 @@
 import Foundation
 
 struct ModlObjectCreator {
-    func createOutput(_ input: ModlInitialObject) -> ModlOutputObject? {
+    
+    var classManager = ModlClassManager()
+
+    func createOutput(_ input: ModlListenerObject) -> ModlOutputObject? {
         let output = ModlOutputObject()
         for structure in input.structures {
             if let outStructure = processModlElement(structure) as? ModlStructure {
@@ -24,27 +27,35 @@ struct ModlObjectCreator {
             return nil
         }
         switch uwElement {
-        case let iPair as ModlInitialObject.Pair:
+        case let iPair as ModlPair:
             let pair = ModlOutputObject.Pair()
             pair.key = iPair.key
+            if processReservedPair(iPair) {
+                return nil
+            }
+            if let classReference = classManager.processFromClass(iPair, classIdentifier: iPair.key){
+                pair.key = classReference.key
+                pair.value = processModlElement(classReference.value)
+                return pair
+            }
             pair.value = processModlElement(iPair.value)
             return pair
-        case let iArray as ModlInitialObject.Array:
+        case let iArray as ModlArray:
             let array = ModlOutputObject.Array()
             array.values = iArray.values.compactMap({ (value) -> ModlValue? in
                 return processModlElement(value)
             })
             return array
-        case let iMap as ModlInitialObject.Map:
+        case let iMap as ModlMap:
             let map = ModlOutputObject.Map()
             for (key, value) in iMap.values {
                 map.values[key] = processModlElement(value)
             }
             map.orderedKeys = iMap.orderedKeys
             return map
-        case is ModlInitialObject.Null:
+        case is ModlNull:
             return ModlOutputObject.Null()
-        case let iPrim as ModlInitialObject.Primitive:
+        case let iPrim as ModlPrimitive:
             let prim = ModlOutputObject.Primitive()
             prim.value = iPrim.value
             return prim
@@ -52,4 +63,33 @@ struct ModlObjectCreator {
             return nil
         }
     }
+    
+    
+    //    //returns bool for existence of special reserved key
+    func hasReservedPairKey(_ pair: ModlPair) -> Bool {
+        guard let key = pair.key else {
+            return false
+        }
+        let reservedKeys = ["*VERSION", "*V","*C", "*c", "*CLASS", "*class"]
+        return reservedKeys.contains(key)
+    }
+    
+    
+    func processReservedPair(_ pair: ModlPair) -> Bool {
+        guard let key = pair.key else {
+            return false
+        }
+        switch key {
+        case "*VERSION", "*V":
+            //Could raise an error here for non-matching version.... although json test implies it just continues
+            return true
+        case "*C", "*c", "*CLASS", "*class":
+            //TODO: process class
+            classManager.addClass(pair.value)
+            return true
+        default:
+            return false
+        }
+    }
+
 }

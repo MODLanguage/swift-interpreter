@@ -1,5 +1,5 @@
 //
-//  ModlObject.swift
+//  ModlListenerObject.swift
 //  MODL-Swift
 //
 //  Created by Nicholas Jones on 17/04/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ModlInitialObject: ModlObject {
+class ModlListenerObject: ModlObject {
     var structures: [ModlStructure] = []
     
     class Pair: ModlPair {

@@ -14,7 +14,7 @@ class ModlListener: MODLParserBaseListener {
     
     static let ModlVersion = 1.0 // included version of MODL grammer
     
-    var object = ModlInitialObject()
+    var object = ModlListenerObject()
     var parseError: Error?
     
     override func enterModl(_ ctx: MODLParser.ModlContext) {
@@ -41,7 +41,7 @@ class ModlListener: MODLParserBaseListener {
     
     func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlPair? {
 //        print("Processing: Pair")
-        let pair = ModlInitialObject.Pair()
+        let pair = ModlListenerObject.Pair()
         //Check key
         if let terminalString = ctx.STRING() {
             pair.key = getString(terminalString.getText())
@@ -60,32 +60,6 @@ class ModlListener: MODLParserBaseListener {
         return pair
     }
     
-//    //returns bool for existence of special reserved key
-//    func hasReservedPairKey(_ ctx: MODLParser.Modl_pairContext) -> Bool {
-//        guard let terminalString = ctx.STRING()?.getText() else {
-//            return false
-//        }
-//        let reservedKeys = ["*VERSION", "*V","*C", "*c", "*CLASS", "*class"]
-//        return reservedKeys.contains(terminalString)
-//    }
-//
-//    func processReservedPair(_ pair: ModlObject.ModlPair) {
-//        guard let key = pair.key else {
-//            return
-//        }
-//        switch key {
-//        case "*VERSION", "*V":
-//            //Could raise an error here for non-matching version.... although json test implies it just continues
-//            return
-//        case "*C", "*c", "*CLASS", "*class":
-//            //TODO: process class
-//            object.classManager.processClass(pair.value)
-//            return
-//        default:
-//            return
-//        }
-//    }
-    
     func processValueItem(_ ctx: MODLParser.Modl_value_itemContext) -> ModlValue? {
         if let value = ctx.modl_value() {
             if let nbArray = value.modl_nb_array() {
@@ -102,9 +76,9 @@ class ModlListener: MODLParserBaseListener {
 //        print("Processing: Array")
         guard let children = ctx.children else {
             //TODO: is this real? or should I return nil
-            return ModlInitialObject.Array()
+            return ModlListenerObject.Array()
         }
-        let arr = ModlInitialObject.Array()
+        let arr = ModlListenerObject.Array()
         arr.values = processArrayChildren(children)
         return arr
     }
@@ -126,9 +100,9 @@ class ModlListener: MODLParserBaseListener {
                     continue
                 }
                 if prevSym == MODLLexer.COLON && currSym == MODLLexer.COLON {
-                    output.append(ModlInitialObject.Null())
+                    output.append(ModlListenerObject.Null())
                 } else if prevSym == MODLLexer.STRUCT_SEP && currSym == MODLLexer.STRUCT_SEP {
-                    output.append(ModlInitialObject.Null())
+                    output.append(ModlListenerObject.Null())
                 }
             }
             previous = child
@@ -151,16 +125,16 @@ class ModlListener: MODLParserBaseListener {
 //        print("processing: NB array")
         guard let children = ctx.children else {
             //TODO: is this real? or should I return nil
-            return ModlInitialObject.Array()
+            return ModlListenerObject.Array()
         }
-        let arr = ModlInitialObject.Array()
+        let arr = ModlListenerObject.Array()
         arr.values = processArrayChildren(children)
         return arr
     }
     
     func processMap(_ ctx: MODLParser.Modl_mapContext) -> ModlMap {
 //        print("Processing: Map")
-        let map = ModlInitialObject.Map()
+        let map = ModlListenerObject.Map()
         for item in ctx.modl_map_item() {
             if let pair = processMapItemPair(item), let key = pair.key, let value = pair.value {
                 map.addValue(key: key, value: value)
@@ -203,7 +177,7 @@ class ModlListener: MODLParserBaseListener {
         } else if let value = ctx.NUMBER() {
             return getTerminalNumber(value)
         } else if ctx.NULL() != nil {
-            return ModlInitialObject.Null()
+            return ModlListenerObject.Null()
         } else if let value = ctx.TRUE() {
             return getTerminalBool(value, value: true)
         } else if let value = ctx.FALSE() {
@@ -225,25 +199,25 @@ class ModlListener: MODLParserBaseListener {
     
     func getTerminalString(_ ctx: TerminalNode?) -> ModlPrimitive {
         //TODO: escape
-        let terminal = ModlInitialObject.Primitive()
+        let terminal = ModlListenerObject.Primitive()
         terminal.value = getString(ctx?.getText())
         return terminal
     }
     
     func getTerminalQuoted(_ ctx: TerminalNode?) -> ModlPrimitive {
-        let terminal = ModlInitialObject.Primitive()
+        let terminal = ModlListenerObject.Primitive()
         terminal.value = getString(processQuotedString(ctx?.getText()))
         return terminal
     }
 
     func getTerminalBool(_ ctx: TerminalNode?, value: Bool) -> ModlPrimitive {
-        let terminal = ModlInitialObject.Primitive()
+        let terminal = ModlListenerObject.Primitive()
         terminal.value = value
         return terminal
     }
     
     func getTerminalNumber(_ ctx: TerminalNode?) -> ModlPrimitive {
-        let terminal = ModlInitialObject.Primitive()
+        let terminal = ModlListenerObject.Primitive()
         let numText = ctx?.getText() ?? ""
         terminal.value = Decimal(string: numText)  // Decimal(numText)
         return terminal
