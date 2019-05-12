@@ -170,8 +170,8 @@ class ModlClassManager {
             return passedData
         }
         var newData = passedData
-        if let assign = currentClass.assignMap {
-            newData.append(assign)
+        if let assign = currentClass.assignMap?.values as? [ModlArray] {
+            newData += assign
         }
         return constructAssignList(currentClass.superclass, passedData: newData)
     }
