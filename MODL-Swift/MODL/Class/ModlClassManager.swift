@@ -75,7 +75,7 @@ class ModlClassManager {
         let outputPair = ModlOutputObject.Pair()
         outputPair.key = classObj.name
         //TODO: work out prim from pair value if superclass doesn't have one....
-        if let prim = findPrimitive(classObj.superclass) {
+        if let prim = findPrimitiveType(classObj) {
             switch prim {
             case .str:
                 if let pairValue = uwInput.value as? ModlPrimitive {
@@ -87,12 +87,13 @@ class ModlClassManager {
             case .map:
                 let replacement = ModlListenerObject.Map()
                 let extraDetails = constructAdditionalItems(classObj.name)
+                let assignList = constructAssignList(classObj.name)
                 for detail in extraDetails {
                     if let key = detail.key, let value = detail.value {
                         replacement.addValue(key: key, value: value)
                     }
                 }
-                if let pairValue = uwInput.value as? ModlArray, let assignList = classObj.assignMap?.values as? [ModlArray] {
+                if let pairValue = uwInput.value as? ModlArray {
                     if let matching = assignList.first(where: { (array) -> Bool in
                             return array.values.count == pairValue.values.count
                     }) ?? assignList.sorted(by: { (first, second) -> Bool in
@@ -100,7 +101,7 @@ class ModlClassManager {
                     }).first {
                         for (index, key) in matching.values.enumerated() {
                             if let keyStr = (key as? ModlPrimitive)?.asString() {
-                                let value = pairValue.values[index] 
+                                let value = pairValue.values[index]
                                 replacement.addValue(key: keyStr, value: value)
                             }
                         }
@@ -139,14 +140,21 @@ class ModlClassManager {
         return outputPair
     }
     
-    private func findPrimitive(_ superclassId: String?) -> PrimitiveSuperclassType? {
-        guard let uwId = superclassId else {
+    private func findPrimitiveType(_ mClass: ModlClass?) -> PrimitiveSuperclassType? {
+        guard let currClass = mClass else {
             return nil
         }
-        if let nextClass = getClass(uwId) {
-            return findPrimitive(nextClass.superclass)
+        if let nextClass = getClass(currClass.superclass) {
+            return findPrimitiveType(nextClass)
         } else {
-            return PrimitiveSuperclassType(rawValue: uwId)
+            if let explicitSuper = currClass.superclass, let explicitPrim = PrimitiveSuperclassType(rawValue: explicitSuper) {
+                return explicitPrim
+            } else if currClass.assignMap != nil {
+                return .map
+            }
+            else {
+                return nil
+            }
         }
     }
     
@@ -154,11 +162,18 @@ class ModlClassManager {
         guard let uwId = classId, let currentClass = getClass(uwId) else {
             return passedData
         }
-        print("Current ID: \(currentClass.name)")
-        print("Next ID: \(currentClass.superclass)")
-        print("Current extra \(currentClass.extraValues.first?.key)")
-        print("List extra \(dump(passedData))")
         return constructAdditionalItems(currentClass.superclass, passedData: passedData + currentClass.extraValues)
+    }
+    
+    private func constructAssignList(_ classId: String?, passedData: [ModlArray] = []) -> [ModlArray] {
+        guard let uwId = classId, let currentClass = getClass(uwId) else {
+            return passedData
+        }
+        var newData = passedData
+        if let assign = currentClass.assignMap {
+            newData.append(assign)
+        }
+        return constructAssignList(currentClass.superclass, passedData: newData)
     }
 }
 
