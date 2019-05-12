@@ -33,7 +33,7 @@ struct ModlObjectCreator {
             if processReservedPair(iPair) {
                 return nil
             }
-            if let classReference = classManager.processFromClass(iPair, classIdentifier: iPair.key){
+            if let classReference = classManager.processFromClass(key: pair.key, value: pair.value){
                 pair.key = classReference.key
                 pair.value = processModlElement(classReference.value)
                 return pair
@@ -48,10 +48,14 @@ struct ModlObjectCreator {
             return array
         case let iMap as ModlMap:
             let map = ModlOutputObject.Map()
-            for (key, value) in iMap.values {
-                map.values[key] = processModlElement(value)
+            for key in iMap.orderedKeys {
+                let originalValue = iMap.value(forKey: key)
+                if let classReference = classManager.processFromClass(key: key, value: originalValue), let mValue = processModlElement(classReference.value), let uwKey = classReference.key {
+                    map.addValue(key: uwKey, value: mValue)
+                } else if let mValue = processModlElement(originalValue){
+                    map.addValue(key: key, value: mValue)
+                }
             }
-            map.orderedKeys = iMap.orderedKeys
             return map
         case is ModlNull:
             return ModlOutputObject.Null()

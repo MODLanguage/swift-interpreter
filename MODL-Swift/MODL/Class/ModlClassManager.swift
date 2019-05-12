@@ -68,8 +68,8 @@ class ModlClassManager {
         })?.value
     }
     
-    func processFromClass(_ input: ModlValue?, classIdentifier: String?) -> ModlPair? {
-        guard let uwInput = input as? ModlPair, let uwClassId = classIdentifier, let classObj = getClass(uwClassId) else {
+    func processFromClass(key: String?, value: ModlValue?) -> ModlPair? {
+        guard let uwValue = value, let classObj = getClass(key) else {
             return nil
         }
         let outputPair = ModlOutputObject.Pair()
@@ -78,7 +78,7 @@ class ModlClassManager {
         if let prim = findPrimitiveType(classObj) {
             switch prim {
             case .str:
-                if let pairValue = uwInput.value as? ModlPrimitive {
+                if let pairValue = uwValue as? ModlPrimitive {
                     let replacement = ModlListenerObject.Primitive()
                     replacement.value = pairValue.asString()
                     outputPair.value = replacement
@@ -93,7 +93,7 @@ class ModlClassManager {
                         replacement.addValue(key: key, value: value)
                     }
                 }
-                if let pairValue = uwInput.value as? ModlArray {
+                if let pairValue = uwValue as? ModlArray {
                     if let matching = assignList.first(where: { (array) -> Bool in
                             return array.values.count == pairValue.values.count
                     }) ?? assignList.sorted(by: { (first, second) -> Bool in
@@ -118,7 +118,7 @@ class ModlClassManager {
 //                        }
 //                    }
                     //TODO: handle assign
-                } else if let pairValue = uwInput.value as? ModlMap {
+                } else if let pairValue = uwValue as? ModlMap {
                     for key in pairValue.orderedKeys {
                         if let value = pairValue.value(forKey: key) {
                             replacement.addValue(key: key, value: value)
@@ -136,7 +136,7 @@ class ModlClassManager {
                 break
             }
         }
-        outputPair.value = uwInput.value
+        outputPair.value = uwValue
         return outputPair
     }
     
