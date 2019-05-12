@@ -27,7 +27,23 @@ class AdvancedTests: XCTestCase {
         let simpleClassTests = json.filter { (modl) -> Bool in
             return (modl.testedFeatures?.contains(FeatureTestTypes.classes.rawValue) ?? false) && modl.testedFeatures?.count == 1
         }
-        for test in simpleClassTests {
+        performTests(simpleClassTests)
+    }
+    
+    func testAssignClass() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let assignClassTests = json.filter { (modl) -> Bool in
+            return (modl.testedFeatures?.contains(FeatureTestTypes.classes.rawValue) ?? false) && modl.testedFeatures?.count == 2 && (modl.testedFeatures?.contains(FeatureTestTypes.assign.rawValue) ?? false)
+        }
+        performTests(assignClassTests)
+    }
+
+    
+    func performTests(_ tests: [MODLTest]) {
+        for test in tests {
             print("******TEST START********\n************")
             print("Test: \(test.modl)")
             let p = ModlParser()
@@ -50,7 +66,6 @@ class AdvancedTests: XCTestCase {
             }
             print("******TEST END********\n************")
         }
-        print("TOTAL TESTS: \(simpleClassTests.count)")
+        print("TOTAL TESTS: \(tests.count)")
     }
-
 }

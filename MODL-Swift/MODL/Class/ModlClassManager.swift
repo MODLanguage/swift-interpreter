@@ -74,7 +74,7 @@ class ModlClassManager {
         }
         let outputPair = ModlOutputObject.Pair()
         outputPair.key = classObj.name
-
+        //TODO: work out prim from pair value if superclass doesn't have one....
         if let prim = findPrimitive(classObj.superclass) {
             switch prim {
             case .str:
@@ -86,13 +86,36 @@ class ModlClassManager {
                 }
             case .map:
                 let replacement = ModlListenerObject.Map()
-                let extraDetails = constructAdditionalItems(classObj.superclass).reversed()
+                let extraDetails = constructAdditionalItems(classObj.name)
                 for detail in extraDetails {
                     if let key = detail.key, let value = detail.value {
                         replacement.addValue(key: key, value: value)
                     }
                 }
-                if let pairValue = uwInput.value as? ModlArray {
+                if let pairValue = uwInput.value as? ModlArray, let assignList = classObj.assignMap?.values as? [ModlArray] {
+                    if let matching = assignList.first(where: { (array) -> Bool in
+                            return array.values.count == pairValue.values.count
+                    }) ?? assignList.sorted(by: { (first, second) -> Bool in
+                        return first.values.count > second.values.count
+                    }).first {
+                        for (index, key) in matching.values.enumerated() {
+                            if let keyStr = (key as? ModlPrimitive)?.asString() {
+                                let value = pairValue.values[index] 
+                                replacement.addValue(key: keyStr, value: value)
+                            }
+                        }
+                    }
+                    
+                    
+//                    for case let keyList as ModlArray in assignList.values {
+//                        if keyList.values.count == pairValue.values.count {
+//                            for (index, key) in keyList.values.enumerated() {
+//                                if let uwKey = (key as? ModlPrimitive)?.asString(), let uwValue = pairValue.values[index] as? ModlValue {
+//                                    replacement.addValue(key: uwKey, value: uwValue)
+//                                }
+//                            }
+//                        }
+//                    }
                     //TODO: handle assign
                 } else if let pairValue = uwInput.value as? ModlMap {
                     for key in pairValue.orderedKeys {
@@ -100,11 +123,11 @@ class ModlClassManager {
                             replacement.addValue(key: key, value: value)
                         }
                     }
-                    for detail in classObj.extraValues {
-                        if let uwKey = detail.key, let uwValue = detail.value {
-                            replacement.addValue(key: uwKey, value: uwValue)
-                        }
-                    }
+//                    for detail in classObj.extraValues {
+//                        if let uwKey = detail.key, let uwValue = detail.value {
+//                            replacement.addValue(key: uwKey, value: uwValue)
+//                        }
+//                    }
                 }
                 outputPair.value = replacement
                 return outputPair
@@ -144,7 +167,7 @@ fileprivate struct ModlClass {
     let id: String
     var superclass: String? = nil
     var name: String
-    var assignMap: Any?
+    var assignMap: ModlArray?
     var extraValues: [ModlPair] = []
     
     init?(_ map: ModlValue?) {
@@ -155,7 +178,7 @@ fileprivate struct ModlClass {
             id = classId
             superclass = (classMap.value(forKeys: ["*s", "*superclass"], ignoreCase: true) as? ModlPrimitive)?.asString()
             name = (classMap.value(forKeys: ["*n", "*name"], ignoreCase: true) as? ModlPrimitive)?.asString() ?? classId
-            assignMap = classMap.value(forKeys: ["*a", "*assign"], ignoreCase: true)
+            assignMap = classMap.value(forKeys: ["*a", "*assign"], ignoreCase: true) as? ModlArray
             let nonSpecialKeys = classMap.orderedKeys.filter { (key) -> Bool in
                 return ClassSpecialKeys(rawValue: key.lowercased()) == nil
             }
