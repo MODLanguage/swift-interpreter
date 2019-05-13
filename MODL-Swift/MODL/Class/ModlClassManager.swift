@@ -31,7 +31,7 @@ class ModlClassManager {
     
     
     private var storedClasses: [String: ModlClass] = [:]
-
+    
     func addClass(_ classMap: ModlValue?) {
         guard let input = classMap as? ModlMap, var mClass = ModlClass(input) else {
             //either not a map, or has no id so ignore ...
@@ -93,8 +93,8 @@ class ModlClassManager {
                     }) ?? assignList.sorted(by: { (first, second) -> Bool in
                         return first.values.count > second.values.count
                     }).first {
-                        for (index, key) in matching.values.enumerated() {
-                            if let keyStr = (key as? ModlPrimitive)?.asString() {
+                        for (index, matchingKey) in matching.values.enumerated() {
+                            if let keyStr = (matchingKey as? ModlPrimitive)?.asString() {
                                 let value = pairValue.values[index]
                                 replacement.addValue(key: keyStr, value: value)
                             }
@@ -109,8 +109,8 @@ class ModlClassManager {
                 }
                 let extraDetails = constructAdditionalItems(classObj.name)
                 for detail in extraDetails {
-                    if let key = detail.key, let value = detail.value {
-                        replacement.addValue(key: key, value: value)
+                    if let detailKey = detail.key, let value = detail.value {
+                        replacement.addValue(key: detailKey, value: value)
                     }
                 }
                 outputPair.value = replacement

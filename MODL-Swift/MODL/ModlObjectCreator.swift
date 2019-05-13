@@ -22,7 +22,7 @@ struct ModlObjectCreator {
         return output
     }
     
-    private func processModlElement(_ element: ModlValue?) -> ModlValue? {
+    private func processModlElement(_ element: ModlValue?, classIdsProcessedInBranch: [String] = []) -> ModlValue? {
         guard let uwElement = element else {
             return nil
         }
@@ -33,26 +33,32 @@ struct ModlObjectCreator {
             if processReservedPair(iPair) {
                 return nil
             }
-            if let classReference = classManager.processFromClass(key: iPair.key, value: iPair.value){
+            if let classReference = classManager.processFromClass(key: iPair.key, value: iPair.value), !haveAlreadyProcessedClassInBranch(identifier: iPair.key, processedList: classIdsProcessedInBranch) {
+                var newProcessedClasses = classIdsProcessedInBranch
+                newProcessedClasses.append(iPair.key ?? "")
+                newProcessedClasses.append(classReference.key ?? "")
                 pair.key = classReference.key
-                pair.value = processModlElement(classReference.value)
+                pair.value = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)
                 return pair
             }
-            pair.value = processModlElement(iPair.value)
+            pair.value = processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)
             return pair
         case let iArray as ModlArray:
             let array = ModlOutputObject.Array()
             array.values = iArray.values.compactMap({ (value) -> ModlValue? in
-                return processModlElement(value)
+                return processModlElement(value, classIdsProcessedInBranch: classIdsProcessedInBranch)
             })
             return array
         case let iMap as ModlMap:
             let map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
                 let originalValue = iMap.value(forKey: key)
-                if let classReference = classManager.processFromClass(key: key, value: originalValue), let mValue = processModlElement(classReference.value), let uwKey = classReference.key {
+                var newProcessedClasses = classIdsProcessedInBranch
+                if let classReference = classManager.processFromClass(key: key, value: originalValue), let mValue = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses) {
+                    newProcessedClasses.append(uwKey)
+                    newProcessedClasses.append(key)
                     map.addValue(key: uwKey, value: mValue)
-                } else if let mValue = processModlElement(originalValue){
+                } else if let mValue = processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
                     map.addValue(key: key, value: mValue)
                 }
             }
@@ -66,6 +72,13 @@ struct ModlObjectCreator {
         default:
             return nil
         }
+    }
+    
+    private func haveAlreadyProcessedClassInBranch(identifier: String?, processedList: [String]) -> Bool {
+        guard let uwId = identifier, uwId.count > 0 else {
+            return false
+        }
+        return processedList.contains(uwId)
     }
     
     
