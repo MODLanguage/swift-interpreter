@@ -11,6 +11,7 @@ import Foundation
 struct ModlObjectCreator {
     
     var classManager = ModlClassManager()
+    var stringTransformer = StringTransformer()
 
     func createOutput(_ input: ModlListenerObject) -> ModlOutputObject? {
         let output = ModlOutputObject()
@@ -66,9 +67,13 @@ struct ModlObjectCreator {
         case is ModlNull:
             return ModlOutputObject.Null()
         case let iPrim as ModlPrimitive:
-            let prim = ModlOutputObject.Primitive()
-            prim.value = iPrim.value
-            return prim
+            if let strValue = iPrim.value as? String {
+                return stringTransformer.transformString(strValue)
+            } else {
+                let prim = ModlOutputObject.Primitive()
+                prim.value = iPrim.value
+                return prim
+            }
         default:
             return nil
         }
@@ -83,7 +88,7 @@ struct ModlObjectCreator {
     
     
     //    //returns bool for existence of special reserved key
-    func hasReservedPairKey(_ pair: ModlPair) -> Bool {
+    private func hasReservedPairKey(_ pair: ModlPair) -> Bool {
         guard let key = pair.key else {
             return false
         }
@@ -92,7 +97,7 @@ struct ModlObjectCreator {
     }
     
     
-    func processReservedPair(_ pair: ModlPair) -> Bool {
+    private func processReservedPair(_ pair: ModlPair) -> Bool {
         guard let key = pair.key else {
             return false
         }

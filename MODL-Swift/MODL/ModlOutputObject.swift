@@ -87,7 +87,6 @@ class ModlOutputObject: ModlObject, ModlJSON {
         var value: Any?
         
         func asJson() -> String? {
-
             if let uwString = value as? String {
                 return "\"\(uwString)\""
                 //                return "\"\(NSRegularExpression.escapedPattern(for: uwString))\""

@@ -16,8 +16,11 @@ class BasicTests: XCTestCase {
         jsonTests = MODLTestManager.getAllTests(self)
     }
     
+    override func tearDown() {
+        jsonTests = nil
+    }
     
-    func testAllJSONExamples() {
+    func testAllBasicExamples() {
         guard let json = jsonTests else {
             XCTFail("Fail creating tests from json input")
             return

@@ -13,6 +13,8 @@
 		3E3896DC22830D63005533B9 /* class.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D622830D62005533B9 /* class.json */; };
 		3E3896DD22830D63005533B9 /* methods.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D722830D62005533B9 /* methods.json */; };
 		3E3896DE22830D63005533B9 /* basic.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D822830D62005533B9 /* basic.json */; };
+		3E3896E12289BECD005533B9 /* StringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E02289BECD005533B9 /* StringTransformer.swift */; };
+		3E3896E52289C15C005533B9 /* StringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E02289BECD005533B9 /* StringTransformer.swift */; };
 		3E5ABB6522674513007419CC /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
 		3E5ABB722267459E007419CC /* ModlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* ModlParser.swift */; };
 		3E5ABB7E226745FB007419CC /* ModlListenerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */; };
@@ -112,6 +114,7 @@
 		3E3896D622830D62005533B9 /* class.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = class.json; sourceTree = "<group>"; };
 		3E3896D722830D62005533B9 /* methods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = methods.json; sourceTree = "<group>"; };
 		3E3896D822830D62005533B9 /* basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = basic.json; sourceTree = "<group>"; };
+		3E3896E02289BECD005533B9 /* StringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTransformer.swift; sourceTree = "<group>"; };
 		3E5ABB6422674513007419CC /* ModlListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListener.swift; sourceTree = "<group>"; };
 		3E5ABB6622674541007419CC /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = ../antlr/Antlr4.xcodeproj; sourceTree = "<group>"; };
 		3E5ABB712267459E007419CC /* ModlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlParser.swift; sourceTree = "<group>"; };
@@ -208,6 +211,7 @@
 				3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */,
 				3E6315782285C59B008BDC14 /* ModlObjectCreator.swift */,
 				3E63157B2285C639008BDC14 /* ModlOutputObject.swift */,
+				3E3896E02289BECD005533B9 /* StringTransformer.swift */,
 				3E63157D2285D8DB008BDC14 /* ModlObjectProtocols.swift */,
 				3E6315742284874F008BDC14 /* Class */,
 			);
@@ -506,6 +510,7 @@
 				3E7743DE22675E59006AA9AF /* DNSTxtRecord.swift in Sources */,
 				3E63157C2285C639008BDC14 /* ModlOutputObject.swift in Sources */,
 				3E7743CE22674865006AA9AF /* MODLParserBaseListener.swift in Sources */,
+				3E3896E12289BECD005533B9 /* StringTransformer.swift in Sources */,
 				3E6315792285C59B008BDC14 /* ModlObjectCreator.swift in Sources */,
 				3E7743CD22674865006AA9AF /* MODLParser.swift in Sources */,
 				3E7743D622674ABE006AA9AF /* DemoOptionsViewController.swift in Sources */,
@@ -531,6 +536,7 @@
 				3E63157122847E04008BDC14 /* AdvancedTests.swift in Sources */,
 				3E63156422819FE2008BDC14 /* MODLParser.swift in Sources */,
 				3E63157A2285C5A1008BDC14 /* ModlObjectCreator.swift in Sources */,
+				3E3896E52289C15C005533B9 /* StringTransformer.swift in Sources */,
 				3E63156A2282D980008BDC14 /* LongInputTests.swift in Sources */,
 				3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */,
 				3E63155922819F31008BDC14 /* BasicTests.swift in Sources */,
