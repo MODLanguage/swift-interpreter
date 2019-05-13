@@ -723,7 +723,7 @@
     "input": "test=`test`",
     "minimised_modl": "test=`test`",
     "expected_output": "{\n \"test\" : \"test\"\n}\n",
-    "tested_features":["pair"]
+    "tested_features":["pair", "graves"]
 }, {
     "input": "test=\u0021",
     "minimised_modl": "test=\u0021",

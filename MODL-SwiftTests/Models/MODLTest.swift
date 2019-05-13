@@ -29,7 +29,7 @@ enum FeatureTestTypes: String {
     case comments
     
     static var advancedFeatures: [FeatureTestTypes] {
-        return [.conditional, .load, .classes, .assign, .method, .objectReference, .puny, .stringMethod]
+        return [.conditional, .load, .classes, .assign, .method, .objectReference, .puny, .stringMethod, .graves]
     }
     
     static var basicFeatures: [FeatureTestTypes] {
@@ -66,7 +66,9 @@ struct MODLTest: Codable {
         }
         return !isBasicTest()
     }
-    
+}
+
+struct MODLTestManager {
     static func getAllTests(_ testObject: XCTestCase) -> [MODLTest]? {
         let bundle = Bundle(for: type(of: testObject))
         guard let fileUrl = bundle.url(forResource: "base_tests", withExtension: "json") else {
@@ -88,4 +90,33 @@ struct MODLTest: Codable {
             return nil
         }
     }
+
+    
+    static func performTests(_ tests: [MODLTest]) {
+        for test in tests {
+            print("******TEST START********\n************")
+            print("Test: \(test.modl)")
+            let p = ModlParser()
+            do {
+                let result = try p.parse(test.modl)
+                let expected = test.expectedJson
+                if expected.count == 0 {
+                    //empty test
+                    XCTAssert(result == expected, "\nExpected: \(expected)\nGot: \(result)")
+                } else {
+                    //import and export JSON so format matches parser
+//                    let data = Data(expected.utf8)
+//                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+//                    let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
+//                    let stringOutput = String(data: dataOutput, encoding: .utf8)
+                    XCTAssert(result == test.expectedJson, "\nExpected: \(test.expectedJson ?? "")\nGot: \(result)")
+                }
+            } catch {
+                XCTFail("Error caught \(error.localizedDescription)")
+            }
+            print("******TEST END********\n************")
+        }
+        print("TOTAL TESTS: \(tests.count)")
+    }
+
 }

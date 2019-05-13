@@ -86,13 +86,7 @@ class ModlClassManager {
                 }
             case .map:
                 let replacement = ModlListenerObject.Map()
-                let extraDetails = constructAdditionalItems(classObj.name)
                 let assignList = constructAssignList(classObj.name)
-                for detail in extraDetails {
-                    if let key = detail.key, let value = detail.value {
-                        replacement.addValue(key: key, value: value)
-                    }
-                }
                 if let pairValue = uwValue as? ModlArray {
                     if let matching = assignList.first(where: { (array) -> Bool in
                             return array.values.count == pairValue.values.count
@@ -106,29 +100,18 @@ class ModlClassManager {
                             }
                         }
                     }
-                    
-                    
-//                    for case let keyList as ModlArray in assignList.values {
-//                        if keyList.values.count == pairValue.values.count {
-//                            for (index, key) in keyList.values.enumerated() {
-//                                if let uwKey = (key as? ModlPrimitive)?.asString(), let uwValue = pairValue.values[index] as? ModlValue {
-//                                    replacement.addValue(key: uwKey, value: uwValue)
-//                                }
-//                            }
-//                        }
-//                    }
-                    //TODO: handle assign
                 } else if let pairValue = uwValue as? ModlMap {
                     for key in pairValue.orderedKeys {
                         if let value = pairValue.value(forKey: key) {
                             replacement.addValue(key: key, value: value)
                         }
                     }
-//                    for detail in classObj.extraValues {
-//                        if let uwKey = detail.key, let uwValue = detail.value {
-//                            replacement.addValue(key: uwKey, value: uwValue)
-//                        }
-//                    }
+                }
+                let extraDetails = constructAdditionalItems(classObj.name)
+                for detail in extraDetails {
+                    if let key = detail.key, let value = detail.value {
+                        replacement.addValue(key: key, value: value)
+                    }
                 }
                 outputPair.value = replacement
                 return outputPair

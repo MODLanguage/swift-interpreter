@@ -33,7 +33,7 @@ struct ModlObjectCreator {
             if processReservedPair(iPair) {
                 return nil
             }
-            if let classReference = classManager.processFromClass(key: pair.key, value: pair.value){
+            if let classReference = classManager.processFromClass(key: iPair.key, value: iPair.value){
                 pair.key = classReference.key
                 pair.value = processModlElement(classReference.value)
                 return pair
