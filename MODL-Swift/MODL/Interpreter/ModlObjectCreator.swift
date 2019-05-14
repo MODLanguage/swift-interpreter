@@ -7,7 +7,14 @@
 //
 
 import Foundation
-
+fileprivate enum ReservedKeys: String, CaseIterable {
+    case version = "*VERSION"
+    case versionSH = "*V"
+    case mClassSH = "*C"
+    case mClass = "*CLASS"
+    case objectIndex = "?"
+    case objectReference = "_"
+}
 struct ModlObjectCreator {
     
     var classManager = ModlClassManager()
@@ -92,8 +99,10 @@ struct ModlObjectCreator {
         guard let key = pair.key else {
             return false
         }
-        let reservedKeys = ["*VERSION", "*V","*C", "*c", "*CLASS", "*class"]
-        return reservedKeys.contains(key)
+        if key.hasPrefix(ReservedKeys.objectReference.rawValue) {
+            return true
+        }
+        return ReservedKeys(rawValue: key.uppercased()) != nil
     }
     
     
@@ -101,17 +110,27 @@ struct ModlObjectCreator {
         guard let key = pair.key else {
             return false
         }
-        switch key {
-        case "*VERSION", "*V":
+        var reserved = ReservedKeys(rawValue: key)
+        if key.hasPrefix(ReservedKeys.objectReference.rawValue) {
+            reserved = .objectReference
+        }
+        guard let uwReserved = reserved else {
+            return false
+        }
+        switch uwReserved {
+        case .version, .versionSH:
             //Could raise an error here for non-matching version.... although json test implies it just continues
             return true
-        case "*C", "*c", "*CLASS", "*class":
+        case .mClass, .mClassSH:
             //TODO: process class
             classManager.addClass(pair.value)
             return true
+        case .objectIndex:
+            return false
+        case .objectReference:
+            return false
         default:
             return false
         }
     }
-
 }

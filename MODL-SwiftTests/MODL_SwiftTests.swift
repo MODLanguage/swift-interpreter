@@ -15,16 +15,7 @@ class MODL_SwiftTests: XCTestCase {
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        let bundle = Bundle(for: type(of: self))
-        guard let fileUrl = bundle.url(forResource: "base_tests", withExtension: "json") else {
-            return
-        }
-        do {
-            let data = try Data(contentsOf: fileUrl)
-            jsonTests = try JSONDecoder().decode([MODLTest].self, from: data)
-        } catch {
-            XCTFail("Fail creating tests from json input")
-        }
+        jsonTests = MODLTestManager.getAllTests(self)
     }
     
     override func tearDown() {
@@ -36,15 +27,6 @@ class MODL_SwiftTests: XCTestCase {
             XCTFail("Fail creating tests from json input")
             return
         }
-        for test in json {
-            let p = ModlParser()
-            do {
-                let result = try p.parse(test.modl)
-                let expected = test.expectedJson.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")
-                XCTAssert(result == expected, "Test: \(test.modl)\nExpected: \(expected)\nGot: \(result ?? "NA")")
-            } catch {
-                XCTFail("Error: \(error.localizedDescription)")
-            }
-        }
+        MODLTestManager.performTests(json)
     }
 }
