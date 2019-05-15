@@ -15,11 +15,13 @@ fileprivate enum ReservedKeys: String, CaseIterable {
     case objectIndex = "?"
     case objectReference = "_"
 }
+
 struct ModlObjectCreator {
     
     var classManager = ModlClassManager()
+    var objectRefManager = ModlObjectReferenceManager()
     var stringTransformer = StringTransformer()
-
+    
     func createOutput(_ input: ModlListenerObject) -> ModlOutputObject? {
         let output = ModlOutputObject()
         for structure in input.structures {
@@ -37,7 +39,6 @@ struct ModlObjectCreator {
         switch uwElement {
         case let iPair as ModlPair:
             let pair = ModlOutputObject.Pair()
-            pair.key = iPair.key
             if processReservedPair(iPair) {
                 return nil
             }
@@ -49,6 +50,7 @@ struct ModlObjectCreator {
                 pair.value = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)
                 return pair
             }
+            pair.key = stringTransformer.transformKeyString(iPair.key, objectMgr: objectRefManager)
             pair.value = processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)
             return pair
         case let iArray as ModlArray:
@@ -74,8 +76,8 @@ struct ModlObjectCreator {
         case is ModlNull:
             return ModlOutputObject.Null()
         case let iPrim as ModlPrimitive:
-            if let strValue = iPrim.value as? String {
-                return stringTransformer.transformString(strValue)
+            if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
+                return processModlElement(transformed, classIdsProcessedInBranch: classIdsProcessedInBranch)
             } else {
                 let prim = ModlOutputObject.Primitive()
                 prim.value = iPrim.value
@@ -126,11 +128,15 @@ struct ModlObjectCreator {
             classManager.addClass(pair.value)
             return true
         case .objectIndex:
-            return false
+            let processed = processModlElement(pair.value)
+            objectRefManager.addIndexedVariables(processed)
+            return true
         case .objectReference:
-            return false
-        default:
-            return false
+            let objPair = ModlOutputObject.Pair()
+            objPair.key = pair.key
+            objPair.value = processModlElement(pair.value)
+            objectRefManager.addKeyedVariable(objPair)
+            return true
         }
     }
 }

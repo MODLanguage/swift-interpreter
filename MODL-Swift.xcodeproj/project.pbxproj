@@ -15,6 +15,8 @@
 		3E3896DE22830D63005533B9 /* basic.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D822830D62005533B9 /* basic.json */; };
 		3E3896E12289BECD005533B9 /* StringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E02289BECD005533B9 /* StringTransformer.swift */; };
 		3E3896E52289C15C005533B9 /* StringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E02289BECD005533B9 /* StringTransformer.swift */; };
+		3E3896E8228C1B39005533B9 /* ModlObjectReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */; };
+		3E3896EC228C22E9005533B9 /* ModlObjectReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */; };
 		3E5ABB6522674513007419CC /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
 		3E5ABB722267459E007419CC /* ModlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* ModlParser.swift */; };
 		3E5ABB7E226745FB007419CC /* ModlListenerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */; };
@@ -117,6 +119,7 @@
 		3E3896D722830D62005533B9 /* methods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = methods.json; sourceTree = "<group>"; };
 		3E3896D822830D62005533B9 /* basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = basic.json; sourceTree = "<group>"; };
 		3E3896E02289BECD005533B9 /* StringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringTransformer.swift; path = ../../StringTransformer.swift; sourceTree = "<group>"; };
+		3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlObjectReferenceManager.swift; sourceTree = "<group>"; };
 		3E5ABB6422674513007419CC /* ModlListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModlListener.swift; path = ../ModlListener.swift; sourceTree = "<group>"; };
 		3E5ABB6622674541007419CC /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = ../antlr/Antlr4.xcodeproj; sourceTree = "<group>"; };
 		3E5ABB712267459E007419CC /* ModlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlParser.swift; sourceTree = "<group>"; };
@@ -312,6 +315,7 @@
 				3E6315782285C59B008BDC14 /* ModlObjectCreator.swift */,
 				3E63157B2285C639008BDC14 /* ModlOutputObject.swift */,
 				3E6315752284875F008BDC14 /* ModlClassManager.swift */,
+				3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */,
 			);
 			path = Interpreter;
 			sourceTree = "<group>";
@@ -537,6 +541,7 @@
 				3E7743D622674ABE006AA9AF /* DemoOptionsViewController.swift in Sources */,
 				3E7743CF22674865006AA9AF /* MODLLexer.swift in Sources */,
 				3E5ABB6522674513007419CC /* ModlListener.swift in Sources */,
+				3E3896E8228C1B39005533B9 /* ModlObjectReferenceManager.swift in Sources */,
 				3E5ABB7E226745FB007419CC /* ModlListenerObject.swift in Sources */,
 				3E7743DB22674AEC006AA9AF /* ParseTestViewController.swift in Sources */,
 				3E7743D322674865006AA9AF /* MODLParserParserATN.swift in Sources */,
@@ -564,6 +569,7 @@
 				3E63155922819F31008BDC14 /* BasicTests.swift in Sources */,
 				3E63156222819FE2008BDC14 /* MODLLexerATN.swift in Sources */,
 				3EFABA5B226737790029EACC /* MODL_SwiftTests.swift in Sources */,
+				3E3896EC228C22E9005533B9 /* ModlObjectReferenceManager.swift in Sources */,
 				3E6315772284D0F8008BDC14 /* ModlClassManager.swift in Sources */,
 				3E63156622819FE2008BDC14 /* MODLParserBaseListener.swift in Sources */,
 				3E63156722819FE2008BDC14 /* MODLParserListener.swift in Sources */,
