@@ -75,7 +75,8 @@ struct ModlObjectCreator {
                     newProcessedClasses.append(key)
                     map.addValue(key: uwKey, value: mValue)
                 } else if let mValue = processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
-                    map.addValue(key: key, value: mValue)
+                    let transKey = stringTransformer.transformKeyString(key, objectMgr: objectRefManager) ?? key
+                    map.addValue(key: transKey, value: mValue)
                 }
             }
             return map
