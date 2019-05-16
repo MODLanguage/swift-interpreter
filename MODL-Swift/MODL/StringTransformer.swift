@@ -134,6 +134,8 @@ struct StringTransformer {
                 newRef = refArray.values[numMethod]
             } else if let refMap = newRef as? ModlMap {
                 newRef = refMap.value(forKey: method)
+            } else if let refPair = newRef as? ModlPair, refPair.key == method {
+                newRef = refPair.value
             } else if let refPrim = newRef as? ModlPrimitive, let primValue = refPrim.asString() {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
