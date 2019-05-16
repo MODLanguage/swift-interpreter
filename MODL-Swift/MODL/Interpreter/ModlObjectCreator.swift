@@ -27,8 +27,11 @@ struct ModlObjectCreator {
         for structure in input.structures {
             if let outStructure = processModlElement(structure) as? ModlStructure {
                 output.addStructure(outStructure)
+                if let pair = outStructure as? ModlPair {
+                    objectRefManager.addKeyedVariable(pair)
+                }
             }
-        }
+       }
         return output
     }
     
