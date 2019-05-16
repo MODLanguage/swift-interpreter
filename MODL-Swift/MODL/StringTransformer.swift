@@ -38,12 +38,10 @@ struct StringTransformer {
     //*** Replace Unicode:
         //TODO: swift might make this unnec
 
-// Implement Elliott's algorithm for string transformation :
-    // 1 : Find all parts of the sting that are enclosed in graves, e.g `test` where neither of the graves is prefixed with an escape character ~ (tilde) or \ (backslash).
         var startIndex: String.Index = uwInput.startIndex
         var finished = false
         while !finished {
-            if let ref = getObjectRangesMatch(uwInput) {
+            if let ref = getObjectRangesMatch(uwInput, start: startIndex) {
                 var refKey = String(uwInput[ref])
                 if refKey.hasPrefix("`") {
                     refKey.removeFirst()
@@ -61,20 +59,24 @@ struct StringTransformer {
                 } else {
                     //TODO: is there anything else that can happen? Can part of a string in graves become an array?
                     //at very least remove the characters that cause it to be loop checked forever
-                    if refKey.hasPrefix("%") {
-                        uwInput = uwInput.replacingCharacters(in: ref, with: refKey.dropFirst())
-                    }
+//                    if refKey.hasPrefix("%") {
+//                        uwInput = uwInput.replacingCharacters(in: ref, with: refKey.dropFirst())
+//                    }
+                    uwInput = uwInput.replacingOccurrences(of: "`", with: "", options: [], range: ref)
                 }
                 if startIndex == ref.lowerBound {
                     finished = true
                 } else {
                     startIndex = ref.lowerBound
                 }
+                if mValue == nil {
+                    finished = true
+                }
             } else {
                 finished = true
             }
         }
-        prim.value = uwInput
+        prim.value = uwInput//.replacingOccurrences(of: "`", with: "")
         return prim
     }
     
@@ -85,10 +87,10 @@ struct StringTransformer {
         return uwStr
     }
     
-    private func getObjectRangesMatch(_ stringToTransform: String) -> Range<String.Index>? {
+    private func getObjectRangesMatch(_ stringToTransform: String, start: String.Index) -> Range<String.Index>? {
         // Find all parts of the sting that are enclosed in graves, e.g `test` where neither of the graves is prefixed with an escape character ~ (tilde) or \ (backslash).
         let regex = try? NSRegularExpression(pattern: objectRegExPattern, options: [])
-        let range = NSRange(stringToTransform.startIndex..., in: stringToTransform)
+        let range = NSRange(start..., in: stringToTransform)
         if let match = regex?.firstMatch(in: stringToTransform, options: [], range: range) {
             return Range(match.range, in: stringToTransform)
         }
@@ -96,7 +98,7 @@ struct StringTransformer {
     }
 
     private func checkObjectReferencing(keyToCheck: String, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
-        guard let uwObjMgr = objectMgr else {
+        guard let uwObjMgr = objectMgr, keyToCheck.count > 0 else {
             return nil
         }
 

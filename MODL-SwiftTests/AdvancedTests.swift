@@ -52,4 +52,33 @@ class AdvancedTests: XCTestCase {
         }
         MODLTestManager.performTests(objRefClassTests)
     }
+    
+    func testAllButMostAdvanced() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let allButTests = json.filter { (modl) -> Bool in
+            guard let modlFeature = modl.testedFeatures else {
+                return false
+            }
+            return !(modlFeature.contains(FeatureTestTypes.conditional.rawValue) || modlFeature.contains(FeatureTestTypes.load.rawValue) || modlFeature.contains(FeatureTestTypes.method.rawValue) || modlFeature.contains(FeatureTestTypes.puny.rawValue) || modlFeature.contains(FeatureTestTypes.stringMethod.rawValue))
+        }
+        MODLTestManager.performTests(allButTests)
+    }
+    
+    func testProblemCases() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let allButTests = json.filter { (modl) -> Bool in
+            guard let modlFeature = modl.testedFeatures else {
+                return false
+            }
+            return modlFeature.contains("problem")
+        }
+        MODLTestManager.performTests(allButTests)
+    }
+
 }

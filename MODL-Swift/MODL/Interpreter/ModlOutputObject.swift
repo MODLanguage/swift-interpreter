@@ -24,7 +24,9 @@ class ModlOutputObject: ModlObject, ModlJSON {
         if reducedArray.count > 0 {
             reducedArray = String(reducedArray.dropLast())
         }
-        if structures.count == 1 {
+        if structures.count == 0 {
+            return "null"
+        }else if structures.count == 1 {
             return reducedArray
         } else {
             return "[\(reducedArray)]"

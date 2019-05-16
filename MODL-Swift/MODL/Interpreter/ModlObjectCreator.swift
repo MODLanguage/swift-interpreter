@@ -80,12 +80,16 @@ struct ModlObjectCreator {
             return ModlOutputObject.Null()
         case let iPrim as ModlPrimitive:
             if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
-                return processModlElement(transformed, classIdsProcessedInBranch: classIdsProcessedInBranch)
-            } else {
-                let prim = ModlOutputObject.Primitive()
-                prim.value = iPrim.value
-                return prim
+                if (transformed as? ModlPrimitive)?.asString() == strValue {
+                    //nothing has or will change so stop transforming
+                } else {
+                    return processModlElement(transformed, classIdsProcessedInBranch: classIdsProcessedInBranch)
+                }
             }
+            
+            let prim = ModlOutputObject.Primitive()
+            prim.value = iPrim.value
+            return prim
         default:
             return nil
         }
@@ -115,7 +119,7 @@ struct ModlObjectCreator {
         guard let key = pair.key else {
             return false
         }
-        var reserved = ReservedKeys(rawValue: key)
+        var reserved = ReservedKeys(rawValue: key.uppercased())
         if key.hasPrefix(ReservedKeys.objectReference.rawValue) {
             reserved = .objectReference
         }
