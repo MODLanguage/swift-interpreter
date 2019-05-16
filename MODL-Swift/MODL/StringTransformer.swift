@@ -104,65 +104,51 @@ struct StringTransformer {
         if mKey.hasPrefix("%") {
             mKey.removeFirst()
         }
-        var methods = mKey.split(separator: ".")
-        var subject = String(methods.remove(at: 0)) //take off the subject and leave the methods
+        var methods = mKey.split(separator: ".").map{String($0)}
+        let subject = String(methods.remove(at: 0)) //take off the subject and leave the methods
+        var refObject: ModlValue?
         if let numReference = Int(subject) {
-            let refObject = uwObjMgr.getIndexedVariable(numReference)
-            if methods.count == 0 {
-                return refObject
-            } else {
-                //nested
-            }
+            refObject = uwObjMgr.getIndexedVariable(numReference)
+        } else {
+            refObject = objectMgr?.getKeyedVariable(subject)
         }
-        var refObject = objectMgr?.getKeyedVariable(subject)
-//        if let referencedValue = valueForReference(subject) {
-//            switch referencedValue {
-//            case let primitive as ModlPrimitive:
-//                if let str = primitive.value as? String {
-//                    subject = str
-//                } else if let num = primitive.value as? Decimal {
-//                    if method.count == 0 {
-//                        return referencedValue
-//                    }
-//                    subject = "\(num)"
-//                }
-//            default:
-//                return referencedValue
-//            }
-//        } else {
-//            let prim = ModlOutputObject.Primitive()
-//            prim.value = keyToCheck
-//            return prim
-//        }
-        
+        if methods.count == 0 {
+            return refObject
+        } else {
+            return handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
+        }
+    }
+
+    
+    private func handleNestedObject(_ refObject: ModlValue?, methods: [String], objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
+        var newRef = refObject
         var index = 0
         var isFinished = index >= methods.count
-    
+        
         while !isFinished {
             var method = String(methods[index])
             if let transformed = transformString(method, objectMgr: objectMgr) as? ModlPrimitive {
                 method = transformed.asString() ?? method
             }
-            if let numMethod = Int(method), let refArray = refObject as? ModlArray {
-                refObject = refArray.values[numMethod]
-            } else if let refMap = refObject as? ModlMap {
-                refObject = refMap.value(forKey: method)
-            } else if let refPrim = refObject as? ModlPrimitive, let primValue = refPrim.value as? String {
+            if let numMethod = Int(method), let refArray = newRef as? ModlArray {
+                newRef = refArray.values[numMethod]
+            } else if let refMap = newRef as? ModlMap {
+                newRef = refMap.value(forKey: method)
+            } else if let refPrim = newRef as? ModlPrimitive, let primValue = refPrim.asString() {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
                     refPrim.value = primValue + "." + methodChain
                 }
-                refObject = refPrim
+                newRef = refPrim
                 isFinished = true
             }
             
             index += 1
             isFinished = index >= methods.count
         }
-
-        return refObject
+        return newRef
     }
-
+    
     private func valueForReference(_ objectName: String) -> ModlValue? {
         //replace with using the object manager to get modl value
         return nil
