@@ -24,7 +24,8 @@ struct StringTransformer {
 
     func transformKeyString(_ inputString: String?, objectMgr: ModlObjectReferenceManager?) -> String? {
         let prim = transformString(inputString, objectMgr: objectMgr) as? ModlPrimitive
-        return prim?.value as? String ?? inputString
+        let output = prim?.value as? String ?? inputString
+        return processStringForMethods(output)
     }
     
     func transformString(_ inputString: String?, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
@@ -166,22 +167,29 @@ struct StringTransformer {
     
 
     func processStringForMethods(_ inputString: String?) -> String? {
-        return nil
+        guard var methods = inputString?.split(separator: ".").map({String($0)}), methods.count > 0 else {
+            return inputString
+        }
+        var subject: String? = String(methods.remove(at: 0)) //take off the subject and leave the methods
+        for method in methods {
+           subject = performStringMethod(inputString: subject, stringMethodName: method)
+        }
+        return subject
     }
     
-    private func performStringMethod(inputString: String, stringMethodName: String) -> String? {
-        guard let sMethod = StringMethod(rawValue: stringMethodName) else {
+    private func performStringMethod(inputString: String?, stringMethodName: String) -> String? {
+        guard let sMethod = StringMethod(rawValue: stringMethodName), let uwStr = inputString else {
             return nil
         }
         switch sMethod {
         case .downcase:
-            return inputString.lowercased()
+            return uwStr.lowercased()
         case .uppercase:
-             return inputString.uppercased()
+             return uwStr.uppercased()
         case .initCap:
-            return inputString.capitalized
+            return uwStr.capitalized
         case .sentenceCase:
-            return inputString.lowercased().replacingCharacters(in: inputString.startIndex...inputString.startIndex, with: String(inputString[inputString.startIndex].uppercased()))
+            return uwStr.lowercased().replacingCharacters(in: uwStr.startIndex...uwStr.startIndex, with: String(uwStr[uwStr.startIndex].uppercased()))
         case .replace:
             //TODO:
             break
