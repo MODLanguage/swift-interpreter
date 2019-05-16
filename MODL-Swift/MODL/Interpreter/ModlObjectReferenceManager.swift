@@ -36,8 +36,11 @@ class ModlObjectReferenceManager {
     }
     
     func getKeyedVariable(_ key: String?) -> ModlValue? {
-        guard let uwKey = key else {
+        guard var uwKey = key else {
             return nil
+        }
+        if uwKey.hasPrefix("_") {
+            uwKey.removeFirst()
         }
         return keyedVariables[uwKey]
     }
