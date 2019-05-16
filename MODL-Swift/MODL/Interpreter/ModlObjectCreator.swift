@@ -42,7 +42,7 @@ struct ModlObjectCreator {
         switch uwElement {
         case let iPair as ModlPair:
             let pair = ModlOutputObject.Pair()
-            if processReservedPair(iPair) {
+            if processReservedPair(key: iPair.key, value: iPair.value) {
                 return nil
             }
             if let classReference = classManager.processFromClass(key: iPair.key, value: iPair.value), !haveAlreadyProcessedClassInBranch(identifier: iPair.key, processedList: classIdsProcessedInBranch) {
@@ -66,6 +66,9 @@ struct ModlObjectCreator {
             let map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
                 let originalValue = iMap.value(forKey: key)
+                if processReservedPair(key: key, value: originalValue) {
+                    continue
+                }
                 var newProcessedClasses = classIdsProcessedInBranch
                 if let classReference = classManager.processFromClass(key: key, value: originalValue), let mValue = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses) {
                     newProcessedClasses.append(uwKey)
@@ -115,12 +118,12 @@ struct ModlObjectCreator {
     }
     
     
-    private func processReservedPair(_ pair: ModlPair) -> Bool {
-        guard let key = pair.key else {
+    private func processReservedPair(key: String?, value: ModlValue?) -> Bool {
+        guard let uwKey = key else {
             return false
         }
-        var reserved = ReservedKeys(rawValue: key.uppercased())
-        if key.hasPrefix(ReservedKeys.objectReference.rawValue) {
+        var reserved = ReservedKeys(rawValue: uwKey.uppercased())
+        if uwKey.hasPrefix(ReservedKeys.objectReference.rawValue) {
             reserved = .objectReference
         }
         guard let uwReserved = reserved else {
@@ -132,16 +135,16 @@ struct ModlObjectCreator {
             return true
         case .mClass, .mClassSH:
             //TODO: process class
-            classManager.addClass(pair.value)
+            classManager.addClass(value)
             return true
         case .objectIndex:
-            let processed = processModlElement(pair.value)
+            let processed = processModlElement(value)
             objectRefManager.addIndexedVariables(processed)
             return true
         case .objectReference:
             let objPair = ModlOutputObject.Pair()
-            objPair.key = pair.key
-            objPair.value = processModlElement(pair.value)
+            objPair.key = uwKey
+            objPair.value = processModlElement(value)
             objectRefManager.addKeyedVariable(objPair)
             return true
         }

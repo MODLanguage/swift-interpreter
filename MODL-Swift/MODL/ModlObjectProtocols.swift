@@ -56,7 +56,6 @@ protocol ModlNull: ModlValue {}
 
 extension ModlMap {
     func addValue(key: String, value: ModlValue) {
-        print("Map key added: \(key)")
         values[key] = value
         orderedKeys.append(key)
     }

@@ -8,6 +8,17 @@
 
 import Foundation
 
+fileprivate enum StringMethod: String {
+    case uppercase = "u"
+    case downcase = "d"
+    case sentenceCase = "s"
+    case initCap = "i"
+    case urlencode = "e"
+    case puny = "p"
+    case replace = "r"
+    case trim = "t"
+}
+
 struct StringTransformer {
     let objectRegExPattern = "((`?\\%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?\\%[0-9][0-9]*`?)|(`?\\%[_a-zA-Z][_a-zA-Z0-9.%(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|(`.*`))"
 
@@ -155,6 +166,35 @@ struct StringTransformer {
     
     private func valueForReference(_ objectName: String) -> ModlValue? {
         //replace with using the object manager to get modl value
+        return nil
+    }
+    
+    private func performStringMethod(inputString: String, stringMethodName: String) -> String? {
+        guard let sMethod = StringMethod(rawValue: stringMethodName) else {
+            return nil
+        }
+        switch sMethod {
+        case .downcase:
+            return inputString.lowercased()
+        case .uppercase:
+             return inputString.uppercased()
+        case .initCap:
+            return inputString.capitalized
+        case .sentenceCase:
+            return inputString.lowercased().replacingCharacters(in: inputString.startIndex...inputString.startIndex, with: String(inputString[inputString.startIndex].uppercased()))
+        case .replace:
+            //TODO:
+            break
+        case .urlencode:
+            //TODO:
+            break
+        case .trim:
+            //TODO:
+            break
+        case .puny:
+            //TODO:
+            break
+        }
         return nil
     }
 }
