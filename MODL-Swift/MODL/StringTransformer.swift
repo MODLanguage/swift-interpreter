@@ -60,6 +60,10 @@ struct StringTransformer {
                     uwInput = uwInput.replacingCharacters(in: ref, with: replacement)
                 } else {
                     //TODO: is there anything else that can happen? Can part of a string in graves become an array?
+                    //at very least remove the characters that cause it to be loop checked forever
+                    if refKey.hasPrefix("%") {
+                        uwInput = uwInput.replacingCharacters(in: ref, with: refKey.dropFirst())
+                    }
                 }
                 if startIndex == ref.lowerBound {
                     finished = true
