@@ -90,9 +90,13 @@ struct ModlObjectCreator {
                     return processModlElement(transformed, classIdsProcessedInBranch: classIdsProcessedInBranch)
                 }
             }
-            
             let prim = ModlOutputObject.Primitive()
-            prim.value = iPrim.value
+
+            if let processed = stringTransformer.processStringForMethods(iPrim.value as? String) {
+                prim.value = processed
+            } else {
+                prim.value = iPrim.value
+            }
             return prim
         default:
             return nil

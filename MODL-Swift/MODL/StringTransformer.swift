@@ -164,8 +164,8 @@ struct StringTransformer {
         return newRef
     }
     
-    private func valueForReference(_ objectName: String) -> ModlValue? {
-        //replace with using the object manager to get modl value
+
+    func processStringForMethods(_ inputString: String?) -> String? {
         return nil
     }
     
