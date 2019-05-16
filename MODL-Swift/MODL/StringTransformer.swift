@@ -139,10 +139,23 @@ struct StringTransformer {
         var isFinished = index >= methods.count
     
         while !isFinished {
-            let method = String(methods[index])
+            var method = String(methods[index])
+            if let transformed = transformString(method, objectMgr: objectMgr) as? ModlPrimitive {
+                method = transformed.asString() ?? method
+            }
             if let numMethod = Int(method), let refArray = refObject as? ModlArray {
                 refObject = refArray.values[numMethod]
+            } else if let refMap = refObject as? ModlMap {
+                refObject = refMap.value(forKey: method)
+            } else if let refPrim = refObject as? ModlPrimitive, let primValue = refPrim.value as? String {
+                let methodChain = methods[index...].joined(separator: ".")
+                if methodChain.count > 0 {
+                    refPrim.value = primValue + "." + methodChain
+                }
+                refObject = refPrim
+                isFinished = true
             }
+            
             index += 1
             isFinished = index >= methods.count
         }
