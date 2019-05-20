@@ -92,7 +92,7 @@ struct StringTransformer {
 //                    if refKey.hasPrefix("%") {
 //                        uwInput = uwInput.replacingCharacters(in: ref, with: refKey.dropFirst())
 //                    }
-                    uwInput = uwInput.replacingOccurrences(of: "`", with: "", options: [], range: ref)
+//                    uwInput = uwInput.replacingOccurrences(of: "`", with: "", options: [], range: ref)
                 }
                 if startIndex == ref.lowerBound {
                     finished = true
@@ -185,7 +185,11 @@ struct StringTransformer {
     
 
     func processStringForMethods(_ inputString: String?) -> String? {
-        guard var methods = inputString?.split(separator: ".").map({String($0)}), methods.count > 0 else {
+//        guard let uwInput = inputString else {
+//            return nil
+//        }
+//        let next = getObjectRangesMatch(uwInput, start: uwInput.startIndex)
+        guard var methods = inputString?.split(separator: ".").map({String($0)}), methods.count > 1 else {
             return inputString
         }
         var subject: String? = String(methods.remove(at: 0)) //take off the subject and leave the methods

@@ -45,9 +45,6 @@ struct ModlObjectCreator {
         for structure in input.structures {
             if let outStructure = processModlElement(structure) as? ModlStructure {
                 output.addStructure(outStructure)
-                if let pair = outStructure as? ModlPair {
-                    objectRefManager.addKeyedVariable(pair)
-                }
             }
        }
         return output
@@ -73,6 +70,7 @@ struct ModlObjectCreator {
             }
             pair.key = stringTransformer.transformKeyString(iPair.key, objectMgr: objectRefManager)
             pair.value = processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)
+            objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
             return pair
         case let iArray as ModlArray:
             let array = ModlOutputObject.Array()
@@ -88,13 +86,20 @@ struct ModlObjectCreator {
                     continue
                 }
                 var newProcessedClasses = classIdsProcessedInBranch
+                var mapKey = key
+                var mapValue = originalValue
                 if let classReference = classManager.processFromClass(key: key, value: originalValue), let mValue = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses) {
                     newProcessedClasses.append(uwKey)
                     newProcessedClasses.append(key)
-                    map.addValue(key: uwKey, value: mValue)
+                    mapKey = uwKey
+                    mapValue = mValue
                 } else if let mValue = processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
-                    let transKey = stringTransformer.transformKeyString(key, objectMgr: objectRefManager) ?? key
-                    map.addValue(key: transKey, value: mValue)
+                    mapKey = stringTransformer.transformKeyString(key, objectMgr: objectRefManager) ?? key
+                    mapValue = mValue
+                }
+                if let uwValue = mapValue {
+                    map.addValue(key: mapKey, value: uwValue)
+                    objectRefManager.addKeyedVariable(key: mapKey, value: mapValue)
                 }
             }
             return map
@@ -168,7 +173,7 @@ struct ModlObjectCreator {
             let objPair = ModlOutputObject.Pair()
             objPair.key = uwKey
             objPair.value = processModlElement(value)
-            objectRefManager.addKeyedVariable(objPair)
+            objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
             return true
         }
     }
