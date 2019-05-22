@@ -356,7 +356,7 @@
   { "input": "_testing = quick-test of John's variable_methods;\nupcase_example = %testing.u;\ndowncase_example = %testing.d;\ninitcap_example = %testing.i;\nsentence_example = %testing.s;\nurl_encode_example = %testing.u.e",
     "minimised_modl": "_testing=quick-test of John's variable_methods;upcase_example=%testing.u;downcase_example=%testing.d;initcap_example=%testing.i;sentence_example=%testing.s;url_encode_example=%testing.u.e",
     "expected_output": "[ {\n \"upcase_example\" : \"QUICK-TEST OF JOHN'S VARIABLE_METHODS\"\n}, {\n \"downcase_example\" : \"quick-test of john's variable_methods\"\n}, {\n \"initcap_example\" : \"Quick-test Of John's Variable_methods\"\n}, {\n \"sentence_example\" : \"Quick-test of John's variable_methods\"\n}, {\n \"url_encode_example\" : \"QUICK-TEST+OF+JOHN%27S+VARIABLE_METHODS\"\n} ]",
-    "tested_features":["string_method"]
+    "tested_features":["string_method", "problem"]
   }, 
   { "input": "*VERSION=1;\n\"test\"=1",
     "minimised_modl": "*VERSION=1;test=1",
@@ -1094,12 +1094,12 @@
   { "input": "_test=(\n  numbers=(\"v\"=TEST)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "minimised_modl": "_test=(numbers=(v=TEST));testing=this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "expected_output": "{\n  \"testing\" : \"this is a string that includes extra transforms for the value test_value\"\n}",
-    "tested_features":["object_ref", "string_method", "problem"]
+    "tested_features":["object_ref", "string_method"]
   }, 
   { "input": "_test=(\n  first=(\"v\"=TEST);\n  second=(\"v\"=TEST2)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "minimised_modl": "_test=(first=(v=TEST);second=(v=TEST2));testing=this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "expected_output": "{\n  \"testing\" : \"this is a string that includes extra transforms for the value test2_value\"\n}",
-    "tested_features":["object_ref", "string_method", "problem"]
+    "tested_features":["object_ref", "string_method"]
   }, 
   { "input": "_test=(\n  first=(\"v1\"=one);\n  second=(\"v2\"=two:three)\n);\n \ntesting = \"`%test.second.v2.1`\"",
     "minimised_modl": "_test=(first=(v1=one);second=(v2=two:three));testing=`%test.second.v2.1`",
@@ -1187,12 +1187,12 @@
   { "input": "_test=(\n  numbers=(\"v\"=TEST)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "minimised_modl" : "_test=(numbers=(\"v\"=TEST));testing = this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "expected_output" : "{\"testing\":\"this is a string that includes extra transforms for the value test_value\"}",
-    "tested_features":["object_ref", "string_method", "problem"]
+    "tested_features":["object_ref", "string_method"]
   },
   { "input": "_test=(\n  first=(\"v\"=TEST);\n  second=(\"v\"=TEST2)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "minimised_modl" : "_test=(first=(\"v\"=TEST);second=(\"v\"=TEST2));testing = this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "expected_output" : "{\"testing\":\"this is a string that includes extra transforms for the value test2_value\"}",
-    "tested_features":["object_ref", "string_method", "problem"]
+    "tested_features":["object_ref", "string_method"]
   },
   { "input": "_test=(\n  first=(\"v1\"=one);\n  second=(\"v2\"=two:three)\n);\n \ntesting = \"`%test.second.v2.1`\"",
     "minimised_modl" : "_test=(first=(\"v1\"=one);second=(\"v2\"=two:three));testing = \"`%test.second.v2.1`\"",

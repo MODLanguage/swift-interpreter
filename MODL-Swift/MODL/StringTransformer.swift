@@ -255,8 +255,9 @@ struct StringTransformer {
             //TODO:
             break
         case .urlencode:
-            //TODO:
-            break
+            let spaceString = uwStr.replacingOccurrences(of: " ", with: "+")
+            let characters = CharacterSet.init(charactersIn: "'").inverted
+            return spaceString.addingPercentEncoding(withAllowedCharacters: characters) ?? spaceString
         case .trim:
             //TODO:
             break
