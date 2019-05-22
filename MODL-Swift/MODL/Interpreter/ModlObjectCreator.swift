@@ -177,4 +177,40 @@ struct ModlObjectCreator {
             return true
         }
     }
+    
+//    private func processStructureForMethods(_ structure: ModlValue?) -> ModlValue? {
+//        guard let uwStruct = structure else {
+//            return nil
+//        }
+//        switch uwStruct {
+//        case let iPair as ModlPair:
+//            iPair.key = stringTransformer.processStringForMethods(iPair.key)
+//            iPair.value = processStructureForMethods(iPair.value)
+//            return iPair
+//        case let iArray as ModlArray:
+//            let array = ModlOutputObject.Array()
+//            array.values = iArray.values.compactMap({ (value) -> ModlValue? in
+//                return processStructureForMethods(value)
+//            })
+//            return array
+//        case let iMap as ModlMap:
+//            let map = ModlOutputObject.Map()
+//            for key in iMap.orderedKeys {
+//                let originalValue = iMap.value(forKey: key)
+//                if let newValue = processStructureForMethods(originalValue), let newKey = stringTransformer.processStringForMethods(key) {
+//                    map.addValue(key: newKey, value: newValue)
+//                }
+//            }
+//            return map
+//        case is ModlNull:
+//            return structure
+//        case let iPrim as ModlPrimitive:
+//            if let strValue = iPrim.value as? String {
+//                iPrim.value = stringTransformer.processStringForMethods(strValue)
+//            }
+//            return iPrim
+//        default:
+//            return nil
+//        }
+//    }
 }

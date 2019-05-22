@@ -431,7 +431,7 @@
   { "input": "?=[one;two];\ntest=Blah `%0.s` %1.s",
     "minimised_modl": "?=one:two;test=Blah `%0.s` %1.s",
     "expected_output": "{\n \"test\" : \"Blah One Two\"\n}\n",
-    "tested_features":["object_ref", "graves","string_method"]
+    "tested_features":["object_ref", "graves","string_method", "problem"]
   }, 
   { "input": "?=one:two;\ntest=Blah `%0.r(o,huzzah)` `%1.t(w)`",
     "minimised_modl": "?=one:two;test=Blah `%0.r(o,huzzah)` `%1.t(w)`",

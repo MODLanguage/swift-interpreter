@@ -72,13 +72,7 @@ struct StringTransformer {
         var finished = false
         while !finished {
             if let ref = getObjectRangesMatch(uwInput, start: startIndex) {
-                var refKey = String(uwInput[ref])
-                if refKey.hasPrefix("`") {
-                    refKey.removeFirst()
-                }
-                if refKey.hasSuffix("`") {
-                    refKey.removeLast()
-                }
+                let refKey = String(uwInput[ref])
                 let mValue = checkObjectReferencing(keyToCheck: refKey, objectMgr: objectMgr)
                 if refKey == uwInput {
                     //the entire key matches the grave key so just return referenced object
@@ -86,19 +80,13 @@ struct StringTransformer {
                 } else if let primitive = mValue as? ModlPrimitive, let replacement = primitive.asString() {
                     //need to get prim value of returned item and replace grave parts with it
                     uwInput = uwInput.replacingCharacters(in: ref, with: replacement)
+                    startIndex = uwInput.index(ref.lowerBound, offsetBy: replacement.distance(from: replacement.startIndex, to: replacement.endIndex))
                 } else {
                     //TODO: is there anything else that can happen? Can part of a string in graves become an array?
-                    //at very least remove the characters that cause it to be loop checked forever
-//                    if refKey.hasPrefix("%") {
-//                        uwInput = uwInput.replacingCharacters(in: ref, with: refKey.dropFirst())
-//                    }
-//                    uwInput = uwInput.replacingOccurrences(of: "`", with: "", options: [], range: ref)
                 }
                 if startIndex == ref.lowerBound {
                     finished = true
-                } else {
-                    startIndex = ref.lowerBound
-                }
+                } 
                 if mValue == nil {
                     finished = true
                 }
@@ -128,14 +116,27 @@ struct StringTransformer {
     }
 
     private func checkObjectReferencing(keyToCheck: String, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
-        guard let uwObjMgr = objectMgr, keyToCheck.count > 0 else {
+        guard let uwObjMgr = objectMgr else {
             return nil
         }
-
+        var hasGraves = false
         var mKey = keyToCheck
+        if mKey.hasPrefix("`") {
+            hasGraves = true
+            mKey.removeFirst()
+        }
         if mKey.hasPrefix("%") {
             mKey.removeFirst()
         }
+        if mKey.hasSuffix("`") {
+            hasGraves = true
+            mKey.removeLast()
+        }
+        
+        guard mKey.count > 0 else {
+            return nil
+        }
+
         var methods = mKey.split(separator: ".").map{String($0)}
         let subject = String(methods.remove(at: 0)) //take off the subject and leave the methods
         var refObject: ModlValue?
@@ -144,11 +145,14 @@ struct StringTransformer {
         } else {
             refObject = objectMgr?.getKeyedVariable(subject)
         }
-        if methods.count == 0 {
-            return refObject
-        } else {
-            return handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
+        var returnObject = refObject
+        if methods.count != 0 {
+            returnObject = handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
         }
+        if let primObj = returnObject as? ModlPrimitive, let strValue = primObj.value as? String {
+            primObj.value = hasGraves ? "`\(strValue)`" : strValue
+        }
+        return returnObject
     }
 
     
@@ -168,11 +172,16 @@ struct StringTransformer {
                 newRef = refMap.value(forKey: method)
             } else if let refPair = newRef as? ModlPair, refPair.key == method {
                 newRef = refPair.value
-            } else if let refPrim = newRef as? ModlPrimitive, let primValue = refPrim.asString() {
+            } else if let refPrim = newRef as? ModlPrimitive, var primValue = refPrim.asString() {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
-                    refPrim.value = primValue + "." + methodChain
+                    primValue = primValue + "." + methodChain
+//                    if refPrim.value as? String != nil {
+//                        //original method was a string so can apply string methods
+//                       primValue = processStringForMethods(primValue) ?? ""
+//                    }
                 }
+                refPrim.value = primValue
                 newRef = refPrim
                 isFinished = true
             }
@@ -185,23 +194,49 @@ struct StringTransformer {
     
 
     func processStringForMethods(_ inputString: String?) -> String? {
-//        guard let uwInput = inputString else {
-//            return nil
-//        }
-//        let next = getObjectRangesMatch(uwInput, start: uwInput.startIndex)
-        guard var methods = inputString?.split(separator: ".").map({String($0)}), methods.count > 1 else {
+        guard var uwInput = inputString else {
+            return nil
+        }
+        var finished = false
+        var startIndex = uwInput.startIndex
+        while !finished {
+            if let ref = getObjectRangesMatch(uwInput, start: startIndex) {
+                var testableString = String(uwInput[ref])
+                if testableString.hasPrefix("`") {
+                    testableString.removeFirst()
+                }
+                if testableString.hasSuffix("`") {
+                    testableString.removeLast()
+                }
+                let replacement = processStringMethods(inputString: testableString)
+                uwInput = uwInput.replacingCharacters(in: ref, with: replacement)
+                startIndex = uwInput.index(ref.lowerBound, offsetBy: replacement.distance(from: replacement.startIndex, to: replacement.endIndex))
+                if startIndex == ref.lowerBound {
+                    finished = true
+                }
+            } else {
+                uwInput = processStringMethods(inputString: uwInput)
+                finished = true
+            }
+        }
+        return uwInput
+    }
+        
+    private func processStringMethods(inputString: String) -> String {
+        var methods = inputString.split(separator: ".").map({String($0)})
+        guard methods.count > 1 else {
             return inputString
         }
-        var subject: String? = String(methods.remove(at: 0)) //take off the subject and leave the methods
+        var subject: String = String(methods.remove(at: 0)) //take off the subject and leave the methods
         for method in methods {
-           subject = performStringMethod(inputString: subject, stringMethodName: method)
+            subject = performStringMethod(inputString: subject, stringMethodName: method)
         }
         return subject
     }
     
-    private func performStringMethod(inputString: String?, stringMethodName: String) -> String? {
+    private func performStringMethod(inputString: String?, stringMethodName: String) -> String {
         guard let sMethod = StringMethod(rawValue: stringMethodName), let uwStr = inputString else {
-            return nil
+            return (inputString ?? "") + "." + stringMethodName
         }
         switch sMethod {
         case .downcase:
@@ -225,6 +260,6 @@ struct StringTransformer {
             //TODO:
             break
         }
-        return nil
+        return uwStr + "." + stringMethodName
     }
 }
