@@ -431,7 +431,7 @@
   { "input": "?=[one;two];\ntest=Blah `%0.s` %1.s",
     "minimised_modl": "?=one:two;test=Blah `%0.s` %1.s",
     "expected_output": "{\n \"test\" : \"Blah One Two\"\n}\n",
-    "tested_features":["object_ref", "graves","string_method", "problem"]
+    "tested_features":["object_ref", "graves", "string_method"]
   }, 
   { "input": "?=one:two;\ntest=Blah `%0.r(o,huzzah)` `%1.t(w)`",
     "minimised_modl": "?=one:two;test=Blah `%0.r(o,huzzah)` `%1.t(w)`",
@@ -1094,12 +1094,12 @@
   { "input": "_test=(\n  numbers=(\"v\"=TEST)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "minimised_modl": "_test=(numbers=(v=TEST));testing=this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "expected_output": "{\n  \"testing\" : \"this is a string that includes extra transforms for the value test_value\"\n}",
-    "tested_features":["object_ref", "string_method"]
+    "tested_features":["object_ref", "string_method", "problem"]
   }, 
   { "input": "_test=(\n  first=(\"v\"=TEST);\n  second=(\"v\"=TEST2)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "minimised_modl": "_test=(first=(v=TEST);second=(v=TEST2));testing=this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "expected_output": "{\n  \"testing\" : \"this is a string that includes extra transforms for the value test2_value\"\n}",
-    "tested_features":["object_ref", "string_method"]
+    "tested_features":["object_ref", "string_method", "problem"]
   }, 
   { "input": "_test=(\n  first=(\"v1\"=one);\n  second=(\"v2\"=two:three)\n);\n \ntesting = \"`%test.second.v2.1`\"",
     "minimised_modl": "_test=(first=(v1=one);second=(v2=two:three));testing=`%test.second.v2.1`",
@@ -1187,12 +1187,12 @@
   { "input": "_test=(\n  numbers=(\"v\"=TEST)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "minimised_modl" : "_test=(numbers=(\"v\"=TEST));testing = this is a string that includes extra transforms for the value `%test.numbers.v.d`_value",
     "expected_output" : "{\"testing\":\"this is a string that includes extra transforms for the value test_value\"}",
-    "tested_features":["object_ref", "string_method"]
+    "tested_features":["object_ref", "string_method", "problem"]
   },
   { "input": "_test=(\n  first=(\"v\"=TEST);\n  second=(\"v\"=TEST2)\n);\n \ntesting = this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "minimised_modl" : "_test=(first=(\"v\"=TEST);second=(\"v\"=TEST2));testing = this is a string that includes extra transforms for the value `%test.second.v.d`_value",
     "expected_output" : "{\"testing\":\"this is a string that includes extra transforms for the value test2_value\"}",
-    "tested_features":["object_ref", "string_method"]
+    "tested_features":["object_ref", "string_method", "problem"]
   },
   { "input": "_test=(\n  first=(\"v1\"=one);\n  second=(\"v2\"=two:three)\n);\n \ntesting = \"`%test.second.v2.1`\"",
     "minimised_modl" : "_test=(first=(\"v1\"=one);second=(\"v2\"=two:three));testing = \"`%test.second.v2.1`\"",

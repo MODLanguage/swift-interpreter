@@ -82,6 +82,7 @@ struct StringTransformer {
                     uwInput = uwInput.replacingCharacters(in: ref, with: replacement)
                     startIndex = uwInput.index(ref.lowerBound, offsetBy: replacement.distance(from: replacement.startIndex, to: replacement.endIndex))
                 } else {
+                    
                     //TODO: is there anything else that can happen? Can part of a string in graves become an array?
                 }
                 if startIndex == ref.lowerBound {
@@ -116,17 +117,18 @@ struct StringTransformer {
     }
 
     private func checkObjectReferencing(keyToCheck: String, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
-        guard let uwObjMgr = objectMgr else {
+        guard let uwObjMgr = objectMgr, var mKey = refContinueQuickProcess(keyToCheck) else {
             return nil
         }
         var hasGraves = false
-        var mKey = keyToCheck
         if mKey.hasPrefix("`") {
             hasGraves = true
             mKey.removeFirst()
         }
         if mKey.hasPrefix("%") {
             mKey.removeFirst()
+        } else {
+            return nil
         }
         if mKey.hasSuffix("`") {
             hasGraves = true
@@ -149,7 +151,8 @@ struct StringTransformer {
         if methods.count != 0 {
             returnObject = handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
         }
-        if let primObj = returnObject as? ModlPrimitive, let strValue = primObj.value as? String {
+        if let primObj = returnObject as? ModlPrimitive, var strValue = primObj.value as? String {
+            strValue = processStringMethods(inputString: strValue)
             primObj.value = hasGraves ? "`\(strValue)`" : strValue
         }
         return returnObject
@@ -184,6 +187,7 @@ struct StringTransformer {
                 refPrim.value = primValue
                 newRef = refPrim
                 isFinished = true
+                continue
             }
             
             index += 1
