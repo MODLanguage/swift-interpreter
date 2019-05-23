@@ -251,7 +251,15 @@ struct StringTransformer {
         case .uppercase:
              return uwStr.uppercased()
         case .initCap:
-            return uwStr.capitalized
+            let words = uwStr.split(separator: " ")
+            let reduced = words.reduce("") { (result, string) -> String in
+                var output = result
+                if result.count > 0 {
+                    output = output + " "
+                }
+                return output + string.replacingCharacters(in: string.startIndex...string.startIndex, with: String(string[string.startIndex].uppercased()))
+            }
+            return reduced //.initcap also capitalises underscore words so cannot use
         case .sentenceCase:
             return uwStr.replacingCharacters(in: uwStr.startIndex...uwStr.startIndex, with: String(uwStr[uwStr.startIndex].uppercased()))
         case .replace:
