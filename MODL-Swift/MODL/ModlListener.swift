@@ -48,6 +48,7 @@ class ModlListener: MODLParserBaseListener {
         if let pair = ctx.modl_pair() {
             return processPair(pair)
         } else if let conditional = ctx.modl_top_level_conditional() {
+            processTopLevelConditional(conditional)
 //            print("is conditional")
         } else if let map = ctx.modl_map() {
             return processMap(map)
@@ -55,6 +56,13 @@ class ModlListener: MODLParserBaseListener {
             return processArray(array)
         }
         return nil
+    }
+    
+    func processTopLevelConditional(_ ctx: MODLParser.Modl_top_level_conditionalContext) {
+        print(ctx.modl_top_level_conditional_return())
+        for test in ctx.modl_top_level_conditional_return() {
+            
+        }
     }
     
     func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlPair? {

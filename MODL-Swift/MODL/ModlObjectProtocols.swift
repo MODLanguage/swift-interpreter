@@ -102,3 +102,18 @@ extension ModlMap {
         return nil
     }
 }
+
+protocol ModlConditionTest {}
+protocol ModlCondition {}
+protocol ModlSubCondition {}
+protocol ModlConditionGroup {}
+
+
+protocol ModlTopLevelConditional: ModlStructure {
+    var returns: [(ModlConditionTest, ModlTopLevelConditionalReturn)] {get set}
+}
+
+protocol ModlTopLevelConditionalReturn: ModlStructure {
+    var structures: [ModlStructure] {get set}
+}
+

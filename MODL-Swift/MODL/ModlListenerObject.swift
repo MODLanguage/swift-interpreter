@@ -57,4 +57,12 @@ class ModlListenerObject: ModlObject {
         
         var value: Any?
     }
+    
+    struct TopLevelConditional: ModlTopLevelConditional {
+        var returns: [(ModlConditionTest, ModlTopLevelConditionalReturn)]
+    }
+    
+    struct ConditionTest: ModlConditionTest {
+        
+    }
 }

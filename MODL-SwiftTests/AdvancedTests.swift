@@ -72,6 +72,17 @@ class AdvancedTests: XCTestCase {
         MODLTestManager.performTests(objRefClassTests)
     }
     
+    func testConditional() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let objRefClassTests = json.filter { (modl) -> Bool in
+            return (modl.testedFeatures?.contains(FeatureTestTypes.conditional.rawValue) ?? false) && modl.testedFeatures?.count == 1
+        }
+        MODLTestManager.performTests(objRefClassTests)
+    }
+
     func testAllButMostAdvanced() {
         guard let json = jsonTests else {
             XCTFail("Fail creating tests from json input")
