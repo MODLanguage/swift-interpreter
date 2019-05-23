@@ -149,14 +149,15 @@ struct StringTransformer {
             returnObject = handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
         }
         if var primObj = returnObject as? ModlPrimitive, var strValue = primObj.value as? String {
-            strValue = processStringMethods(inputString: strValue)
             if !strValue.hasPrefix("`") {
                 strValue = "`\(strValue)"
             }
             if !strValue.hasSuffix("`") {
                 strValue = "\(strValue)`"
             }
+            strValue = processStringForMethods(strValue) ?? ""
             primObj.setValue(value: strValue)
+            returnObject = primObj
         }
         return returnObject
     }
@@ -182,10 +183,6 @@ struct StringTransformer {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
                     primValue = primValue + "." + methodChain
-                    if refPrim.value as? String != nil {
-                        //returned object is a string so can apply string methods
-                       primValue = processStringForMethods(primValue) ?? ""
-                    }
                 }
                 refPrim.setValue(value: primValue)
                 newRef = refPrim
@@ -222,7 +219,7 @@ struct StringTransformer {
                     finished = true
                 }
             } else {
-                uwInput = processStringMethods(inputString: uwInput)
+//                uwInput = processStringMethods(inputString: uwInput)
                 finished = true
             }
         }
