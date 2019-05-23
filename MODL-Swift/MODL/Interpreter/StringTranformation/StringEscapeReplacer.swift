@@ -85,7 +85,7 @@ struct StringEscapeReplacer {
     func replace(_ inputString: String) -> String {
         var output = inputString
         for (key, value) in StringEscapeReplacer.replacements {
-            output = output.replacingOccurrences(of: key, with: value)
+                output = output.replacingOccurrences(of: key, with: value)
         }
         return output
     }

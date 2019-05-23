@@ -80,7 +80,7 @@ struct StringTransformer {
     }
     
     func transformString(_ inputString: String?, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
-        guard var uwInput = refContinueQuickProcess(inputString) else {
+        guard var uwInput = inputString else {
             //TODO: Return ModlNull?
             return nil
         }
@@ -94,13 +94,19 @@ struct StringTransformer {
             prim.value = false
             return prim
         }
-        
+
+
     //*** Escape as per string-replacement.txt
         //TODO: is this necessary?
         uwInput = StringEscapeReplacer().replace(uwInput)
     //*** Replace Unicode:
         //TODO: swift might make this unnec
 
+        if refContinueQuickProcess(inputString) == nil {
+            prim.value = uwInput
+            return prim
+        }
+        
         var startIndex: String.Index = uwInput.startIndex
         var finished = false
         while !finished {
