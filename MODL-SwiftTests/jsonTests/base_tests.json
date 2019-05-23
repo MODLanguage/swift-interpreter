@@ -151,7 +151,7 @@
   { "input": "_person(  \n name(\n   speak=say;\n   first=John;\n   last=Smith\n )\n);\njust `%person.name.speak.u`_this=Hello %person.name.first.d!",
     "minimised_modl":  "_person(name(speak=say;first=John;last=Smith));just `%person.name.speak.u`_this=Hello %person.name.first.d!",
     "expected_output":   "{\n    \"just SAY_this\": \"Hello john!\"\n}",
-    "tested_features":["string_method", "object_ref"]
+    "tested_features":["string_method", "object_ref", "problem"]
   },
   { "input": "*class(\n  *i=test;\n  *a=[\n    [one;two;three]\n  ]\n);\ntest=1:2:3",
     "minimised_modl":  "*class(\n  *i=test\n  *a=[\n    [one;two;three]\n  ]\n)\ntest=1:2:3",

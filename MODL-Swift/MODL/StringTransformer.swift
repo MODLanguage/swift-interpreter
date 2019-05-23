@@ -120,9 +120,7 @@ struct StringTransformer {
         guard let uwObjMgr = objectMgr, var mKey = refContinueQuickProcess(keyToCheck) else {
             return nil
         }
-        var hasGraves = false
         if mKey.hasPrefix("`") {
-            hasGraves = true
             mKey.removeFirst()
         }
         if mKey.hasPrefix("%") {
@@ -131,7 +129,6 @@ struct StringTransformer {
             return nil
         }
         if mKey.hasSuffix("`") {
-            hasGraves = true
             mKey.removeLast()
         }
         
@@ -153,7 +150,13 @@ struct StringTransformer {
         }
         if var primObj = returnObject as? ModlPrimitive, var strValue = primObj.value as? String {
             strValue = processStringMethods(inputString: strValue)
-            primObj.setValue(value: hasGraves ? "`\(strValue)`" : strValue)
+            if !strValue.hasPrefix("`") {
+                strValue = "`\(strValue)"
+            }
+            if !strValue.hasSuffix("`") {
+                strValue = "\(strValue)`"
+            }
+            primObj.setValue(value: strValue)
         }
         return returnObject
     }
@@ -179,10 +182,10 @@ struct StringTransformer {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
                     primValue = primValue + "." + methodChain
-//                    if refPrim.value as? String != nil {
-//                        //original method was a string so can apply string methods
-//                       primValue = processStringForMethods(primValue) ?? ""
-//                    }
+                    if refPrim.value as? String != nil {
+                        //returned object is a string so can apply string methods
+                       primValue = processStringForMethods(primValue) ?? ""
+                    }
                 }
                 refPrim.setValue(value: primValue)
                 newRef = refPrim
