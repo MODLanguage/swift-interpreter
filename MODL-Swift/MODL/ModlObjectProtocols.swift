@@ -34,7 +34,7 @@ extension ModlObject {
         self.structures.append(structure)
     }
 }
-protocol ModlValue: AnyObject {}
+protocol ModlValue {}
 protocol ModlStructure: ModlValue {}
 protocol ModlPair: ModlStructure {
     var key: String? {get set}
@@ -43,15 +43,18 @@ protocol ModlPair: ModlStructure {
 
 protocol ModlArray: ModlStructure {
     var values: [ModlValue] {get set}
+    mutating func addValue(_ value: ModlValue)
 }
 
 protocol ModlMap: ModlStructure {
     var values: [String: ModlValue] {get set}
     var orderedKeys: [String] {get set}
+    mutating func addValue(key: String, value: ModlValue)
 }
 
 protocol ModlPrimitive: ModlValue {
     var value: Any? {get set}
+    mutating func setValue(value: Any?)
 }
 
 extension ModlPrimitive {
@@ -72,7 +75,7 @@ extension ModlPrimitive {
 protocol ModlNull: ModlValue {}
 
 extension ModlMap {
-    func addValue(key: String, value: ModlValue) {
+    mutating func addValue(key: String, value: ModlValue) {
         values[key] = value
         orderedKeys.append(key)
     }

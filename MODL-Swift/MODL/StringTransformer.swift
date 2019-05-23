@@ -51,7 +51,7 @@ struct StringTransformer {
             //TODO: Return ModlNull?
             return nil
         }
-        let prim = ModlOutputObject.Primitive()
+        var prim = ModlOutputObject.Primitive()
 
     //*** Check if bool value
         if uwInput.lowercased() == "true" {
@@ -151,9 +151,9 @@ struct StringTransformer {
         if methods.count != 0 {
             returnObject = handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
         }
-        if let primObj = returnObject as? ModlPrimitive, var strValue = primObj.value as? String {
+        if var primObj = returnObject as? ModlPrimitive, var strValue = primObj.value as? String {
             strValue = processStringMethods(inputString: strValue)
-            primObj.value = hasGraves ? "`\(strValue)`" : strValue
+            primObj.setValue(value: hasGraves ? "`\(strValue)`" : strValue)
         }
         return returnObject
     }
@@ -175,7 +175,7 @@ struct StringTransformer {
                 newRef = refMap.value(forKey: method)
             } else if let refPair = newRef as? ModlPair, refPair.key == method {
                 newRef = refPair.value
-            } else if let refPrim = newRef as? ModlPrimitive, var primValue = refPrim.asString() {
+            } else if var refPrim = newRef as? ModlPrimitive, var primValue = refPrim.asString() {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
                     primValue = primValue + "." + methodChain
@@ -184,7 +184,7 @@ struct StringTransformer {
 //                       primValue = processStringForMethods(primValue) ?? ""
 //                    }
                 }
-                refPrim.value = primValue
+                refPrim.setValue(value: primValue)
                 newRef = refPrim
                 isFinished = true
                 continue
@@ -250,14 +250,16 @@ struct StringTransformer {
         case .initCap:
             return uwStr.capitalized
         case .sentenceCase:
-            return uwStr.lowercased().replacingCharacters(in: uwStr.startIndex...uwStr.startIndex, with: String(uwStr[uwStr.startIndex].uppercased()))
+            return uwStr.replacingCharacters(in: uwStr.startIndex...uwStr.startIndex, with: String(uwStr[uwStr.startIndex].uppercased()))
         case .replace:
             //TODO:
             break
         case .urlencode:
             let spaceString = uwStr.replacingOccurrences(of: " ", with: "+")
-            let characters = CharacterSet.init(charactersIn: "'").inverted
-            return spaceString.addingPercentEncoding(withAllowedCharacters: characters) ?? spaceString
+            let unreserved = "-._~/?+"
+            var allowed = CharacterSet.alphanumerics
+            allowed.insert(charactersIn: unreserved)
+            return spaceString.addingPercentEncoding(withAllowedCharacters: allowed) ?? spaceString
         case .trim:
             //TODO:
             break

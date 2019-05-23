@@ -41,7 +41,7 @@ class ModlListener: MODLParserBaseListener {
     
     func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlPair? {
 //        print("Processing: Pair")
-        let pair = ModlListenerObject.Pair()
+        var pair = ModlListenerObject.Pair()
         //Check key
         if let terminalString = ctx.STRING() {
             pair.key = getString(terminalString.getText())
@@ -78,7 +78,7 @@ class ModlListener: MODLParserBaseListener {
             //TODO: is this real? or should I return nil
             return ModlListenerObject.Array()
         }
-        let arr = ModlListenerObject.Array()
+        var arr = ModlListenerObject.Array()
         arr.values = processArrayChildren(children)
         return arr
     }
@@ -127,14 +127,14 @@ class ModlListener: MODLParserBaseListener {
             //TODO: is this real? or should I return nil
             return ModlListenerObject.Array()
         }
-        let arr = ModlListenerObject.Array()
+        var arr = ModlListenerObject.Array()
         arr.values = processArrayChildren(children)
         return arr
     }
     
     func processMap(_ ctx: MODLParser.Modl_mapContext) -> ModlMap {
 //        print("Processing: Map")
-        let map = ModlListenerObject.Map()
+        var map = ModlListenerObject.Map()
         for item in ctx.modl_map_item() {
             if let pair = processMapItemPair(item), let key = pair.key, let value = pair.value {
                 map.addValue(key: key, value: value)
@@ -199,25 +199,25 @@ class ModlListener: MODLParserBaseListener {
     
     func getTerminalString(_ ctx: TerminalNode?) -> ModlPrimitive {
         //TODO: escape
-        let terminal = ModlListenerObject.Primitive()
+        var terminal = ModlListenerObject.Primitive()
         terminal.value = getString(ctx?.getText())
         return terminal
     }
     
     func getTerminalQuoted(_ ctx: TerminalNode?) -> ModlPrimitive {
-        let terminal = ModlListenerObject.Primitive()
+        var terminal = ModlListenerObject.Primitive()
         terminal.value = getString(processQuotedString(ctx?.getText()))
         return terminal
     }
 
     func getTerminalBool(_ ctx: TerminalNode?, value: Bool) -> ModlPrimitive {
-        let terminal = ModlListenerObject.Primitive()
+        var terminal = ModlListenerObject.Primitive()
         terminal.value = value
         return terminal
     }
     
     func getTerminalNumber(_ ctx: TerminalNode?) -> ModlPrimitive {
-        let terminal = ModlListenerObject.Primitive()
+        var terminal = ModlListenerObject.Primitive()
         let numText = ctx?.getText() ?? ""
         terminal.value = Decimal(string: numText)  // Decimal(numText)
         return terminal

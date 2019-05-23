@@ -90,20 +90,20 @@ class ModlClassManager {
         guard let uwValue = value, let classObj = getClass(key) else {
             return nil
         }
-        let outputPair = ModlOutputObject.Pair()
+        var outputPair = ModlOutputObject.Pair()
         outputPair.key = classObj.name
         //TODO: work out prim from pair value if superclass doesn't have one....
         if let prim = findPrimitiveType(classObj) {
             switch prim {
             case .str:
                 if let pairValue = uwValue as? ModlPrimitive {
-                    let replacement = ModlListenerObject.Primitive()
+                    var replacement = ModlListenerObject.Primitive()
                     replacement.value = pairValue.asString()
                     outputPair.value = replacement
                     return outputPair
                 }
             case .map:
-                let replacement = ModlListenerObject.Map()
+                var replacement = ModlListenerObject.Map()
                 let assignList = constructAssignList(classObj.name)
                 if let pairValue = uwValue as? ModlArray {
                     if let matching = assignList.first(where: { (array) -> Bool in
@@ -199,7 +199,7 @@ fileprivate struct ModlClass {
                 return ClassSpecialKeys(rawValue: key.lowercased()) == nil
             }
             for key in nonSpecialKeys {
-                let newPair = ModlListenerObject.Pair()
+                var newPair = ModlListenerObject.Pair()
                 newPair.key = key
                 newPair.value = classMap.value(forKey: key)
                 extraValues.append(newPair)

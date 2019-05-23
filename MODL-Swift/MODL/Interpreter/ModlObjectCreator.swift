@@ -56,7 +56,7 @@ struct ModlObjectCreator {
         }
         switch uwElement {
         case let iPair as ModlPair:
-            let pair = ModlOutputObject.Pair()
+            var pair = ModlOutputObject.Pair()
             if processReservedPair(key: iPair.key, value: iPair.value) {
                 return nil
             }
@@ -73,13 +73,13 @@ struct ModlObjectCreator {
             objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
             return pair
         case let iArray as ModlArray:
-            let array = ModlOutputObject.Array()
+            var array = ModlOutputObject.Array()
             array.values = iArray.values.compactMap({ (value) -> ModlValue? in
                 return processModlElement(value, classIdsProcessedInBranch: classIdsProcessedInBranch)
             })
             return array
         case let iMap as ModlMap:
-            let map = ModlOutputObject.Map()
+            var map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
                 let originalValue = iMap.value(forKey: key)
                 if processReservedPair(key: key, value: originalValue) {
@@ -113,7 +113,7 @@ struct ModlObjectCreator {
                     return processModlElement(transformed, classIdsProcessedInBranch: classIdsProcessedInBranch)
                 }
             }
-            let prim = ModlOutputObject.Primitive()
+            var prim = ModlOutputObject.Primitive()
 
             if let processed = stringTransformer.processStringForMethods(iPrim.value as? String) {
                 prim.value = processed
@@ -170,7 +170,7 @@ struct ModlObjectCreator {
             objectRefManager.addIndexedVariables(processed)
             return true
         case .objectReference:
-            let objPair = ModlOutputObject.Pair()
+            var objPair = ModlOutputObject.Pair()
             objPair.key = uwKey
             objPair.value = processModlElement(value)
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)

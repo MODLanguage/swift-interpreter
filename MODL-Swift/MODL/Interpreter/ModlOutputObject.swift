@@ -53,7 +53,7 @@ class ModlOutputObject: ModlObject, ModlJSON {
     
     var structures: [ModlStructure] = []
     
-    class Pair: ModlPair, ModlJSON {
+    struct Pair: ModlPair, ModlJSON {
         func asJson() -> String? {
             guard let uwKey = key, let uwValue = (value as? ModlJSON)?.asJson() else {
                 return nil
@@ -65,7 +65,7 @@ class ModlOutputObject: ModlObject, ModlJSON {
         var value: ModlValue?
     }
     
-    class Array: ModlArray, ModlJSON {
+    struct Array: ModlArray, ModlJSON {
         var values: [ModlValue] = []
         func asJson() -> String? {
             var reducedArray = values.reduce("") { (result, nextValue) -> String in
@@ -80,9 +80,13 @@ class ModlOutputObject: ModlObject, ModlJSON {
             }
             return "[\(reducedArray)]"
         }
+        
+        mutating func addValue(_ value: ModlValue) {
+            values.append(value)
+        }
     }
     
-    class Map: ModlMap, ModlJSON {
+    struct Map: ModlMap, ModlJSON {
         var values: [String : ModlValue] = [:]
         var orderedKeys: [String] = []
         
@@ -97,13 +101,17 @@ class ModlOutputObject: ModlObject, ModlJSON {
         }
     }
     
-    class Null: ModlNull, ModlJSON {
+    struct Null: ModlNull, ModlJSON {
         func asJson() -> String? {
             return "null"
         }
     }
     
-    class Primitive: ModlPrimitive, ModlJSON {
+    struct Primitive: ModlPrimitive, ModlJSON {
+        mutating func setValue(value: Any?) {
+            self.value = value
+        }
+        
         var value: Any?
         
         func asJson() -> String? {

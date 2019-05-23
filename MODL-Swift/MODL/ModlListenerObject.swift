@@ -11,24 +11,32 @@ import Foundation
 class ModlListenerObject: ModlObject {
     var structures: [ModlStructure] = []
     
-    class Pair: ModlPair {
+    struct Pair: ModlPair {
         var key: String?
         var value: ModlValue?
     }
     
-    class Array: ModlArray {
+    struct Array: ModlArray {
+        mutating func addValue(_ value: ModlValue) {
+            self.values.append(value)
+        }
+        
         var values: [ModlValue] = []
     }
     
-    class Map: ModlMap {
+    struct Map: ModlMap {
         var values: [String : ModlValue] = [:]
         var orderedKeys: [String] = []
     }
     
-    class Null: ModlNull {
+    struct Null: ModlNull {
     }
     
-    class Primitive: ModlPrimitive {
+    struct Primitive: ModlPrimitive {
+        mutating func setValue(value: Any?) {
+            self.value = value
+        }
+        
         var value: Any?
     }
 }
