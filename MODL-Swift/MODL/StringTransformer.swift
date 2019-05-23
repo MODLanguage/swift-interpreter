@@ -26,15 +26,48 @@
 
 import Foundation
 
-fileprivate enum StringMethod: String {
-    case uppercase = "u"
-    case downcase = "d"
-    case sentenceCase = "s"
-    case initCap = "i"
-    case urlencode = "e"
-    case puny = "p"
-    case replace = "r"
-    case trim = "t"
+fileprivate enum StringMethod {
+    case uppercase
+    case downcase
+    case sentenceCase
+    case initCap
+    case urlencode
+    case puny
+    case replace(_ existing: String, _ replacement: String)
+    case trim(_ reference: String)
+    
+    init?(rawValue: String) {
+        guard let first = rawValue.first else {
+            return nil
+        }
+        switch first {
+        case "u":
+            self = .uppercase
+        case "d":
+            self = .downcase
+        case "s":
+            self = .sentenceCase
+        case "i":
+            self = .initCap
+        case "e":
+            self = .urlencode
+        case "p":
+            self = .puny
+        case "r":
+            guard let find = rawValue.slice(from: "(", to: ","),
+                let replace = rawValue.slice(from: ",", to: ")") else {
+                    return nil
+            }
+            self = .replace(find, replace)
+        case "t":
+            guard let reference = rawValue.slice(from: "(", to: ")") else {
+                return nil
+            }
+            self = .trim(reference)
+        default:
+            return nil
+        }
+    }
 }
 
 struct StringTransformer {
@@ -248,33 +281,46 @@ struct StringTransformer {
         case .uppercase:
              return uwStr.uppercased()
         case .initCap:
-            let words = uwStr.split(separator: " ")
-            let reduced = words.reduce("") { (result, string) -> String in
-                var output = result
-                if result.count > 0 {
-                    output = output + " "
-                }
-                return output + string.replacingCharacters(in: string.startIndex...string.startIndex, with: String(string[string.startIndex].uppercased()))
-            }
-            return reduced //.initcap also capitalises underscore words so cannot use
+            return initCapIgnoringUnderscore(uwStr)
         case .sentenceCase:
             return uwStr.replacingCharacters(in: uwStr.startIndex...uwStr.startIndex, with: String(uwStr[uwStr.startIndex].uppercased()))
-        case .replace:
-            //TODO:
-            break
+        case .replace(let find, let replace):
+            return uwStr.replacingOccurrences(of: find, with: replace)
         case .urlencode:
-            let spaceString = uwStr.replacingOccurrences(of: " ", with: "+")
-            let unreserved = "-._~/?+"
-            var allowed = CharacterSet.alphanumerics
-            allowed.insert(charactersIn: unreserved)
-            return spaceString.addingPercentEncoding(withAllowedCharacters: allowed) ?? spaceString
-        case .trim:
-            //TODO:
-            break
+            return urlPercentEncode(uwStr)
+        case .trim(let reference):
+            return trimStringToRef(input: uwStr, ref: reference)
         case .puny:
             //TODO:
             break
         }
         return uwStr + "." + stringMethodName
+    }
+    
+    private func urlPercentEncode(_ inputString: String) -> String {
+        let spaceString = inputString.replacingOccurrences(of: " ", with: "+")
+        let unreserved = "-._~/?+"
+        var allowed = CharacterSet.alphanumerics
+        allowed.insert(charactersIn: unreserved)
+        return spaceString.addingPercentEncoding(withAllowedCharacters: allowed) ?? spaceString
+    }
+    
+    private func initCapIgnoringUnderscore(_ inputString: String) -> String {
+        let words = inputString.split(separator: " ")
+        let reduced = words.reduce("") { (result, string) -> String in
+            var output = result
+            if result.count > 0 {
+                output = output + " "
+            }
+            return output + string.replacingCharacters(in: string.startIndex...string.startIndex, with: String(string[string.startIndex].uppercased()))
+        }
+        return reduced //.initcap also capitalises underscore words so cannot use
+    }
+    
+    private func trimStringToRef(input: String, ref: String) -> String {
+        if let range = input.range(of: ref)?.lowerBound {
+            return String(input[..<range])
+        }
+        return input
     }
 }

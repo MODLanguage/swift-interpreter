@@ -25,6 +25,7 @@
 //
 
 import XCTest
+@testable import MODL_Swift
 
 class AdvancedTests: XCTestCase {
     var jsonTests: [MODLTest]?
