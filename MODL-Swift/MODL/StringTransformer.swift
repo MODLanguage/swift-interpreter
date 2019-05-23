@@ -25,6 +25,7 @@
 //
 
 import Foundation
+import Punycode
 
 fileprivate enum StringMethod {
     case uppercase
@@ -244,14 +245,14 @@ struct StringTransformer {
         var startIndex = uwInput.startIndex
         while !finished {
             if let ref = getObjectRangesMatch(uwInput, start: startIndex) {
-                var testableString = String(uwInput[ref])
-                if testableString.hasPrefix("`") {
-                    testableString.removeFirst()
+                let testableString = String(uwInput[ref])
+                var replacement = processStringMethods(inputString: testableString)
+                if replacement.hasPrefix("`") {
+                    replacement.removeFirst()
                 }
-                if testableString.hasSuffix("`") {
-                    testableString.removeLast()
+                if replacement.hasSuffix("`") {
+                    replacement.removeLast()
                 }
-                let replacement = processStringMethods(inputString: testableString)
                 uwInput = uwInput.replacingCharacters(in: ref, with: replacement)
                 startIndex = uwInput.index(ref.lowerBound, offsetBy: replacement.distance(from: replacement.startIndex, to: replacement.endIndex))
                 if startIndex == ref.lowerBound {
@@ -271,6 +272,12 @@ struct StringTransformer {
             return inputString
         }
         var subject: String = String(methods.remove(at: 0)) //take off the subject and leave the methods
+        if subject.hasPrefix("`") {
+            subject.removeFirst()
+        }
+        if subject.hasSuffix("`") {
+            subject.removeLast()
+        }
         for method in methods {
             subject = performStringMethod(inputString: subject, stringMethodName: method)
         }
@@ -297,10 +304,9 @@ struct StringTransformer {
         case .trim(let reference):
             return trimStringToRef(input: uwStr, ref: reference)
         case .puny:
-            //TODO:
-            break
+            return uwStr.punycodeDecoded ?? ""
         }
-        return uwStr + "." + stringMethodName
+//        return uwStr + "." + stringMethodName
     }
     
     private func urlPercentEncode(_ inputString: String) -> String {

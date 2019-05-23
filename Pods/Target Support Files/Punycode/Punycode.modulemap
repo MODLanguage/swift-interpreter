@@ -1,0 +1,6 @@
+framework module Punycode {
+  umbrella header "Punycode-umbrella.h"
+
+  export *
+  module * { export * }
+}

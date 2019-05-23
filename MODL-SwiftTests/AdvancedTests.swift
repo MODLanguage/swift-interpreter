@@ -81,7 +81,7 @@ class AdvancedTests: XCTestCase {
             guard let modlFeature = modl.testedFeatures else {
                 return false
             }
-            return !(modlFeature.contains(FeatureTestTypes.conditional.rawValue) || modlFeature.contains(FeatureTestTypes.load.rawValue) || modlFeature.contains(FeatureTestTypes.method.rawValue) || modlFeature.contains(FeatureTestTypes.puny.rawValue))
+            return !(modlFeature.contains(FeatureTestTypes.conditional.rawValue) || modlFeature.contains(FeatureTestTypes.load.rawValue) || modlFeature.contains(FeatureTestTypes.method.rawValue))
         }
         MODLTestManager.performTests(allButTests)
     }

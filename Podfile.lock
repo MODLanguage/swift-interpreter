@@ -1,0 +1,16 @@
+PODS:
+  - Punycode (1.0.1)
+
+DEPENDENCIES:
+  - Punycode
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Punycode
+
+SPEC CHECKSUMS:
+  Punycode: ddbef4a269780c8f19a7e8deb01d9f101cb2ef86
+
+PODFILE CHECKSUM: b01070a4c018d133486be34f5c207bac11c7302a
+
+COCOAPODS: 1.6.0
