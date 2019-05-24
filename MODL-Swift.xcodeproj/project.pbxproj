@@ -126,10 +126,10 @@
 		3E3896E02289BECD005533B9 /* StringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringTransformer.swift; path = ../../StringTransformer.swift; sourceTree = "<group>"; };
 		3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlObjectReferenceManager.swift; sourceTree = "<group>"; };
 		3E3C29A02296BD45007D555C /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		3E5ABB6422674513007419CC /* ModlListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModlListener.swift; path = ../ModlListener.swift; sourceTree = "<group>"; };
+		3E5ABB6422674513007419CC /* ModlListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListener.swift; sourceTree = "<group>"; };
 		3E5ABB6622674541007419CC /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = ../antlr/Antlr4.xcodeproj; sourceTree = "<group>"; };
 		3E5ABB712267459E007419CC /* ModlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlParser.swift; sourceTree = "<group>"; };
-		3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModlListenerObject.swift; path = ../ModlListenerObject.swift; sourceTree = "<group>"; };
+		3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListenerObject.swift; sourceTree = "<group>"; };
 		3E63153222816FCD008BDC14 /* 3.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3.modl; sourceTree = "<group>"; };
 		3E63153322816FCD008BDC14 /* 2.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2.modl; sourceTree = "<group>"; };
 		3E63153522816FCD008BDC14 /* test_import.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_import.txt; sourceTree = "<group>"; };
@@ -411,7 +411,6 @@
 				43A4339DD77837A61B86F756 /* Pods-MODL-SwiftTests.debug.xcconfig */,
 				94805F7E7C80A9E07B41A6E1 /* Pods-MODL-SwiftTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
