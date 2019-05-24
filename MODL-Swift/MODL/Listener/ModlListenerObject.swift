@@ -59,10 +59,31 @@ class ModlListenerObject: ModlObject {
     }
     
     struct TopLevelConditional: ModlTopLevelConditional {
-        var returns: [(ModlConditionTest, ModlTopLevelConditionalReturn)]
+        var defaultReturn: ModlTopLevelConditionalReturn?        
+        var conditionReturns: [ModlTopLevelConditionalReturn] = []
+        var conditionTests: [ModlConditionTest] = []
     }
     
+    struct TopLevelConditionalReturn: ModlTopLevelConditionalReturn {
+        var structures: [ModlStructure] = []
+    }
+
     struct ConditionTest: ModlConditionTest {
+        var subConditionList: [ModlSubCondition] = []
+    }
+    
+    struct ConditionGroup: ModlConditionGroup {
+        var shouldNegate: Bool?
+        var lastOperator: String?
+        var conditionTests: [(ModlConditionTest, String)]
+    }
+    
+    struct Condition: ModlCondition {
+        var key: String?
+        var operatorType: String?
+        var values: [ModlValue]?
         
+        var shouldNegate: Bool?
+        var lastOperator: String?
     }
 }

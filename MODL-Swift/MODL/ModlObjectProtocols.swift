@@ -103,14 +103,38 @@ extension ModlMap {
     }
 }
 
-protocol ModlConditionTest {}
-protocol ModlCondition {}
-protocol ModlSubCondition {}
-protocol ModlConditionGroup {}
+protocol ModlConditionTest {
+    var subConditionList: [ModlSubCondition] {get set}
+}
 
+protocol ModlCondition: ModlSubCondition {
+    var key: String? {get set}
+    var operatorType: String? {get set}
+    var values: [ModlValue]? {get set}
+}
+
+protocol ModlConditionGroup: ModlSubCondition {
+    var conditionTests: [(ModlConditionTest, String)] {get set} //TODO: this can be improved, too many tuples
+}
+
+protocol ModlSubCondition {
+    var shouldNegate: Bool? {get set}
+    var lastOperator: String? {get set}
+}
 
 protocol ModlTopLevelConditional: ModlStructure {
-    var returns: [(ModlConditionTest, ModlTopLevelConditionalReturn)] {get set}
+    var conditionReturns: [ModlTopLevelConditionalReturn] {get set}
+    var conditionTests: [ModlConditionTest] {get set}
+    var defaultReturn: ModlTopLevelConditionalReturn? {get set}
+    mutating func addTestAndReturn(testCase: ModlConditionTest, conditionalReturn: ModlTopLevelConditionalReturn)
+}
+
+extension ModlTopLevelConditional {
+    mutating func addTestAndReturn(testCase: ModlConditionTest, conditionalReturn: ModlTopLevelConditionalReturn) {
+        //TODO: check indexes
+        conditionReturns.append(conditionalReturn)
+        conditionTests.append(testCase)
+    }
 }
 
 protocol ModlTopLevelConditionalReturn: ModlStructure {
