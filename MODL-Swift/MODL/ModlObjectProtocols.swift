@@ -29,11 +29,6 @@ protocol ModlObject: AnyObject {
     var structures: [ModlStructure] {get set}
 }
 
-extension ModlObject {
-    func addStructure(_ structure: ModlStructure) {
-        self.structures.append(structure)
-    }
-}
 protocol ModlValue {}
 protocol ModlStructure: ModlValue {}
 protocol ModlPair: ModlStructure {
@@ -41,20 +36,95 @@ protocol ModlPair: ModlStructure {
     var value: ModlValue? {get set}
 }
 
+
 protocol ModlArray: ModlStructure {
     var values: [ModlValue] {get set}
     mutating func addValue(_ value: ModlValue)
 }
 
+protocol ModlArrayItem: ModlValue {}
+
 protocol ModlMap: ModlStructure {
     var values: [String: ModlValue] {get set}
     var orderedKeys: [String] {get set}
-    mutating func addValue(key: String, value: ModlValue)
+    mutating func addValue(_ mapItem: ModlMapItem)
+}
+
+protocol ModlMapItem: ModlPair {
+    init?(pair: ModlPair)
 }
 
 protocol ModlPrimitive: ModlValue {
     var value: Any? {get set}
     mutating func setValue(value: Any?)
+}
+
+protocol ModlNull: ModlValue {}
+
+
+/*****/
+//Condition Details
+/*****/
+protocol ModlConditionTest {
+    var subConditionList: [ModlSubCondition] {get set}
+}
+
+protocol ModlCondition: ModlSubCondition {
+    var key: String? {get set}
+    var operatorType: String? {get set}
+    var values: [ModlValue]? {get set}
+}
+
+protocol ModlConditionGroup: ModlSubCondition {
+    var conditionTests: [(ModlConditionTest, String)] {get set} //TODO: this can be improved, too many tuples
+}
+
+protocol ModlSubCondition {
+    var shouldNegate: Bool? {get set}
+    var lastOperator: String? {get set}
+}
+
+/*****/
+//Conditionals
+/*****/
+protocol ModlConditional: ModlStructure {
+    var conditionReturns: [ModlConditionalReturn] {get}
+    var conditionTests: [ModlConditionTest] {get}
+    var defaultReturn: ModlConditionalReturn? {get}
+}
+
+protocol ModlTopLevelConditional: ModlConditional {
+    mutating func addTestAndReturn(testCase: ModlConditionTest, conditionalReturn: ModlTopLevelConditionalReturn)
+}
+
+/*****/
+//ConditionalReturns
+/*****/
+protocol ModlConditionalReturn: ModlStructure {
+    var structures: [ModlValue] {get}
+}
+
+protocol ModlTopLevelConditionalReturn: ModlConditionalReturn {
+    mutating func addStructure(_ structure: ModlStructure)
+}
+
+protocol ModlMapConditionalReturn: ModlConditionalReturn {
+    mutating func addItem(_ structure: ModlMapItem)
+}
+
+protocol ModlArrayConditionalReturn: ModlConditionalReturn {
+    mutating func addItem(_ structure: ModlValue)
+}
+
+protocol ModlValueConditionalReturn: ModlConditionalReturn {
+    mutating func addItem(_ structure: ModlValue)
+}
+
+//EXTENSIONS
+extension ModlObject {
+    func addStructure(_ structure: ModlStructure) {
+        self.structures.append(structure)
+    }
 }
 
 extension ModlPrimitive {
@@ -72,14 +142,24 @@ extension ModlPrimitive {
     }
 }
 
-protocol ModlNull: ModlValue {}
 
 extension ModlMap {
+    mutating func addValue(_ mapItem: ModlMapItem) {
+        guard let uwKey = mapItem.key, let uwValue = mapItem.value else {
+            return
+        }
+        values[uwKey] = uwValue
+        orderedKeys.append(uwKey)
+    }
+    
     mutating func addValue(key: String, value: ModlValue) {
+//        guard let uwKey = mapItem.key, let uwValue = mapItem.value else {
+//            return
+//        }
         values[key] = value
         orderedKeys.append(key)
     }
-    
+
     func value(forKey key: String, ignoreCase: Bool = false) -> ModlValue? {
         if ignoreCase {
             for (vKey,value) in values {
@@ -102,42 +182,3 @@ extension ModlMap {
         return nil
     }
 }
-
-protocol ModlConditionTest {
-    var subConditionList: [ModlSubCondition] {get set}
-}
-
-protocol ModlCondition: ModlSubCondition {
-    var key: String? {get set}
-    var operatorType: String? {get set}
-    var values: [ModlValue]? {get set}
-}
-
-protocol ModlConditionGroup: ModlSubCondition {
-    var conditionTests: [(ModlConditionTest, String)] {get set} //TODO: this can be improved, too many tuples
-}
-
-protocol ModlSubCondition {
-    var shouldNegate: Bool? {get set}
-    var lastOperator: String? {get set}
-}
-
-protocol ModlTopLevelConditional: ModlStructure {
-    var conditionReturns: [ModlTopLevelConditionalReturn] {get set}
-    var conditionTests: [ModlConditionTest] {get set}
-    var defaultReturn: ModlTopLevelConditionalReturn? {get set}
-    mutating func addTestAndReturn(testCase: ModlConditionTest, conditionalReturn: ModlTopLevelConditionalReturn)
-}
-
-extension ModlTopLevelConditional {
-    mutating func addTestAndReturn(testCase: ModlConditionTest, conditionalReturn: ModlTopLevelConditionalReturn) {
-        //TODO: check indexes
-        conditionReturns.append(conditionalReturn)
-        conditionTests.append(testCase)
-    }
-}
-
-protocol ModlTopLevelConditionalReturn: ModlStructure {
-    var structures: [ModlStructure] {get set}
-}
-

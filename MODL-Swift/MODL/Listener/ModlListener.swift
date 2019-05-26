@@ -95,7 +95,7 @@ class ModlListener: MODLParserBaseListener {
                 }
             }
         }
-        return nil
+        return test
     }
     
     func processConditionGroup(_ ctx: MODLParser.Modl_condition_groupContext, shouldNegate: Bool = false, lastOperator: String?) -> ModlListenerObject.ConditionGroup? {
@@ -110,14 +110,17 @@ class ModlListener: MODLParserBaseListener {
         condition.values = ctx.modl_value().compactMap({ (ctx) -> ModlValue? in
             return processValue(ctx)
         })
-        condition.lastOperator = lastOperator
-        condition.shouldNegate = shouldNegate
         return condition
     }
     
     func processTopLevelConditionalReturn(_ ctx: MODLParser.Modl_top_level_conditional_returnContext) -> ModlListenerObject.TopLevelConditionalReturn? {
-        let cReturn = ModlListenerObject.TopLevelConditionalReturn()
-        return nil
+        var cReturn = ModlListenerObject.TopLevelConditionalReturn()
+        for structure in ctx.modl_structure() {
+            if let mStruct = processStructure(structure) {
+                cReturn.structures.append(mStruct)
+            }
+        }
+        return cReturn
     }
     
     func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlPair? {
@@ -217,8 +220,8 @@ class ModlListener: MODLParserBaseListener {
 //        print("Processing: Map")
         var map = ModlListenerObject.Map()
         for item in ctx.modl_map_item() {
-            if let pair = processMapItemPair(item), let key = pair.key, let value = pair.value {
-                map.addValue(key: key, value: value)
+            if let item = processMapItemPair(item) {
+                map.addValue(item)
             } else {
                 //TODO: process conditional
             }
@@ -226,14 +229,14 @@ class ModlListener: MODLParserBaseListener {
         return map
     }
     
-    func processMapItemPair(_ ctx: MODLParser.Modl_map_itemContext) -> ModlPair? {
-        if let pair = ctx.modl_pair() {
-            return processPair(pair)
+    func processMapItemPair(_ ctx: MODLParser.Modl_map_itemContext) -> ModlMapItem? {
+        if let pair = ctx.modl_pair(), let mPair = processPair(pair), let mMapItem = ModlListenerObject.MapItem(pair: mPair) {
+            return mMapItem
         }
         return nil
     }
     
-    func processMapItemConditional(_ ctx: MODLParser.Modl_map_itemContext) ->ModlPair? {
+    func processMapItemConditional(_ ctx: MODLParser.Modl_map_itemContext) -> ModlMapItem? {
         return nil
     }
 

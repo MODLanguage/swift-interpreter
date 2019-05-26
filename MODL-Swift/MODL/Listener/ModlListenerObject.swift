@@ -47,6 +47,16 @@ class ModlListenerObject: ModlObject {
         var orderedKeys: [String] = []
     }
     
+    struct MapItem: ModlMapItem {
+        var key: String?
+        var value: ModlValue?
+        
+        init?(pair: ModlPair) {
+            self.key = pair.key
+            self.value = pair.value
+        }
+    }
+    
     struct Null: ModlNull {
     }
     
@@ -59,13 +69,38 @@ class ModlListenerObject: ModlObject {
     }
     
     struct TopLevelConditional: ModlTopLevelConditional {
-        var defaultReturn: ModlTopLevelConditionalReturn?        
-        var conditionReturns: [ModlTopLevelConditionalReturn] = []
+        var defaultReturn: ModlConditionalReturn?
+        var conditionReturns: [ModlConditionalReturn] = []
         var conditionTests: [ModlConditionTest] = []
+        
+        mutating func addTestAndReturn(testCase: ModlConditionTest, conditionalReturn: ModlTopLevelConditionalReturn) {
+            //TODO: check indexes
+            conditionReturns.append(conditionalReturn)
+            conditionTests.append(testCase)
+        }
     }
     
     struct TopLevelConditionalReturn: ModlTopLevelConditionalReturn {
-        var structures: [ModlStructure] = []
+        mutating func addStructure(_ structure: ModlStructure) {
+            structures.append(structure)
+        }
+        
+        var structures: [ModlValue] = []
+    }
+    
+    struct ArrayConditionalReturn: ModlArrayConditionalReturn {
+        mutating func addItem(_ structure: ModlValue) {
+            self.structures.append(structure)
+        }
+        
+        var structures: [ModlValue] = []
+    }
+    
+    struct MapConditionalReturn: ModlMapConditionalReturn {
+        var structures: [ModlValue] = []
+        mutating func addItem(_ structure: ModlMapItem) {
+            self.structures.append(structure)
+        }
     }
 
     struct ConditionTest: ModlConditionTest {
