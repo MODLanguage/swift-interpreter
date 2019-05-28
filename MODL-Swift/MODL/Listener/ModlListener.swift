@@ -48,7 +48,7 @@ class ModlListener: MODLParserBaseListener {
         if let pair = ctx.modl_pair() {
             return processPair(pair)
         } else if let conditional = ctx.modl_top_level_conditional() {
-            print(dump(processTopLevelConditional(conditional)))
+            return processTopLevelConditional(conditional)
         } else if let map = ctx.modl_map() {
             return processMap(map)
         } else if let array = ctx.modl_array() {
@@ -57,74 +57,7 @@ class ModlListener: MODLParserBaseListener {
         return nil
     }
     
-    func processTopLevelConditional(_ ctx: MODLParser.Modl_top_level_conditionalContext) -> ModlListenerObject.TopLevelConditional? {
-        var topLevelConditional = ModlListenerObject.TopLevelConditional()
-        for (index, test) in ctx.modl_condition_test().enumerated() {
-            if let condition = processConditionTest(test), let result = processTopLevelConditionalReturn(ctx.modl_top_level_conditional_return()[index]) {
-                topLevelConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
-            }
-        }
-        let returnCount = ctx.modl_top_level_conditional_return().count
-        let testCount = ctx.modl_condition_test().count
-        if  returnCount > testCount {
-            //default return if no tests pass
-            let secondReturn = ctx.modl_top_level_conditional_return()[returnCount - 1]
-            topLevelConditional.defaultReturn = processTopLevelConditionalReturn(secondReturn)
-        }
-        return topLevelConditional
-    }
-    
-    func processConditionTest(_ ctx: MODLParser.Modl_condition_testContext) -> ModlListenerObject.ConditionTest? {
-        var test = ModlListenerObject.ConditionTest()
-        var shouldNegate = false
-        var lastOperator: String? = nil
-        for child in ctx.children  ?? [] {
-            if let group = child as? MODLParser.Modl_condition_groupContext, let cGroup = processConditionGroup(group, shouldNegate: shouldNegate, lastOperator: lastOperator) {
-                test.subConditionList.append(cGroup)
-                lastOperator = nil
-                shouldNegate = false
-            } else if let condition = child as? MODLParser.Modl_conditionContext, let con = processCondition(condition, shouldNegate: shouldNegate, lastOperator: lastOperator) {
-                test.subConditionList.append(con)
-                lastOperator = nil
-                shouldNegate = false
-            } else {
-                if child.getText() == "!" {
-                    shouldNegate = true
-                } else {
-                    lastOperator = child.getText()
-                }
-            }
-        }
-        return test
-    }
-    
-    func processConditionGroup(_ ctx: MODLParser.Modl_condition_groupContext, shouldNegate: Bool = false, lastOperator: String?) -> ModlListenerObject.ConditionGroup? {
-        let conditionGroup = ModlListenerObject.ConditionGroup(shouldNegate: shouldNegate, lastOperator: lastOperator, conditionTests: [])
-        return conditionGroup
-    }
-    
-    func processCondition(_ ctx: MODLParser.Modl_conditionContext, shouldNegate: Bool = false, lastOperator: String?) -> ModlListenerObject.Condition? {
-        var condition = ModlListenerObject.Condition(key: nil, operatorType: nil, values: nil, shouldNegate: shouldNegate, lastOperator: lastOperator)
-        condition.key = ctx.STRING()?.getText()
-        condition.operatorType = ctx.modl_operator()?.getText()
-        condition.values = ctx.modl_value().compactMap({ (ctx) -> ModlValue? in
-            return processValue(ctx)
-        })
-        return condition
-    }
-    
-    func processTopLevelConditionalReturn(_ ctx: MODLParser.Modl_top_level_conditional_returnContext) -> ModlListenerObject.TopLevelConditionalReturn? {
-        var cReturn = ModlListenerObject.TopLevelConditionalReturn()
-        for structure in ctx.modl_structure() {
-            if let mStruct = processStructure(structure) {
-                cReturn.structures.append(mStruct)
-            }
-        }
-        return cReturn
-    }
-    
     func processPair(_ ctx: MODLParser.Modl_pairContext) -> ModlPair? {
-//        print("Processing: Pair")
         var pair = ModlListenerObject.Pair()
         //Check key
         if let terminalString = ctx.STRING() {
@@ -151,13 +84,12 @@ class ModlListener: MODLParserBaseListener {
             }
             return processValue(value)
         } else if let conditional = ctx.modl_value_conditional() {
-            //TODO: process conditional
+            return processValueConditional(conditional)
         }
         return nil
     }
     
     func processArray(_ ctx: MODLParser.Modl_arrayContext) ->ModlArray {
-//        print("Processing: Array")
         guard let children = ctx.children else {
             //TODO: is this real? or should I return nil
             return ModlListenerObject.Array()
@@ -196,17 +128,14 @@ class ModlListener: MODLParserBaseListener {
     
     func processArrayItem(_ ctx: MODLParser.Modl_array_itemContext) -> ModlValue? {
         if let conditional = ctx.modl_array_conditional() {
-            //FIXME: process conditional
-            return nil
+            return processArrayConditional(conditional)
         } else if let value = ctx.modl_array_value_item() {
-            //TODO: Should this be a array specific method? or can I piggyback of existing value parser
             return processValue(value)
         }
         return nil
     }
     
     func processNBArray(_ ctx: MODLParser.Modl_nb_arrayContext) -> ModlValue? {
-//        print("processing: NB array")
         guard let children = ctx.children else {
             //TODO: is this real? or should I return nil
             return ModlListenerObject.Array()
@@ -217,13 +146,12 @@ class ModlListener: MODLParserBaseListener {
     }
     
     func processMap(_ ctx: MODLParser.Modl_mapContext) -> ModlMap {
-//        print("Processing: Map")
         var map = ModlListenerObject.Map()
         for item in ctx.modl_map_item() {
             if let item = processMapItemPair(item) {
                 map.addValue(item)
-            } else {
-                //TODO: process conditional
+            } else if let conditional = item.modl_map_conditional(), let processed = processMapConditional(conditional) {
+                map.addConditional(processed)
             }
         }
         return map
@@ -236,10 +164,6 @@ class ModlListener: MODLParserBaseListener {
         return nil
     }
     
-    func processMapItemConditional(_ ctx: MODLParser.Modl_map_itemContext) -> ModlMapItem? {
-        return nil
-    }
-
     func processValue(_ ctx: MODLValueContext) -> ModlValue? {
         if let value = ctx.modl_array() {
             return processArray(value)
@@ -253,6 +177,9 @@ class ModlListener: MODLParserBaseListener {
         return nil
     }
     
+    //***********
+    //MARK: - Terminals
+    //***********
     func processPrimitive(_ ctx: MODLParser.Modl_primitiveContext) -> ModlValue? {
         if let value = ctx.STRING() {
             return getTerminalString(value)
@@ -312,7 +239,165 @@ class ModlListener: MODLParserBaseListener {
             return ""
         }
         // do not remove graves
-        return uwInput //.replacingOccurrences(of: "`", with: "")
+        return uwInput
+    }
+
+    //***********
+    //MARK: - Conditionals
+    //***********
+    
+    func processTopLevelConditional(_ ctx: MODLParser.Modl_top_level_conditionalContext) -> ModlListenerObject.TopLevelConditional? {
+        var topLevelConditional = ModlListenerObject.TopLevelConditional()
+        for (index, test) in ctx.modl_condition_test().enumerated() {
+            if let condition = processConditionTest(test), let result = processTopLevelConditionalReturn(ctx.modl_top_level_conditional_return()[index]) {
+                topLevelConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
+            }
+        }
+        let returnCount = ctx.modl_top_level_conditional_return().count
+        let testCount = ctx.modl_condition_test().count
+        if  returnCount > testCount {
+            //default return if no tests pass
+            let endReturn = ctx.modl_top_level_conditional_return()[returnCount - 1]
+            topLevelConditional.defaultReturn = processTopLevelConditionalReturn(endReturn)
+        }
+        return topLevelConditional
+    }
+    
+    func processTopLevelConditionalReturn(_ ctx: MODLParser.Modl_top_level_conditional_returnContext) -> ModlListenerObject.TopLevelConditionalReturn? {
+        var cReturn = ModlListenerObject.TopLevelConditionalReturn()
+        for structure in ctx.modl_structure() {
+            if let mStruct = processStructure(structure) {
+                cReturn.addStructure(mStruct)
+            }
+        }
+        return cReturn
+    }
+    
+    func processMapConditional(_ ctx: MODLParser.Modl_map_conditionalContext) -> ModlListenerObject.MapConditional? {
+        var mapConditional = ModlListenerObject.MapConditional()
+        for (index, test) in ctx.modl_condition_test().enumerated() {
+            if  let condition = processConditionTest(test),
+                let result = processMapConditionalReturn(ctx.modl_map_conditional_return()[index]) {
+                mapConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
+            }
+        }
+        let returnCount = ctx.modl_map_conditional_return().count
+        let testCount = ctx.modl_condition_test().count
+        if  returnCount > testCount {
+            //default return if no tests pass
+            let endReturn = ctx.modl_map_conditional_return()[returnCount - 1]
+            mapConditional.defaultReturn = processMapConditionalReturn(endReturn)
+        }
+        return mapConditional
+    }
+    
+    func processMapConditionalReturn(_ ctx: MODLParser.Modl_map_conditional_returnContext) -> ModlListenerObject.MapConditionalReturn? {
+        var cReturn = ModlListenerObject.MapConditionalReturn()
+        for structure in ctx.modl_map_item() {
+            if let mStruct = processMapItemPair(structure) {
+                cReturn.addItem(mStruct)
+            }
+        }
+        return cReturn
+    }
+    
+    func processArrayConditional(_ ctx: MODLParser.Modl_array_conditionalContext) -> ModlListenerObject.ArrayConditional? {
+        var arrayConditional = ModlListenerObject.ArrayConditional()
+        for (index, test) in ctx.modl_condition_test().enumerated() {
+            if  let condition = processConditionTest(test),
+                let result = processArrayConditionalReturn(ctx.modl_array_conditional_return()[index]) {
+                arrayConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
+            }
+        }
+        let returnCount = ctx.modl_array_conditional_return().count
+        let testCount = ctx.modl_condition_test().count
+        if  returnCount > testCount {
+            //default return if no tests pass
+            let endReturn = ctx.modl_array_conditional_return()[returnCount - 1]
+            arrayConditional.defaultReturn = processArrayConditionalReturn(endReturn)
+        }
+        return arrayConditional
+    }
+    
+    func processArrayConditionalReturn(_ ctx: MODLParser.Modl_array_conditional_returnContext) -> ModlListenerObject.ArrayConditionalReturn? {
+        var cReturn = ModlListenerObject.ArrayConditionalReturn()
+        for structure in ctx.modl_array_item() {
+            if let mStruct = processArrayItem(structure) {
+                cReturn.addItem(mStruct)
+            }
+        }
+        return cReturn
+    }
+    
+    func processValueConditional(_ ctx: MODLParser.Modl_value_conditionalContext) -> ModlListenerObject.ValueConditional? {
+        var valueConditional = ModlListenerObject.ValueConditional()
+        for (index, test) in ctx.modl_condition_test().enumerated() {
+            if  let condition = processConditionTest(test),
+                let result = processValueConditionalReturn(ctx.modl_value_conditional_return()[index]) {
+                valueConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
+            }
+        }
+        let returnCount = ctx.modl_value_conditional_return().count
+        let testCount = ctx.modl_condition_test().count
+        if  returnCount > testCount {
+            //default return if no tests pass
+            let endReturn = ctx.modl_value_conditional_return()[returnCount - 1]
+            valueConditional.defaultReturn = processValueConditionalReturn(endReturn)
+        }
+        return valueConditional
+    }
+    
+    func processValueConditionalReturn(_ ctx: MODLParser.Modl_value_conditional_returnContext) -> ModlListenerObject.ValueConditionalReturn? {
+        var cReturn = ModlListenerObject.ValueConditionalReturn()
+        for structure in ctx.modl_value_item() {
+            if let mStruct = processValueItem(structure) {
+                cReturn.addItem(mStruct)
+            }
+        }
+        return cReturn
+    }
+
+    
+    //***********
+    //MARK: Conditions
+    //***********
+    func processConditionTest(_ ctx: MODLParser.Modl_condition_testContext) -> ModlListenerObject.ConditionTest? {
+        var test = ModlListenerObject.ConditionTest()
+        var shouldNegate = false
+        var lastOperator: String? = nil
+        for child in ctx.children  ?? [] {
+            if let group = child as? MODLParser.Modl_condition_groupContext, let cGroup = processConditionGroup(group, shouldNegate: shouldNegate, lastOperator: lastOperator) {
+                test.subConditionList.append(cGroup)
+                lastOperator = nil
+                shouldNegate = false
+            } else if let condition = child as? MODLParser.Modl_conditionContext, let con = processCondition(condition, shouldNegate: shouldNegate, lastOperator: lastOperator) {
+                test.subConditionList.append(con)
+                lastOperator = nil
+                shouldNegate = false
+            } else {
+                if child.getText() == "!" {
+                    shouldNegate = true
+                } else {
+                    lastOperator = child.getText()
+                }
+            }
+        }
+        return test
+    }
+    
+    func processConditionGroup(_ ctx: MODLParser.Modl_condition_groupContext, shouldNegate: Bool = false, lastOperator: String?) -> ModlListenerObject.ConditionGroup? {
+        let conditionGroup = ModlListenerObject.ConditionGroup(shouldNegate: shouldNegate, lastOperator: lastOperator, conditionTests: [])
+        return conditionGroup
+    }
+    
+    func processCondition(_ ctx: MODLParser.Modl_conditionContext, shouldNegate: Bool = false, lastOperator: String?) -> ModlListenerObject.Condition? {
+        var condition = ModlListenerObject.Condition(key: nil, operatorType: nil, values: nil, shouldNegate: shouldNegate, lastOperator: lastOperator)
+        condition.key = ctx.STRING()?.getText()
+        condition.operatorType = ctx.modl_operator()?.getText()
+        condition.values = ctx.modl_value().compactMap({ (ctx) -> ModlValue? in
+            return processValue(ctx)
+        })
+        return condition
     }
     
 }

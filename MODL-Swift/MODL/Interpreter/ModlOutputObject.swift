@@ -87,6 +87,8 @@ class ModlOutputObject: ModlObject, ModlJSON {
     }
     
     struct Map: ModlMap, ModlJSON {
+        var conditionals: [ModlMapConditionalReturn] = []
+        
         var values: [String : ModlValue] = [:]
         var orderedKeys: [String] = []
         

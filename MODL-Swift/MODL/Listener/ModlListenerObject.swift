@@ -43,8 +43,13 @@ class ModlListenerObject: ModlObject {
     }
     
     struct Map: ModlMap {
+        private var conditionals: [MapConditional] = []
         var values: [String : ModlValue] = [:]
         var orderedKeys: [String] = []
+        
+        mutating func addConditional(_ conditional: MapConditional) {
+            self.conditionals.append(conditional)
+        }
     }
     
     struct MapItem: ModlMapItem {
@@ -82,10 +87,29 @@ class ModlListenerObject: ModlObject {
     
     struct TopLevelConditionalReturn: ModlTopLevelConditionalReturn {
         mutating func addStructure(_ structure: ModlStructure) {
-            structures.append(structure)
+            self.structures.append(structure)
         }
         
-        var structures: [ModlValue] = []
+        public private(set) var structures: [ModlValue] = []
+    }
+    
+    struct MapConditional: ModlMapConditional {
+        var conditionReturns: [MapConditionalReturn] = []
+        var conditionTests: [ModlConditionTest] = []
+        var defaultReturn: MapConditionalReturn?
+    }
+
+    struct MapConditionalReturn: ModlMapConditionalReturn {
+        public private(set) var structures: [ModlValue] = []
+        mutating func addItem(_ structure: ModlMapItem) {
+            self.structures.append(structure)
+        }
+    }
+    
+    struct ArrayConditional: ModlArrayConditional {
+        var conditionReturns: [ArrayConditionalReturn] = []
+        var conditionTests: [ModlConditionTest] = []
+        var defaultReturn: ArrayConditionalReturn?
     }
     
     struct ArrayConditionalReturn: ModlArrayConditionalReturn {
@@ -93,14 +117,21 @@ class ModlListenerObject: ModlObject {
             self.structures.append(structure)
         }
         
-        var structures: [ModlValue] = []
+        public private(set) var structures: [ModlValue] = []
     }
     
-    struct MapConditionalReturn: ModlMapConditionalReturn {
-        var structures: [ModlValue] = []
-        mutating func addItem(_ structure: ModlMapItem) {
+    struct ValueConditional: ModlValueConditional {
+        var conditionReturns: [ValueConditionalReturn] = []
+        var conditionTests: [ModlConditionTest] = []
+        var defaultReturn: ValueConditionalReturn?
+    }
+    
+    struct ValueConditionalReturn: ModlValueConditionalReturn {
+        mutating func addItem(_ structure: ModlValue) {
             self.structures.append(structure)
         }
+        
+        public private(set) var structures: [ModlValue] = []
     }
 
     struct ConditionTest: ModlConditionTest {
