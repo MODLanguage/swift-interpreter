@@ -55,6 +55,8 @@ struct ModlObjectCreator {
             return nil
         }
         switch uwElement {
+        case let topLevelConditional as ModlTopLevelConditional:
+            return processConditional(topLevelConditional)
         case let iPair as ModlPair:
             var pair = ModlOutputObject.Pair()
             if processReservedPair(key: iPair.key, value: iPair.value) {
@@ -133,7 +135,6 @@ struct ModlObjectCreator {
         return processedList.contains(uwId)
     }
     
-    
     //    //returns bool for existence of special reserved key
     private func hasReservedPairKey(_ pair: ModlPair) -> Bool {
         guard let key = pair.key else {
@@ -176,6 +177,29 @@ struct ModlObjectCreator {
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
             return true
         }
+    }
+    
+    func processConditional(_ conditional: ModlConditional) -> ModlValue? {
+        var returnStructures: [ModlValue] = []
+        for (index, test) in conditional.conditionTests.enumerated() {
+            if evaluateTest(test) {
+                for structure in conditional.conditionReturns[index].structures {
+                    //TODO: process each structure and construct something to return
+                }
+            }
+            let returnValue = conditional.conditionReturns[index]
+            if evaluateTest(test) {
+                returnStructures.append(returnValue)
+            }
+        }
+        if returnStructures.count == 0 {
+            return conditional.defaultReturn?.structures.first //TODO: not just first
+        }
+        return nil
+    }
+    
+    func evaluateTest(_ testCondition: ModlConditionTest) -> Bool {
+        return false
     }
     
 //    private func processStructureForMethods(_ structure: ModlValue?) -> ModlValue? {

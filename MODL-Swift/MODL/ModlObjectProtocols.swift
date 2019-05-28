@@ -88,16 +88,14 @@ protocol ModlSubCondition {
 //Conditionals
 /*****/
 protocol ModlConditional: ModlStructure {
-    associatedtype ConditionalReturn
-    init()
-    var conditionReturns: [ConditionalReturn] {get set}
+    var conditionReturns: [ModlConditionalReturn] {get set}
     var conditionTests: [ModlConditionTest] {get set}
-    var defaultReturn: ConditionalReturn? {get set}
-    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ConditionalReturn)
+    var defaultReturn: ModlConditionalReturn? {get set}
+    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn)
 }
 
 extension ModlConditional {
-    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ConditionalReturn) {
+    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn) {
         if let uwTest = testCase {
             conditionReturns.append(conditionalReturn)
             conditionTests.append(uwTest)

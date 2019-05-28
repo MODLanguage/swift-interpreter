@@ -94,9 +94,9 @@ class ModlListenerObject: ModlObject {
     }
     
     struct MapConditional: ModlMapConditional {
-        var conditionReturns: [MapConditionalReturn] = []
+        var conditionReturns: [ModlConditionalReturn] = []
+        var defaultReturn: ModlConditionalReturn?
         var conditionTests: [ModlConditionTest] = []
-        var defaultReturn: MapConditionalReturn?
     }
 
     struct MapConditionalReturn: ModlMapConditionalReturn {
@@ -107,9 +107,9 @@ class ModlListenerObject: ModlObject {
     }
     
     struct ArrayConditional: ModlArrayConditional {
-        var conditionReturns: [ArrayConditionalReturn] = []
+        var conditionReturns: [ModlConditionalReturn] = []
         var conditionTests: [ModlConditionTest] = []
-        var defaultReturn: ArrayConditionalReturn?
+        var defaultReturn: ModlConditionalReturn?
     }
     
     struct ArrayConditionalReturn: ModlArrayConditionalReturn {
@@ -121,9 +121,9 @@ class ModlListenerObject: ModlObject {
     }
     
     struct ValueConditional: ModlValueConditional {
-        var conditionReturns: [ValueConditionalReturn] = []
+        var conditionReturns: [ModlConditionalReturn] = []
         var conditionTests: [ModlConditionTest] = []
-        var defaultReturn: ValueConditionalReturn?
+        var defaultReturn: ModlConditionalReturn?
     }
     
     struct ValueConditionalReturn: ModlValueConditionalReturn {
