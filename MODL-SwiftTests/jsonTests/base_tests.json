@@ -341,7 +341,7 @@
   { "input": "a=1;b=2;b={{a=1}|{b=2}?true/?false}",
     "minimised_modl": "a=1;b=2;b={{a=1}|{b=2}?true/?false}",
     "expected_output": "[{\"a\": 1},{\"b\": 2},{\"b\": true}]",
-    "tested_features":["conditional", "problem"]
+    "tested_features":["conditional"]
   },
   { "input": "_a=1;\n_b=2;\nx={a=b?}",
     "minimised_modl": "_a=1;_b=2;x={a=b?}",
@@ -541,7 +541,7 @@
   { "input": "{\n !test?\n   result=test is not defined\n /?\n   result=test is defined\n}\n",
     "minimised_modl": "{!test?result=test is not defined/?result=test is defined}",
     "expected_output": "{\n \"result\" : \"test is not defined\"\n}\n",
-    "tested_features":["conditional"]
+    "tested_features":["conditional", "problem"]
   }, 
   { "input": "_colour = green;\n_test = { colour=green? true /? false }; \n\n{\n !test?\n   result=it's not green\n /?\n   result=it's green\n}",
     "minimised_modl": "_colour=green;_test={colour=green?01/?00};{!test?result=it's not green/?result=it's green}",

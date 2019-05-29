@@ -208,10 +208,6 @@ struct ModlObjectCreator {
         var returnResult = true
         for subCondition in testCondition.subConditionList {
             var subConditionResult = true
-            //TODO: process subcondition or group
-            if let negate = subCondition.shouldNegate, negate {
-                subConditionResult = !subConditionResult
-            }
             switch subCondition {
             case let condition as ModlCondition:
                 subConditionResult = evaluateTest(condition)
@@ -220,6 +216,9 @@ struct ModlObjectCreator {
             default:
                 print("Error: Cannot find condition to evaluate")
                 break
+            }
+            if let negate = subCondition.shouldNegate, negate {
+                subConditionResult = !subConditionResult
             }
             switch subCondition.lastOperator {
             case "&":
