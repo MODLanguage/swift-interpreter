@@ -193,7 +193,11 @@ struct ModlObjectCreator {
             }
          }
         if returnStructures.count == 0 {
-            return conditional.defaultReturn?.structures
+            for structure in conditional.defaultReturn?.structures ?? [] {
+                if let value = processModlElement(structure)?.first {
+                    returnStructures.append(value)
+                }
+            }
         }
         return returnStructures
     }
