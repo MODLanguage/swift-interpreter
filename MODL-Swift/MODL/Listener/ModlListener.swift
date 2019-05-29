@@ -386,7 +386,20 @@ class ModlListener: MODLParserBaseListener {
     }
     
     func processConditionGroup(_ ctx: MODLParser.Modl_condition_groupContext, shouldNegate: Bool = false, lastOperator: String?) -> ModlListenerObject.ConditionGroup? {
-        let conditionGroup = ModlListenerObject.ConditionGroup(shouldNegate: shouldNegate, lastOperator: lastOperator, conditionTests: [])
+        var testList: [ModlListenerObject.ConditionTest] = []
+        var lastSubOp: String? = nil
+        for child in ctx.children ?? [] {
+            if let testCtx = child as? MODLParser.Modl_condition_testContext, var conTest = processConditionTest(testCtx) {
+                conTest.lastOperator = lastSubOp
+                testList.append(conTest)
+                lastSubOp = nil
+            } else {
+                if child.getText() != "{" && child.getText() != "}" {
+                    lastSubOp = child.getText()
+                }
+            }
+        }
+        let conditionGroup = ModlListenerObject.ConditionGroup(shouldNegate: shouldNegate, lastOperator: lastOperator, conditionTests: testList)
         return conditionGroup
     }
     

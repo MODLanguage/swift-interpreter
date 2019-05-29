@@ -135,13 +135,14 @@ class ModlListenerObject: ModlObject {
     }
 
     struct ConditionTest: ModlConditionTest {
+        var lastOperator: String? = nil
         var subConditionList: [ModlSubCondition] = []
     }
     
     struct ConditionGroup: ModlConditionGroup {
         var shouldNegate: Bool?
         var lastOperator: String?
-        var conditionTests: [(ModlConditionTest, String)]
+        var conditionTests: [ModlConditionTest]
     }
     
     struct Condition: ModlCondition {

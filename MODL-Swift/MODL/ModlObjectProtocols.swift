@@ -65,7 +65,7 @@ protocol ModlNull: ModlValue {}
 /*****/
 //Condition Details
 /*****/
-protocol ModlConditionTest {
+protocol ModlConditionTest: ModlLastOperator {
     var subConditionList: [ModlSubCondition] {get set}
 }
 
@@ -76,12 +76,17 @@ protocol ModlCondition: ModlSubCondition {
 }
 
 protocol ModlConditionGroup: ModlSubCondition {
-    var conditionTests: [(ModlConditionTest, String)] {get set} //TODO: this can be improved, too many tuples
+    var conditionTests: [ModlConditionTest] {get set} //TODO: this can be improved, too many tuples
 }
 
-protocol ModlSubCondition {
-    var shouldNegate: Bool? {get set}
+protocol ModlSubCondition: ModlLastOperator, ModlConditionNegatable {}
+
+protocol ModlLastOperator {
     var lastOperator: String? {get set}
+}
+
+protocol ModlConditionNegatable {
+    var shouldNegate: Bool? {get set}
 }
 
 /*****/
