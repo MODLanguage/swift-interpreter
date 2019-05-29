@@ -541,7 +541,7 @@
   { "input": "{\n !test?\n   result=test is not defined\n /?\n   result=test is defined\n}\n",
     "minimised_modl": "{!test?result=test is not defined/?result=test is defined}",
     "expected_output": "{\n \"result\" : \"test is not defined\"\n}\n",
-    "tested_features":["conditional", "problem"]
+    "tested_features":["conditional"]
   }, 
   { "input": "_colour = green;\n_test = { colour=green? true /? false }; \n\n{\n !test?\n   result=it's not green\n /?\n   result=it's green\n}",
     "minimised_modl": "_colour=green;_test={colour=green?01/?00};{!test?result=it's not green/?result=it's green}",
@@ -1119,7 +1119,7 @@
   { "input": "b=2;c=2;d=2;e=2;a={{b=c & d=e}?v1:v2:v3/?v4:v5:v6}",
     "minimised_modl": "b=2;c=2;d=2;e=2;a={{b=c & d=e}?v1:v2:v3/?v4:v5:v6}",
     "expected_output": "[{\"b\": 2},{\"c\": 2},{\"d\": 2},{\"e\": 2}, {\"a\": [\"v1\",\"v2\",\"v3\"]}]",
-    "tested_features":["conditional"]
+    "tested_features":["conditional", "problem"]
   },
   { "input" : "o=1:2:3:4:5",
     "minimised_modl" : "o=1:2:3:4:5",
