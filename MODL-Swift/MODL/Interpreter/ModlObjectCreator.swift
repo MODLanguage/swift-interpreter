@@ -43,14 +43,16 @@ struct ModlObjectCreator {
     func createOutput(_ input: ModlListenerObject) -> ModlOutputObject? {
         let output = ModlOutputObject()
         for structure in input.structures {
-            if let outStructure = processModlElement(structure) as? ModlStructure {
-                output.addStructure(outStructure)
+            if let outStructures = processModlElement(structure) as? [ModlStructure] {
+                for singleStruct in outStructures {
+                    output.addStructure(singleStruct)
+                }
             }
        }
         return output
     }
     
-    private func processModlElement(_ element: ModlValue?, classIdsProcessedInBranch: [String] = []) -> ModlValue? {
+    private func processModlElement(_ element: ModlValue?, classIdsProcessedInBranch: [String] = []) -> [ModlValue]? {
         guard let uwElement = element else {
             return nil
         }
@@ -67,19 +69,19 @@ struct ModlObjectCreator {
                 newProcessedClasses.append(iPair.key ?? "")
                 newProcessedClasses.append(classReference.key ?? "")
                 pair.key = classReference.key
-                pair.value = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)
-                return pair
+                pair.value = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)?.first
+                return [pair]
             }
             pair.key = stringTransformer.transformKeyString(iPair.key, objectMgr: objectRefManager)
-            pair.value = processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)
+            pair.value = processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
             objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
-            return pair
+            return [pair]
         case let iArray as ModlArray:
             var array = ModlOutputObject.Array()
             array.values = iArray.values.compactMap({ (value) -> ModlValue? in
-                return processModlElement(value, classIdsProcessedInBranch: classIdsProcessedInBranch)
+                return processModlElement(value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
             })
-            return array
+            return [array]
         case let iMap as ModlMap:
             var map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
@@ -94,19 +96,19 @@ struct ModlObjectCreator {
                     newProcessedClasses.append(uwKey)
                     newProcessedClasses.append(key)
                     mapKey = uwKey
-                    mapValue = mValue
+                    mapValue = mValue.first
                 } else if let mValue = processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
                     mapKey = stringTransformer.transformKeyString(key, objectMgr: objectRefManager) ?? key
-                    mapValue = mValue
+                    mapValue = mValue.first
                 }
                 if let uwValue = mapValue {
                     map.addValue(key: mapKey, value: uwValue)
                     objectRefManager.addKeyedVariable(key: mapKey, value: mapValue)
                 }
             }
-            return map
+            return [map]
         case is ModlNull:
-            return ModlOutputObject.Null()
+            return [ModlOutputObject.Null()]
         case let iPrim as ModlPrimitive:
             if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
                 if (transformed as? ModlPrimitive)?.asString() == strValue {
@@ -122,7 +124,7 @@ struct ModlObjectCreator {
             } else {
                 prim.value = iPrim.value
             }
-            return prim
+            return [prim]
         default:
             return nil
         }
@@ -168,38 +170,134 @@ struct ModlObjectCreator {
             return true
         case .objectIndex:
             let processed = processModlElement(value)
-            objectRefManager.addIndexedVariables(processed)
+            objectRefManager.addIndexedVariables(processed?.first)
             return true
         case .objectReference:
             var objPair = ModlOutputObject.Pair()
             objPair.key = uwKey
-            objPair.value = processModlElement(value)
+            objPair.value = processModlElement(value)?.first
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
             return true
         }
     }
     
-    func processConditional(_ conditional: ModlConditional) -> ModlValue? {
+    func processConditional(_ conditional: ModlConditional) -> [ModlValue]? {
         var returnStructures: [ModlValue] = []
         for (index, test) in conditional.conditionTests.enumerated() {
             if evaluateTest(test) {
                 for structure in conditional.conditionReturns[index].structures {
-                    //TODO: process each structure and construct something to return
+                    if let value = processModlElement(structure)?.first {
+                        returnStructures.append(value)
+                    }
                 }
             }
-            let returnValue = conditional.conditionReturns[index]
-            if evaluateTest(test) {
-                returnStructures.append(returnValue)
-            }
-        }
+         }
         if returnStructures.count == 0 {
-            return conditional.defaultReturn?.structures.first //TODO: not just first
+            return conditional.defaultReturn?.structures
         }
-        return nil
+        return returnStructures
     }
     
     func evaluateTest(_ testCondition: ModlConditionTest) -> Bool {
+        var returnResult = true
+        for subCondition in testCondition.subConditionList {
+            var subConditionResult = true
+            //TODO: process subcondition or group
+            if let negate = subCondition.shouldNegate, negate {
+                subConditionResult = !subConditionResult
+            }
+            switch subCondition {
+            case let condition as ModlCondition:
+                subConditionResult = evaluateTest(condition)
+            case let group as ModlConditionGroup:
+                subConditionResult = evaluateTest(group)
+            default:
+                print("Error: Cannot find condition to evaluate")
+                break
+            }
+            switch subCondition.lastOperator {
+            case "&":
+                returnResult = subConditionResult && returnResult
+            case "|":
+                returnResult = subConditionResult || returnResult
+            default:
+                returnResult = subConditionResult
+            }
+        }
+        return returnResult
+    }
+    
+    func evaluateTest(_ condition: ModlCondition) -> Bool {
+        guard let values = condition.values else {
+            return false
+        }
+    
+        if let key = condition.key, let newKey = transformConditionalArguments(key), let operatorValue = condition.operatorType {
+            if values.count > 0 {
+                for value in values {
+                    if let pValue = (value as? ModlPrimitive)?.asString(),  operatorValue == "=", checkConditionalEquals(key: newKey, valueToCheck: pValue) {
+                        return true
+                    }
+                }
+                return false
+            } else if let firstPrimitive = values.first as? ModlPrimitive, let primStr = firstPrimitive.asString() {
+                if operatorValue  == "=" {
+                    return checkConditionalEquals(key: key, valueToCheck: primStr)
+                } else if operatorValue == "!=" {
+                    return !checkConditionalEquals(key: key, valueToCheck: primStr)
+                } else if let doubleFirst = Double(newKey), let doubleSecond = Double(primStr) {
+                    //Number so could directly evaluate
+                    let expression = "\(doubleFirst) \(operatorValue) \(doubleSecond)"
+                    let predicate = NSPredicate(format: expression)
+                    return predicate.evaluate(with: nil)
+                }
+            }
+        } else if let firstValue = values.first {
+            if let primBool = evaluatePrimitive(firstValue) {
+                return primBool
+            }
+            if let strValue = (firstValue as? ModlPrimitive)?.asString(), let transformedName = stringTransformer.transformString(strValue, objectMgr: objectRefManager), let transformedBool = evaluatePrimitive(transformedName) {
+                return transformedBool
+            }
+            if let pair = firstValue as? ModlPair, let pairBoolValue = evaluatePrimitive(pair.value) {
+                return pairBoolValue
+            }
+        }
         return false
+    }
+    
+    func evaluateTest(_ conditionGroup: ModlConditionGroup) -> Bool {
+        return false
+    }
+    
+    func evaluatePrimitive(_ modlValue: ModlValue?) -> Bool? {
+        guard let mPrim = modlValue as? ModlPrimitive, let pValue = mPrim.value as? Bool else {
+            return nil
+        }
+        return pValue
+    }
+    
+    func checkConditionalEquals(key: String, valueToCheck: String) -> Bool {
+        var modifiedToCheck = valueToCheck
+        if valueToCheck.hasPrefix("`") {
+            modifiedToCheck.removeFirst()
+        }
+        if valueToCheck.hasSuffix("`") {
+            modifiedToCheck.removeLast()
+        }
+        return key == modifiedToCheck
+    }
+
+    func transformConditionalArguments(_ originalKey: String) -> String? {
+        var keyToCheck = originalKey
+        if !keyToCheck.hasPrefix("%") {
+            keyToCheck = "%"+keyToCheck
+        }
+        let transString = stringTransformer.transformString(keyToCheck, objectMgr: objectRefManager)
+        if let prim = transString as? ModlPrimitive {
+            return prim.asString()
+        }
+        return nil
     }
     
 //    private func processStructureForMethods(_ structure: ModlValue?) -> ModlValue? {
