@@ -273,7 +273,19 @@ struct ModlObjectCreator {
     }
     
     func evaluateTest(_ conditionGroup: ModlConditionGroup) -> Bool {
-        return false
+        var result = true
+        for test in conditionGroup.conditionTests {
+            let ctReturn = evaluateTest(test)
+            switch test.lastOperator {
+            case "&":
+                result = ctReturn && result
+            case "|":
+                result = ctReturn || result
+            default:
+                result = ctReturn
+            }
+        }
+        return result
     }
     
     func evaluatePrimitive(_ modlValue: ModlValue?) -> Bool? {
