@@ -24,6 +24,7 @@
 //  Created by Nicholas Jones on 08/05/2019.
 
 import XCTest
+@testable import MODL_Swift
 
 class LongInputTests: XCTestCase {
 

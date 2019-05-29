@@ -27,6 +27,8 @@
 import Foundation
 import XCTest
 
+@testable import MODL_Swift
+
 enum FeatureTestTypes: String {
     case conditional
     case load

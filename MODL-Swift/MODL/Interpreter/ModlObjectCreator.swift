@@ -57,8 +57,6 @@ struct ModlObjectCreator {
             return nil
         }
         switch uwElement {
-        case let topLevelConditional as ModlTopLevelConditional:
-            return processConditional(topLevelConditional)
         case let iPair as ModlPair:
             var pair = ModlOutputObject.Pair()
             if processReservedPair(key: iPair.key, value: iPair.value) {
@@ -125,6 +123,10 @@ struct ModlObjectCreator {
                 prim.value = iPrim.value
             }
             return [prim]
+        case let topLevelConditional as ModlTopLevelConditional:
+            return processConditional(topLevelConditional)
+        case let valueConditional as ModlValueConditional:
+            return processConditional(valueConditional)
         default:
             return nil
         }
