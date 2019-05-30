@@ -72,7 +72,7 @@ fileprivate enum StringMethod {
 }
 
 struct StringTransformer {
-    let objectRegExPattern = "((`?\\%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?\\%[0-9][0-9]*`?)|(`?\\%[_a-zA-Z][_a-zA-Z0-9.%(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|(`.*`))"
+    let objectRegExPattern = "((`?%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?%[0-9][0-9]*`?)|(`?%[_a-zA-Z][_a-zA-Z0-9.%(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|((?<![\\~])`.*(?<![\\~])`))"
 
     func transformKeyString(_ inputString: String?, objectMgr: ModlObjectReferenceManager?) -> String? {
         let prim = transformString(inputString, objectMgr: objectMgr) as? ModlPrimitive
@@ -99,7 +99,7 @@ struct StringTransformer {
 
     //*** Escape as per string-replacement.txt
         //TODO: is this necessary?
-        uwInput = StringEscapeReplacer().replace(uwInput)
+//        uwInput = StringEscapeReplacer().replace(uwInput)
     //*** Replace Unicode:
         //TODO: swift might make this unnec
 
@@ -135,7 +135,10 @@ struct StringTransformer {
                 finished = true
             }
         }
-        prim.value = uwInput//.replacingOccurrences(of: "`", with: "")
+
+        //After all processing has occured can now unescape graves etc
+        uwInput = StringEscapeReplacer().replace(uwInput)
+        prim.value = uwInput
         return prim
     }
     
@@ -147,7 +150,7 @@ struct StringTransformer {
     }
     
     private func getObjectRangesMatch(_ stringToTransform: String, start: String.Index) -> Range<String.Index>? {
-        // Find all parts of the sting that are enclosed in graves, e.g `test` where neither of the graves is prefixed with an escape character ~ (tilde) or \ (backslash).
+        // Find all parts of the sting that are enclosed in graves, e.g `test` where neither of the graves is prefixed with an escape character ~ (tilde) or \ (backslash). Or that have a %
         let regex = try? NSRegularExpression(pattern: objectRegExPattern, options: [])
         let range = NSRange(start..., in: stringToTransform)
         if let match = regex?.firstMatch(in: stringToTransform, options: [], range: range) {

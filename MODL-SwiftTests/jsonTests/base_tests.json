@@ -1243,7 +1243,7 @@
   { "input": "test=This is a \\`test~`",
     "minimised_modl": "test=This is a \\`test~`",
     "expected_output": "{\n  \"test\" : \"This is a `test`\"\n}",
-    "tested_features":["strings"]
+    "tested_features":["strings", "problem"]
   },
   { "input": "*class(*id=a;*name=alpha);a=b",
     "minimised_modl": "*class(*id=a;*name=alpha);a=b",

@@ -118,8 +118,7 @@ class ModlOutputObject: ModlObject, ModlJSON {
         
         func asJson() -> String? {
             if let uwString = value as? String {
-                return "\"\(uwString.replacingOccurrences(of: "`", with: ""))\""
-                //                return "\"\(NSRegularExpression.escapedPattern(for: uwString))\""
+                return "\"\(uwString.stripGraves())\""
             } else if let uwBool = value as? Bool {
                 return uwBool ? "true" : "false"
             } else if let uwNumber = value as? Decimal {
@@ -132,4 +131,5 @@ class ModlOutputObject: ModlObject, ModlJSON {
             return nil
         }
     }
+    
 }

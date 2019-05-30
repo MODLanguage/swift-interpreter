@@ -34,4 +34,13 @@ extension String {
             }
         }
     }
+    
+    func stripGraves() -> String {
+        return self.replacingOccurrences(
+            of: #"(?<![\\~])`"#,
+            with: "",
+            options: .regularExpression
+        )
+    }
+
 }
