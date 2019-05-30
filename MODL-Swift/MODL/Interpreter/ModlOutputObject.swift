@@ -118,6 +118,7 @@ class ModlOutputObject: ModlObject, ModlJSON {
         
         func asJson() -> String? {
             if let uwString = value as? String {
+//                let escaped = StringEscapeReplacer().replaceGraves(uwString)
                 return "\"\(uwString.stripGraves())\""
             } else if let uwBool = value as? Bool {
                 return uwBool ? "true" : "false"

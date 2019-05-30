@@ -99,7 +99,7 @@ struct StringTransformer {
 
     //*** Escape as per string-replacement.txt
         //TODO: is this necessary?
-//        uwInput = StringEscapeReplacer().replace(uwInput)
+        uwInput = StringEscapeReplacer().replace(uwInput)
     //*** Replace Unicode:
         //TODO: swift might make this unnec
 
@@ -136,8 +136,6 @@ struct StringTransformer {
             }
         }
 
-        //After all processing has occured can now unescape graves etc
-        uwInput = StringEscapeReplacer().replace(uwInput)
         prim.value = uwInput
         return prim
     }

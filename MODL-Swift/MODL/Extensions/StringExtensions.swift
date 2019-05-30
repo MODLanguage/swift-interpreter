@@ -40,6 +40,10 @@ extension String {
             of: #"(?<![\\~])`"#,
             with: "",
             options: .regularExpression
+            ).replacingOccurrences(
+                of: #"[\\~]`"#,
+                with: "`",
+                options: .regularExpression
         )
     }
 

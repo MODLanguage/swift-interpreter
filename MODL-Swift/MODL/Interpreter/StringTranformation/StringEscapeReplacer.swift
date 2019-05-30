@@ -51,8 +51,6 @@ struct StringEscapeReplacer {
         "~:" : ":",
         "\\:" : ":",
         
-//        "~`" : "`",
-//        "\\`" : "`",
         "~\"" : "\"",
         "\\\"" : "\"",
         
@@ -82,10 +80,24 @@ struct StringEscapeReplacer {
 //        "\\r" : "\r"
     ]
     
+    private static let graveReplacements = [
+                "~`" : "`",
+                "\\`" : "`"
+    ]
+    
     func replace(_ inputString: String) -> String {
         var output = inputString
         for (key, value) in StringEscapeReplacer.replacements {
                 output = output.replacingOccurrences(of: key, with: value)
+        }
+        return output
+    }
+    
+    func replaceGraves(_ inputString: String) -> String
+    {
+        var output = inputString
+        for (key, value) in StringEscapeReplacer.graveReplacements {
+            output = output.replacingOccurrences(of: key, with: value)
         }
         return output
     }
