@@ -279,15 +279,23 @@ struct StringTransformer {
         if subject.hasSuffix("`") {
             subject.removeLast()
         }
-        for method in methods {
-            subject = performStringMethod(inputString: subject, stringMethodName: method)
+        for (index,method) in methods.enumerated() {
+            if let transformed = performStringMethod(inputString: subject, stringMethodName: method) {
+                subject = transformed
+            } else {
+                let remaining = methods[index...]
+                for rMethod in remaining {
+                    subject = subject + "." + rMethod
+                }
+                break
+            }
         }
         return subject
     }
     
-    private func performStringMethod(inputString: String?, stringMethodName: String) -> String {
+    private func performStringMethod(inputString: String?, stringMethodName: String) -> String? {
         guard let sMethod = StringMethod(rawValue: stringMethodName), let uwStr = inputString else {
-            return (inputString ?? "") + "." + stringMethodName
+            return nil
         }
         switch sMethod {
         case .downcase:
@@ -307,7 +315,6 @@ struct StringTransformer {
         case .puny:
             return uwStr.punycodeDecoded ?? ""
         }
-//        return uwStr + "." + stringMethodName
     }
     
     private func urlPercentEncode(_ inputString: String) -> String {

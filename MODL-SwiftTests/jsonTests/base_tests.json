@@ -1243,7 +1243,7 @@
   { "input": "test=This is a \\`test~`",
     "minimised_modl": "test=This is a \\`test~`",
     "expected_output": "{\n  \"test\" : \"This is a `test`\"\n}",
-    "tested_features":["strings", "problem"]
+    "tested_features":["strings"]
   },
   { "input": "*class(*id=a;*name=alpha);a=b",
     "minimised_modl": "*class(*id=a;*name=alpha);a=b",
@@ -1358,6 +1358,6 @@
   { "input": "a = `example`.u.nonsense.s",
     "minimised_modl": "a = `example`.u.nonsense.s",
     "expected_output": "{\n    \"a\": \"EXAMPLE.nonsense.s\"\n}",
-    "tested_features":["object_ref"]
+    "tested_features":["object_ref", "problem"]
   }
 ]

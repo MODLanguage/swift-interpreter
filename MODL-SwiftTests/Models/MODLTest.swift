@@ -114,8 +114,8 @@ struct MODLTestManager {
     
     static func performTests(_ tests: [MODLTest]) {
         for test in tests {
-            print("******TEST START********\n************")
-            print("Test: \(test.modl)")
+//            print("******TEST START********\n************")
+//            print("Test: \(test.modl)")
             let p = ModlParser()
             do {
                 let result = try p.parse(test.modl)
@@ -129,12 +129,12 @@ struct MODLTestManager {
 //                    let json = try JSONSerialization.jsonObject(with: data, options: [])
 //                    let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
 //                    let stringOutput = String(data: dataOutput, encoding: .utf8)
-                    XCTAssert(result == test.expectedJson, "\nExpected: \(test.expectedJson ?? "")\nGot: \(result)")
+                    XCTAssert(result == test.expectedJson, "\nTest: \(test.modl)\nExpected: \(test.expectedJson ?? "")\nGot: \(result)")
                 }
             } catch {
                 XCTFail("Error caught \(error.localizedDescription)")
             }
-            print("******TEST END********\n************")
+//            print("******TEST END********\n************")
         }
         print("TOTAL TESTS: \(tests.count)")
     }
