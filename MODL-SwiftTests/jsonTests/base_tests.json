@@ -487,7 +487,7 @@
   { "input": "_C=gb;\n_COUNTRIES(\n us=United States;\n gb=United Kingdom;\n de=Germany\n);\n\ncountry_name = %COUNTRIES.%C",
     "minimised_modl": "_C=gb;_COUNTRIES(us=United States;gb=United Kingdom;de=Germany);country_name=%COUNTRIES.%C",
     "expected_output": "{\n \"country_name\" : \"United Kingdom\"\n}\n",
-    "tested_features":["object_ref"]
+    "tested_features":["object_ref", "problem"]
   },
   { "input": "*class(\n *id=car;\n *name=car;\n *superclass=map;\n *assign=[\n   [m];\n   [m;md]\n ]\n);\n\n_C=gb;\n\ncar=Bentley:{C=ru?ContinentalRussia GT/?Continental GT}",
     "minimised_modl": "*c(*i=car;*n=car;*s=map;*a=[m]:[m;md]);_C=gb;car=Bentley:{C=ru?ContinentalRussia GT/?Continental GT}",
@@ -1358,6 +1358,6 @@
   { "input": "a = `example`.u.nonsense.s",
     "minimised_modl": "a = `example`.u.nonsense.s",
     "expected_output": "{\n    \"a\": \"EXAMPLE.nonsense.s\"\n}",
-    "tested_features":["object_ref", "problem"]
+    "tested_features":["object_ref"]
   }
 ]

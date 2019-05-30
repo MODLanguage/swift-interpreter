@@ -72,7 +72,9 @@ fileprivate enum StringMethod {
 }
 
 struct StringTransformer {
-    let objectRegExPattern = "((`?%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?%[0-9][0-9]*`?)|(`?%[_a-zA-Z][_a-zA-Z0-9.%(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|((?<![\\~])`.*(?<![\\~])`))"
+    let objectRegExPattern = "(`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[a-zA-Z0-9.(),]*`?)|((?<![\\~])`.*(?<![\\~])`)(.[a-zA-Z0-9_])*"
+    //"(`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[a-zA-Z0-9.(),]*`?)|((?<![\\~])`.*(?<![\\~])`)"
+    // original pattern "((`?%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?%[0-9][0-9]*`?)|(`?%[_a-zA-Z][_a-zA-Z0-9(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|((?<![\\~])`.*(?<![\\~])`))"
 
     func transformKeyString(_ inputString: String?, objectMgr: ModlObjectReferenceManager?) -> String? {
         let prim = transformString(inputString, objectMgr: objectMgr) as? ModlPrimitive
