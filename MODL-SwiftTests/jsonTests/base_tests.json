@@ -147,7 +147,7 @@
   { "input": "_person(  \n name(\n   speak=say;\n   first=John;\n   last=Smith\n )\n);\njust `%person.name.speak.u`_this=Hello %person.name.first.d!",
     "minimised_modl":  "_person(name(speak=say;first=John;last=Smith));just `%person.name.speak.u`_this=Hello %person.name.first.d!",
     "expected_output":   "{\n    \"just SAY_this\": \"Hello john!\"\n}",
-    "tested_features":["string_method", "object_ref","problem"]
+    "tested_features":["string_method", "object_ref"]
   },
   { "input": "*class(\n  *i=test;\n  *a=[\n    [one;two;three]\n  ]\n);\ntest=1:2:3",
     "minimised_modl":  "*class(\n  *i=test\n  *a=[\n    [one;two;three]\n  ]\n)\ntest=1:2:3",
@@ -292,7 +292,7 @@
   { "input": "a(b(c(d(e(f=1)))));\ntesting=%a.b.c.d.e.f",
     "minimised_modl": "a(b(c(d(e(f=1)))))\ntesting=%a.b.c.d.e.f",
     "expected_output": "[ {\"a\" : {\"b\" : {\"c\" : {\"d\" : {\"e\" : {\"f\" : 1}}}}}}, {\"testing\":1}]",
-    "tested_features":["object_ref", "problem"]
+    "tested_features":["object_ref"]
   },
   { "input": "_test=(a=b=c=d=f);\ntesting=%test.a.b.c.d",
     "minimised_modl": "_test=(a=b=c=d=f)\ntesting=%test.a.b.c.d",
@@ -352,7 +352,7 @@
   { "input": "_testing = quick-test of John's variable_methods;\nupcase_example = %testing.u;\ndowncase_example = %testing.d;\ninitcap_example = %testing.i;\nsentence_example = %testing.s;\nurl_encode_example = %testing.u.e",
     "minimised_modl": "_testing=quick-test of John's variable_methods;upcase_example=%testing.u;downcase_example=%testing.d;initcap_example=%testing.i;sentence_example=%testing.s;url_encode_example=%testing.u.e",
     "expected_output": "[ {\n \"upcase_example\" : \"QUICK-TEST OF JOHN'S VARIABLE_METHODS\"\n}, {\n \"downcase_example\" : \"quick-test of john's variable_methods\"\n}, {\n \"initcap_example\" : \"Quick-test Of John's Variable_methods\"\n}, {\n \"sentence_example\" : \"Quick-test of John's variable_methods\"\n}, {\n \"url_encode_example\" : \"QUICK-TEST+OF+JOHN%27S+VARIABLE_METHODS\"\n} ]",
-    "tested_features":["string_method"]
+    "tested_features":["string_method","problem"]
   },
   { "input": "*VERSION=1;\n\"test\"=1",
     "minimised_modl": "*VERSION=1;test=1",

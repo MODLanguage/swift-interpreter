@@ -72,13 +72,13 @@ fileprivate enum StringMethod {
 }
 
 struct StringTransformer {
-    let objectRegExPattern = "((`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[0-9]*`?)|((?<![\\~])`.*(?<![\\~])`))(\\.[a-zA-Z0-9_()])*"
-    let gravesPatternStart = "((?<![\\~])`\\s*[a-zA-Z_0-9-]+"
-    let gravePatternEnd = "(?<![\\~])`)"
-    let numberRefPatternStart = "`?%[0-9]+"
-    let refPatternEnd = "`?"
-    let valueRefPatternStart = "`?%[a-zA-Z_]+[_a-zA-Z0-9]*"
-    let methodPattern = "(\\.[a-zA-Z0-9_%]+(\\([a-zA-Z,]*\\))*)*"
+//    let objectRegExPattern = #"((`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[0-9]*`?)|((?<![\~])`.*(?<![\~])`))(\.[a-zA-Z0-9_()])*"#
+    let gravesPatternStart = #"(?<![\~])`[^`]+"#
+    let gravePatternEnd = #"(?<![\~])`"#
+    let numberRefPatternStart = #"`?%[0-9]+"#
+    let refPatternEnd = #"`?"#
+    let valueRefPatternStart = #"`?%[a-zA-Z_]+[_a-zA-Z0-9]*"#
+    let methodPattern = #"(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*"#
     //"(`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[a-zA-Z0-9.(),]*`?)|((?<![\\~])`.*(?<![\\~])`)"
     // original pattern "((`?%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?%[0-9][0-9]*`?)|(`?%[_a-zA-Z][_a-zA-Z0-9(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|((?<![\\~])`.*(?<![\\~])`))"
 
