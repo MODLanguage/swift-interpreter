@@ -397,7 +397,7 @@
   { "input": "_root=tesco.com;\n_branch=direct.;\nnamespace1=`%branch`numrecord.`%root`;\nnamespace2=`%branch`_`%root`.numq.net",
     "minimised_modl": "_root=tesco.com;_branch=direct.;namespace1=`%branch`numrecord.`%root`;namespace2=`%branch`_`%root`.numq.net",
     "expected_output": "[ {\n \"namespace1\" : \"direct.numrecord.tesco.com\"\n}, {\n \"namespace2\" : \"direct._tesco.com.numq.net\"\n} ]\n",
-    "tested_features":["object_ref", "graves", "problem"]
+    "tested_features":["object_ref", "graves"]
   },
   { "input": "_branch=\"\";\n_root=\"\";\nnamespace=`%branch`numrecord.`%root`",
     "minimised_modl": "_branch=\"\";_root=\"\";namespace=`%branch`numrecord.`%root`",
@@ -1238,7 +1238,7 @@
   { "input": "*class(\n  *id=p;\n  *name=person;\n  *superclass=map;\n  actions=[call;email]\n);\n*class(\n  *id=c;\n  *name=customer;\n  *superclass=person;\n  *assign=[\n    [title;name;email]\n  ]\n);\n*class(\n  *id=e;\n  *name=employee;\n  *superclass=person;\n  *assign=[\n    [title;name;job_title;email]\n  ]\n);\n\n## An employee:\ne=Mr:John Smith:Sales Director:john.smith@example.com;\n## A customer:\nc=Mr:Joe Bloggs:joe.bloggs@example.com;\n## Another customer:\nc=Mrs:Jane Wilson:jane.wilson@example.com",
     "minimised_modl": "*class(*id=p;*name=person;*superclass=map;actions=[call;email]);*class(*id=c;*name=customer;*superclass=person;*assign=[[title;name;email]]);*class(*id=e;*name=employee;*superclass=person;*assign=[[title;name;job_title;email]]);## An employee:;e=Mr:John Smith:Sales Director:john.smith@example.com;## A customer:;c=Mr:Joe Bloggs:joe.bloggs@example.com;## Another customer:;c=Mrs:Jane Wilson:jane.wilson@example.com",
     "expected_output": "[ {\n  \"employee\" : {\n    \"title\" : \"Mr\",\n    \"name\" : \"John Smith\",\n    \"job_title\" : \"Sales Director\",\n    \"email\" : \"john.smith@example.com\",\n    \"actions\" : [ \"call\", \"email\" ]\n  }\n}, {\n  \"customer\" : {\n    \"title\" : \"Mr\",\n    \"name\" : \"Joe Bloggs\",\n    \"email\" : \"joe.bloggs@example.com\",\n    \"actions\" : [ \"call\", \"email\" ]\n  }\n}, {\n  \"customer\" : {\n    \"title\" : \"Mrs\",\n    \"name\" : \"Jane Wilson\",\n    \"email\" : \"jane.wilson@example.com\",\n    \"actions\" : [ \"call\", \"email\" ]\n  }\n} ]",
-    "tested_features":["class"]
+    "tested_features":["class", "problem"]
   },
   { "input": "test=This is a \\`test~`",
     "minimised_modl": "test=This is a \\`test~`",

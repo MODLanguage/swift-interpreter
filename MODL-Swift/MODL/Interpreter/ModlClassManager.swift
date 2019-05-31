@@ -63,12 +63,14 @@ class ModlClassManager {
                 return
             }
            //has a superclass mentioned so check for it....
-            if let existingingSuperClass = getClass(superclassName) {
-                //TODO: this should probably loop through and update individual bits rather than overwrite
-                mClass.assignMap = existingingSuperClass.assignMap
-                //TODO: do I group here or construct later?
-                //                mClass.extraValues = existingingSuperClass.extraValues
-            }
+//            if let existingingSuperClass = getClass(superclassName) {
+//                //TODO: this should probably loop through and update individual bits rather than overwrite
+//                for assign in existingingSuperClass.assignMap?.values ?? []  {
+//                    mClass.assignMap?.addValue(assign)
+//                }
+//                //TODO: do I group here or construct later?
+//                //                mClass.extraValues = existingingSuperClass.extraValues
+//            }
         }
         storedClasses[mClass.id] = mClass
      }
