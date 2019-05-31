@@ -154,6 +154,31 @@ extension ModlPrimitive {
             return "\(dec)"
         case let str as String:
             return str
+        case let bool as Bool:
+            if bool {
+                return "true"
+            } else {
+                return "false"
+            }
+        default:
+            return nil
+        }
+    }
+    
+    func asNumber() -> Decimal? {
+        switch value {
+        case let int as Int:
+            return Decimal(integerLiteral: int)
+        case let dec as Decimal:
+            return dec
+        case let str as String:
+            return Decimal(string: str)
+        case let bool as Bool:
+            if bool {
+                return 1
+            } else {
+                return 0
+            }
         default:
             return nil
         }

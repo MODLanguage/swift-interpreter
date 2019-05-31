@@ -152,8 +152,20 @@ class ModlClassManager {
                 }
                 outputPair.value = replacement
                 return outputPair
-            default:
-                break
+            case .num:
+                if let pairValue = uwValue as? ModlPrimitive {
+                    var replacement = ModlListenerObject.Primitive()
+                    replacement.value = pairValue.asNumber()
+                    outputPair.value = replacement
+                    return outputPair
+                }
+            case .arr:
+                if let prim = uwValue as? ModlPrimitive {
+                    var replacement = ModlListenerObject.Array()
+                    replacement.addValue(prim)
+                    outputPair.value = replacement
+                    return outputPair
+                }
             }
         }
         outputPair.value = uwValue
