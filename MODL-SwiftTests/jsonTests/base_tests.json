@@ -417,7 +417,7 @@
   { "input": "*c(\n *i=m;\n *n=message;\n *S=map;\n *a=[\n   [direction;date_time;message]\n ];\n method=sms\n);\nm=in:2018-03-22:hi",
     "minimised_modl": "*c(*i=m;*n=message;*S=map;*a[[direction;date_time;message]];method=sms);m=in:2018-03-22:hi",
     "expected_output": "{\n \"message\" : {\n   \"direction\" : \"in\",\n   \"date_time\" : \"2018-03-22\",\n   \"message\" : \"hi\",\n   \"method\" : \"sms\"\n }\n}\n",
-    "tested_features":["class", "assign"]
+    "tested_features":["class", "assign","problem"]
   },
   { "input": "*class(\n *id=car;\n *name=car;\n *superclass=map\n);\n\ncar(\n make=Bentley\n)",
     "minimised_modl": "*c(*i=car;*n=car;*s=map);car(make=Bentley)",
@@ -1278,7 +1278,7 @@
   { "input": "*class(*id=a;*name=alpha;x=\"test\");a=1",
     "minimised_modl": "*class(*id=a;*name=alpha;x=\"test\");a=1",
     "expected_output": "{\n  \"alpha\": {\n    \"value\":1,\n    \"x\":\"test\"\n  }\n}",
-    "tested_features":["class", "superclass_inference", "problem"]
+    "tested_features":["class", "superclass_inference"]
   },
   { "input": "*class(*id=a;*name=alpha;*assign[[x]]);a=1\n",
     "minimised_modl": "*class(*id=a;*name=alpha;*assign[[x]]);a=1\n",

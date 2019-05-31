@@ -90,7 +90,7 @@ struct ModlObjectCreator {
                 var newProcessedClasses = classIdsProcessedInBranch
                 var mapKey = key
                 var mapValue = originalValue
-                if let classReference = classManager.processFromClass(key: key, value: originalValue), let mValue = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses) {
+                if  let classReference = classManager.processFromClass(key: key, value: originalValue), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses), let mValue = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses) {
                     newProcessedClasses.append(uwKey)
                     newProcessedClasses.append(key)
                     mapKey = uwKey
