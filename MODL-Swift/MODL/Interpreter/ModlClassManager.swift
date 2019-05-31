@@ -133,14 +133,16 @@ class ModlClassManager {
                     }) ?? assignList.sorted(by: { (first, second) -> Bool in
                         return first.values.count > second.values.count
                     }).first {
-                        for (index, matchingKey) in matching.values.enumerated() {
+                        for matchingKey in matching.values{
                             if let keyStr = (matchingKey as? ModlPrimitive)?.asString() {
                                 let value = pValue
                                 replacement.addValue(key: keyStr, value: value)
                             }
                         }
                     }
-                    replacement.addValue(key: "value", value: pValue)
+                    if replacement.values.count == 0 {
+                        replacement.addValue(key: "value", value: pValue)
+                    }
                 }
                 let extraDetails = constructAdditionalItems(classObj.name)
                 for detail in extraDetails {
