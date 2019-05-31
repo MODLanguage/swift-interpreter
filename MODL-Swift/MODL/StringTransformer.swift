@@ -72,7 +72,6 @@ fileprivate enum StringMethod {
 }
 
 struct StringTransformer {
-//    let objectRegExPattern = #"((`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[0-9]*`?)|((?<![\~])`.*(?<![\~])`))(\.[a-zA-Z0-9_()])*"#
     let gravesPatternStart = #"(?<![\~])`[^`]+"#
     let gravePatternEnd = #"(?<![\~])`"#
     let numberRefPatternStart = #"`?%[0-9]+"#
@@ -187,7 +186,10 @@ struct StringTransformer {
         }
 
         var methods = mKey.split(separator: ".").map{String($0)}
-        let subject = String(methods.remove(at: 0)) //take off the subject and leave the methods
+        var subject = String(methods.remove(at: 0)) //take off the subject and leave the methods
+        if subject.hasSuffix("`") {
+            subject.removeLast()
+        }
         var refObject: ModlValue?
         if let numReference = Int(subject) {
             refObject = uwObjMgr.getIndexedVariable(numReference)

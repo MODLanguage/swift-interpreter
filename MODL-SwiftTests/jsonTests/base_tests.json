@@ -352,7 +352,7 @@
   { "input": "_testing = quick-test of John's variable_methods;\nupcase_example = %testing.u;\ndowncase_example = %testing.d;\ninitcap_example = %testing.i;\nsentence_example = %testing.s;\nurl_encode_example = %testing.u.e",
     "minimised_modl": "_testing=quick-test of John's variable_methods;upcase_example=%testing.u;downcase_example=%testing.d;initcap_example=%testing.i;sentence_example=%testing.s;url_encode_example=%testing.u.e",
     "expected_output": "[ {\n \"upcase_example\" : \"QUICK-TEST OF JOHN'S VARIABLE_METHODS\"\n}, {\n \"downcase_example\" : \"quick-test of john's variable_methods\"\n}, {\n \"initcap_example\" : \"Quick-test Of John's Variable_methods\"\n}, {\n \"sentence_example\" : \"Quick-test of John's variable_methods\"\n}, {\n \"url_encode_example\" : \"QUICK-TEST+OF+JOHN%27S+VARIABLE_METHODS\"\n} ]",
-    "tested_features":["string_method","problem"]
+    "tested_features":["string_method"]
   },
   { "input": "*VERSION=1;\n\"test\"=1",
     "minimised_modl": "*VERSION=1;test=1",
@@ -397,7 +397,7 @@
   { "input": "_root=tesco.com;\n_branch=direct.;\nnamespace1=`%branch`numrecord.`%root`;\nnamespace2=`%branch`_`%root`.numq.net",
     "minimised_modl": "_root=tesco.com;_branch=direct.;namespace1=`%branch`numrecord.`%root`;namespace2=`%branch`_`%root`.numq.net",
     "expected_output": "[ {\n \"namespace1\" : \"direct.numrecord.tesco.com\"\n}, {\n \"namespace2\" : \"direct._tesco.com.numq.net\"\n} ]\n",
-    "tested_features":["object_ref", "graves"]
+    "tested_features":["object_ref", "graves", "problem"]
   },
   { "input": "_branch=\"\";\n_root=\"\";\nnamespace=`%branch`numrecord.`%root`",
     "minimised_modl": "_branch=\"\";_root=\"\";namespace=`%branch`numrecord.`%root`",
