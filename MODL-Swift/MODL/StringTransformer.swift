@@ -72,7 +72,13 @@ fileprivate enum StringMethod {
 }
 
 struct StringTransformer {
-    let objectRegExPattern = "(`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[a-zA-Z0-9.(),]*`?)|((?<![\\~])`.*(?<![\\~])`)(.[a-zA-Z0-9_])*"
+    let objectRegExPattern = "((`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[0-9]*`?)|((?<![\\~])`.*(?<![\\~])`))(\\.[a-zA-Z0-9_()])*"
+    let gravesPatternStart = "((?<![\\~])`\\s*[a-zA-Z_0-9-]+"
+    let gravePatternEnd = "(?<![\\~])`)"
+    let numberRefPatternStart = "`?%[0-9]+"
+    let refPatternEnd = "`?"
+    let valueRefPatternStart = "`?%[a-zA-Z_]+[_a-zA-Z0-9]*"
+    let methodPattern = "(\\.[a-zA-Z0-9_%]+(\\([a-zA-Z,]*\\))*)*"
     //"(`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[a-zA-Z0-9.(),]*`?)|((?<![\\~])`.*(?<![\\~])`)"
     // original pattern "((`?%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?%[0-9][0-9]*`?)|(`?%[_a-zA-Z][_a-zA-Z0-9(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|((?<![\\~])`.*(?<![\\~])`))"
 
@@ -151,7 +157,8 @@ struct StringTransformer {
     
     private func getObjectRangesMatch(_ stringToTransform: String, start: String.Index) -> Range<String.Index>? {
         // Find all parts of the sting that are enclosed in graves, e.g `test` where neither of the graves is prefixed with an escape character ~ (tilde) or \ (backslash). Or that have a %
-        let regex = try? NSRegularExpression(pattern: objectRegExPattern, options: [])
+        let completePattern = "(\(gravesPatternStart)\(methodPattern)\(gravePatternEnd)|\(numberRefPatternStart)\(methodPattern)\(refPatternEnd)|\(valueRefPatternStart)\(methodPattern)\(refPatternEnd))\(methodPattern)"
+        let regex = try? NSRegularExpression(pattern: completePattern, options: [])
         let range = NSRange(start..., in: stringToTransform)
         if let match = regex?.firstMatch(in: stringToTransform, options: [], range: range) {
             return Range(match.range, in: stringToTransform)

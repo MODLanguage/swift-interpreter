@@ -147,7 +147,7 @@
   { "input": "_person(  \n name(\n   speak=say;\n   first=John;\n   last=Smith\n )\n);\njust `%person.name.speak.u`_this=Hello %person.name.first.d!",
     "minimised_modl":  "_person(name(speak=say;first=John;last=Smith));just `%person.name.speak.u`_this=Hello %person.name.first.d!",
     "expected_output":   "{\n    \"just SAY_this\": \"Hello john!\"\n}",
-    "tested_features":["string_method", "object_ref"]
+    "tested_features":["string_method", "object_ref","problem"]
   },
   { "input": "*class(\n  *i=test;\n  *a=[\n    [one;two;three]\n  ]\n);\ntest=1:2:3",
     "minimised_modl":  "*class(\n  *i=test\n  *a=[\n    [one;two;three]\n  ]\n)\ntest=1:2:3",
@@ -292,7 +292,7 @@
   { "input": "a(b(c(d(e(f=1)))));\ntesting=%a.b.c.d.e.f",
     "minimised_modl": "a(b(c(d(e(f=1)))))\ntesting=%a.b.c.d.e.f",
     "expected_output": "[ {\"a\" : {\"b\" : {\"c\" : {\"d\" : {\"e\" : {\"f\" : 1}}}}}}, {\"testing\":1}]",
-    "tested_features":["object_ref"]
+    "tested_features":["object_ref", "problem"]
   },
   { "input": "_test=(a=b=c=d=f);\ntesting=%test.a.b.c.d",
     "minimised_modl": "_test=(a=b=c=d=f)\ntesting=%test.a.b.c.d",
@@ -487,7 +487,7 @@
   { "input": "_C=gb;\n_COUNTRIES(\n us=United States;\n gb=United Kingdom;\n de=Germany\n);\n\ncountry_name = %COUNTRIES.%C",
     "minimised_modl": "_C=gb;_COUNTRIES(us=United States;gb=United Kingdom;de=Germany);country_name=%COUNTRIES.%C",
     "expected_output": "{\n \"country_name\" : \"United Kingdom\"\n}\n",
-    "tested_features":["object_ref", "problem"]
+    "tested_features":["object_ref"]
   },
   { "input": "*class(\n *id=car;\n *name=car;\n *superclass=map;\n *assign=[\n   [m];\n   [m;md]\n ]\n);\n\n_C=gb;\n\ncar=Bentley:{C=ru?ContinentalRussia GT/?Continental GT}",
     "minimised_modl": "*c(*i=car;*n=car;*s=map;*a=[m]:[m;md]);_C=gb;car=Bentley:{C=ru?ContinentalRussia GT/?Continental GT}",
