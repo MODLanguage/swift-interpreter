@@ -33,7 +33,8 @@ enum FeatureTestTypes: String {
     case conditional
     case load
     case classes = "class"
-    case assign 
+    case assign
+    case superclassInference = "superclass_inference"
     case method
     case puny
     case stringMethod = "string_method"

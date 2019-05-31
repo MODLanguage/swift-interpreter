@@ -111,4 +111,20 @@ class AdvancedTests: XCTestCase {
         MODLTestManager.performTests(allButTests)
     }
 
+    func testSuperclassInferenceCases() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let allButTests = json.filter { (modl) -> Bool in
+            guard let modlFeature = modl.testedFeatures else {
+                return false
+            }
+            return modlFeature.contains(FeatureTestTypes.superclassInference.rawValue)
+        }
+        MODLTestManager.performTests(allButTests)
+    }
+
+    
+    
 }

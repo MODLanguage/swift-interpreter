@@ -1238,7 +1238,7 @@
   { "input": "*class(\n  *id=p;\n  *name=person;\n  *superclass=map;\n  actions=[call;email]\n);\n*class(\n  *id=c;\n  *name=customer;\n  *superclass=person;\n  *assign=[\n    [title;name;email]\n  ]\n);\n*class(\n  *id=e;\n  *name=employee;\n  *superclass=person;\n  *assign=[\n    [title;name;job_title;email]\n  ]\n);\n\n## An employee:\ne=Mr:John Smith:Sales Director:john.smith@example.com;\n## A customer:\nc=Mr:Joe Bloggs:joe.bloggs@example.com;\n## Another customer:\nc=Mrs:Jane Wilson:jane.wilson@example.com",
     "minimised_modl": "*class(*id=p;*name=person;*superclass=map;actions=[call;email]);*class(*id=c;*name=customer;*superclass=person;*assign=[[title;name;email]]);*class(*id=e;*name=employee;*superclass=person;*assign=[[title;name;job_title;email]]);## An employee:;e=Mr:John Smith:Sales Director:john.smith@example.com;## A customer:;c=Mr:Joe Bloggs:joe.bloggs@example.com;## Another customer:;c=Mrs:Jane Wilson:jane.wilson@example.com",
     "expected_output": "[ {\n  \"employee\" : {\n    \"title\" : \"Mr\",\n    \"name\" : \"John Smith\",\n    \"job_title\" : \"Sales Director\",\n    \"email\" : \"john.smith@example.com\",\n    \"actions\" : [ \"call\", \"email\" ]\n  }\n}, {\n  \"customer\" : {\n    \"title\" : \"Mr\",\n    \"name\" : \"Joe Bloggs\",\n    \"email\" : \"joe.bloggs@example.com\",\n    \"actions\" : [ \"call\", \"email\" ]\n  }\n}, {\n  \"customer\" : {\n    \"title\" : \"Mrs\",\n    \"name\" : \"Jane Wilson\",\n    \"email\" : \"jane.wilson@example.com\",\n    \"actions\" : [ \"call\", \"email\" ]\n  }\n} ]",
-    "tested_features":["class", "problem"]
+    "tested_features":["class"]
   },
   { "input": "test=This is a \\`test~`",
     "minimised_modl": "test=This is a \\`test~`",
@@ -1278,7 +1278,7 @@
   { "input": "*class(*id=a;*name=alpha;x=\"test\");a=1",
     "minimised_modl": "*class(*id=a;*name=alpha;x=\"test\");a=1",
     "expected_output": "{\n  \"alpha\": {\n    \"value\":1,\n    \"x\":\"test\"\n  }\n}",
-    "tested_features":["class", "superclass_inference"]
+    "tested_features":["class", "superclass_inference", "problem"]
   },
   { "input": "*class(*id=a;*name=alpha;*assign[[x]]);a=1\n",
     "minimised_modl": "*class(*id=a;*name=alpha;*assign[[x]]);a=1\n",
