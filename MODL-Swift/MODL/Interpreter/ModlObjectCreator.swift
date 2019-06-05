@@ -127,6 +127,10 @@ struct ModlObjectCreator {
             return processConditional(topLevelConditional)
         case let valueConditional as ModlValueConditional:
             return processConditional(valueConditional)
+        case let arrayConditional as ModlArrayConditional:
+            return processConditional(arrayConditional)
+        case let mapConditional as ModlMapConditional:
+            return processConditional(mapConditional)
         default:
             return nil
         }
@@ -246,7 +250,8 @@ struct ModlObjectCreator {
             if values.count > 0 {
                 for value in values {
                     if let pValue = (value as? ModlPrimitive)?.asString(), operatorValue == "=" {
-                        if checkConditionalEquals(key: newKey, valueToCheck: pValue) {
+                        let escaped = StringEscapeReplacer().replace(pValue)
+                        if checkConditionalEquals(key: newKey, valueToCheck: escaped) {
                             return true
                         }
                         if let newValue = transformConditionalArguments(pValue) {

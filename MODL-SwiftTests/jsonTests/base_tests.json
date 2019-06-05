@@ -52,12 +52,12 @@
   { "input": "_x=a:b:c:d;\n_y=[1;2;3;4];\nz={%x.1=b | %y.2=1?}\n",
     "minimised_modl":  "_x=a:b:c:d;_y=[1;2;3;4];z={%x.1=b | %y.2=1?}",
     "expected_output":   "{\"z\":true}",
-    "tested_features":["conditional", "object_ref", "problem"]
+    "tested_features":["conditional", "object_ref"]
   },
   { "input": "_x=a:b:c:d;\n_y=[1;2;3;4];\nz={%x.1=b & %y.2=1?}\n",
     "minimised_modl":  "_x=a:b:c:d;_y=[1;2;3;4];z={%x.1=b & %y.2=1?}",
     "expected_output":   "{\"z\":false}",
-    "tested_features":["conditional", "object_ref", "problem"]
+    "tested_features":["conditional", "object_ref"]
   },
   { "input": "_x=a:b:c:d;\n_y=[1;2;3;4];\nz={%x.1=b&%y.2=3?}",
     "minimised_modl":  "_x=a:b:c:d;_y=[1;2;3;4];z={%x.1=b&%y.2=3?}",
@@ -372,7 +372,7 @@
   { "input": "_test=1~:2;\n\nresult={\n test=1~:2?\n     yes\n /?\n    no\n}",
     "minimised_modl": "_test=1~:2;result={test=1~:2?yes/?no}",
     "expected_output": "{\n \"result\" : \"yes\"\n}\n",
-    "tested_features":["class", "object_ref", "conditional"]
+    "tested_features":["class", "object_ref", "conditional", "problem"]
   },
   { "input": "_test=\"http://www.tesco.com\";\n\nresult={\n test=\"http://www.tesco.com\"?\n     yes\n /?\n    no\n}",
     "minimised_modl": "_test=http~://www.tesco.com;result={test=\"http://www.tesco.com\"?yes/?no}",
@@ -512,7 +512,7 @@
   { "input": "_test=abc;\n\n{\n test?\n   result=test is defined\n /?\n   result=test is not defined\n}",
     "minimised_modl": "_test=abc;{test?result=test is defined/?result=test is not defined}",
     "expected_output": "{\n \"result\" : \"test is defined\"\n}\n",
-    "tested_features":["object_ref", "conditional"]
+    "tested_features":["object_ref", "conditional", "problem"]
   },
   { "input": "{\n true?\n   result=true\n}\n",
     "minimised_modl": "{01?result=01}",
