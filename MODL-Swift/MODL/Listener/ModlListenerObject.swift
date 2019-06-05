@@ -43,12 +43,13 @@ class ModlListenerObject: ModlObject {
     }
     
     struct Map: ModlMap {
-        private var conditionals: [MapConditional] = []
+//        var conditionals: [MapConditional] = []
         var values: [String : ModlValue] = [:]
         var orderedKeys: [String] = []
         
         mutating func addConditional(_ conditional: MapConditional) {
-            self.conditionals.append(conditional)
+            let randomKey = UUID().uuidString
+            addValue(key: randomKey, value: conditional)
         }
     }
     

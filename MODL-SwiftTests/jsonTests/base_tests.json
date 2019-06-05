@@ -512,7 +512,7 @@
   { "input": "_test=abc;\n\n{\n test?\n   result=test is defined\n /?\n   result=test is not defined\n}",
     "minimised_modl": "_test=abc;{test?result=test is defined/?result=test is not defined}",
     "expected_output": "{\n \"result\" : \"test is defined\"\n}\n",
-    "tested_features":["object_ref", "conditional", "problem"]
+    "tested_features":["object_ref", "conditional"]
   },
   { "input": "{\n true?\n   result=true\n}\n",
     "minimised_modl": "{01?result=01}",
@@ -527,17 +527,17 @@
   { "input": "_test=false;\n\n{\n test?\n   result=result is true\n /?\n   result=result is false\n}",
     "minimised_modl": "_test=00;{test?result=result is true/?result=result is false}",
     "expected_output": "{\n \"result\" : \"result is false\"\n}\n",
-    "tested_features":["object_ref", "conditional", "problem"]
+    "tested_features":["object_ref", "conditional"]
   },
   { "input": "{\n test?\n   result=test is defined\n /?\n   result=test is not defined\n}\n",
     "minimised_modl": "{test?result=test is defined/?result=test is not defined}",
     "expected_output": "{\n \"result\" : \"test is not defined\"\n}\n",
-    "tested_features":["conditional", "problem"]
+    "tested_features":["conditional"]
   },
   { "input": "{\n !test?\n   result=test is not defined\n /?\n   result=test is defined\n}\n",
     "minimised_modl": "{!test?result=test is not defined/?result=test is defined}",
     "expected_output": "{\n \"result\" : \"test is not defined\"\n}\n",
-    "tested_features":["conditional", "problem"]
+    "tested_features":["conditional"]
   },
   { "input": "_colour = green;\n_test = { colour=green? true /? false }; \n\n{\n !test?\n   result=it's not green\n /?\n   result=it's green\n}",
     "minimised_modl": "_colour=green;_test={colour=green?01/?00};{!test?result=it's not green/?result=it's green}",
@@ -602,7 +602,7 @@
   { "input": "_C=gb;\no(\n{C=gb?test1=123};\ntest2=456\n)",
     "minimised_modl": "_C=gb;o({C=gb?test1=123};test2=456)",
     "expected_output": "{\n \"o\" : {\n   \"test1\" : 123,\n   \"test2\" : 456\n }\n}\n",
-    "tested_features":["object_ref", "conditional"]
+    "tested_features":["object_ref", "conditional", "problem"]
   },
   { "input": "{\ntrue?\n test=1\n}",
     "minimised_modl": "{01?test=1}",
@@ -652,7 +652,7 @@
   { "input": "(_C=gb;\n{C=gb?test1=123};\ntest2=456)",
     "minimised_modl": "(_C=gb;{C=gb?test1=123};test2=456)",
     "expected_output": "{\n \"test1\" : 123,\n \"test2\" : 456\n}\n",
-    "tested_features":["object_ref", "conditional"]
+    "tested_features":["object_ref", "conditional", "problem"]
   },
   { "input": "alex=1.2345",
     "minimised_modl": "alex=1.2345",
@@ -737,7 +737,7 @@
   { "input": "_C=fr;\n{C=gb?test1=123};\ntest2=456",
     "minimised_modl": "_C=fr;{C=gb?test1=123};test2=456",
     "expected_output": "{\n \"test2\" : 456\n}\n",
-    "tested_features":["object_ref", "conditional"]
+    "tested_features":["object_ref", "conditional", "problem"]
   },
   { "input": "_C=ca;\n_L=en;\n{\n C=ca?\n  n=Tesco Canada\n  {L=fr?\n    s=Chaque Petite Contribution\n  }\n}",
     "minimised_modl": "_C=ca;_L=en;{C=ca?n=Tesco Canada;{L=fr?s=Chaque Petite Contribution}}",
