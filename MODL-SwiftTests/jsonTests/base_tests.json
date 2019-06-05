@@ -692,7 +692,7 @@
   { "input": "_num1 = 2;\n_num2 = 1000;\n\nresult={\n num1>num2?\n   num1 is bigger\n /?\n   num1 is not bigger\n}\n",
     "minimised_modl": "_num1=2;_num2=1000;result={num1>num2?num1 is bigger/?num1 is not bigger}",
     "expected_output": "{\n \"result\" : \"num1 is not bigger\"\n}\n",
-    "tested_features":["object_ref", "conditional", "problem"]
+    "tested_features":["object_ref", "conditional"]
   },
   { "input": "?=0:1:2;\nzero=%0;\none=%1;\ntwo=%2",
     "minimised_modl": "?=0:1:2;zero=%0;one=%1;two=%2",
@@ -707,7 +707,7 @@
   { "input": "_num1 = 5;\n_num2 = 2;\n\nresult={\n num1>num2?\n   num1 is bigger\n /?\n   num1 is not bigger\n}",
     "minimised_modl": "_num1=5;_num2=2;result={num1>num2?num1 is bigger/?num1 is not bigger}",
     "expected_output": "{\n \"result\" : \"num1 is bigger\"\n}\n",
-    "tested_features":["object_ref", "conditional", "problem"]
+    "tested_features":["object_ref", "conditional"]
   },
   { "input": "?=\"A\":B:C;\nfirst_letter=%0",
     "minimised_modl": "?=A:B:C;first_letter=%0",
@@ -827,7 +827,7 @@
   { "input": "_input=\"hi apple ios\";\n{\n {input=*apple*ios*}?\n   support_number=441270123456\n /?\n   support_number=International Clients:14161234567\n}",
     "minimised_modl": "_input=hi apple ios;{{input=*apple*ios*}?support_number=441270123456/?support_number=International Clients:14161234567}",
     "expected_output": "{\n \"support_number\" : 441270123456\n}\n",
-    "tested_features":["object_ref", "conditional"]
+    "tested_features":["object_ref", "conditional", "problem"]
   },
   { "input": "_input=\"An iOS string\";\n{\n {input=*iOS*}?\n   support_number=441270123456\n /?\n   support_number=International Clients:14161234567\n}",
     "minimised_modl": "_input=An iOS string;{{input=*iOS*}?support_number=441270123456/?support_number=International Clients:14161234567}",

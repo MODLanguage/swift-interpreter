@@ -299,7 +299,7 @@ struct ModlObjectCreator {
                 }
                 //Can it convert to a bool?
                 if let originalStringValue = (firstValue as? ModlPrimitive)?.asString() {
-                    let transformedStringValue = transformConditionalArguments(originalStringValue)
+                    let transformedStringValue = transformConditionalArguments(originalStringValue) ?? originalStringValue
                     if operatorValue == "=" {
                         if checkConditionalEquals(key: newKey, valueToCheck: transformedStringValue) {
                             return true
@@ -316,7 +316,7 @@ struct ModlObjectCreator {
                         return false
                     } else if operatorValue == "!=" {
                         return !checkConditionalEquals(key: newKey, valueToCheck: transformedStringValue)
-                    } else if let doubleFirst = Double(newKey), let doubleSecond = Double(transformedStringValue ?? originalStringValue) {
+                    } else if let doubleFirst = Double(newKey), let doubleSecond = Double(transformedStringValue) {
                         let expression = "\(doubleFirst) \(operatorValue) \(doubleSecond)"
                         let predicate = NSPredicate(format: expression)
                         return predicate.evaluate(with: nil)
@@ -354,6 +354,9 @@ struct ModlObjectCreator {
         guard let uwKey = key, let uwValue = valueToCheck else {
             return false
         }
+        if uwValue.contains("*") {
+            return checkWildcardConditionalEquals(key: uwKey, valueToCheck: uwValue)
+        }
         var modifiedToCheck = uwValue
         if uwValue.hasPrefix("`") {
             modifiedToCheck.removeFirst()
@@ -363,6 +366,18 @@ struct ModlObjectCreator {
         }
         return uwKey == modifiedToCheck
     }
+    
+    func checkWildcardConditionalEquals(key: String, valueToCheck: String) -> Bool {
+        var regex = #""#
+        regex += valueToCheck.hasPrefix("*") ? ".*" : "^"
+//        let splits = valueToCheck.split(separator: "*")
+        for split in valueToCheck.split(separator: "*") {
+            regex += ".*"
+            regex += split
+        }
+        regex += valueToCheck.hasSuffix("*") ? ".*" : "$"
+        return key.range(of: regex, options: .regularExpression) != nil
+    }
 
     func transformConditionalArguments(_ originalKey: String) -> String? {
         var keyToCheck = originalKey
@@ -370,7 +385,7 @@ struct ModlObjectCreator {
             keyToCheck = "%"+keyToCheck
         }
         let transString = stringTransformer.transformString(keyToCheck, objectMgr: objectRefManager)
-        if let prim = transString as? ModlPrimitive {
+        if let prim = transString as? ModlPrimitive, "%\(originalKey)" != prim.asString() {
             return prim.asString()
         }
         return nil
