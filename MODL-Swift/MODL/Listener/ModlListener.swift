@@ -332,10 +332,13 @@ class ModlListener: MODLParserBaseListener {
     func processValueConditional(_ ctx: MODLParser.Modl_value_conditionalContext) -> ModlListenerObject.ValueConditional? {
         var valueConditional = ModlListenerObject.ValueConditional()
         for (index, test) in ctx.modl_condition_test().enumerated() {
-            if  let condition = processConditionTest(test),
-                ctx.modl_value_conditional_return().count > 0,
-                let result = processValueConditionalReturn(ctx.modl_value_conditional_return()[index]) {
-                valueConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
+            if let condition = processConditionTest(test) {
+                if ctx.modl_value_conditional_return().count > 0,
+                    let result = processValueConditionalReturn(ctx.modl_value_conditional_return()[index]) {
+                        valueConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
+                } else {
+                    valueConditional.addTestAndReturn(testCase: condition, conditionalReturn: nil)
+                }
             }
         }
         let returnCount = ctx.modl_value_conditional_return().count

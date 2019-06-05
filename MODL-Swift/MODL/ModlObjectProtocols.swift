@@ -96,13 +96,15 @@ protocol ModlConditional: ModlStructure {
     var conditionReturns: [ModlConditionalReturn] {get set}
     var conditionTests: [ModlConditionTest] {get set}
     var defaultReturn: ModlConditionalReturn? {get set}
-    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn)
+    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn?)
 }
 
 extension ModlConditional {
-    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn) {
+    mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn?) {
         if let uwTest = testCase {
-            conditionReturns.append(conditionalReturn)
+            if let uwReturn = conditionalReturn {
+                conditionReturns.append(uwReturn)
+            }
             conditionTests.append(uwTest)
         } else {
             defaultReturn = conditionalReturn

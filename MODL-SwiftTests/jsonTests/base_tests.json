@@ -52,12 +52,12 @@
   { "input": "_x=a:b:c:d;\n_y=[1;2;3;4];\nz={%x.1=b | %y.2=1?}\n",
     "minimised_modl":  "_x=a:b:c:d;_y=[1;2;3;4];z={%x.1=b | %y.2=1?}",
     "expected_output":   "{\"z\":true}",
-    "tested_features":["conditional", "object_ref"]
+    "tested_features":["conditional", "object_ref", "problem"]
   },
   { "input": "_x=a:b:c:d;\n_y=[1;2;3;4];\nz={%x.1=b & %y.2=1?}\n",
     "minimised_modl":  "_x=a:b:c:d;_y=[1;2;3;4];z={%x.1=b & %y.2=1?}",
     "expected_output":   "{\"z\":false}",
-    "tested_features":["conditional", "object_ref"]
+    "tested_features":["conditional", "object_ref", "problem"]
   },
   { "input": "_x=a:b:c:d;\n_y=[1;2;3;4];\nz={%x.1=b&%y.2=3?}",
     "minimised_modl":  "_x=a:b:c:d;_y=[1;2;3;4];z={%x.1=b&%y.2=3?}",
@@ -467,7 +467,7 @@
   { "input": "_co=at;\n_l=de;\n{\n co=at?\n   country=Austria\n   language={\n     l=fr?\n       French\n     /l=de?\n       German\n     /?\n       Other\n   }\n /?\n   country=Other\n}",
     "minimised_modl": "_co=at;_l=de;{co=at?country=Austria;language={l=fr?French/l=de?German/?Other}/?country=Other}",
     "expected_output": "[ {\n \"country\" : \"Austria\"\n}, {\n \"language\" : \"German\"\n} ]\n",
-    "tested_features":["conditional", "problem"]
+    "tested_features":["conditional"]
   },
   { "input": "true2 = 01;\ntrue1 = true;\nfalse2 = 00;\nfalse1 = false;\nnull2 = 000;\nnull1 = null",
     "minimised_modl": "true2=01;true1=01;false2=00;false1=00;null2=000;null1=000",
@@ -1115,7 +1115,7 @@
   { "input": "b=2;c=2;d=2;e=2;a={{b=c & d=e}?v1:v2:v3/?v4:v5:v6}",
     "minimised_modl": "b=2;c=2;d=2;e=2;a={{b=c & d=e}?v1:v2:v3/?v4:v5:v6}",
     "expected_output": "[{\"b\": 2},{\"c\": 2},{\"d\": 2},{\"e\": 2}, {\"a\": [\"v1\",\"v2\",\"v3\"]}]",
-    "tested_features":["conditional", "problem"]
+    "tested_features":["conditional"]
   },
   { "input" : "o=1:2:3:4:5",
     "minimised_modl" : "o=1:2:3:4:5",

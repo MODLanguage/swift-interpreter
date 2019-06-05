@@ -185,8 +185,13 @@ struct ModlObjectCreator {
     
     func processConditional(_ conditional: ModlConditional) -> [ModlValue]? {
         var returnStructures: [ModlValue] = []
+        //nothing to return so return test value
         for (index, test) in conditional.conditionTests.enumerated() {
-            if evaluateTest(test) {
+            if conditional.conditionReturns.count == 0 {
+                var returnStruct = ModlOutputObject.Primitive()
+                returnStruct.value = evaluateTest(test)
+                returnStructures.append(returnStruct)
+            } else if evaluateTest(test) {
                 for structure in conditional.conditionReturns[index].structures {
                     if let value = processModlElement(structure)?.first {
                         returnStructures.append(value)
