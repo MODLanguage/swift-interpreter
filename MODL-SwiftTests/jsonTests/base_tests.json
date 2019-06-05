@@ -372,7 +372,7 @@
   { "input": "_test=1~:2;\n\nresult={\n test=1~:2?\n     yes\n /?\n    no\n}",
     "minimised_modl": "_test=1~:2;result={test=1~:2?yes/?no}",
     "expected_output": "{\n \"result\" : \"yes\"\n}\n",
-    "tested_features":["class", "object_ref", "conditional", "problem"]
+    "tested_features":["class", "object_ref", "conditional"]
   },
   { "input": "_test=\"http://www.tesco.com\";\n\nresult={\n test=\"http://www.tesco.com\"?\n     yes\n /?\n    no\n}",
     "minimised_modl": "_test=http~://www.tesco.com;result={test=\"http://www.tesco.com\"?yes/?no}",
@@ -532,12 +532,12 @@
   { "input": "{\n test?\n   result=test is defined\n /?\n   result=test is not defined\n}\n",
     "minimised_modl": "{test?result=test is defined/?result=test is not defined}",
     "expected_output": "{\n \"result\" : \"test is not defined\"\n}\n",
-    "tested_features":["conditional"]
+    "tested_features":["conditional", "problem"]
   },
   { "input": "{\n !test?\n   result=test is not defined\n /?\n   result=test is defined\n}\n",
     "minimised_modl": "{!test?result=test is not defined/?result=test is defined}",
     "expected_output": "{\n \"result\" : \"test is not defined\"\n}\n",
-    "tested_features":["conditional"]
+    "tested_features":["conditional", "problem"]
   },
   { "input": "_colour = green;\n_test = { colour=green? true /? false }; \n\n{\n !test?\n   result=it's not green\n /?\n   result=it's green\n}",
     "minimised_modl": "_colour=green;_test={colour=green?01/?00};{!test?result=it's not green/?result=it's green}",

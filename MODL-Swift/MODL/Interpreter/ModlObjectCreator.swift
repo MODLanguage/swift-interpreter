@@ -278,8 +278,11 @@ struct ModlObjectCreator {
             if let primBool = evaluatePrimitive(firstValue) {
                 return primBool
             }
-            if let strValue = (firstValue as? ModlPrimitive)?.asString(), let transformedName = stringTransformer.transformString(strValue, objectMgr: objectRefManager), let transformedBool = evaluatePrimitive(transformedName) {
-                return transformedBool
+            if let strValue = (firstValue as? ModlPrimitive)?.asString(), let transformedName = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
+                if let transformedBool = evaluatePrimitive(transformedName) {
+                    return transformedBool
+                }
+                return objectRefManager.getKeyedVariable(strValue) != nil
             }
             if let pair = firstValue as? ModlPair, let pairBoolValue = evaluatePrimitive(pair.value) {
                 return pairBoolValue
