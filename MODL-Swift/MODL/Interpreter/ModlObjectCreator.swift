@@ -282,7 +282,14 @@ struct ModlObjectCreator {
                 if let transformedBool = evaluatePrimitive(transformedName) {
                     return transformedBool
                 }
-                return objectRefManager.getKeyedVariable(strValue) != nil
+                if let reference = objectRefManager.getKeyedVariable(strValue){
+                    if let boolPrim = evaluatePrimitive(reference) {
+                        return boolPrim
+                    }
+                    return true
+                } else {
+                    return false
+                }
             }
             if let pair = firstValue as? ModlPair, let pairBoolValue = evaluatePrimitive(pair.value) {
                 return pairBoolValue

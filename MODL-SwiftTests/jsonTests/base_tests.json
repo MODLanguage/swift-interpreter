@@ -527,7 +527,7 @@
   { "input": "_test=false;\n\n{\n test?\n   result=result is true\n /?\n   result=result is false\n}",
     "minimised_modl": "_test=00;{test?result=result is true/?result=result is false}",
     "expected_output": "{\n \"result\" : \"result is false\"\n}\n",
-    "tested_features":["object_ref", "conditional"]
+    "tested_features":["object_ref", "conditional", "problem"]
   },
   { "input": "{\n test?\n   result=test is defined\n /?\n   result=test is not defined\n}\n",
     "minimised_modl": "{test?result=test is defined/?result=test is not defined}",
