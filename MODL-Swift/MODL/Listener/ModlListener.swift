@@ -333,6 +333,7 @@ class ModlListener: MODLParserBaseListener {
         var valueConditional = ModlListenerObject.ValueConditional()
         for (index, test) in ctx.modl_condition_test().enumerated() {
             if  let condition = processConditionTest(test),
+                ctx.modl_value_conditional_return().count > 0,
                 let result = processValueConditionalReturn(ctx.modl_value_conditional_return()[index]) {
                 valueConditional.addTestAndReturn(testCase: condition, conditionalReturn: result)
             }

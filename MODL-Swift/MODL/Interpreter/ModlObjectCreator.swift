@@ -240,8 +240,15 @@ struct ModlObjectCreator {
         if let key = condition.key, let newKey = transformConditionalArguments(key), let operatorValue = condition.operatorType {
             if values.count > 0 {
                 for value in values {
-                    if let pValue = (value as? ModlPrimitive)?.asString(),  operatorValue == "=", checkConditionalEquals(key: newKey, valueToCheck: pValue) {
-                        return true
+                    if let pValue = (value as? ModlPrimitive)?.asString(), operatorValue == "=" {
+                        if checkConditionalEquals(key: newKey, valueToCheck: pValue) {
+                            return true
+                        }
+                        if let newValue = transformConditionalArguments(pValue) {
+                            if checkConditionalEquals(key: newKey, valueToCheck: newValue) {
+                                return true
+                            }
+                        }
                     }
                 }
                 return false
@@ -314,7 +321,7 @@ struct ModlObjectCreator {
         if let prim = transString as? ModlPrimitive {
             return prim.asString()
         }
-        return nil
+        return originalKey
     }
     
 //    private func processStructureForMethods(_ structure: ModlValue?) -> ModlValue? {
