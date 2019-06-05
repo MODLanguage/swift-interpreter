@@ -248,9 +248,35 @@ struct ModlObjectCreator {
         guard let values = condition.values else {
             return false
         }
-    
+        
+        //No key for condition so just a result to check i.e. no operator as no left side
+        if condition.key == nil {
+            //check if initially Bool value
+            if let primBool = evaluatePrimitive(values.first) {
+                return primBool
+            }
+            //Check if can be represented as a string
+            if let primString = values.first as? ModlPrimitive, let stringValue = primString.asString() {
+                //Check if can transform string to different Bool value
+                if let transformed = stringTransformer.transformString(stringValue, objectMgr: objectRefManager), let primBool = evaluatePrimitive(transformed) {
+                    return primBool
+                }
+                //Check if there is a object reference for this value, and if it has a bool value
+                if let refObj = objectRefManager.getKeyedVariable(stringValue) {
+                    if let primBool = evaluatePrimitive(refObj) {
+                        return primBool
+                    }
+                } else {
+                    return false
+                }
+            }
+            return true
+        }
+
+        //have a key, so LHS to check against RHS
         if let key = condition.key, let newKey = transformConditionalArguments(key), let operatorValue = condition.operatorType {
-            if values.count > 0 {
+            //more than one value to check against, must be =, check if LHS = RHS for any value
+            if values.count > 1 {
                 for value in values {
                     if let pValue = (value as? ModlPrimitive)?.asString(), operatorValue == "=" {
                         let escaped = StringEscapeReplacer().replace(pValue)
@@ -265,37 +291,37 @@ struct ModlObjectCreator {
                     }
                 }
                 return false
-            } else if let firstPrimitive = values.first as? ModlPrimitive, let primStr = firstPrimitive.asString() {
-                if operatorValue  == "=" {
-                    return checkConditionalEquals(key: key, valueToCheck: primStr)
-                } else if operatorValue == "!=" {
-                    return !checkConditionalEquals(key: key, valueToCheck: primStr)
-                } else if let doubleFirst = Double(newKey), let doubleSecond = Double(primStr) {
-                    //Number so could directly evaluate
-                    let expression = "\(doubleFirst) \(operatorValue) \(doubleSecond)"
-                    let predicate = NSPredicate(format: expression)
-                    return predicate.evaluate(with: nil)
+            } else if let firstValue = values.first {
+            //only one value to check
+                //Is it a bool?
+                if let primBool = evaluatePrimitive(firstValue) {
+                    return primBool
                 }
-            }
-        } else if let firstValue = values.first {
-            if let primBool = evaluatePrimitive(firstValue) {
-                return primBool
-            }
-            if let strValue = (firstValue as? ModlPrimitive)?.asString(), let transformedName = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
-                if let transformedBool = evaluatePrimitive(transformedName) {
-                    return transformedBool
-                }
-                if let reference = objectRefManager.getKeyedVariable(strValue){
-                    if let boolPrim = evaluatePrimitive(reference) {
-                        return boolPrim
+                //Can it convert to a bool?
+                if let originalStringValue = (firstValue as? ModlPrimitive)?.asString() {
+                    let transformedStringValue = transformConditionalArguments(originalStringValue)
+                    if operatorValue == "=" {
+                        if checkConditionalEquals(key: newKey, valueToCheck: transformedStringValue) {
+                            return true
+                        }
+                        if checkConditionalEquals(key: newKey, valueToCheck: originalStringValue) {
+                            return true
+                        }
+                        if let newStringValue = (stringTransformer.transformString(transformedStringValue, objectMgr: objectRefManager) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
+                            return true
+                        }
+                        if let newStringValue = (stringTransformer.transformString(originalStringValue, objectMgr: objectRefManager) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
+                            return true
+                        }
+                        return false
+                    } else if operatorValue == "!=" {
+                        return !checkConditionalEquals(key: newKey, valueToCheck: transformedStringValue)
+                    } else if let doubleFirst = Double(newKey), let doubleSecond = Double(transformedStringValue ?? originalStringValue) {
+                        let expression = "\(doubleFirst) \(operatorValue) \(doubleSecond)"
+                        let predicate = NSPredicate(format: expression)
+                        return predicate.evaluate(with: nil)
                     }
-                    return true
-                } else {
-                    return false
                 }
-            }
-            if let pair = firstValue as? ModlPair, let pairBoolValue = evaluatePrimitive(pair.value) {
-                return pairBoolValue
             }
         }
         return false
@@ -324,15 +350,18 @@ struct ModlObjectCreator {
         return pValue
     }
     
-    func checkConditionalEquals(key: String, valueToCheck: String) -> Bool {
-        var modifiedToCheck = valueToCheck
-        if valueToCheck.hasPrefix("`") {
+    func checkConditionalEquals(key: String?, valueToCheck: String?) -> Bool {
+        guard let uwKey = key, let uwValue = valueToCheck else {
+            return false
+        }
+        var modifiedToCheck = uwValue
+        if uwValue.hasPrefix("`") {
             modifiedToCheck.removeFirst()
         }
-        if valueToCheck.hasSuffix("`") {
+        if uwValue.hasSuffix("`") {
             modifiedToCheck.removeLast()
         }
-        return key == modifiedToCheck
+        return uwKey == modifiedToCheck
     }
 
     func transformConditionalArguments(_ originalKey: String) -> String? {
@@ -344,7 +373,7 @@ struct ModlObjectCreator {
         if let prim = transString as? ModlPrimitive {
             return prim.asString()
         }
-        return originalKey
+        return nil
     }
     
 //    private func processStructureForMethods(_ structure: ModlValue?) -> ModlValue? {
