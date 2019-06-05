@@ -836,7 +836,7 @@
   { "input": "_input=\"An iOS string\";\n{\n !{input=iOS*}?\n   support_number=441270123456\n /?\n   support_number=International Clients:14161234567\n}",
     "minimised_modl": "_input=An iOS string;{!{input=iOS*}?support_number=441270123456/?support_number=International Clients:14161234567}",
     "expected_output": "{\n \"support_number\" : 441270123456\n}\n",
-    "tested_features":["object_ref", "conditional"]
+    "tested_features":["object_ref", "conditional", "problem"]
   },
   { "input": "_number=42;\n{\n {number>41}?\n   support_number=441270123456\n /?\n   support_number=International Clients:14161234567\n}",
     "minimised_modl": "_number=42;{{number>41}?support_number=441270123456/?support_number=International Clients:14161234567}",

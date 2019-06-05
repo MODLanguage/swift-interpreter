@@ -371,8 +371,8 @@ struct ModlObjectCreator {
         var regex = #""#
         regex += valueToCheck.hasPrefix("*") ? ".*" : "^"
 //        let splits = valueToCheck.split(separator: "*")
-        for split in valueToCheck.split(separator: "*") {
-            regex += ".*"
+        for (index, split) in valueToCheck.split(separator: "*").enumerated() {
+            regex += index == 0 ? "" : ".*"
             regex += split
         }
         regex += valueToCheck.hasSuffix("*") ? ".*" : "$"
