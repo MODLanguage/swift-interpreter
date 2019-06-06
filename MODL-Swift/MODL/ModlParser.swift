@@ -33,23 +33,31 @@ enum ModlParserError: Error {
 }
 
 struct ModlParser {
-    func parse(_ input: String) throws -> String {
+    func parseToJson(_ input: String) throws -> String {
+        do {
+            let intermediate = try parseToRawModl(input)
+            let output = ModlObjectCreator().createOutput(intermediate)
+            return output?.asJson() ?? ""
+        } catch {
+            print("Parser fail : \(error)")
+            return ""
+        }
+    }
+    
+    internal func parseToRawModl(_ input: String) throws -> ModlListenerObject? {
         let lexer = MODLLexer(ANTLRInputStream(input))
         do {
             let parser = try MODLParser(CommonTokenStream(lexer))
-//            parser.removeErrorListeners()
+            //            parser.removeErrorListeners()
             let base = ModlListener()
             try parser.modl().enterRule(base)
             if let error = base.parseError {
                 throw error
             }
-            let initialObject = base.object
-            let converter = ModlObjectCreator()
-            let output = converter.createOutput(initialObject)
-            return output?.asJson() ?? ""
+            return base.object
         } catch {
             print("Parser fail : \(error)")
-            return ""
+            return nil
         }
     }
 }

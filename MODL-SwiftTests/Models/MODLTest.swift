@@ -119,7 +119,7 @@ struct MODLTestManager {
             print("Test: \(test.modl)")
             let p = ModlParser()
             do {
-                let result = try p.parse(test.modl)
+                let result = try p.parseToJson(test.modl)
                 let expected = test.expectedJson
                 if expected.count == 0 {
                     //empty test

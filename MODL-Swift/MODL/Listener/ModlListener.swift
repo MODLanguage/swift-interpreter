@@ -35,6 +35,10 @@ class ModlListener: MODLParserBaseListener {
     var object = ModlListenerObject()
     var parseError: Error?
     
+    func parseModl() {
+        
+    }
+    
     override func enterModl(_ ctx: MODLParser.ModlContext) {
         parseError = nil
         for mStructure in ctx.modl_structure() {

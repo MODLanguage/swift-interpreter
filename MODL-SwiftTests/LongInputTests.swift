@@ -40,7 +40,7 @@ class LongInputTests: XCTestCase {
         let modl = LongTest.text
         let p = ModlParser()
         do {
-            let result = try p.parse(modl)
+            let result = try p.parseToJson(modl)
             print(result)
         } catch {
             XCTFail("Parse error: \(error.localizedDescription)")

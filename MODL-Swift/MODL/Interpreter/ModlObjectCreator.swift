@@ -40,9 +40,12 @@ struct ModlObjectCreator {
     var objectRefManager = ModlObjectReferenceManager()
     var stringTransformer = StringTransformer()
     
-    func createOutput(_ input: ModlListenerObject) -> ModlOutputObject? {
+    func createOutput(_ input: ModlListenerObject?) -> ModlOutputObject? {
+        guard let uwInput = input else {
+            return nil
+        }
         let output = ModlOutputObject()
-        for structure in input.structures {
+        for structure in uwInput.structures {
             if let outStructures = processModlElement(structure) as? [ModlStructure] {
                 for singleStruct in outStructures {
                     output.addStructure(singleStruct)

@@ -76,7 +76,7 @@ class ParseTestViewController: UIViewController {
         }
         let p = ModlParser()
         do {
-            let result = try p.parse(modl)
+            let result = try p.parseToJson(modl)
             resultView.text = result
         } catch {
             print("Parse error: \(error)")
