@@ -41,13 +41,16 @@ class FileLoader {
     }
     
     func loadFileText(_ path: String) throws -> String? {
-        let filePath = adjustFilePath(path)
-        if filePath.hasPrefix("http:") || filePath.hasPrefix("https:") {
+        var filePath = adjustFilePath(path)
+        let insecurePrefix = "http:"
+        if filePath.hasPrefix(insecurePrefix) {
+            filePath = "https:" + filePath[insecurePrefix.endIndex...]
+        }
+        if filePath.hasPrefix("https:") {
             if let url = URL(string: filePath) {
                 return try String(contentsOf: url)
             }
         } else {
-            //TODO: load from file
                 if let docDirectory = FileManager.default.urls(for: .documentDirectory,
                                                                in: .userDomainMask).first {
                     let fileUrl = docDirectory.appendingPathComponent(filePath)
