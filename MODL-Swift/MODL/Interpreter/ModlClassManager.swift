@@ -213,14 +213,16 @@ class ModlClassManager {
         return constructAssignList(currentClass.superclass, passedData: newData)
     }
     
-    func referenceInstruction() -> [ModlValue] {
+    func referenceInstruction() -> ModlOutputObject.Array {
         let classArr = classOrder.compactMap({ (classId) -> ModlValue? in
             if let mClass = storedClasses[classId] {
                 return mClass.referenceInstruction()
             }
             return nil
         })
-        return classArr
+        var output = ModlOutputObject.Array()
+        output.values = classArr
+        return output
     }
 }
 
@@ -263,12 +265,33 @@ fileprivate struct ModlClass {
             map.addValue(key: "superclass", value: ModlOutputObject.Primitive(sClass))
         }
         if let assignList = assignMap {
-            map.addValue(key: "assign", value: assignList)
+            var transformedList = ModlOutputObject.Array()
+            for case let assignItem as ModlArray in assignList.values {
+                var assignSubList = ModlOutputObject.Array()
+                for case let item as ModlPrimitive in assignItem.values where item.asString() != nil {
+                    let newPrim = ModlOutputObject.Primitive(item.asString()!)
+                    assignSubList.addValue(newPrim)
+                }
+                transformedList.addValue(assignSubList)
+            }
+            map.addValue(key: "assign", value: transformedList)
         }
         if extraValues.count > 0 {
             for pair in extraValues {
                 if let key = pair.key, let value = pair.value {
-                    map.addValue(key: key, value: value)
+                    var convertedValue: ModlValue? = nil
+                    switch value {
+                    case let prim as ModlPrimitive:
+                        var oPrim = ModlOutputObject.Primitive()
+                        oPrim.value = prim.value
+                        convertedValue = oPrim
+                    default:
+                        //TODO: other conversions
+                        break
+                    }
+                    if let conv = convertedValue {
+                        map.addValue(key: key, value: conv)
+                    }
                 }
             }
         }

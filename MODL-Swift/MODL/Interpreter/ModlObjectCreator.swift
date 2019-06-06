@@ -125,7 +125,7 @@ struct ModlObjectCreator {
         case is ModlNull:
             return [ModlOutputObject.Null()]
         case let iPrim as ModlPrimitive:
-            if let iPrimStr = iPrim.asString(), iPrimStr.hasPrefix("%*"), let value = processReferenceInstruction(key: iPrimStr){
+            if let iPrimStr = iPrim.asString(), iPrimStr.hasPrefix("%*"), let value = processReferenceInstruction(key: iPrimStr, classIdsProcessedInBranch: classIdsProcessedInBranch){
                 return [value]
             }
             if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
@@ -236,7 +236,8 @@ struct ModlObjectCreator {
         return (false, nil)
     }
     
-    private func processReferenceInstruction(key: String?) -> ModlValue? {
+    private func processReferenceInstruction(key: String?, classIdsProcessedInBranch: [String]) -> ModlValue? {
+        var outputValue: ModlValue? = nil
         guard var uwKey = key else {
             return nil
         }
@@ -248,22 +249,13 @@ struct ModlObjectCreator {
         }
         switch reservedType {
         case .load:
-            var array = ModlOutputObject.Array()
-            for file in fileLoader.loadedFiles() {
-                var prim = ModlOutputObject.Primitive()
-                prim.value = file
-                array.addValue(prim)
-            }
-            return array
+            outputValue = fileLoader.loadedFiles()
         case .mClass:
-            var array = ModlOutputObject.Array()
-            for value in classManager.referenceInstruction() {
-                array.addValue(value)
-            }
-            return array
+            outputValue = classManager.referenceInstruction()
         default:
             return nil
         }
+        return outputValue
     }
 
     func processConditional(_ conditional: ModlConditional) -> [ModlValue]? {
