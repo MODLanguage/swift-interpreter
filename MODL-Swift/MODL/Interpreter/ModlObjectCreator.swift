@@ -255,6 +255,12 @@ struct ModlObjectCreator {
                 array.addValue(prim)
             }
             return array
+        case .mClass:
+            var array = ModlOutputObject.Array()
+            for value in classManager.referenceInstruction() {
+                array.addValue(value)
+            }
+            return array
         default:
             return nil
         }

@@ -49,6 +49,7 @@ class ModlClassManager {
     
     
     private var storedClasses: [String: ModlClass] = [:]
+    private var classOrder: [String] = []
     
     func addClass(_ classMap: ModlValue?) {
         guard let input = classMap as? ModlMap, var mClass = ModlClass(input) else {
@@ -73,6 +74,7 @@ class ModlClassManager {
 //            }
         }
         storedClasses[mClass.id] = mClass
+        classOrder.append(mClass.id)
      }
     
     func isClass(_ keyValue: String?) -> Bool {
@@ -210,6 +212,16 @@ class ModlClassManager {
         }
         return constructAssignList(currentClass.superclass, passedData: newData)
     }
+    
+    func referenceInstruction() -> [ModlValue] {
+        let classArr = classOrder.compactMap({ (classId) -> ModlValue? in
+            if let mClass = storedClasses[classId] {
+                return mClass.referenceInstruction()
+            }
+            return nil
+        })
+        return classArr
+    }
 }
 
 
@@ -241,6 +253,28 @@ fileprivate struct ModlClass {
         } else {
             return nil
         }
+    }
+    
+    func referenceInstruction() -> ModlOutputObject.Pair {
+        var pair = ModlOutputObject.Pair()
+        var map = ModlOutputObject.Map()
+        map.addValue(key: "name", value: ModlOutputObject.Primitive(name))
+        if let sClass = superclass {
+            map.addValue(key: "superclass", value: ModlOutputObject.Primitive(sClass))
+        }
+        if let assignList = assignMap {
+            map.addValue(key: "assign", value: assignList)
+        }
+        if extraValues.count > 0 {
+            for pair in extraValues {
+                if let key = pair.key, let value = pair.value {
+                    map.addValue(key: key, value: value)
+                }
+            }
+        }
+        pair.key = id
+        pair.value = map
+        return pair
     }
 }
 

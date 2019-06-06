@@ -110,6 +110,14 @@ class ModlOutputObject: ModlObject, ModlJSON {
     }
     
     struct Primitive: ModlPrimitive, ModlJSON {
+        
+        init() {
+        }
+        
+        init(_ strValue: String) {
+            self.value = strValue
+        }
+        
         mutating func setValue(value: Any?) {
             self.value = value
         }

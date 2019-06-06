@@ -23,14 +23,25 @@ class LoadTests: XCTestCase {
         TestFileLoader().removeTestFiles()
     }
 
-    func testLoad() {
+    func testJustLoad() {
         guard let json = jsonTests else {
             XCTFail("Fail creating tests from json input")
             return
         }
-        let objRefClassTests = json.filter { (modl) -> Bool in
+        let loadTests = json.filter { (modl) -> Bool in
             return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && modl.testedFeatures?.count == 1
         }
-        MODLTestManager.performTests(objRefClassTests)
+        MODLTestManager.performTests(loadTests)
+    }
+    
+    func testAllLoad() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let loadTests = json.filter { (modl) -> Bool in
+            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && !(modl.testedFeatures?.contains(FeatureTestTypes.method.rawValue) ?? true)
+        }
+        MODLTestManager.performTests(loadTests)
     }
 }
