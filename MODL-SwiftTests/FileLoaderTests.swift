@@ -9,14 +9,14 @@
 import XCTest
 @testable import MODL_Swift
 
-class FileLoadTests: XCTestCase {
+class FileLoaderTests: XCTestCase {
         var sut: FileLoader? = nil
     
     override func setUp() {
         let testFileLoader = TestFileLoader()
         sut = FileLoader()
         testFileLoader.removeTestFiles()
-        testFileLoader.copyFiles()
+        testFileLoader.copyFiles(self)
     }
 
     override func tearDown() {

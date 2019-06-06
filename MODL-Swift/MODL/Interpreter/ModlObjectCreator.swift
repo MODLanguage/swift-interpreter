@@ -30,6 +30,8 @@ fileprivate enum ReservedKeys: String, CaseIterable {
     case versionSH = "*V"
     case mClassSH = "*C"
     case mClass = "*CLASS"
+    case load = "*LOAD"
+    case loadSH = "*L"
     case objectIndex = "?"
     case objectReference = "_"
 }
@@ -39,7 +41,8 @@ struct ModlObjectCreator {
     var classManager = ModlClassManager()
     var objectRefManager = ModlObjectReferenceManager()
     var stringTransformer = StringTransformer()
-    
+    var fileLoader = FileLoader()
+
     func createOutput(_ input: ModlListenerObject?) -> ModlOutputObject? {
         guard let uwInput = input else {
             return nil
@@ -62,7 +65,11 @@ struct ModlObjectCreator {
         switch uwElement {
         case let iPair as ModlPair:
             var pair = ModlOutputObject.Pair()
-            if processReservedPair(key: iPair.key, value: iPair.value) {
+            let reservedPair = processReservedPair(key: iPair.key, value: iPair.value)
+            if reservedPair.isReserved {
+                if let outputStructures = reservedPair.processedStructures {
+                    return outputStructures
+                }
                 return nil
             }
             if let classReference = classManager.processFromClass(key: iPair.key, value: iPair.value), !haveAlreadyProcessedClassInBranch(identifier: iPair.key, processedList: classIdsProcessedInBranch) {
@@ -87,7 +94,11 @@ struct ModlObjectCreator {
             var map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
                 let originalValue = iMap.value(forKey: key)
-                if processReservedPair(key: key, value: originalValue) {
+                let reservedPair = processReservedPair(key: key, value: originalValue)
+                if reservedPair.isReserved {
+                    if let outputStructures = reservedPair.processedStructures {
+                        return outputStructures
+                    }
                     continue
                 }
                 var newProcessedClasses = classIdsProcessedInBranch
@@ -114,6 +125,9 @@ struct ModlObjectCreator {
         case is ModlNull:
             return [ModlOutputObject.Null()]
         case let iPrim as ModlPrimitive:
+            if let iPrimStr = iPrim.asString(), iPrimStr.hasPrefix("%*"), let value = processReferenceInstruction(key: iPrimStr){
+                return [value]
+            }
             if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
                 if (transformed as? ModlPrimitive)?.asString() == strValue {
                     //nothing has or will change so stop transforming
@@ -161,38 +175,91 @@ struct ModlObjectCreator {
     }
     
     
-    private func processReservedPair(key: String?, value: ModlValue?) -> Bool {
+    private func processReservedPair(key: String?, value: ModlValue?) -> (isReserved: Bool, processedStructures: [ModlValue]?) {
         guard let uwKey = key else {
-            return false
+            return (false, nil)
         }
         var reserved = ReservedKeys(rawValue: uwKey.uppercased())
         if uwKey.hasPrefix(ReservedKeys.objectReference.rawValue) {
             reserved = .objectReference
         }
         guard let uwReserved = reserved else {
-            return false
+            return (false, nil)
         }
         switch uwReserved {
         case .version, .versionSH:
             //Could raise an error here for non-matching version.... although json test implies it just continues
-            return true
+            return (true, nil)
         case .mClass, .mClassSH:
-            //TODO: process class
             classManager.addClass(value)
-            return true
+            return (true, nil)
         case .objectIndex:
             let processed = processModlElement(value)
             objectRefManager.addIndexedVariables(processed?.first)
-            return true
+            return (true, nil)
         case .objectReference:
             var objPair = ModlOutputObject.Pair()
             objPair.key = uwKey
             objPair.value = processModlElement(value)?.first
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
-            return true
+            return (true, nil)
+        case .load, .loadSH:
+            if let processedPath = processModlElement(value)?.first {
+                switch processedPath {
+                case let primPath as ModlPrimitive:
+                    if let path = primPath.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
+                        var outputModl: [ModlValue] = []
+                        for structure in obj.structures {
+                            for processed in processModlElement(structure) ?? [] {
+                                outputModl.append(processed)
+                            }
+                        }
+                        return (true, outputModl)
+                    }
+                case let arrPath as ModlArray:
+                    var outputModl: [ModlValue] = []
+                    for case let path as ModlPrimitive in arrPath.values {
+                        if let path = path.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
+                            for structure in obj.structures {
+                                for processed in processModlElement(structure) ?? [] {
+                                    outputModl.append(processed)
+                                }
+                            }
+                        }
+                    }
+                    return (true, outputModl)
+                default:
+                    return (true, nil)
+                }
+            }
         }
+        return (false, nil)
     }
     
+    private func processReferenceInstruction(key: String?) -> ModlValue? {
+        guard var uwKey = key else {
+            return nil
+        }
+        if uwKey.hasPrefix("%*") {
+            uwKey.removeFirst()
+        }
+        guard let reservedType = ReservedKeys(rawValue: uwKey.uppercased()) else {
+            return nil
+        }
+        switch reservedType {
+        case .load:
+            var array = ModlOutputObject.Array()
+            for file in fileLoader.loadedFiles() {
+                var prim = ModlOutputObject.Primitive()
+                prim.value = file
+                array.addValue(prim)
+            }
+            return array
+        default:
+            return nil
+        }
+    }
+
     func processConditional(_ conditional: ModlConditional) -> [ModlValue]? {
         var returnStructures: [ModlValue] = []
         //nothing to return so return test value

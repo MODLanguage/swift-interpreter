@@ -15,6 +15,7 @@ struct FileCacheItem {
 
 class FileLoader {
     private var cache: [String: FileCacheItem] = [:]
+    private var cacheKeyOrder: [String] = []
     
     func loadFileObject(_ pathFromRoot: String) throws -> ModlListenerObject? {
         let forceReload = pathFromRoot.hasSuffix("!")
@@ -29,17 +30,22 @@ class FileLoader {
         cache.removeValue(forKey: filePath)
         if let fileText = try loadFileText(filePath) {
             let parser = ModlParser()
-            let output = try? parser.parseToRawModl(fileText)
-            //TODO: add to cache
-            return output
+            if let output = try? parser.parseToRawModl(fileText) {
+                let fileItem = FileCacheItem(expiryTime: Date().addingTimeInterval(60 * 60 * 60), fileData: output)
+                cache[filePath] = fileItem
+                cacheKeyOrder.append(filePath)
+                return output
+            }
         }
         return nil
     }
     
     func loadFileText(_ path: String) throws -> String? {
         let filePath = adjustFilePath(path)
-        if filePath.hasPrefix("http:") {
-            //TODO: load from URI
+        if filePath.hasPrefix("http:") || filePath.hasPrefix("https:") {
+            if let url = URL(string: filePath) {
+                return try String(contentsOf: url)
+            }
         } else {
             //TODO: load from file
                 if let docDirectory = FileManager.default.urls(for: .documentDirectory,
@@ -62,5 +68,9 @@ class FileLoader {
             filePath += ".modl"
         }
         return filePath
+    }
+    
+    func loadedFiles() -> [String] {
+        return cacheKeyOrder
     }
 }

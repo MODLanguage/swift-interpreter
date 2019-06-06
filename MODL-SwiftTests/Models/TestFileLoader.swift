@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XCTest
 
 struct TestFileLoader {
     func removeTestFiles() {
@@ -26,24 +27,26 @@ struct TestFileLoader {
     }
     
     //copy bundle files to documents directory to mirror real life use case
-    func copyFiles() {
+    func copyFiles(_ testObject: XCTestCase) {
         if let docDirectory = FileManager.default.urls(for: .documentDirectory,
                                                        in: .userDomainMask).first {
             do {
+                let bundle = Bundle(for: type(of: testObject))
                 let rootTestFolder = "grammar_tests"
                 let rootTestPath = docDirectory.appendingPathComponent(rootTestFolder)
                 try FileManager.default.createDirectory(at: rootTestPath, withIntermediateDirectories: false, attributes: nil)
                 let newFolder = "test_import_dir"
                 let newFolderUrl = rootTestPath.appendingPathComponent(newFolder)
                 for file in ["1", "2", "3", "a", "b", "c", "demo_config", "import_config"] {
-                    if let bundleFile = Bundle(for: FileLoadTests.self).url(forResource: file, withExtension: "modl") {
+                    if let bundleFile = bundle.url(forResource: file, withExtension: "modl") {
                         try FileManager.default.copyItem(at: bundleFile, to: rootTestPath.appendingPathComponent(file + ".modl"))
                     }
                 }
-                let subfolderFile = "test_import"
-                if let bundleFile = Bundle(for: FileLoadTests.self).url(forResource: subfolderFile, withExtension: "txt") {
-                    try FileManager.default.createDirectory(at: newFolderUrl, withIntermediateDirectories: false, attributes: nil)
-                    try FileManager.default.copyItem(at: bundleFile, to: newFolderUrl.appendingPathComponent(subfolderFile + ".txt"))
+                try FileManager.default.createDirectory(at: newFolderUrl, withIntermediateDirectories: false, attributes: nil)
+                for file in ["test_import", "nested_import1", "nested_import2", "nested_import3"] {
+                    if let bundleFile = bundle.url(forResource: file, withExtension: "txt") {
+                        try FileManager.default.copyItem(at: bundleFile, to: newFolderUrl.appendingPathComponent(file + ".txt"))
+                    }
                 }
             } catch {
                 print(error)
