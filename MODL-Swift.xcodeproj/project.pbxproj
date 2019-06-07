@@ -61,6 +61,7 @@
 		3E7743DB22674AEC006AA9AF /* ParseTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */; };
 		3E7743DE22675E59006AA9AF /* DNSTxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */; };
 		3E7B4AAA228ADC9900C54CCF /* StringEscapeReplacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */; };
+		3EF9718A22AA78C70000B220 /* MethodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF9718922AA78C70000B220 /* MethodManager.swift */; };
 		3EFABA46226737760029EACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFABA45226737760029EACC /* AppDelegate.swift */; };
 		3EFABA4B226737760029EACC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA49226737760029EACC /* Main.storyboard */; };
 		3EFABA4D226737790029EACC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA4C226737790029EACC /* Assets.xcassets */; };
@@ -116,7 +117,7 @@
 		3E3896D622830D62005533B9 /* class.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = class.json; sourceTree = "<group>"; };
 		3E3896D722830D62005533B9 /* methods.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = methods.json; sourceTree = "<group>"; };
 		3E3896D822830D62005533B9 /* basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = basic.json; sourceTree = "<group>"; };
-		3E3896E02289BECD005533B9 /* StringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringTransformer.swift; path = ../../StringTransformer.swift; sourceTree = "<group>"; };
+		3E3896E02289BECD005533B9 /* StringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTransformer.swift; sourceTree = "<group>"; };
 		3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlObjectReferenceManager.swift; sourceTree = "<group>"; };
 		3E3C29A02296BD45007D555C /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		3E5ABB6422674513007419CC /* ModlListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListener.swift; sourceTree = "<group>"; };
@@ -157,6 +158,7 @@
 		3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTestViewController.swift; sourceTree = "<group>"; };
 		3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTxtRecord.swift; sourceTree = "<group>"; };
 		3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEscapeReplacer.swift; sourceTree = "<group>"; };
+		3EF9718922AA78C70000B220 /* MethodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodManager.swift; sourceTree = "<group>"; };
 		3EFABA42226737760029EACC /* MODL-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MODL-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EFABA45226737760029EACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3EFABA4A226737760029EACC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -333,12 +335,9 @@
 		3E7B4AA7228AD4CB00C54CCF /* Interpreter */ = {
 			isa = PBXGroup;
 			children = (
-				3E7B4AA8228ADC8500C54CCF /* StringTranformation */,
+				3EF9718822AA78AA0000B220 /* Helpers */,
 				3E6315782285C59B008BDC14 /* ModlObjectCreator.swift */,
-				3E2BECCB22A92AC500FC1303 /* FileLoader.swift */,
 				3E63157B2285C639008BDC14 /* ModlOutputObject.swift */,
-				3E6315752284875F008BDC14 /* ModlClassManager.swift */,
-				3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */,
 			);
 			path = Interpreter;
 			sourceTree = "<group>";
@@ -350,6 +349,18 @@
 				3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */,
 			);
 			path = StringTranformation;
+			sourceTree = "<group>";
+		};
+		3EF9718822AA78AA0000B220 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B4AA8228ADC8500C54CCF /* StringTranformation */,
+				3E6315752284875F008BDC14 /* ModlClassManager.swift */,
+				3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */,
+				3E2BECCB22A92AC500FC1303 /* FileLoader.swift */,
+				3EF9718922AA78C70000B220 /* MethodManager.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		3EFABA39226737760029EACC = {
@@ -638,6 +649,7 @@
 			files = (
 				3E7743CC22674865006AA9AF /* MODLLexerATN.swift in Sources */,
 				3E7743CB22674865006AA9AF /* MODLParserListener.swift in Sources */,
+				3EF9718A22AA78C70000B220 /* MethodManager.swift in Sources */,
 				3E5ABB722267459E007419CC /* ModlParser.swift in Sources */,
 				3E7743DE22675E59006AA9AF /* DNSTxtRecord.swift in Sources */,
 				3E63157C2285C639008BDC14 /* ModlOutputObject.swift in Sources */,

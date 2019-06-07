@@ -52,7 +52,7 @@ class ModlClassManager {
     private var classOrder: [String] = []
     
     func addClass(_ classMap: ModlValue?) {
-        guard let input = classMap as? ModlMap, var mClass = ModlClass(input) else {
+        guard let input = classMap as? ModlMap, let mClass = ModlClass(input) else {
             //either not a map, or has no id so ignore ...
             //TODO: raise bad class error?
             return
@@ -63,15 +63,6 @@ class ModlClassManager {
                 //TODO: throw an error?
                 return
             }
-           //has a superclass mentioned so check for it....
-//            if let existingingSuperClass = getClass(superclassName) {
-//                //TODO: this should probably loop through and update individual bits rather than overwrite
-//                for assign in existingingSuperClass.assignMap?.values ?? []  {
-//                    mClass.assignMap?.addValue(assign)
-//                }
-//                //TODO: do I group here or construct later?
-//                //                mClass.extraValues = existingingSuperClass.extraValues
-//            }
         }
         storedClasses[mClass.id] = mClass
         classOrder.append(mClass.id)
