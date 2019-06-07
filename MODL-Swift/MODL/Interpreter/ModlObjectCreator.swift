@@ -30,6 +30,8 @@ fileprivate enum ReservedKey: String, CaseIterable {
     case versionSH = "*V"
     case mClassSH = "*C"
     case mClass = "*CLASS"
+    case methodSH = "*M"
+    case method = "*METHOD"
     case load = "*LOAD"
     case loadSH = "*L"
     case objectIndex = "?"
@@ -40,9 +42,14 @@ struct ModlObjectCreator {
     
     var classManager = ModlClassManager()
     var objectRefManager = ModlObjectReferenceManager()
-    var stringTransformer = StringTransformer()
+    var methodManager = MethodManager()
+    var stringTransformer: StringTransformer
     var fileLoader = FileLoader()
 
+    init() {
+        self.stringTransformer = StringTransformer(objectManager: self.objectRefManager, methodManager: self.methodManager)
+    }
+    
     func createOutput(_ input: ModlListenerObject?) -> ModlOutputObject? {
         guard let uwInput = input else {
             return nil
@@ -80,7 +87,7 @@ struct ModlObjectCreator {
                 pair.value = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)?.first
                 return [pair]
             }
-            pair.key = stringTransformer.transformKeyString(iPair.key, objectMgr: objectRefManager)
+            pair.key = stringTransformer.transformKeyString(iPair.key)
             pair.value = processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
             objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
             return [pair]
@@ -113,7 +120,7 @@ struct ModlObjectCreator {
                     mapKey = uwKey
                     mapValue = mValue.first
                 } else if let mValue = processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
-                    mapKey = stringTransformer.transformKeyString(key, objectMgr: objectRefManager) ?? key
+                    mapKey = stringTransformer.transformKeyString(key) ?? key
                     mapValue = mValue.first
                 }
                 if let uwValue = mapValue {
@@ -128,7 +135,7 @@ struct ModlObjectCreator {
             if let iPrimStr = iPrim.asString(), iPrimStr.hasPrefix("%*"), let value = processReferenceInstruction(key: iPrimStr, classIdsProcessedInBranch: classIdsProcessedInBranch){
                 return [value]
             }
-            if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue, objectMgr: objectRefManager) {
+            if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue) {
                 if (transformed as? ModlPrimitive)?.asString() == strValue {
                     //nothing has or will change so stop transforming
                 } else {
@@ -192,7 +199,7 @@ struct ModlObjectCreator {
             return uwReserved
         case .mClass, .mClassSH:
             classManager.addClass(value)
-            return uwReserved
+            return .mClass
         case .objectIndex:
             let processed = processModlElement(value)
             objectRefManager.addIndexedVariables(processed?.first)
@@ -205,8 +212,10 @@ struct ModlObjectCreator {
             return uwReserved
         case .load, .loadSH:
             return .load
+        case .methodSH, .method:
+            methodManager.addMethod(value)
+            return .method
         }
-        return nil
     }
     
     private func processReferenceInstruction(key: String?, classIdsProcessedInBranch: [String]) -> ModlValue? {
@@ -222,9 +231,11 @@ struct ModlObjectCreator {
         }
         switch reservedType {
         case .load:
-            outputValue = fileLoader.loadedFiles()
+            outputValue = fileLoader.referenceInstruction()
         case .mClass:
             outputValue = classManager.referenceInstruction()
+        case .method:
+            outputValue = methodManager.referenceInstruction()
         default:
             return nil
         }
@@ -333,7 +344,7 @@ struct ModlObjectCreator {
             //Check if can be represented as a string
             if let primString = values.first as? ModlPrimitive, let stringValue = primString.asString() {
                 //Check if can transform string to different Bool value
-                if let transformed = stringTransformer.transformString(stringValue, objectMgr: objectRefManager), let primBool = evaluatePrimitive(transformed) {
+                if let transformed = stringTransformer.transformString(stringValue), let primBool = evaluatePrimitive(transformed) {
                     return primBool
                 }
                 //Check if there is a object reference for this value, and if it has a bool value
@@ -382,10 +393,10 @@ struct ModlObjectCreator {
                         if checkConditionalEquals(key: newKey, valueToCheck: originalStringValue) {
                             return true
                         }
-                        if let newStringValue = (stringTransformer.transformString(transformedStringValue, objectMgr: objectRefManager) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
+                        if let newStringValue = (stringTransformer.transformString(transformedStringValue) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
                             return true
                         }
-                        if let newStringValue = (stringTransformer.transformString(originalStringValue, objectMgr: objectRefManager) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
+                        if let newStringValue = (stringTransformer.transformString(originalStringValue) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
                             return true
                         }
                         return false
@@ -459,7 +470,7 @@ struct ModlObjectCreator {
         if !keyToCheck.hasPrefix("%") {
             keyToCheck = "%"+keyToCheck
         }
-        let transString = stringTransformer.transformString(keyToCheck, objectMgr: objectRefManager)
+        let transString = stringTransformer.transformString(keyToCheck)
         if let prim = transString as? ModlPrimitive, "%\(originalKey)" != prim.asString() {
             return prim.asString()
         }

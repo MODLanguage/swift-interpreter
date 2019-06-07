@@ -73,7 +73,7 @@ class FileLoader {
         return filePath
     }
     
-    func loadedFiles() -> ModlArray {
+    func referenceInstruction() -> ModlArray {
         var output = ModlOutputObject.Array()
         output.values = cacheKeyOrder.map({ (key) -> ModlPrimitive in
             return ModlOutputObject.Primitive(key)

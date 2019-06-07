@@ -27,50 +27,6 @@
 import Foundation
 import Punycode
 
-fileprivate enum StringMethod {
-    case uppercase
-    case downcase
-    case sentenceCase
-    case initCap
-    case urlencode
-    case puny
-    case replace(_ existing: String, _ replacement: String)
-    case trim(_ reference: String)
-    
-    init?(rawValue: String) {
-        guard let first = rawValue.first else {
-            return nil
-        }
-        switch first {
-        case "u":
-            self = .uppercase
-        case "d":
-            self = .downcase
-        case "s":
-            self = .sentenceCase
-        case "i":
-            self = .initCap
-        case "e":
-            self = .urlencode
-        case "p":
-            self = .puny
-        case "r":
-            guard let find = rawValue.slice(from: "(", to: ","),
-                let replace = rawValue.slice(from: ",", to: ")") else {
-                    return nil
-            }
-            self = .replace(find, replace)
-        case "t":
-            guard let reference = rawValue.slice(from: "(", to: ")") else {
-                return nil
-            }
-            self = .trim(reference)
-        default:
-            return nil
-        }
-    }
-}
-
 struct StringTransformer {
     let gravesPatternStart = #"(?<![\~])`[^`]+"#
     let gravePatternEnd = #"(?<![\~])`"#
@@ -78,16 +34,22 @@ struct StringTransformer {
     let refPatternEnd = #"`?"#
     let valueRefPatternStart = #"`?%[a-zA-Z_]+[_a-zA-Z0-9]*"#
     let methodPattern = #"(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*"#
-    //"(`?%[a-zA-Z_]+[a-zA-Z_0-9]*(\\.%?[a-zA-Z_0-9]+)*`?)|(`?%[0-9]+[a-zA-Z0-9.(),]*`?)|((?<![\\~])`.*(?<![\\~])`)"
-    // original pattern "((`?%[0-9][0-9.][a-zA-Z0-9.(),]*`?)|(`?%[0-9][0-9]*`?)|(`?%[_a-zA-Z][_a-zA-Z0-9(),]*`?)|(`.*`\\.[_a-zA-Z0-9.(),%]+)|((?<![\\~])`.*(?<![\\~])`))"
 
-    func transformKeyString(_ inputString: String?, objectMgr: ModlObjectReferenceManager?) -> String? {
-        let prim = transformString(inputString, objectMgr: objectMgr) as? ModlPrimitive
+    let objectManager: ModlObjectReferenceManager
+    let methodManager: MethodManager
+
+    init(objectManager: ModlObjectReferenceManager, methodManager: MethodManager) {
+        self.objectManager = objectManager
+        self.methodManager = methodManager
+    }
+    
+    func transformKeyString(_ inputString: String?) -> String? {
+        let prim = transformString(inputString) as? ModlPrimitive
         let output = prim?.value as? String ?? inputString
         return processStringForMethods(output)
     }
     
-    func transformString(_ inputString: String?, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
+    func transformString(_ inputString: String?) -> ModlValue? {
         guard var uwInput = inputString else {
             //TODO: Return ModlNull?
             return nil
@@ -120,7 +82,7 @@ struct StringTransformer {
         while !finished {
             if let ref = getObjectRangesMatch(uwInput, start: startIndex) {
                 let refKey = String(uwInput[ref])
-                let mValue = checkObjectReferencing(keyToCheck: refKey, objectMgr: objectMgr)
+                let mValue = checkObjectReferencing(keyToCheck: refKey, objectMgr: objectManager)
                 if refKey == uwInput {
                     //the entire key matches the grave key so just return referenced object
                     return mValue
@@ -222,7 +184,7 @@ struct StringTransformer {
         
         while !isFinished {
             var method = String(methods[index])
-            if let transformed = transformString(method, objectMgr: objectMgr) as? ModlPrimitive {
+            if let transformed = transformString(method) as? ModlPrimitive {
                 method = transformed.asString() ?? method
             }
             if let numMethod = Int(method), let refArray = newRef as? ModlArray {
@@ -258,7 +220,7 @@ struct StringTransformer {
         while !finished {
             if let ref = getObjectRangesMatch(uwInput, start: startIndex) {
                 let testableString = String(uwInput[ref])
-                var replacement = processStringMethods(inputString: testableString)
+                var replacement = methodManager.processStringMethods(inputString: testableString)
                 if replacement.hasPrefix("`") {
                     replacement.removeFirst()
                 }
@@ -278,80 +240,4 @@ struct StringTransformer {
         return uwInput
     }
         
-    private func processStringMethods(inputString: String) -> String {
-        var methods = inputString.split(separator: ".").map({String($0)})
-        guard methods.count > 1 else {
-            return inputString
-        }
-        var subject: String = String(methods.remove(at: 0)) //take off the subject and leave the methods
-        if subject.hasPrefix("`") {
-            subject.removeFirst()
-        }
-        if subject.hasSuffix("`") {
-            subject.removeLast()
-        }
-        for (index,method) in methods.enumerated() {
-            if let transformed = performStringMethod(inputString: subject, stringMethodName: method) {
-                subject = transformed
-            } else {
-                let remaining = methods[index...]
-                for rMethod in remaining {
-                    subject = subject + "." + rMethod
-                }
-                break
-            }
-        }
-        return subject
-    }
-    
-    private func performStringMethod(inputString: String?, stringMethodName: String) -> String? {
-        guard let sMethod = StringMethod(rawValue: stringMethodName), let uwStr = inputString else {
-            return nil
-        }
-        switch sMethod {
-        case .downcase:
-            return uwStr.lowercased()
-        case .uppercase:
-             return uwStr.uppercased()
-        case .initCap:
-            return initCapIgnoringUnderscore(uwStr)
-        case .sentenceCase:
-            return uwStr.replacingCharacters(in: uwStr.startIndex...uwStr.startIndex, with: String(uwStr[uwStr.startIndex].uppercased()))
-        case .replace(let find, let replace):
-            return uwStr.replacingOccurrences(of: find, with: replace)
-        case .urlencode:
-            return urlPercentEncode(uwStr)
-        case .trim(let reference):
-            return trimStringToRef(input: uwStr, ref: reference)
-        case .puny:
-            return uwStr.punycodeDecoded ?? ""
-        }
-    }
-    
-    private func urlPercentEncode(_ inputString: String) -> String {
-        let spaceString = inputString.replacingOccurrences(of: " ", with: "+")
-        let unreserved = "-._~/?+"
-        var allowed = CharacterSet.alphanumerics
-        allowed.insert(charactersIn: unreserved)
-        return spaceString.addingPercentEncoding(withAllowedCharacters: allowed) ?? spaceString
-    }
-    
-    private func initCapIgnoringUnderscore(_ inputString: String) -> String {
-        let words = inputString.split(separator: " ")
-        let reduced = words.reduce("") { (result, string) -> String in
-            var output = result
-            if result.count > 0 {
-                output = output + " "
-            }
-            return output + string.replacingCharacters(in: string.startIndex...string.startIndex, with: String(string[string.startIndex].uppercased()))
-        }
-        return reduced //.initcap also capitalises underscore words so cannot use
-    }
-    
-    private func trimStringToRef(input: String, ref: String) -> String {
-        if let range = input.range(of: ref)?.lowerBound {
-            return String(input[..<range])
-        }
-        return input
-    }
 }
