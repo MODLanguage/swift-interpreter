@@ -25,7 +25,7 @@
 //
 
 import Foundation
-fileprivate enum ReservedKeys: String, CaseIterable {
+fileprivate enum ReservedKey: String, CaseIterable {
     case version = "*VERSION"
     case versionSH = "*V"
     case mClassSH = "*C"
@@ -65,10 +65,10 @@ struct ModlObjectCreator {
         switch uwElement {
         case let iPair as ModlPair:
             var pair = ModlOutputObject.Pair()
-            let reservedPair = processReservedPair(key: iPair.key, value: iPair.value)
-            if reservedPair.isReserved {
-                if let outputStructures = reservedPair.processedStructures {
-                    return outputStructures
+           
+            if  let reservedPair = processReservedPair(key: iPair.key, value: iPair.value) {
+                if case ReservedKey.load = reservedPair {
+                    return processLoad(iPair.value)
                 }
                 return nil
             }
@@ -94,10 +94,10 @@ struct ModlObjectCreator {
             var map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
                 let originalValue = iMap.value(forKey: key)
-                let reservedPair = processReservedPair(key: key, value: originalValue)
-                if reservedPair.isReserved {
-                    if let outputStructures = reservedPair.processedStructures {
-                        return outputStructures
+                
+                if let reservedPair = processReservedPair(key: key, value: originalValue) {
+                    if case ReservedKey.load = reservedPair {
+                        return processLoad(originalValue)
                     }
                     continue
                 }
@@ -164,76 +164,49 @@ struct ModlObjectCreator {
     }
     
     //    //returns bool for existence of special reserved key
-    private func hasReservedPairKey(_ pair: ModlPair) -> Bool {
+    private func hasReservedPairKey(_ pair: ModlPair) -> ReservedKey? {
         guard let key = pair.key else {
-            return false
+            return nil
         }
-        if key.hasPrefix(ReservedKeys.objectReference.rawValue) {
-            return true
+        if key.hasPrefix(ReservedKey.objectReference.rawValue) {
+            return ReservedKey.objectReference
         }
-        return ReservedKeys(rawValue: key.uppercased()) != nil
+        return ReservedKey(rawValue: key.uppercased())
     }
     
     
-    private func processReservedPair(key: String?, value: ModlValue?) -> (isReserved: Bool, processedStructures: [ModlValue]?) {
+    private func processReservedPair(key: String?, value: ModlValue?) -> ReservedKey? {
         guard let uwKey = key else {
-            return (false, nil)
+            return nil
         }
-        var reserved = ReservedKeys(rawValue: uwKey.uppercased())
-        if uwKey.hasPrefix(ReservedKeys.objectReference.rawValue) {
+        var reserved = ReservedKey(rawValue: uwKey.uppercased())
+        if uwKey.hasPrefix(ReservedKey.objectReference.rawValue) {
             reserved = .objectReference
         }
         guard let uwReserved = reserved else {
-            return (false, nil)
+            return nil
         }
         switch uwReserved {
         case .version, .versionSH:
             //Could raise an error here for non-matching version.... although json test implies it just continues
-            return (true, nil)
+            return uwReserved
         case .mClass, .mClassSH:
             classManager.addClass(value)
-            return (true, nil)
+            return uwReserved
         case .objectIndex:
             let processed = processModlElement(value)
             objectRefManager.addIndexedVariables(processed?.first)
-            return (true, nil)
+            return uwReserved
         case .objectReference:
             var objPair = ModlOutputObject.Pair()
             objPair.key = uwKey
             objPair.value = processModlElement(value)?.first
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
-            return (true, nil)
+            return uwReserved
         case .load, .loadSH:
-            if let processedPath = processModlElement(value)?.first {
-                switch processedPath {
-                case let primPath as ModlPrimitive:
-                    if let path = primPath.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
-                        var outputModl: [ModlValue] = []
-                        for structure in obj.structures {
-                            for processed in processModlElement(structure) ?? [] {
-                                outputModl.append(processed)
-                            }
-                        }
-                        return (true, outputModl)
-                    }
-                case let arrPath as ModlArray:
-                    var outputModl: [ModlValue] = []
-                    for case let path as ModlPrimitive in arrPath.values {
-                        if let path = path.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
-                            for structure in obj.structures {
-                                for processed in processModlElement(structure) ?? [] {
-                                    outputModl.append(processed)
-                                }
-                            }
-                        }
-                    }
-                    return (true, outputModl)
-                default:
-                    return (true, nil)
-                }
-            }
+            return .load
         }
-        return (false, nil)
+        return nil
     }
     
     private func processReferenceInstruction(key: String?, classIdsProcessedInBranch: [String]) -> ModlValue? {
@@ -244,7 +217,7 @@ struct ModlObjectCreator {
         if uwKey.hasPrefix("%*") {
             uwKey.removeFirst()
         }
-        guard let reservedType = ReservedKeys(rawValue: uwKey.uppercased()) else {
+        guard let reservedType = ReservedKey(rawValue: uwKey.uppercased()) else {
             return nil
         }
         switch reservedType {
@@ -257,9 +230,42 @@ struct ModlObjectCreator {
         }
         return outputValue
     }
+    
+    private func processLoad(_ value: ModlValue?) -> [ModlValue]? {
+        if let processedPath = processModlElement(value)?.first {
+            switch processedPath {
+            case let primPath as ModlPrimitive:
+                if let path = primPath.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
+                    var outputModl: [ModlValue] = []
+                    for structure in obj.structures {
+                        for processed in processModlElement(structure) ?? [] {
+                            outputModl.append(processed)
+                        }
+                    }
+                    return [primPath]
+                }
+            case let arrPath as ModlArray:
+                var outputModl: [ModlValue] = []
+                for case let path as ModlPrimitive in arrPath.values {
+                    if let path = path.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
+                        for structure in obj.structures {
+                            for processed in processModlElement(structure) ?? [] {
+                                outputModl.append(processed)
+                            }
+                        }
+                    }
+                }
+                return outputModl
+            default:
+                return nil
+            }
+        }
+        return nil
+    }
 
     func processConditional(_ conditional: ModlConditional) -> [ModlValue]? {
         var returnStructures: [ModlValue] = []
+        var passedTest: Bool = false
         //nothing to return so return test value
         for (index, test) in conditional.conditionTests.enumerated() {
             if conditional.conditionReturns.count == 0 {
@@ -267,6 +273,7 @@ struct ModlObjectCreator {
                 returnStruct.value = evaluateTest(test)
                 returnStructures.append(returnStruct)
             } else if evaluateTest(test) {
+                passedTest = true
                 for structure in conditional.conditionReturns[index].structures {
                     if let value = processModlElement(structure)?.first {
                         returnStructures.append(value)
@@ -274,7 +281,7 @@ struct ModlObjectCreator {
                 }
             }
          }
-        if returnStructures.count == 0 {
+        if !passedTest {
             for structure in conditional.defaultReturn?.structures ?? [] {
                 if let value = processModlElement(structure)?.first {
                     returnStructures.append(value)

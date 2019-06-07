@@ -105,7 +105,7 @@ class AdvancedTests: XCTestCase {
             guard let modlFeature = modl.testedFeatures else {
                 return false
             }
-            return modlFeature.contains("problem")
+            return modlFeature.contains("problem") && !modlFeature.contains(FeatureTestTypes.load.rawValue)
         }
         MODLTestManager.performTests(allButTests)
     }

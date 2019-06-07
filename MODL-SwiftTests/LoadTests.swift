@@ -44,4 +44,15 @@ class LoadTests: XCTestCase {
         }
         MODLTestManager.performTests(loadTests)
     }
+    
+    func testLoadProblem() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let loadTests = json.filter { (modl) -> Bool in
+            return (modl.testedFeatures?.contains("problem") ?? false) && (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? true)
+        }
+        MODLTestManager.performTests(loadTests)
+    }
 }
