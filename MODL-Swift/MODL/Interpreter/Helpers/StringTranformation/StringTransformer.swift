@@ -126,6 +126,17 @@ struct StringTransformer {
         }
         return nil
     }
+    
+    private func getStringMethodsMatch(_ stringToTransform: String, start: String.Index) -> Range<String.Index>? {
+        // Find all parts of the sting that are enclosed in graves and return with subsequent methods
+        let completePattern = "(\(gravesPatternStart)\(gravePatternEnd)|\(numberRefPatternStart)\(methodPattern)\(refPatternEnd)|\(valueRefPatternStart)\(methodPattern)\(refPatternEnd))\(methodPattern)"
+        let regex = try? NSRegularExpression(pattern: completePattern, options: [])
+        let range = NSRange(start..., in: stringToTransform)
+        if let match = regex?.firstMatch(in: stringToTransform, options: [], range: range) {
+            return Range(match.range, in: stringToTransform)
+        }
+        return nil
+    }
 
     private func checkObjectReferencing(keyToCheck: String, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
         guard let uwObjMgr = objectMgr, var mKey = refContinueQuickProcess(keyToCheck) else {
