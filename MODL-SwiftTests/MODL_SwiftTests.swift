@@ -33,18 +33,22 @@ class MODL_SwiftTests: XCTestCase {
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        let testFileLoader = TestFileLoader()
+        testFileLoader.removeTestFiles()
+        testFileLoader.copyFiles(self)
         jsonTests = MODLTestManager.getAllTests(self)
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        jsonTests = nil
+        TestFileLoader().removeTestFiles()
     }
     
-//    func testAllJSONExamples() {
-//        guard let json = jsonTests else {
-//            XCTFail("Fail creating tests from json input")
-//            return
-//        }
-//        MODLTestManager.performTests(json)
-//    }
+    func testAllJSONExamples() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        MODLTestManager.performTests(json)
+    }
 }

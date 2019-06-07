@@ -91,7 +91,7 @@ class AdvancedTests: XCTestCase {
             guard let modlFeature = modl.testedFeatures else {
                 return false
             }
-            return !(modlFeature.contains(FeatureTestTypes.load.rawValue) || modlFeature.contains(FeatureTestTypes.method.rawValue))
+            return !modlFeature.contains(FeatureTestTypes.load.rawValue) && !modlFeature.contains(FeatureTestTypes.method.rawValue)
         }
         MODLTestManager.performTests(allButTests)
     }
@@ -122,6 +122,20 @@ class AdvancedTests: XCTestCase {
             return modlFeature.contains(FeatureTestTypes.superclassInference.rawValue)
         }
         MODLTestManager.performTests(allButTests)
+    }
+    
+    func testMethods() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let methodTests = json.filter { (modl) -> Bool in
+            guard let modlFeature = modl.testedFeatures else {
+                return false
+            }
+            return modlFeature.contains(FeatureTestTypes.method.rawValue)
+        }
+        MODLTestManager.performTests(methodTests)
     }
 
     
