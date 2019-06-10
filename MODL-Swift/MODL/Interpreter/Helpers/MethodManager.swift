@@ -65,6 +65,7 @@ fileprivate enum StringMethod {
 class MethodManager {
     private var storedMethods: [String: Method] = [:]
     private var methodOrder: [String] = []
+    private let stringMethodPattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*"#
 
     func addMethod(_ method: ModlValue?) {
         if let mMethod = Method(method) {
@@ -82,7 +83,48 @@ class MethodManager {
         })?.value
     }
     
-    func processStringMethods(inputString: String) -> String {
+    func processStringForMethods(_ inputString: String?) -> String? {
+        guard var uwInput = inputString else {
+            return nil
+        }
+        var finished = false
+        var startIndex = uwInput.startIndex
+        while !finished {
+            if let ref = getStringMethodsMatch(uwInput, start: startIndex) {
+                let testableString = String(uwInput[ref])
+                var replacement = processStringMethods(inputString: testableString)
+                if replacement.hasPrefix("`") {
+                    replacement.removeFirst()
+                }
+                if replacement.hasSuffix("`") {
+                    replacement.removeLast()
+                }
+                uwInput = uwInput.replacingCharacters(in: ref, with: replacement)
+                startIndex = uwInput.index(ref.lowerBound, offsetBy: replacement.distance(from: replacement.startIndex, to: replacement.endIndex))
+                if startIndex == ref.lowerBound {
+                    finished = true
+                }
+            } else {
+                //                uwInput = processStringMethods(inputString: uwInput)
+                finished = true
+            }
+        }
+        return uwInput
+    }
+
+    private func getStringMethodsMatch(_ stringToTransform: String, start: String.Index) -> Range<String.Index>? {
+        // Find all parts of the sting that are enclosed in graves and return with subsequent methods
+        let completePattern = stringMethodPattern
+        let regex = try? NSRegularExpression(pattern: completePattern, options: [])
+        let range = NSRange(start..., in: stringToTransform)
+        if let match = regex?.firstMatch(in: stringToTransform, options: [], range: range) {
+            return Range(match.range, in: stringToTransform)
+        }
+        return nil
+    }
+
+    
+    private func processStringMethods(inputString: String) -> String {
         var methods = inputString.split(separator: ".").map({String($0)})
         guard methods.count > 1 else {
             return inputString

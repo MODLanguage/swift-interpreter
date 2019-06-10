@@ -144,7 +144,7 @@ struct ModlObjectCreator {
             }
             var prim = ModlOutputObject.Primitive()
 
-            if let processed = stringTransformer.processStringForMethods(iPrim.value as? String) {
+            if let processed = methodManager.processStringForMethods(iPrim.value as? String) {
                 prim.value = processed
             } else {
                 prim.value = iPrim.value
@@ -443,14 +443,9 @@ struct ModlObjectCreator {
         if uwValue.contains("*") {
             return checkWildcardConditionalEquals(key: uwKey, valueToCheck: uwValue)
         }
-        var modifiedToCheck = uwValue
-        if uwValue.hasPrefix("`") {
-            modifiedToCheck.removeFirst()
-        }
-        if uwValue.hasSuffix("`") {
-            modifiedToCheck.removeLast()
-        }
-        return uwKey == modifiedToCheck
+        let modifiedToCheck = uwValue.stripGraves()
+        let modifiedKey = uwKey.stripGraves()
+        return modifiedKey == modifiedToCheck
     }
     
     func checkWildcardConditionalEquals(key: String, valueToCheck: String) -> Bool {

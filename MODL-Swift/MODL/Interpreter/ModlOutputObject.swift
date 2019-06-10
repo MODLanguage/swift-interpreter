@@ -55,7 +55,7 @@ class ModlOutputObject: ModlObject, ModlJSON {
     
     struct Pair: ModlPair, ModlJSON {
         func asJson() -> String? {
-            guard let uwKey = key, let uwValue = (value as? ModlJSON)?.asJson() else {
+            guard let uwKey = key?.stripGraves(), let uwValue = (value as? ModlJSON)?.asJson() else {
                 return nil
             }
             return "{\"\(uwKey)\":\(uwValue)}"
@@ -96,7 +96,7 @@ class ModlOutputObject: ModlObject, ModlJSON {
             var out = ""
             for key in orderedKeys {
                 if values.keys.contains(key) {
-                    out += "\"\(key)\":\((values[key] as? ModlJSON)?.asJson() ?? ""),"
+                    out += "\"\(key.stripGraves())\":\((values[key] as? ModlJSON)?.asJson() ?? ""),"
                 }
             }
             return "{" + out.dropLast() + "}"
