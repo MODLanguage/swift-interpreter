@@ -204,7 +204,7 @@ class MethodManager {
     }
 
     private func performStringMethod(inputString: String?, stringMethodName: String) -> String? {
-        guard let sMethod = StringMethod(rawValue: stringMethodName), let uwStr = inputString else {
+        guard let sMethod = StringMethod(rawValue: stringMethodName), let uwStr = inputString?.stripGraves() else {
             return nil
         }
         switch sMethod {
@@ -287,7 +287,7 @@ fileprivate struct Method {
             if methodChain.hasSuffix("`") {
                 methodChain.removeLast()
             }
-            transformChain = methodChain.replacingOccurrences(of: ", )", with: ",)") //TODO: better handling of empty replace method
+            transformChain = methodChain //TODO: better handling of empty replace method
         } else {
             return nil
         }
@@ -297,7 +297,7 @@ fileprivate struct Method {
         var pair = ModlOutputObject.Pair()
         var map = ModlOutputObject.Map()
         map.addValue(key: "name", value: ModlOutputObject.Primitive(name))
-        map.addValue(key: "transform", value: ModlOutputObject.Primitive(transformChain))
+        map.addValue(key: "transform", value: ModlOutputObject.Primitive(transformChain.replacingOccurrences(of: ", )", with: ",)")))
         pair.key = id
         pair.value = map
         return pair
