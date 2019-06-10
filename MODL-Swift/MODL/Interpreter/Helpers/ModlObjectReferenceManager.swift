@@ -44,7 +44,7 @@ class ModlObjectReferenceManager {
     }
     
     func addKeyedVariable(key: String?, value: ModlValue?) {
-        guard var uwKey = key, let uwValue = value else {
+        guard var uwKey = key?.stripGraves(), let uwValue = value else {
             return
         }
         if uwKey.hasPrefix("_") {
@@ -54,7 +54,7 @@ class ModlObjectReferenceManager {
     }
     
     func getKeyedVariable(_ key: String?) -> ModlValue? {
-        guard var uwKey = key else {
+        guard var uwKey = key?.stripGraves() else {
             return nil
         }
         if uwKey.hasPrefix("_") {

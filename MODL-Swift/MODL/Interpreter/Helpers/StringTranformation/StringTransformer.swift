@@ -185,7 +185,7 @@ struct StringTransformer {
         var isFinished = index >= methods.count
         
         while !isFinished {
-            var method = String(methods[index])
+            var method = String(methods[index]).stripGraves()
             if let transformed = transformString(method) as? ModlPrimitive {
                 method = transformed.asString() ?? method
             }
@@ -198,7 +198,7 @@ struct StringTransformer {
             } else if var refPrim = newRef as? ModlPrimitive, var primValue = refPrim.asString() {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
-                    primValue = "`\(primValue)`.\(methodChain)"
+                    primValue = "`\(primValue)`.\(methodChain.stripGraves())"
                 }
                 refPrim.setValue(value: primValue)
                 newRef = refPrim

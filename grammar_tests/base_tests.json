@@ -132,7 +132,7 @@
   { "input": "_array[1;2];\n_array_item=%array.0;\ntest={\n  array_item=%array.0?\n     yes\n  /?\n     no\n}",
     "minimised_modl":  "_array[1;2];_array_item=%array.0;test={array_item=%array.0?yes/?no}",
     "expected_output":   "{\n    \"test\": \"yes\"\n}",
-    "tested_features":["conditional", "object_ref", "problem"]
+    "tested_features":["conditional", "object_ref"]
   },
   { "input": "_array[1;2];\ntest={\n  %array.0=1?\n     yes\n  /?\n     no\n}",
     "minimised_modl":  "_array[1;2];test={%array.0=1?yes/?no}",
@@ -1100,7 +1100,7 @@
   { "input": "_test=(\n  first=(\"v1\"=one);\n  second=(\"v2\"=two:three)\n);\n \ntesting = \"`%test.second.v2.1`\"",
     "minimised_modl": "_test=(first=(v1=one);second=(v2=two:three));testing=`%test.second.v2.1`",
     "expected_output": "{\n  \"testing\" : \"three\"\n}\n",
-    "tested_features":["object_ref", "graves"]
+    "tested_features":["object_ref", "graves", "problem"]
   },
   { "input": "_test=(\n  first=(\"v1\"=[one]);\n  second=(\"v2\"=two:three)\n);\n \ntesting = \"`%test.first.v1.0``%test.second.v2.0``%test.second.v2.1`\"",
     "minimised_modl": "_test=(first=(v1=[one]);second=(v2=two:three));testing=`%test.first.v1.0``%test.second.v2.0``%test.second.v2.1`",
