@@ -65,7 +65,9 @@ fileprivate enum StringMethod {
 class MethodManager {
     private var storedMethods: [String: Method] = [:]
     private var methodOrder: [String] = []
-    private let stringMethodPattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*"#
+    private let subjectMethodInclusivePattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*"#
+    private let methodPattern = #"(^|[0-9a-zA-Z])"#
+    private let subjectPattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)"#
 
     func addMethod(_ method: ModlValue?) {
         if let mMethod = Method(method) {
@@ -114,28 +116,64 @@ class MethodManager {
 
     private func getStringMethodsMatch(_ stringToTransform: String, start: String.Index) -> Range<String.Index>? {
         // Find all parts of the sting that are enclosed in graves and return with subsequent methods
-        let completePattern = stringMethodPattern
-        let regex = try? NSRegularExpression(pattern: completePattern, options: [])
-        let range = NSRange(start..., in: stringToTransform)
-        if let match = regex?.firstMatch(in: stringToTransform, options: [], range: range) {
-            return Range(match.range, in: stringToTransform)
+        guard let regex = try? NSRegularExpression(pattern: subjectMethodInclusivePattern, options: []) else {
+            return nil
+        }
+        return getPatternRange(inputString: stringToTransform, start: start, regEx: regex)
+    }
+
+    private func getSubjectMatch(inputString: String) -> Range<String.Index>? {
+        guard let regex = try? NSRegularExpression(pattern: subjectPattern, options: []) else {
+            return nil
+        }
+        return getPatternRange(inputString: inputString, start: inputString.startIndex, regEx: regex)
+    }
+    
+    private func getPatternRange(inputString: String, start: String.Index, regEx: NSRegularExpression) -> Range<String.Index>? {
+        let range = NSRange(start..., in: inputString)
+        if let match = regEx.firstMatch(in: inputString, options: [], range: range) {
+            return Range(match.range, in: inputString)
         }
         return nil
     }
-
     
     private func processStringMethods(inputString: String) -> String {
-        var methods = inputString.split(separator: ".").map({String($0)})
-        guard methods.count > 1 else {
+        guard let subjectRange = getSubjectMatch(inputString: inputString) else {
             return inputString
         }
-        var subject: String = String(methods.remove(at: 0)) //take off the subject and leave the methods
-        if subject.hasPrefix("`") {
-            subject.removeFirst()
+        
+        var subject = String(inputString[subjectRange.lowerBound..<subjectRange.upperBound])
+
+        guard subject.count > 0 else {
+            return inputString
         }
-        if subject.hasSuffix("`") {
-            subject.removeLast()
+
+        let methodChain = inputString[subjectRange.upperBound...]
+        //        var methods = methodChain.split(separator: ".").map({String($0)})
+        var methods: [String] = []
+        var output = ""
+        var inBrackets = false
+        for char in methodChain {
+            if char == "." && !inBrackets {
+                if output.count > 0  {
+                    methods.append(output)
+                    output = ""
+                }
+                continue
+            }else if char == "(" {
+                inBrackets = true
+            } else if char == ")" {
+                inBrackets = false
+            }
+            output.append(char)
         }
+        if output.count > 0 {
+            methods.append(output)
+        }
+        guard methods.count > 0 else {
+            return inputString
+        }
+        
         for (index,method) in methods.enumerated() {
             if let customTransformed = performCustomStringMethod(subject, customMethodId: method) {
                 subject = customTransformed

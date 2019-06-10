@@ -134,15 +134,7 @@ struct StringTransformer {
             return nil
         }
 
-        var subject = String(methods.remove(at: 0)) //take off the subject and leave the methods
-        var subjectHasGraves = false
-        if subject.hasPrefix("`") {
-            subject.removeFirst()
-            if subject.hasSuffix("`") {
-                subject.removeLast()
-                subjectHasGraves = true
-            }
-        }
+        var subject = String(methods.remove(at: 0)).stripGraves() //take off the subject and leave the methods
 
         if subject.hasPrefix("%") {
             subject.removeFirst()
@@ -163,14 +155,6 @@ struct StringTransformer {
             returnObject = handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
         }
         if var primObj = returnObject as? ModlPrimitive, var strValue = primObj.value as? String {
-//            if !subjectHasGraves {
-//                if !strValue.hasPrefix("`") {
-//                    strValue = "`\(strValue)"
-//                }
-//                if !strValue.hasSuffix("`") {
-//                    strValue = "\(strValue)`"
-//                }
-//            }
             strValue = methodManager.processStringForMethods(strValue) ?? ""
             primObj.setValue(value: strValue)
             returnObject = primObj
