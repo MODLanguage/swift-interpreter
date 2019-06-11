@@ -29,7 +29,7 @@ class FileLoader {
         }
         cache.removeValue(forKey: filePath)
         if let fileText = try loadFileText(filePath) {
-            let parser = ModlParser()
+            let parser = Interpreter()
             if let output = try? parser.parseToRawModl(fileText) {
                 let fileItem = FileCacheItem(expiryTime: Date().addingTimeInterval(60 * 60 * 60), fileData: output)
                 cache[filePath] = fileItem

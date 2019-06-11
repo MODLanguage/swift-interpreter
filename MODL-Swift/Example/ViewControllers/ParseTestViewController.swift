@@ -74,7 +74,7 @@ class ParseTestViewController: UIViewController {
             resultView.text = "Enter MODL to test"
             return
         }
-        let p = ModlParser()
+        let p = Interpreter()
         do {
             let result = try p.parseToJson(modl)
             resultView.text = result

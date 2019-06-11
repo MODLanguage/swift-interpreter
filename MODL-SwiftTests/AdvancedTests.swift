@@ -137,7 +137,4 @@ class AdvancedTests: XCTestCase {
         }
         MODLTestManager.performTests(methodTests)
     }
-
-    
-    
 }

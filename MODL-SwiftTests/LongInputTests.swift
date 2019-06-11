@@ -38,7 +38,7 @@ class LongInputTests: XCTestCase {
 
     func testlongInput() {
         let modl = LongTest.text
-        let p = ModlParser()
+        let p = Interpreter()
         do {
             let result = try p.parseToJson(modl)
             print(result)

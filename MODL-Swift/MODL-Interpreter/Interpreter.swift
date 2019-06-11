@@ -27,21 +27,16 @@
 import Foundation
 import Antlr4
 
-enum ModlParserError: Error {
+enum InterpreterError: Error {
     case invalidVersion
     case invalidClass
 }
 
-struct ModlParser {
+struct Interpreter {
     func parseToJson(_ input: String) throws -> String {
-        do {
-            let intermediate = try parseToRawModl(input)
-            let output = ModlObjectCreator().createOutput(intermediate)
-            return output?.asJson() ?? ""
-        } catch {
-            print("Parser fail : \(error)")
-            return ""
-        }
+        let intermediate = try parseToRawModl(input)
+        let output = ModlObjectCreator().createOutput(intermediate)
+        return output?.asJson() ?? ""
     }
     
     internal func parseToRawModl(_ input: String) throws -> ModlListenerObject? {
