@@ -31,13 +31,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3E64009F22AFBE240041260D /* MODL-Interpreter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MODL-Interpreter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E64009F22AFBE240041260D /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6400A222AFBE240041260D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E6400A722AFBE240041260D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E6400A922AFBE260041260D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E6400AC22AFBE260041260D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E6400AE22AFBE260041260D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3E6400B322AFBE260041260D /* MODL-InterpreterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MODL-InterpreterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E6400B322AFBE260041260D /* iOS Example Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Example Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6400B722AFBE260041260D /* MODL_InterpreterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MODL_InterpreterTests.swift; sourceTree = "<group>"; };
 		3E6400B922AFBE260041260D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E6400C322AFC2010041260D /* ParseTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseTestViewController.swift; sourceTree = "<group>"; };
@@ -78,8 +78,8 @@
 		3E6400A022AFBE240041260D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3E64009F22AFBE240041260D /* MODL-Interpreter.app */,
-				3E6400B322AFBE260041260D /* MODL-InterpreterTests.xctest */,
+				3E64009F22AFBE240041260D /* iOS Example.app */,
+				3E6400B322AFBE260041260D /* iOS Example Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,9 +130,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3E64009E22AFBE240041260D /* MODL-Interpreter */ = {
+		3E64009E22AFBE240041260D /* iOS Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E6400BC22AFBE260041260D /* Build configuration list for PBXNativeTarget "MODL-Interpreter" */;
+			buildConfigurationList = 3E6400BC22AFBE260041260D /* Build configuration list for PBXNativeTarget "iOS Example" */;
 			buildPhases = (
 				3E64009B22AFBE240041260D /* Sources */,
 				3E64009C22AFBE240041260D /* Frameworks */,
@@ -142,14 +142,14 @@
 			);
 			dependencies = (
 			);
-			name = "MODL-Interpreter";
+			name = "iOS Example";
 			productName = "MODL-Interpreter";
-			productReference = 3E64009F22AFBE240041260D /* MODL-Interpreter.app */;
+			productReference = 3E64009F22AFBE240041260D /* iOS Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3E6400B222AFBE260041260D /* MODL-InterpreterTests */ = {
+		3E6400B222AFBE260041260D /* iOS Example Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E6400BF22AFBE260041260D /* Build configuration list for PBXNativeTarget "MODL-InterpreterTests" */;
+			buildConfigurationList = 3E6400BF22AFBE260041260D /* Build configuration list for PBXNativeTarget "iOS Example Tests" */;
 			buildPhases = (
 				3E6400AF22AFBE260041260D /* Sources */,
 				3E6400B022AFBE260041260D /* Frameworks */,
@@ -160,9 +160,9 @@
 			dependencies = (
 				3E6400B522AFBE260041260D /* PBXTargetDependency */,
 			);
-			name = "MODL-InterpreterTests";
+			name = "iOS Example Tests";
 			productName = "MODL-InterpreterTests";
-			productReference = 3E6400B322AFBE260041260D /* MODL-InterpreterTests.xctest */;
+			productReference = 3E6400B322AFBE260041260D /* iOS Example Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -197,8 +197,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3E64009E22AFBE240041260D /* MODL-Interpreter */,
-				3E6400B222AFBE260041260D /* MODL-InterpreterTests */,
+				3E64009E22AFBE240041260D /* iOS Example */,
+				3E6400B222AFBE260041260D /* iOS Example Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,7 +251,7 @@
 /* Begin PBXTargetDependency section */
 		3E6400B522AFBE260041260D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3E64009E22AFBE240041260D /* MODL-Interpreter */;
+			target = 3E64009E22AFBE240041260D /* iOS Example */;
 			targetProxy = 3E6400B422AFBE260041260D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -461,7 +461,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MODL-Interpreter.app/MODL-Interpreter";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS Example.app/iOS Example";
 			};
 			name = Debug;
 		};
@@ -482,7 +482,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MODL-Interpreter.app/MODL-Interpreter";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS Example.app/iOS Example";
 			};
 			name = Release;
 		};
@@ -498,7 +498,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E6400BC22AFBE260041260D /* Build configuration list for PBXNativeTarget "MODL-Interpreter" */ = {
+		3E6400BC22AFBE260041260D /* Build configuration list for PBXNativeTarget "iOS Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E6400BD22AFBE260041260D /* Debug */,
@@ -507,7 +507,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E6400BF22AFBE260041260D /* Build configuration list for PBXNativeTarget "MODL-InterpreterTests" */ = {
+		3E6400BF22AFBE260041260D /* Build configuration list for PBXNativeTarget "iOS Example Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E6400C022AFBE260041260D /* Debug */,

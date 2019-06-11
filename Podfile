@@ -1,18 +1,20 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-# Uncomment the next line to define a global platform for your project
 platform :ios, '9.3'
 
 inhibit_all_warnings!
 project 'MODL-Swift.xcodeproj'
 
-target 'MODL-Swift' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-   use_frameworks! 
+def standard_pods
+  pod 'Punycode'
+end
 
-   pod 'Punycode'
+target 'Interpreter' do
+  use_frameworks!
+  standard_pods
+end
 
-   target 'MODL-SwiftTests' do
-     inherit! :search_paths
-   end
+target 'InterpreterTests' do
+  use_frameworks!
+  standard_pods
 end

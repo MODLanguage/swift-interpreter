@@ -7,71 +7,73 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E2BECCC22A92AC500FC1303 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECCB22A92AC500FC1303 /* FileLoader.swift */; };
-		3E2BECCE22A9321B00FC1303 /* FileLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECCD22A9321B00FC1303 /* FileLoaderTests.swift */; };
-		3E2BECD022A95BDC00FC1303 /* TestFileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECCF22A95BDC00FC1303 /* TestFileLoader.swift */; };
-		3E2BECD222A95C9000FC1303 /* LoadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECD122A95C9000FC1303 /* LoadTests.swift */; };
-		3E2BECD622A9703C00FC1303 /* nested_import3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD322A9703C00FC1303 /* nested_import3.txt */; };
-		3E2BECD722A9703C00FC1303 /* nested_import1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD422A9703C00FC1303 /* nested_import1.txt */; };
-		3E2BECD822A9703C00FC1303 /* nested_import2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD522A9703C00FC1303 /* nested_import2.txt */; };
-		3E3896D922830D63005533B9 /* conditional.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D322830D62005533B9 /* conditional.json */; };
-		3E3896DA22830D63005533B9 /* misc.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D422830D62005533B9 /* misc.json */; };
-		3E3896DB22830D63005533B9 /* replacement.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D522830D62005533B9 /* replacement.json */; };
-		3E3896DC22830D63005533B9 /* class.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D622830D62005533B9 /* class.json */; };
-		3E3896DD22830D63005533B9 /* methods.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D722830D62005533B9 /* methods.json */; };
-		3E3896DE22830D63005533B9 /* basic.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E3896D822830D62005533B9 /* basic.json */; };
-		3E3896E12289BECD005533B9 /* StringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E02289BECD005533B9 /* StringTransformer.swift */; };
-		3E3896E8228C1B39005533B9 /* ModlObjectReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */; };
-		3E3C29A12296BD45007D555C /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3C29A02296BD45007D555C /* StringExtensions.swift */; };
-		3E5ABB6522674513007419CC /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
-		3E5ABB722267459E007419CC /* Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* Interpreter.swift */; };
-		3E5ABB7E226745FB007419CC /* ModlListenerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */; };
-		3E63154122816FCD008BDC14 /* 3.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153222816FCD008BDC14 /* 3.modl */; };
-		3E63154222816FCD008BDC14 /* 2.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153322816FCD008BDC14 /* 2.modl */; };
-		3E63154322816FCD008BDC14 /* test_import.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153522816FCD008BDC14 /* test_import.txt */; };
-		3E63154422816FCD008BDC14 /* b.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153622816FCD008BDC14 /* b.modl */; };
-		3E63154522816FCD008BDC14 /* c.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153722816FCD008BDC14 /* c.modl */; };
-		3E63154622816FCD008BDC14 /* import_config.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153822816FCD008BDC14 /* import_config.modl */; };
-		3E63154722816FCD008BDC14 /* a.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153922816FCD008BDC14 /* a.modl */; };
-		3E63154822816FCD008BDC14 /* demo_config.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153A22816FCD008BDC14 /* demo_config.modl */; };
-		3E63154922816FCD008BDC14 /* base_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153B22816FCD008BDC14 /* base_tests.json */; };
-		3E63154A22816FCD008BDC14 /* error_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153C22816FCD008BDC14 /* error_tests.json */; };
-		3E63154B22816FCD008BDC14 /* 1.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153D22816FCD008BDC14 /* 1.modl */; };
-		3E63155922819F31008BDC14 /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155822819F31008BDC14 /* BasicTests.swift */; };
-		3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155A22819F62008BDC14 /* MODLTest.swift */; };
-		3E63156A2282D980008BDC14 /* LongInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6315692282D980008BDC14 /* LongInputTests.swift */; };
-		3E63157122847E04008BDC14 /* AdvancedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63157022847E04008BDC14 /* AdvancedTests.swift */; };
-		3E6315762284875F008BDC14 /* ModlClassManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6315752284875F008BDC14 /* ModlClassManager.swift */; };
-		3E6315792285C59B008BDC14 /* ModlObjectCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6315782285C59B008BDC14 /* ModlObjectCreator.swift */; };
-		3E63157C2285C639008BDC14 /* ModlOutputObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63157B2285C639008BDC14 /* ModlOutputObject.swift */; };
-		3E63157E2285D8DB008BDC14 /* ModlObjectProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63157D2285D8DB008BDC14 /* ModlObjectProtocols.swift */; };
-		3E7743BE226747E1006AA9AF /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7743B92267479D006AA9AF /* Antlr4.framework */; };
-		3E7743CA22674865006AA9AF /* MODLParser.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C022674865006AA9AF /* MODLParser.interp */; };
-		3E7743CB22674865006AA9AF /* MODLParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C122674865006AA9AF /* MODLParserListener.swift */; };
-		3E7743CC22674865006AA9AF /* MODLLexerATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C222674865006AA9AF /* MODLLexerATN.swift */; };
-		3E7743CD22674865006AA9AF /* MODLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C322674865006AA9AF /* MODLParser.swift */; };
-		3E7743CE22674865006AA9AF /* MODLParserBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C422674865006AA9AF /* MODLParserBaseListener.swift */; };
-		3E7743CF22674865006AA9AF /* MODLLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C522674865006AA9AF /* MODLLexer.swift */; };
-		3E7743D022674865006AA9AF /* MODLLexer.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C622674865006AA9AF /* MODLLexer.interp */; };
-		3E7743D122674865006AA9AF /* MODLLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C722674865006AA9AF /* MODLLexer.tokens */; };
-		3E7743D222674865006AA9AF /* MODLParser.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C822674865006AA9AF /* MODLParser.tokens */; };
-		3E7743D322674865006AA9AF /* MODLParserParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C922674865006AA9AF /* MODLParserParserATN.swift */; };
-		3E7743D622674ABE006AA9AF /* DemoOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743D522674ABE006AA9AF /* DemoOptionsViewController.swift */; };
-		3E7743D922674AE3006AA9AF /* DNSTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743D822674AE3006AA9AF /* DNSTestViewController.swift */; };
-		3E7743DB22674AEC006AA9AF /* ParseTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */; };
-		3E7743DE22675E59006AA9AF /* DNSTxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */; };
-		3E7B4AAA228ADC9900C54CCF /* StringEscapeReplacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */; };
-		3EF9718A22AA78C70000B220 /* MethodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF9718922AA78C70000B220 /* MethodManager.swift */; };
-		3EFABA46226737760029EACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFABA45226737760029EACC /* AppDelegate.swift */; };
-		3EFABA4B226737760029EACC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA49226737760029EACC /* Main.storyboard */; };
-		3EFABA4D226737790029EACC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA4C226737790029EACC /* Assets.xcassets */; };
-		3EFABA50226737790029EACC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EFABA4E226737790029EACC /* LaunchScreen.storyboard */; };
-		3EFABA5B226737790029EACC /* MODL_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFABA5A226737790029EACC /* MODL_SwiftTests.swift */; };
-		E1D6E32A157521B107ABF38C /* Pods_MODL_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE9756048106A33F1DBDA8C /* Pods_MODL_Swift.framework */; };
-		F851FCC8F27F93DCD6D6980B /* Pods_MODL_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D4DD2FDF4AF497503C6E33 /* Pods_MODL_SwiftTests.framework */; };
+		006BB75B27953D47CAAC776D /* Pods_InterpreterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5979BDEDCEC6CD9B68F409 /* Pods_InterpreterTests.framework */; };
+		3E6400E222AFDEF70041260D /* Interpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6400D922AFDEF70041260D /* Interpreter.framework */; };
+		3E6400E922AFDEF70041260D /* InterpreterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400E822AFDEF70041260D /* InterpreterTests.swift */; };
+		3E6400EB22AFDEF70041260D /* Interpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6400DB22AFDEF70041260D /* Interpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3E6400FA22AFDF1D0041260D /* ModlObjectProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63157D2285D8DB008BDC14 /* ModlObjectProtocols.swift */; };
+		3E6400FB22AFDF1D0041260D /* Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB712267459E007419CC /* Interpreter.swift */; };
+		3E6400FC22AFDF530041260D /* LoadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECD122A95C9000FC1303 /* LoadTests.swift */; };
+		3E6400FD22AFDF530041260D /* AdvancedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63157022847E04008BDC14 /* AdvancedTests.swift */; };
+		3E6400FE22AFDF530041260D /* LongInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6315692282D980008BDC14 /* LongInputTests.swift */; };
+		3E64010022AFDF530041260D /* FileLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECCD22A9321B00FC1303 /* FileLoaderTests.swift */; };
+		3E64010122AFDF530041260D /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155822819F31008BDC14 /* BasicTests.swift */; };
+		3E64010222AFE0EA0041260D /* ModlListenerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */; };
+		3E64010322AFE0EC0041260D /* ModlListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5ABB6422674513007419CC /* ModlListener.swift */; };
+		3E64010422AFE0F00041260D /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3C29A02296BD45007D555C /* StringExtensions.swift */; };
+		3E64010522AFE1050041260D /* ModlObjectCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6315782285C59B008BDC14 /* ModlObjectCreator.swift */; };
+		3E64010622AFE1050041260D /* ModlOutputObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63157B2285C639008BDC14 /* ModlOutputObject.swift */; };
+		3E64010722AFE1090041260D /* ModlClassManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6315752284875F008BDC14 /* ModlClassManager.swift */; };
+		3E64010822AFE1090041260D /* ModlObjectReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E7228C1B39005533B9 /* ModlObjectReferenceManager.swift */; };
+		3E64010922AFE1090041260D /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECCB22A92AC500FC1303 /* FileLoader.swift */; };
+		3E64010A22AFE1090041260D /* MethodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF9718922AA78C70000B220 /* MethodManager.swift */; };
+		3E64010B22AFE10C0041260D /* StringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3896E02289BECD005533B9 /* StringTransformer.swift */; };
+		3E64010C22AFE10C0041260D /* StringEscapeReplacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */; };
+		3E64011622AFE23D0041260D /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7743B92267479D006AA9AF /* Antlr4.framework */; };
+		3E64011722AFE25A0041260D /* MODLLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C522674865006AA9AF /* MODLLexer.swift */; };
+		3E64011822AFE25F0041260D /* MODLLexer.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C622674865006AA9AF /* MODLLexer.interp */; };
+		3E64011922AFE25F0041260D /* MODLLexer.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C722674865006AA9AF /* MODLLexer.tokens */; };
+		3E64011A22AFE25F0041260D /* MODLLexerATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C222674865006AA9AF /* MODLLexerATN.swift */; };
+		3E64011B22AFE25F0041260D /* MODLParser.interp in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C022674865006AA9AF /* MODLParser.interp */; };
+		3E64011C22AFE25F0041260D /* MODLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C322674865006AA9AF /* MODLParser.swift */; };
+		3E64011D22AFE25F0041260D /* MODLParser.tokens in Resources */ = {isa = PBXBuildFile; fileRef = 3E7743C822674865006AA9AF /* MODLParser.tokens */; };
+		3E64011E22AFE25F0041260D /* MODLParserBaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C422674865006AA9AF /* MODLParserBaseListener.swift */; };
+		3E64011F22AFE25F0041260D /* MODLParserListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C122674865006AA9AF /* MODLParserListener.swift */; };
+		3E64012022AFE25F0041260D /* MODLParserParserATN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7743C922674865006AA9AF /* MODLParserParserATN.swift */; };
+		3E64012122AFE2F40041260D /* MODLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63155A22819F62008BDC14 /* MODLTest.swift */; };
+		3E64012222AFE2F40041260D /* TestFileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BECCF22A95BDC00FC1303 /* TestFileLoader.swift */; };
+		3E64012322AFE2FF0041260D /* 3.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153222816FCD008BDC14 /* 3.modl */; };
+		3E64012422AFE2FF0041260D /* 2.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153322816FCD008BDC14 /* 2.modl */; };
+		3E64012522AFE2FF0041260D /* b.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153622816FCD008BDC14 /* b.modl */; };
+		3E64012622AFE2FF0041260D /* c.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153722816FCD008BDC14 /* c.modl */; };
+		3E64012722AFE2FF0041260D /* import_config.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153822816FCD008BDC14 /* import_config.modl */; };
+		3E64012822AFE2FF0041260D /* a.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153922816FCD008BDC14 /* a.modl */; };
+		3E64012922AFE2FF0041260D /* demo_config.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153A22816FCD008BDC14 /* demo_config.modl */; };
+		3E64012A22AFE2FF0041260D /* base_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153B22816FCD008BDC14 /* base_tests.json */; };
+		3E64012B22AFE2FF0041260D /* error_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153C22816FCD008BDC14 /* error_tests.json */; };
+		3E64012C22AFE2FF0041260D /* 1.modl in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153D22816FCD008BDC14 /* 1.modl */; };
+		3E64012D22AFE3030041260D /* nested_import1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD422A9703C00FC1303 /* nested_import1.txt */; };
+		3E64012E22AFE3030041260D /* nested_import2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD522A9703C00FC1303 /* nested_import2.txt */; };
+		3E64012F22AFE3030041260D /* nested_import3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD322A9703C00FC1303 /* nested_import3.txt */; };
+		3E64013022AFE3030041260D /* test_import.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153522816FCD008BDC14 /* test_import.txt */; };
+		82B89B1E14D403107CC5E0BF /* Pods_Interpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0341B1F51315FDB3DB6021F /* Pods_Interpreter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3E6400E322AFDEF70041260D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EFABA3A226737760029EACC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
+			remoteInfo = Interpreter;
+		};
+		3E64011022AFE2350041260D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E5ABB6622674541007419CC /* Antlr4.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = "Antlr4::Antlr4";
+			remoteInfo = Antlr4;
+		};
 		3E7743B82267479D006AA9AF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3E5ABB6622674541007419CC /* Antlr4.xcodeproj */;
@@ -86,24 +88,11 @@
 			remoteGlobalIDString = "Antlr4::Antlr4Tests::Product";
 			remoteInfo = Antlr4Tests;
 		};
-		3E7743BC226747DE006AA9AF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E5ABB6622674541007419CC /* Antlr4.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = "Antlr4::Antlr4";
-			remoteInfo = Antlr4;
-		};
-		3EFABA57226737790029EACC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3EFABA3A226737760029EACC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3EFABA41226737760029EACC;
-			remoteInfo = "MODL-Swift";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		04D4DD2FDF4AF497503C6E33 /* Pods_MODL_SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MODL_SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D3FA46A23283BE76F527C56 /* Pods-InterpreterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterpreterTests.release.xcconfig"; path = "Target Support Files/Pods-InterpreterTests/Pods-InterpreterTests.release.xcconfig"; sourceTree = "<group>"; };
 		3E2BECCB22A92AC500FC1303 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		3E2BECCD22A9321B00FC1303 /* FileLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoaderTests.swift; sourceTree = "<group>"; };
 		3E2BECCF22A95BDC00FC1303 /* TestFileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFileLoader.swift; sourceTree = "<group>"; };
@@ -143,6 +132,12 @@
 		3E6315782285C59B008BDC14 /* ModlObjectCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlObjectCreator.swift; sourceTree = "<group>"; };
 		3E63157B2285C639008BDC14 /* ModlOutputObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlOutputObject.swift; sourceTree = "<group>"; };
 		3E63157D2285D8DB008BDC14 /* ModlObjectProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlObjectProtocols.swift; sourceTree = "<group>"; };
+		3E6400D922AFDEF70041260D /* Interpreter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interpreter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E6400DB22AFDEF70041260D /* Interpreter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interpreter.h; sourceTree = "<group>"; };
+		3E6400DC22AFDEF70041260D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E6400E122AFDEF70041260D /* InterpreterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InterpreterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E6400E822AFDEF70041260D /* InterpreterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterpreterTests.swift; sourceTree = "<group>"; };
+		3E6400EA22AFDEF70041260D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E7743C022674865006AA9AF /* MODLParser.interp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.interp; sourceTree = "<group>"; };
 		3E7743C122674865006AA9AF /* MODLParserListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserListener.swift; sourceTree = "<group>"; };
 		3E7743C222674865006AA9AF /* MODLLexerATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLLexerATN.swift; sourceTree = "<group>"; };
@@ -153,43 +148,33 @@
 		3E7743C722674865006AA9AF /* MODLLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLLexer.tokens; sourceTree = "<group>"; };
 		3E7743C822674865006AA9AF /* MODLParser.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.tokens; sourceTree = "<group>"; };
 		3E7743C922674865006AA9AF /* MODLParserParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserParserATN.swift; sourceTree = "<group>"; };
-		3E7743D522674ABE006AA9AF /* DemoOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoOptionsViewController.swift; sourceTree = "<group>"; };
-		3E7743D822674AE3006AA9AF /* DNSTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTestViewController.swift; sourceTree = "<group>"; };
-		3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTestViewController.swift; sourceTree = "<group>"; };
 		3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTxtRecord.swift; sourceTree = "<group>"; };
 		3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEscapeReplacer.swift; sourceTree = "<group>"; };
 		3EF9718922AA78C70000B220 /* MethodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodManager.swift; sourceTree = "<group>"; };
-		3EFABA42226737760029EACC /* MODL-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MODL-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EFABA45226737760029EACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3EFABA4A226737760029EACC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3EFABA4C226737790029EACC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3EFABA4F226737790029EACC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		3EFABA51226737790029EACC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3EFABA56226737790029EACC /* MODL-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MODL-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3EFABA5A226737790029EACC /* MODL_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MODL_SwiftTests.swift; sourceTree = "<group>"; };
-		3EFABA5C226737790029EACC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		43A4339DD77837A61B86F756 /* Pods-MODL-SwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MODL-SwiftTests.debug.xcconfig"; path = "Target Support Files/Pods-MODL-SwiftTests/Pods-MODL-SwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4DCA2BE4D1499562444B7B47 /* Pods-MODL-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MODL-Swift.debug.xcconfig"; path = "Target Support Files/Pods-MODL-Swift/Pods-MODL-Swift.debug.xcconfig"; sourceTree = "<group>"; };
-		733C4A095A80AFA930FB4CC9 /* Pods-MODL-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MODL-Swift.release.xcconfig"; path = "Target Support Files/Pods-MODL-Swift/Pods-MODL-Swift.release.xcconfig"; sourceTree = "<group>"; };
-		94805F7E7C80A9E07B41A6E1 /* Pods-MODL-SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MODL-SwiftTests.release.xcconfig"; path = "Target Support Files/Pods-MODL-SwiftTests/Pods-MODL-SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		AC5979BDEDCEC6CD9B68F409 /* Pods_InterpreterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InterpreterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE6A61BD6B6868E6E1973DE6 /* Pods-Interpreter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Interpreter.release.xcconfig"; path = "Target Support Files/Pods-Interpreter/Pods-Interpreter.release.xcconfig"; sourceTree = "<group>"; };
 		BFE9756048106A33F1DBDA8C /* Pods_MODL_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MODL_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0341B1F51315FDB3DB6021F /* Pods_Interpreter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Interpreter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2086B844BACFE181C86188B /* Pods-Interpreter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Interpreter.debug.xcconfig"; path = "Target Support Files/Pods-Interpreter/Pods-Interpreter.debug.xcconfig"; sourceTree = "<group>"; };
+		E3EEE2D1EE35E7F32B7499C0 /* Pods-InterpreterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterpreterTests.debug.xcconfig"; path = "Target Support Files/Pods-InterpreterTests/Pods-InterpreterTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3EFABA3F226737760029EACC /* Frameworks */ = {
+		3E6400D622AFDEF70041260D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E7743BE226747E1006AA9AF /* Antlr4.framework in Frameworks */,
-				E1D6E32A157521B107ABF38C /* Pods_MODL_Swift.framework in Frameworks */,
+				3E64011622AFE23D0041260D /* Antlr4.framework in Frameworks */,
+				82B89B1E14D403107CC5E0BF /* Pods_Interpreter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3EFABA53226737790029EACC /* Frameworks */ = {
+		3E6400DE22AFDEF70041260D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F851FCC8F27F93DCD6D6980B /* Pods_MODL_SwiftTests.framework in Frameworks */,
+				3E6400E222AFDEF70041260D /* Interpreter.framework in Frameworks */,
+				006BB75B27953D47CAAC776D /* Pods_InterpreterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +186,8 @@
 			children = (
 				BFE9756048106A33F1DBDA8C /* Pods_MODL_Swift.framework */,
 				04D4DD2FDF4AF497503C6E33 /* Pods_MODL_SwiftTests.framework */,
+				C0341B1F51315FDB3DB6021F /* Pods_Interpreter.framework */,
+				AC5979BDEDCEC6CD9B68F409 /* Pods_InterpreterTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -226,19 +213,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		3E5ABB612267402A007419CC /* MODL-Interpreter */ = {
-			isa = PBXGroup;
-			children = (
-				3E7743BF22674829006AA9AF /* grammar */,
-				3E5ABB712267459E007419CC /* Interpreter.swift */,
-				3E63157D2285D8DB008BDC14 /* ModlObjectProtocols.swift */,
-				3E3C29A52296BDAC007D555C /* Extensions */,
-				3E7B4AA6228AD4BD00C54CCF /* Listener */,
-				3E7B4AA7228AD4CB00C54CCF /* Generator */,
-			);
-			path = "MODL-Interpreter";
-			sourceTree = "<group>";
-		};
 		3E63153122816FCD008BDC14 /* grammar_tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,8 +229,7 @@
 				3E63153C22816FCD008BDC14 /* error_tests.json */,
 				3E63153D22816FCD008BDC14 /* 1.modl */,
 			);
-			name = grammar_tests;
-			path = ../grammar_tests;
+			path = grammar_tests;
 			sourceTree = "<group>";
 		};
 		3E63153422816FCD008BDC14 /* test_import_dir */ = {
@@ -279,16 +252,36 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		3E64009322AFB64A0041260D /* Example */ = {
+		3E6400DA22AFDEF70041260D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				3EFABA4C226737790029EACC /* Assets.xcassets */,
-				3EFABA4E226737790029EACC /* LaunchScreen.storyboard */,
-				3EFABA45226737760029EACC /* AppDelegate.swift */,
-				3EFABA49226737760029EACC /* Main.storyboard */,
-				3E7743D722674AC3006AA9AF /* ViewControllers */,
+				3E6400DB22AFDEF70041260D /* Interpreter.h */,
+				3E7743BF22674829006AA9AF /* grammar */,
+				3E5ABB712267459E007419CC /* Interpreter.swift */,
+				3E63157D2285D8DB008BDC14 /* ModlObjectProtocols.swift */,
+				3E3C29A52296BDAC007D555C /* Extensions */,
+				3E7B4AA6228AD4BD00C54CCF /* Listener */,
+				3E7B4AA7228AD4CB00C54CCF /* Generator */,
+				3E5ABB6622674541007419CC /* Antlr4.xcodeproj */,
+				3E6400DC22AFDEF70041260D /* Info.plist */,
 			);
-			path = Example;
+			path = Source;
+			sourceTree = "<group>";
+		};
+		3E6400E722AFDEF70041260D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E6400E822AFDEF70041260D /* InterpreterTests.swift */,
+				3E63153122816FCD008BDC14 /* grammar_tests */,
+				3E63156C22842AEE008BDC14 /* Models */,
+				3E6315692282D980008BDC14 /* LongInputTests.swift */,
+				3E63155822819F31008BDC14 /* BasicTests.swift */,
+				3E63157022847E04008BDC14 /* AdvancedTests.swift */,
+				3E2BECCD22A9321B00FC1303 /* FileLoaderTests.swift */,
+				3E2BECD122A95C9000FC1303 /* LoadTests.swift */,
+				3E6400EA22AFDEF70041260D /* Info.plist */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		3E7743B22267479D006AA9AF /* Products */ = {
@@ -315,16 +308,6 @@
 				3E7743C922674865006AA9AF /* MODLParserParserATN.swift */,
 			);
 			path = grammar;
-			sourceTree = "<group>";
-		};
-		3E7743D722674AC3006AA9AF /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				3E7743D522674ABE006AA9AF /* DemoOptionsViewController.swift */,
-				3E7743D822674AE3006AA9AF /* DNSTestViewController.swift */,
-				3E7743DA22674AEC006AA9AF /* ParseTestViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		3E7743DC22675E1C006AA9AF /* DNS */ = {
@@ -378,8 +361,9 @@
 		3EFABA39226737760029EACC = {
 			isa = PBXGroup;
 			children = (
-				3EFABA44226737760029EACC /* MODL-Swift */,
-				3EFABA59226737790029EACC /* MODL-SwiftTests */,
+				3EFABA44226737760029EACC /* ToMove */,
+				3E6400DA22AFDEF70041260D /* Source */,
+				3E6400E722AFDEF70041260D /* Tests */,
 				3EFABA43226737760029EACC /* Products */,
 				3E00995E226746EC0042D518 /* Frameworks */,
 				9E463A30F4282472954996FE /* Pods */,
@@ -389,91 +373,83 @@
 		3EFABA43226737760029EACC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3EFABA42226737760029EACC /* MODL-Swift.app */,
-				3EFABA56226737790029EACC /* MODL-SwiftTests.xctest */,
+				3E6400D922AFDEF70041260D /* Interpreter.framework */,
+				3E6400E122AFDEF70041260D /* InterpreterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3EFABA44226737760029EACC /* MODL-Swift */ = {
+		3EFABA44226737760029EACC /* ToMove */ = {
 			isa = PBXGroup;
 			children = (
-				3E64009322AFB64A0041260D /* Example */,
-				3E5ABB6622674541007419CC /* Antlr4.xcodeproj */,
-				3E5ABB612267402A007419CC /* MODL-Interpreter */,
 				3E7743DC22675E1C006AA9AF /* DNS */,
-				3EFABA51226737790029EACC /* Info.plist */,
 			);
-			path = "MODL-Swift";
-			sourceTree = "<group>";
-		};
-		3EFABA59226737790029EACC /* MODL-SwiftTests */ = {
-			isa = PBXGroup;
-			children = (
-				3E63153122816FCD008BDC14 /* grammar_tests */,
-				3E63156C22842AEE008BDC14 /* Models */,
-				3EFABA5A226737790029EACC /* MODL_SwiftTests.swift */,
-				3E6315692282D980008BDC14 /* LongInputTests.swift */,
-				3E63155822819F31008BDC14 /* BasicTests.swift */,
-				3E63157022847E04008BDC14 /* AdvancedTests.swift */,
-				3E2BECCD22A9321B00FC1303 /* FileLoaderTests.swift */,
-				3E2BECD122A95C9000FC1303 /* LoadTests.swift */,
-				3EFABA5C226737790029EACC /* Info.plist */,
-			);
-			path = "MODL-SwiftTests";
+			path = ToMove;
 			sourceTree = "<group>";
 		};
 		9E463A30F4282472954996FE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4DCA2BE4D1499562444B7B47 /* Pods-MODL-Swift.debug.xcconfig */,
-				733C4A095A80AFA930FB4CC9 /* Pods-MODL-Swift.release.xcconfig */,
-				43A4339DD77837A61B86F756 /* Pods-MODL-SwiftTests.debug.xcconfig */,
-				94805F7E7C80A9E07B41A6E1 /* Pods-MODL-SwiftTests.release.xcconfig */,
+				E2086B844BACFE181C86188B /* Pods-Interpreter.debug.xcconfig */,
+				BE6A61BD6B6868E6E1973DE6 /* Pods-Interpreter.release.xcconfig */,
+				E3EEE2D1EE35E7F32B7499C0 /* Pods-InterpreterTests.debug.xcconfig */,
+				2D3FA46A23283BE76F527C56 /* Pods-InterpreterTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXNativeTarget section */
-		3EFABA41226737760029EACC /* MODL-Swift */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3EFABA5F226737790029EACC /* Build configuration list for PBXNativeTarget "MODL-Swift" */;
-			buildPhases = (
-				0B05892C3877A389053EEE76 /* [CP] Check Pods Manifest.lock */,
-				3EFABA3E226737760029EACC /* Sources */,
-				3EFABA3F226737760029EACC /* Frameworks */,
-				3EFABA40226737760029EACC /* Resources */,
-				BA748CC26F99BB6A37B1F8A1 /* [CP] Embed Pods Frameworks */,
+/* Begin PBXHeadersBuildPhase section */
+		3E6400D422AFDEF70041260D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E6400EB22AFDEF70041260D /* Interpreter.h in Headers */,
 			);
-			buildRules = (
-			);
-			dependencies = (
-				3E7743BD226747DE006AA9AF /* PBXTargetDependency */,
-			);
-			name = "MODL-Swift";
-			productName = "MODL-Swift";
-			productReference = 3EFABA42226737760029EACC /* MODL-Swift.app */;
-			productType = "com.apple.product-type.application";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3EFABA55226737790029EACC /* MODL-SwiftTests */ = {
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3E6400D822AFDEF70041260D /* Interpreter */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3EFABA62226737790029EACC /* Build configuration list for PBXNativeTarget "MODL-SwiftTests" */;
+			buildConfigurationList = 3E6400F722AFDEF70041260D /* Build configuration list for PBXNativeTarget "Interpreter" */;
 			buildPhases = (
-				93530752BACFF802862CBD0D /* [CP] Check Pods Manifest.lock */,
-				3EFABA52226737790029EACC /* Sources */,
-				3EFABA53226737790029EACC /* Frameworks */,
-				3EFABA54226737790029EACC /* Resources */,
+				BBF6E02BF56C196FC0049A08 /* [CP] Check Pods Manifest.lock */,
+				3E6400D422AFDEF70041260D /* Headers */,
+				3E6400D522AFDEF70041260D /* Sources */,
+				3E6400D622AFDEF70041260D /* Frameworks */,
+				3E6400D722AFDEF70041260D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3EFABA58226737790029EACC /* PBXTargetDependency */,
+				3E64011122AFE2350041260D /* PBXTargetDependency */,
 			);
-			name = "MODL-SwiftTests";
-			productName = "MODL-SwiftTests";
-			productReference = 3EFABA56226737790029EACC /* MODL-SwiftTests.xctest */;
+			name = Interpreter;
+			productName = Interpreter;
+			productReference = 3E6400D922AFDEF70041260D /* Interpreter.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3E6400E022AFDEF70041260D /* InterpreterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E6400F922AFDEF70041260D /* Build configuration list for PBXNativeTarget "InterpreterTests" */;
+			buildPhases = (
+				BEDF04E2CBCEDDDAA878FF3D /* [CP] Check Pods Manifest.lock */,
+				3E6400DD22AFDEF70041260D /* Sources */,
+				3E6400DE22AFDEF70041260D /* Frameworks */,
+				3E6400DF22AFDEF70041260D /* Resources */,
+				4FEB5D276B348CDF3ECD84C4 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3E6400E422AFDEF70041260D /* PBXTargetDependency */,
+			);
+			name = InterpreterTests;
+			productName = InterpreterTests;
+			productReference = 3E6400E122AFDEF70041260D /* InterpreterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -486,12 +462,11 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Touchsoft Ltd";
 				TargetAttributes = {
-					3EFABA41226737760029EACC = {
-						CreatedOnToolsVersion = 10.2;
+					3E6400D822AFDEF70041260D = {
+						CreatedOnToolsVersion = 10.2.1;
 					};
-					3EFABA55226737790029EACC = {
-						CreatedOnToolsVersion = 10.2;
-						TestTargetID = 3EFABA41226737760029EACC;
+					3E6400E022AFDEF70041260D = {
+						CreatedOnToolsVersion = 10.2.1;
 					};
 				};
 			};
@@ -514,8 +489,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				3EFABA41226737760029EACC /* MODL-Swift */,
-				3EFABA55226737790029EACC /* MODL-SwiftTests */,
+				3E6400D822AFDEF70041260D /* Interpreter */,
+				3E6400E022AFDEF70041260D /* InterpreterTests */,
 			);
 		};
 /* End PBXProject section */
@@ -538,51 +513,42 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3EFABA40226737760029EACC /* Resources */ = {
+		3E6400D722AFDEF70041260D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EFABA50226737790029EACC /* LaunchScreen.storyboard in Resources */,
-				3E7743D222674865006AA9AF /* MODLParser.tokens in Resources */,
-				3EFABA4D226737790029EACC /* Assets.xcassets in Resources */,
-				3E7743D022674865006AA9AF /* MODLLexer.interp in Resources */,
-				3E7743CA22674865006AA9AF /* MODLParser.interp in Resources */,
-				3E7743D122674865006AA9AF /* MODLLexer.tokens in Resources */,
-				3EFABA4B226737760029EACC /* Main.storyboard in Resources */,
+				3E64011D22AFE25F0041260D /* MODLParser.tokens in Resources */,
+				3E64011922AFE25F0041260D /* MODLLexer.tokens in Resources */,
+				3E64011B22AFE25F0041260D /* MODLParser.interp in Resources */,
+				3E64011822AFE25F0041260D /* MODLLexer.interp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3EFABA54226737790029EACC /* Resources */ = {
+		3E6400DF22AFDEF70041260D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E63154522816FCD008BDC14 /* c.modl in Resources */,
-				3E63154722816FCD008BDC14 /* a.modl in Resources */,
-				3E3896DC22830D63005533B9 /* class.json in Resources */,
-				3E63154322816FCD008BDC14 /* test_import.txt in Resources */,
-				3E2BECD622A9703C00FC1303 /* nested_import3.txt in Resources */,
-				3E63154922816FCD008BDC14 /* base_tests.json in Resources */,
-				3E63154622816FCD008BDC14 /* import_config.modl in Resources */,
-				3E63154822816FCD008BDC14 /* demo_config.modl in Resources */,
-				3E63154A22816FCD008BDC14 /* error_tests.json in Resources */,
-				3E63154222816FCD008BDC14 /* 2.modl in Resources */,
-				3E3896DD22830D63005533B9 /* methods.json in Resources */,
-				3E2BECD822A9703C00FC1303 /* nested_import2.txt in Resources */,
-				3E3896DB22830D63005533B9 /* replacement.json in Resources */,
-				3E2BECD722A9703C00FC1303 /* nested_import1.txt in Resources */,
-				3E3896D922830D63005533B9 /* conditional.json in Resources */,
-				3E63154422816FCD008BDC14 /* b.modl in Resources */,
-				3E3896DA22830D63005533B9 /* misc.json in Resources */,
-				3E63154122816FCD008BDC14 /* 3.modl in Resources */,
-				3E63154B22816FCD008BDC14 /* 1.modl in Resources */,
-				3E3896DE22830D63005533B9 /* basic.json in Resources */,
+				3E64012522AFE2FF0041260D /* b.modl in Resources */,
+				3E64012422AFE2FF0041260D /* 2.modl in Resources */,
+				3E64012722AFE2FF0041260D /* import_config.modl in Resources */,
+				3E64012922AFE2FF0041260D /* demo_config.modl in Resources */,
+				3E64012A22AFE2FF0041260D /* base_tests.json in Resources */,
+				3E64012F22AFE3030041260D /* nested_import3.txt in Resources */,
+				3E64012C22AFE2FF0041260D /* 1.modl in Resources */,
+				3E64012322AFE2FF0041260D /* 3.modl in Resources */,
+				3E64012622AFE2FF0041260D /* c.modl in Resources */,
+				3E64013022AFE3030041260D /* test_import.txt in Resources */,
+				3E64012B22AFE2FF0041260D /* error_tests.json in Resources */,
+				3E64012D22AFE3030041260D /* nested_import1.txt in Resources */,
+				3E64012822AFE2FF0041260D /* a.modl in Resources */,
+				3E64012E22AFE3030041260D /* nested_import2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0B05892C3877A389053EEE76 /* [CP] Check Pods Manifest.lock */ = {
+		4FEB5D276B348CDF3ECD84C4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -590,51 +556,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MODL-Swift-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93530752BACFF802862CBD0D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MODL-SwiftTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BA748CC26F99BB6A37B1F8A1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MODL-Swift/Pods-MODL-Swift-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-InterpreterTests/Pods-InterpreterTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Punycode/Punycode.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -645,93 +567,211 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MODL-Swift/Pods-MODL-Swift-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InterpreterTests/Pods-InterpreterTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BBF6E02BF56C196FC0049A08 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Interpreter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEDF04E2CBCEDDDAA878FF3D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InterpreterTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3EFABA3E226737760029EACC /* Sources */ = {
+		3E6400D522AFDEF70041260D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E7743CC22674865006AA9AF /* MODLLexerATN.swift in Sources */,
-				3E7743CB22674865006AA9AF /* MODLParserListener.swift in Sources */,
-				3EF9718A22AA78C70000B220 /* MethodManager.swift in Sources */,
-				3E5ABB722267459E007419CC /* Interpreter.swift in Sources */,
-				3E7743DE22675E59006AA9AF /* DNSTxtRecord.swift in Sources */,
-				3E63157C2285C639008BDC14 /* ModlOutputObject.swift in Sources */,
-				3E7743CE22674865006AA9AF /* MODLParserBaseListener.swift in Sources */,
-				3E3C29A12296BD45007D555C /* StringExtensions.swift in Sources */,
-				3E3896E12289BECD005533B9 /* StringTransformer.swift in Sources */,
-				3E7B4AAA228ADC9900C54CCF /* StringEscapeReplacer.swift in Sources */,
-				3E6315792285C59B008BDC14 /* ModlObjectCreator.swift in Sources */,
-				3E7743CD22674865006AA9AF /* MODLParser.swift in Sources */,
-				3E7743D622674ABE006AA9AF /* DemoOptionsViewController.swift in Sources */,
-				3E7743CF22674865006AA9AF /* MODLLexer.swift in Sources */,
-				3E2BECCC22A92AC500FC1303 /* FileLoader.swift in Sources */,
-				3E5ABB6522674513007419CC /* ModlListener.swift in Sources */,
-				3E3896E8228C1B39005533B9 /* ModlObjectReferenceManager.swift in Sources */,
-				3E5ABB7E226745FB007419CC /* ModlListenerObject.swift in Sources */,
-				3E7743DB22674AEC006AA9AF /* ParseTestViewController.swift in Sources */,
-				3E7743D322674865006AA9AF /* MODLParserParserATN.swift in Sources */,
-				3E63157E2285D8DB008BDC14 /* ModlObjectProtocols.swift in Sources */,
-				3E7743D922674AE3006AA9AF /* DNSTestViewController.swift in Sources */,
-				3E6315762284875F008BDC14 /* ModlClassManager.swift in Sources */,
-				3EFABA46226737760029EACC /* AppDelegate.swift in Sources */,
+				3E64011F22AFE25F0041260D /* MODLParserListener.swift in Sources */,
+				3E64012022AFE25F0041260D /* MODLParserParserATN.swift in Sources */,
+				3E6400FB22AFDF1D0041260D /* Interpreter.swift in Sources */,
+				3E64010522AFE1050041260D /* ModlObjectCreator.swift in Sources */,
+				3E64010A22AFE1090041260D /* MethodManager.swift in Sources */,
+				3E64010C22AFE10C0041260D /* StringEscapeReplacer.swift in Sources */,
+				3E64011C22AFE25F0041260D /* MODLParser.swift in Sources */,
+				3E64010622AFE1050041260D /* ModlOutputObject.swift in Sources */,
+				3E64010B22AFE10C0041260D /* StringTransformer.swift in Sources */,
+				3E6400FA22AFDF1D0041260D /* ModlObjectProtocols.swift in Sources */,
+				3E64010922AFE1090041260D /* FileLoader.swift in Sources */,
+				3E64010822AFE1090041260D /* ModlObjectReferenceManager.swift in Sources */,
+				3E64010422AFE0F00041260D /* StringExtensions.swift in Sources */,
+				3E64010222AFE0EA0041260D /* ModlListenerObject.swift in Sources */,
+				3E64011A22AFE25F0041260D /* MODLLexerATN.swift in Sources */,
+				3E64010722AFE1090041260D /* ModlClassManager.swift in Sources */,
+				3E64011E22AFE25F0041260D /* MODLParserBaseListener.swift in Sources */,
+				3E64011722AFE25A0041260D /* MODLLexer.swift in Sources */,
+				3E64010322AFE0EC0041260D /* ModlListener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3EFABA52226737790029EACC /* Sources */ = {
+		3E6400DD22AFDEF70041260D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E63157122847E04008BDC14 /* AdvancedTests.swift in Sources */,
-				3E63156A2282D980008BDC14 /* LongInputTests.swift in Sources */,
-				3E63155B22819F62008BDC14 /* MODLTest.swift in Sources */,
-				3E2BECCE22A9321B00FC1303 /* FileLoaderTests.swift in Sources */,
-				3E63155922819F31008BDC14 /* BasicTests.swift in Sources */,
-				3E2BECD222A95C9000FC1303 /* LoadTests.swift in Sources */,
-				3E2BECD022A95BDC00FC1303 /* TestFileLoader.swift in Sources */,
-				3EFABA5B226737790029EACC /* MODL_SwiftTests.swift in Sources */,
+				3E6400FD22AFDF530041260D /* AdvancedTests.swift in Sources */,
+				3E64010122AFDF530041260D /* BasicTests.swift in Sources */,
+				3E64012122AFE2F40041260D /* MODLTest.swift in Sources */,
+				3E6400E922AFDEF70041260D /* InterpreterTests.swift in Sources */,
+				3E6400FE22AFDF530041260D /* LongInputTests.swift in Sources */,
+				3E64010022AFDF530041260D /* FileLoaderTests.swift in Sources */,
+				3E64012222AFE2F40041260D /* TestFileLoader.swift in Sources */,
+				3E6400FC22AFDF530041260D /* LoadTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3E7743BD226747DE006AA9AF /* PBXTargetDependency */ = {
+		3E6400E422AFDEF70041260D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3E6400D822AFDEF70041260D /* Interpreter */;
+			targetProxy = 3E6400E322AFDEF70041260D /* PBXContainerItemProxy */;
+		};
+		3E64011122AFE2350041260D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Antlr4;
-			targetProxy = 3E7743BC226747DE006AA9AF /* PBXContainerItemProxy */;
-		};
-		3EFABA58226737790029EACC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3EFABA41226737760029EACC /* MODL-Swift */;
-			targetProxy = 3EFABA57226737790029EACC /* PBXContainerItemProxy */;
+			targetProxy = 3E64011022AFE2350041260D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		3EFABA49226737760029EACC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3EFABA4A226737760029EACC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3EFABA4E226737790029EACC /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3EFABA4F226737790029EACC /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
+		3E6400F022AFDEF70041260D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2086B844BACFE181C86188B /* Pods-Interpreter.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 75343VFMU9;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.modl.Interpreter;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3E6400F122AFDEF70041260D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE6A61BD6B6868E6E1973DE6 /* Pods-Interpreter.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 75343VFMU9;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.modl.Interpreter;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3E6400F222AFDEF70041260D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E3EEE2D1EE35E7F32B7499C0 /* Pods-InterpreterTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D97R76SVB2;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.modl.InterpreterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3E6400F322AFDEF70041260D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D3FA46A23283BE76F527C56 /* Pods-InterpreterTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D97R76SVB2;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = uk.modl.InterpreterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		3EFABA5D226737790029EACC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -848,114 +888,32 @@
 			};
 			name = Release;
 		};
-		3EFABA60226737790029EACC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4DCA2BE4D1499562444B7B47 /* Pods-MODL-Swift.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75343VFMU9;
-				INFOPLIST_FILE = "MODL-Swift/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "uk.modl.swift-interpreter";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		3EFABA61226737790029EACC /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 733C4A095A80AFA930FB4CC9 /* Pods-MODL-Swift.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75343VFMU9;
-				INFOPLIST_FILE = "MODL-Swift/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "uk.modl.swift-interpreter";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		3EFABA63226737790029EACC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43A4339DD77837A61B86F756 /* Pods-MODL-SwiftTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75343VFMU9;
-				INFOPLIST_FILE = "MODL-SwiftTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.njajones.MODL-SwiftTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MODL-Swift.app/MODL-Swift";
-			};
-			name = Debug;
-		};
-		3EFABA64226737790029EACC /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94805F7E7C80A9E07B41A6E1 /* Pods-MODL-SwiftTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 75343VFMU9;
-				INFOPLIST_FILE = "MODL-SwiftTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.njajones.MODL-SwiftTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MODL-Swift.app/MODL-Swift";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3E6400F722AFDEF70041260D /* Build configuration list for PBXNativeTarget "Interpreter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E6400F022AFDEF70041260D /* Debug */,
+				3E6400F122AFDEF70041260D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E6400F922AFDEF70041260D /* Build configuration list for PBXNativeTarget "InterpreterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E6400F222AFDEF70041260D /* Debug */,
+				3E6400F322AFDEF70041260D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3EFABA3D226737760029EACC /* Build configuration list for PBXProject "MODL-Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EFABA5D226737790029EACC /* Debug */,
 				3EFABA5E226737790029EACC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3EFABA5F226737790029EACC /* Build configuration list for PBXNativeTarget "MODL-Swift" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3EFABA60226737790029EACC /* Debug */,
-				3EFABA61226737790029EACC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3EFABA62226737790029EACC /* Build configuration list for PBXNativeTarget "MODL-SwiftTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3EFABA63226737790029EACC /* Debug */,
-				3EFABA64226737790029EACC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
