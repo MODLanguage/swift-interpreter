@@ -17,53 +17,37 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 //
-//  FileLoadTests.swift
-//  MODL-SwiftTests
+//  InterpreterTests.swift
+//  InterpreterTests
 //
-//  Created by Nicholas Jones on 06/06/2019.
+//  Created by Nicholas Jones on 11/06/2019.
 //
 
 import XCTest
-@testable import MODLInterpreter
+@testable import MODL_Interpreter
 
-class FileLoaderTests: XCTestCase {
-        var sut: FileLoader? = nil
+class InterpreterTests: XCTestCase {
+    var jsonTests: [MODLTest]?
     
     override func setUp() {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
         let testFileLoader = TestFileLoader()
-        sut = FileLoader()
         testFileLoader.removeTestFiles()
         testFileLoader.copyFiles(self)
+        jsonTests = MODLTestManager.getAllTests(self)
     }
-
+    
     override func tearDown() {
-        sut = nil
+        jsonTests = nil
         TestFileLoader().removeTestFiles()
     }
-
-    func testLoadFile() {
-        for fileName in ["1", "2", "3", "a", "b", "c", "demo_config", "import_config"] {
-            let fileText = try? sut?.loadFileText("grammar_tests/\(fileName)")
-            XCTAssert( fileText != nil )
-        }
-    }
     
-    func testForceLoadFilePath() {
-        for fileName in ["1", "2", "3", "a", "b", "c", "demo_config", "import_config"] {
-            let fileText = try? sut?.loadFileText("grammar_tests/\(fileName)!")
-            XCTAssert( fileText != nil )
+    func testAllJSONExamples() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
         }
-    }
-    
-    func testSubFolderLoadFile() {
-        let path = "test_import_dir/test_import.txt"
-        let fileText = try? sut?.loadFileText("grammar_tests/\(path)!")
-        XCTAssert( fileText != nil )
+        MODLTestManager.performTests(json)
     }
 
-    func testMODLObjectLoad() {
-        let fileObj = try? sut?.loadFileObject("grammar_tests/1")
-        XCTAssert(fileObj != nil)
-        XCTAssert(fileObj?.structures.count == 1)
-    }
 }

@@ -16,38 +16,37 @@
  OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 //
-//  InterpreterTests.swift
-//  InterpreterTests
+//  BasicTests.swift
+//  MODL-SwiftTests
 //
-//  Created by Nicholas Jones on 11/06/2019.
+//  Created by Nicholas Jones on 07/05/2019.
 //
 
 import XCTest
-@testable import MODLInterpreter
+@testable import MODL_Interpreter
 
-class InterpreterTests: XCTestCase {
+class BasicTests: XCTestCase {
+
     var jsonTests: [MODLTest]?
     
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        let testFileLoader = TestFileLoader()
-        testFileLoader.removeTestFiles()
-        testFileLoader.copyFiles(self)
         jsonTests = MODLTestManager.getAllTests(self)
     }
     
     override func tearDown() {
         jsonTests = nil
-        TestFileLoader().removeTestFiles()
     }
     
-    func testAllJSONExamples() {
+    func testAllBasicExamples() {
         guard let json = jsonTests else {
             XCTFail("Fail creating tests from json input")
             return
         }
-        MODLTestManager.performTests(json)
+        let basic = json.filter { (modl) -> Bool in
+            modl.isBasicTest()
+        }
+        MODLTestManager.performTests(basic)
     }
-
 }

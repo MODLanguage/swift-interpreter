@@ -17,60 +17,53 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 //
-//  LoadTests.swift
+//  FileLoadTests.swift
 //  MODL-SwiftTests
 //
 //  Created by Nicholas Jones on 06/06/2019.
 //
 
 import XCTest
-@testable import MODLInterpreter
+@testable import MODL_Interpreter
 
-class LoadTests: XCTestCase {
-    var jsonTests: [MODLTest]?
+class FileLoaderTests: XCTestCase {
+        var sut: FileLoader? = nil
     
     override func setUp() {
         let testFileLoader = TestFileLoader()
+        sut = FileLoader()
         testFileLoader.removeTestFiles()
         testFileLoader.copyFiles(self)
-        jsonTests = MODLTestManager.getAllTests(self)
     }
 
     override func tearDown() {
-        jsonTests = nil
+        sut = nil
         TestFileLoader().removeTestFiles()
     }
 
-    func testJustLoad() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
+    func testLoadFile() {
+        for fileName in ["1", "2", "3", "a", "b", "c", "demo_config", "import_config"] {
+            let fileText = try? sut?.loadFileText("grammar_tests/\(fileName)")
+            XCTAssert( fileText != nil )
         }
-        let loadTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && modl.testedFeatures?.count == 1
-        }
-        MODLTestManager.performTests(loadTests)
     }
     
-    func testAllLoad() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
+    func testForceLoadFilePath() {
+        for fileName in ["1", "2", "3", "a", "b", "c", "demo_config", "import_config"] {
+            let fileText = try? sut?.loadFileText("grammar_tests/\(fileName)!")
+            XCTAssert( fileText != nil )
         }
-        let loadTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && !(modl.testedFeatures?.contains(FeatureTestTypes.method.rawValue) ?? true)
-        }
-        MODLTestManager.performTests(loadTests)
     }
     
-    func testLoadProblem() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let loadTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains("problem") ?? false) && (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? true)
-        }
-        MODLTestManager.performTests(loadTests)
+    func testSubFolderLoadFile() {
+        let path = "test_import_dir/test_import.txt"
+        let fileText = try? sut?.loadFileText("grammar_tests/\(path)!")
+        XCTAssert( fileText != nil )
+    }
+
+    func testMODLObjectLoad() {
+        let fileObj = try? sut?.loadFileObject("grammar_tests/1")
+        XCTAssert(fileObj != nil)
+        XCTAssert(fileObj?.structures.count == 1)
     }
 }

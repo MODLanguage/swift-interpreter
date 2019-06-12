@@ -16,37 +16,61 @@
  OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 //
-//  BasicTests.swift
+//  LoadTests.swift
 //  MODL-SwiftTests
 //
-//  Created by Nicholas Jones on 07/05/2019.
+//  Created by Nicholas Jones on 06/06/2019.
 //
 
 import XCTest
-@testable import MODLInterpreter
+@testable import MODL_Interpreter
 
-class BasicTests: XCTestCase {
-
+class LoadTests: XCTestCase {
     var jsonTests: [MODLTest]?
     
     override func setUp() {
+        let testFileLoader = TestFileLoader()
+        testFileLoader.removeTestFiles()
+        testFileLoader.copyFiles(self)
         jsonTests = MODLTestManager.getAllTests(self)
     }
-    
+
     override func tearDown() {
         jsonTests = nil
+        TestFileLoader().removeTestFiles()
     }
-    
-    func testAllBasicExamples() {
+
+    func testJustLoad() {
         guard let json = jsonTests else {
             XCTFail("Fail creating tests from json input")
             return
         }
-        let basic = json.filter { (modl) -> Bool in
-            modl.isBasicTest()
+        let loadTests = json.filter { (modl) -> Bool in
+            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && modl.testedFeatures?.count == 1
         }
-        MODLTestManager.performTests(basic)
+        MODLTestManager.performTests(loadTests)
+    }
+    
+    func testAllLoad() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let loadTests = json.filter { (modl) -> Bool in
+            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && !(modl.testedFeatures?.contains(FeatureTestTypes.method.rawValue) ?? true)
+        }
+        MODLTestManager.performTests(loadTests)
+    }
+    
+    func testLoadProblem() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let loadTests = json.filter { (modl) -> Bool in
+            return (modl.testedFeatures?.contains("problem") ?? false) && (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? true)
+        }
+        MODLTestManager.performTests(loadTests)
     }
 }

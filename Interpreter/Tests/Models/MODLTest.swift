@@ -27,7 +27,7 @@
 import Foundation
 import XCTest
 
-@testable import MODLInterpreter
+@testable import MODL_Interpreter
 
 enum FeatureTestTypes: String {
     case conditional
