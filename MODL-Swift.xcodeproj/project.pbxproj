@@ -148,7 +148,6 @@
 		3E7743C722674865006AA9AF /* MODLLexer.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLLexer.tokens; sourceTree = "<group>"; };
 		3E7743C822674865006AA9AF /* MODLParser.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.tokens; sourceTree = "<group>"; };
 		3E7743C922674865006AA9AF /* MODLParserParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserParserATN.swift; sourceTree = "<group>"; };
-		3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTxtRecord.swift; sourceTree = "<group>"; };
 		3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEscapeReplacer.swift; sourceTree = "<group>"; };
 		3EF9718922AA78C70000B220 /* MethodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodManager.swift; sourceTree = "<group>"; };
 		AC5979BDEDCEC6CD9B68F409 /* Pods_InterpreterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InterpreterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,14 +309,6 @@
 			path = grammar;
 			sourceTree = "<group>";
 		};
-		3E7743DC22675E1C006AA9AF /* DNS */ = {
-			isa = PBXGroup;
-			children = (
-				3E7743DD22675E59006AA9AF /* DNSTxtRecord.swift */,
-			);
-			path = DNS;
-			sourceTree = "<group>";
-		};
 		3E7B4AA6228AD4BD00C54CCF /* Listener */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,7 +352,6 @@
 		3EFABA39226737760029EACC = {
 			isa = PBXGroup;
 			children = (
-				3EFABA44226737760029EACC /* ToMove */,
 				3E6400DA22AFDEF70041260D /* Source */,
 				3E6400E722AFDEF70041260D /* Tests */,
 				3EFABA43226737760029EACC /* Products */,
@@ -377,14 +367,6 @@
 				3E6400E122AFDEF70041260D /* InterpreterTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		3EFABA44226737760029EACC /* ToMove */ = {
-			isa = PBXGroup;
-			children = (
-				3E7743DC22675E1C006AA9AF /* DNS */,
-			);
-			path = ToMove;
 			sourceTree = "<group>";
 		};
 		9E463A30F4282472954996FE /* Pods */ = {

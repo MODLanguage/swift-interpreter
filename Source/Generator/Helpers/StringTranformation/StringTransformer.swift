@@ -27,7 +27,7 @@
 import Foundation
 import Punycode
 
-struct StringTransformer {
+internal struct StringTransformer {
     
     private let objectReferencePattern = #"((?<![\\~])`?)%(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*((?<![\\~])`?)"#
     

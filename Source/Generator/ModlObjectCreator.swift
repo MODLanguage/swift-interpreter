@@ -38,7 +38,7 @@ fileprivate enum ReservedKey: String, CaseIterable {
     case objectReference = "_"
 }
 
-struct ModlObjectCreator {
+internal struct ModlObjectCreator {
     
     var classManager = ModlClassManager()
     var objectRefManager = ModlObjectReferenceManager()

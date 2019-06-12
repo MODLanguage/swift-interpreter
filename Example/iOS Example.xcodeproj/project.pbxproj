@@ -9,15 +9,14 @@
 /* Begin PBXBuildFile section */
 		3E6400A322AFBE240041260D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400A222AFBE240041260D /* AppDelegate.swift */; };
 		3E6400A822AFBE240041260D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400A622AFBE240041260D /* Main.storyboard */; };
-		3E6400AA22AFBE260041260D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400A922AFBE260041260D /* Assets.xcassets */; };
 		3E6400AD22AFBE260041260D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400AB22AFBE260041260D /* LaunchScreen.storyboard */; };
 		3E6400B822AFBE260041260D /* MODL_InterpreterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400B722AFBE260041260D /* MODL_InterpreterTests.swift */; };
 		3E6400CC22AFC2020041260D /* ParseTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400C322AFC2010041260D /* ParseTestViewController.swift */; };
 		3E6400CD22AFC2020041260D /* DemoOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400C422AFC2010041260D /* DemoOptionsViewController.swift */; };
 		3E6400CE22AFC2020041260D /* DNSTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400C522AFC2010041260D /* DNSTestViewController.swift */; };
-		3E6400CF22AFC2020041260D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400C722AFC2020041260D /* LaunchScreen.storyboard */; };
-		3E6400D022AFC2020041260D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400C922AFC2020041260D /* Main.storyboard */; };
 		3E6400D122AFC2020041260D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400CB22AFC2020041260D /* Assets.xcassets */; };
+		3E723A7722B108DC00FACCAA /* DNSTxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E723A7122B108B600FACCAA /* DNSTxtRecord.swift */; };
+		3E723A8722B1117600FACCAA /* Interpreter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3E723A7E22B109E400FACCAA /* Interpreter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +27,49 @@
 			remoteGlobalIDString = 3E64009E22AFBE240041260D;
 			remoteInfo = "MODL-Interpreter";
 		};
+		3E723A7D22B109E400FACCAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E6400D922AFDEF70041260D;
+			remoteInfo = Interpreter;
+		};
+		3E723A7F22B109E400FACCAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E6400E122AFDEF70041260D;
+			remoteInfo = InterpreterTests;
+		};
+		3E723A8122B10A5A00FACCAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
+			remoteInfo = Interpreter;
+		};
+		3E723A8822B1117600FACCAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
+			remoteInfo = Interpreter;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E723A8A22B1117700FACCAA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3E723A8722B1117600FACCAA /* Interpreter.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3E64009F22AFBE240041260D /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +87,8 @@
 		3E6400C822AFC2020041260D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E6400CA22AFC2020041260D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		3E6400CB22AFC2020041260D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3E723A7122B108B600FACCAA /* DNSTxtRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTxtRecord.swift; sourceTree = "<group>"; };
+		3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "MODL-Swift.xcodeproj"; path = "../MODL-Swift.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,9 +112,11 @@
 		3E64009622AFBE240041260D = {
 			isa = PBXGroup;
 			children = (
+				3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */,
 				3E6400A122AFBE240041260D /* Source */,
 				3E6400B622AFBE260041260D /* Tests */,
 				3E6400A022AFBE240041260D /* Products */,
+				3E723A8322B10A6200FACCAA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				3E6400CB22AFC2020041260D /* Assets.xcassets */,
+				3E723A7222B108B600FACCAA /* DNS */,
 				3E6400C622AFC2020041260D /* Base.lproj */,
 				3E6400C222AFC2010041260D /* ViewControllers */,
 				3E6400A222AFBE240041260D /* AppDelegate.swift */,
@@ -127,6 +173,30 @@
 			path = Base.lproj;
 			sourceTree = "<group>";
 		};
+		3E723A7222B108B600FACCAA /* DNS */ = {
+			isa = PBXGroup;
+			children = (
+				3E723A7122B108B600FACCAA /* DNSTxtRecord.swift */,
+			);
+			path = DNS;
+			sourceTree = "<group>";
+		};
+		3E723A7922B109E400FACCAA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E723A7E22B109E400FACCAA /* Interpreter.framework */,
+				3E723A8022B109E400FACCAA /* InterpreterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3E723A8322B10A6200FACCAA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -137,10 +207,13 @@
 				3E64009B22AFBE240041260D /* Sources */,
 				3E64009C22AFBE240041260D /* Frameworks */,
 				3E64009D22AFBE240041260D /* Resources */,
+				3E723A8A22B1117700FACCAA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3E723A8222B10A5A00FACCAA /* PBXTargetDependency */,
+				3E723A8922B1117600FACCAA /* PBXTargetDependency */,
 			);
 			name = "iOS Example";
 			productName = "MODL-Interpreter";
@@ -195,6 +268,12 @@
 			mainGroup = 3E64009622AFBE240041260D;
 			productRefGroup = 3E6400A022AFBE240041260D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3E723A7922B109E400FACCAA /* Products */;
+					ProjectRef = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3E64009E22AFBE240041260D /* iOS Example */,
@@ -203,15 +282,29 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		3E723A7E22B109E400FACCAA /* Interpreter.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Interpreter.framework;
+			remoteRef = 3E723A7D22B109E400FACCAA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E723A8022B109E400FACCAA /* InterpreterTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = InterpreterTests.xctest;
+			remoteRef = 3E723A7F22B109E400FACCAA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		3E64009D22AFBE240041260D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3E6400AD22AFBE260041260D /* LaunchScreen.storyboard in Resources */,
-				3E6400D022AFC2020041260D /* Main.storyboard in Resources */,
-				3E6400CF22AFC2020041260D /* LaunchScreen.storyboard in Resources */,
-				3E6400AA22AFBE260041260D /* Assets.xcassets in Resources */,
 				3E6400D122AFC2020041260D /* Assets.xcassets in Resources */,
 				3E6400A822AFBE240041260D /* Main.storyboard in Resources */,
 			);
@@ -233,6 +326,7 @@
 			files = (
 				3E6400CD22AFC2020041260D /* DemoOptionsViewController.swift in Sources */,
 				3E6400CC22AFC2020041260D /* ParseTestViewController.swift in Sources */,
+				3E723A7722B108DC00FACCAA /* DNSTxtRecord.swift in Sources */,
 				3E6400CE22AFC2020041260D /* DNSTestViewController.swift in Sources */,
 				3E6400A322AFBE240041260D /* AppDelegate.swift in Sources */,
 			);
@@ -253,6 +347,16 @@
 			isa = PBXTargetDependency;
 			target = 3E64009E22AFBE240041260D /* iOS Example */;
 			targetProxy = 3E6400B422AFBE260041260D /* PBXContainerItemProxy */;
+		};
+		3E723A8222B10A5A00FACCAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Interpreter;
+			targetProxy = 3E723A8122B10A5A00FACCAA /* PBXContainerItemProxy */;
+		};
+		3E723A8922B1117600FACCAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Interpreter;
+			targetProxy = 3E723A8822B1117600FACCAA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -411,6 +515,7 @@
 		3E6400BD22AFBE260041260D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D97R76SVB2;
@@ -429,6 +534,7 @@
 		3E6400BE22AFBE260041260D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D97R76SVB2;

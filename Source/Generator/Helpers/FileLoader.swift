@@ -13,7 +13,7 @@ struct FileCacheItem {
     let fileData: ModlListenerObject
 }
 
-class FileLoader {
+internal class FileLoader {
     private var cache: [String: FileCacheItem] = [:]
     private var cacheKeyOrder: [String] = []
     

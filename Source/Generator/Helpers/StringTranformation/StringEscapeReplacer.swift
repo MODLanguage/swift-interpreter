@@ -25,7 +25,7 @@
 
 import Foundation
 
-struct StringEscapeReplacer {
+internal struct StringEscapeReplacer {
     private static let replacements: [String: String] = [
         "~\\" : "\\",
         "\\\\" : "\\",

@@ -28,7 +28,7 @@ import Foundation
 import Antlr4
 
 
-class ModlListener: MODLParserBaseListener {
+internal class ModlListener: MODLParserBaseListener {
     
     static let ModlVersion = 1.0 // included version of MODL grammer
     

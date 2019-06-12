@@ -26,7 +26,7 @@
 
 import Foundation
 
-class ModlObjectReferenceManager {
+internal class ModlObjectReferenceManager {
     private var numberedVariables: [ModlValue?] = []
     private var keyedVariables: [String: ModlValue] = [:]
     

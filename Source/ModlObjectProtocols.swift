@@ -25,81 +25,81 @@
 
 import Foundation
 
-protocol ModlObject: AnyObject {
+internal protocol ModlObject: AnyObject {
     var structures: [ModlStructure] {get set}
 }
 
-protocol ModlValue {}
-protocol ModlStructure: ModlValue {}
-protocol ModlPair: ModlStructure {
+internal protocol ModlValue {}
+internal protocol ModlStructure: ModlValue {}
+internal protocol ModlPair: ModlStructure {
     var key: String? {get set}
     var value: ModlValue? {get set}
 }
 
 
-protocol ModlArray: ModlStructure {
+internal protocol ModlArray: ModlStructure {
     var values: [ModlValue] {get set}
     mutating func addValue(_ value: ModlValue)
 }
 
-protocol ModlArrayItem: ModlValue {}
+internal protocol ModlArrayItem: ModlValue {}
 
-protocol ModlMap: ModlStructure {
+internal protocol ModlMap: ModlStructure {
     var values: [String: ModlValue] {get set}
     var orderedKeys: [String] {get set}
     mutating func addValue(_ mapItem: ModlMapItem)
 }
 
-protocol ModlMapItem: ModlPair {
+internal protocol ModlMapItem: ModlPair {
     init?(pair: ModlPair)
 }
 
-protocol ModlPrimitive: ModlValue {
+internal protocol ModlPrimitive: ModlValue {
     var value: Any? {get set}
     mutating func setValue(value: Any?)
 }
 
-protocol ModlNull: ModlValue {}
+internal protocol ModlNull: ModlValue {}
 
 
 /*****/
 //Condition Details
 /*****/
-protocol ModlConditionTest: ModlLastOperator {
+internal protocol ModlConditionTest: ModlLastOperator {
     var subConditionList: [ModlSubCondition] {get set}
 }
 
-protocol ModlCondition: ModlSubCondition {
+internal protocol ModlCondition: ModlSubCondition {
     var key: String? {get set}
     var operatorType: String? {get set}
     var values: [ModlValue]? {get set}
 }
 
-protocol ModlConditionGroup: ModlSubCondition {
+internal protocol ModlConditionGroup: ModlSubCondition {
     var conditionTests: [ModlConditionTest] {get set} //TODO: this can be improved, too many tuples
 }
 
-protocol ModlSubCondition: ModlLastOperator, ModlConditionNegatable {}
+internal protocol ModlSubCondition: ModlLastOperator, ModlConditionNegatable {}
 
-protocol ModlLastOperator {
+internal protocol ModlLastOperator {
     var lastOperator: String? {get set}
 }
 
-protocol ModlConditionNegatable {
+internal protocol ModlConditionNegatable {
     var shouldNegate: Bool? {get set}
 }
 
 /*****/
 //Conditionals
 /*****/
-protocol ModlConditional: ModlStructure {
+internal protocol ModlConditional: ModlStructure {
     var conditionReturns: [ModlConditionalReturn] {get set}
     var conditionTests: [ModlConditionTest] {get set}
     var defaultReturn: ModlConditionalReturn? {get set}
     mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn?)
 }
 
-extension ModlConditional {
+internal extension ModlConditional {
     mutating func addTestAndReturn(testCase: ModlConditionTest?, conditionalReturn: ModlConditionalReturn?) {
         if let uwTest = testCase {
             if let uwReturn = conditionalReturn {
@@ -112,42 +112,42 @@ extension ModlConditional {
     }
 }
 
-protocol ModlTopLevelConditional: ModlConditional {}
-protocol ModlMapConditional: ModlConditional {}
-protocol ModlArrayConditional: ModlConditional {}
-protocol ModlValueConditional: ModlConditional {}
+internal protocol ModlTopLevelConditional: ModlConditional {}
+internal protocol ModlMapConditional: ModlConditional {}
+internal protocol ModlArrayConditional: ModlConditional {}
+internal protocol ModlValueConditional: ModlConditional {}
 
 /*****/
 //ConditionalReturns
 /*****/
-protocol ModlConditionalReturn: ModlStructure {
+internal protocol ModlConditionalReturn: ModlStructure {
     var structures: [ModlValue] {get}
 }
 
-protocol ModlTopLevelConditionalReturn: ModlConditionalReturn {
+internal protocol ModlTopLevelConditionalReturn: ModlConditionalReturn {
     mutating func addStructure(_ structure: ModlStructure)
 }
 
-protocol ModlMapConditionalReturn: ModlConditionalReturn {
+internal protocol ModlMapConditionalReturn: ModlConditionalReturn {
     mutating func addItem(_ structure: ModlMapItem)
 }
 
-protocol ModlArrayConditionalReturn: ModlConditionalReturn {
+internal protocol ModlArrayConditionalReturn: ModlConditionalReturn {
     mutating func addItem(_ structure: ModlValue)
 }
 
-protocol ModlValueConditionalReturn: ModlConditionalReturn {
+internal protocol ModlValueConditionalReturn: ModlConditionalReturn {
     mutating func addItem(_ structure: ModlValue)
 }
 
 //EXTENSIONS
-extension ModlObject {
+internal extension ModlObject {
     func addStructure(_ structure: ModlStructure) {
         self.structures.append(structure)
     }
 }
 
-extension ModlPrimitive {
+internal extension ModlPrimitive {
     func asString() -> String? {
         switch value {
         case let int as Int:
@@ -188,7 +188,7 @@ extension ModlPrimitive {
 }
 
 
-extension ModlMap {
+internal extension ModlMap {
     mutating func addValue(_ mapItem: ModlMapItem) {
         guard let uwKey = mapItem.key, let uwValue = mapItem.value else {
             return

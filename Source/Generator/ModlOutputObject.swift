@@ -26,11 +26,11 @@
 
 import Foundation
 
-protocol ModlJSON {
+internal protocol ModlJSON {
     func asJson() -> String?
 }
 
-class ModlOutputObject: ModlObject, ModlJSON {
+internal class ModlOutputObject: ModlObject, ModlJSON {
     func asJson() -> String? {
         var reducedArray = structures.reduce("") { (result, nextValue) -> String in
             if let next = (nextValue as? ModlJSON)?.asJson() {

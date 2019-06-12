@@ -38,7 +38,7 @@ fileprivate enum ClassSpecialKeys: String, CaseIterable {
 }
 
 
-class ModlClassManager {
+internal class ModlClassManager {
     
     private enum PrimitiveSuperclassType: String, CaseIterable {
         case num

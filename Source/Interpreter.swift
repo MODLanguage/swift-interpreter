@@ -32,8 +32,8 @@ enum InterpreterError: Error {
     case invalidClass
 }
 
-struct Interpreter {
-    func parseToJson(_ input: String) throws -> String {
+public struct Interpreter {
+    public func parseToJson(_ input: String) throws -> String {
         let intermediate = try parseToRawModl(input)
         let output = ModlObjectCreator().createOutput(intermediate)
         return output?.asJson() ?? ""
