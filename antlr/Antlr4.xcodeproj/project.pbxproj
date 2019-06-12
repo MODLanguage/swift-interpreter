@@ -666,7 +666,7 @@
 			path = atn;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -675,7 +675,6 @@
 				OBJ_203 /* Products */,
 				OBJ_206 /* boot.py */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -796,6 +795,11 @@
 			attributes = {
 				LastSwiftMigration = 9999;
 				LastUpgradeCheck = 9999;
+				TargetAttributes = {
+					"Antlr4::Antlr4" = {
+						LastSwiftMigration = 1020;
+					};
+				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Antlr4" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -805,7 +809,7 @@
 				English,
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_203 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
