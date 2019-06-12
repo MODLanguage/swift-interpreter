@@ -25,7 +25,7 @@
 //
 
 import UIKit
-import MODLInterpreter
+import MODL_Interpreter
 
 class ParseTestViewController: UIViewController {
 

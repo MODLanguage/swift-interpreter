@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E2EEC0E22B11A6E005D77DC /* Punycode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2EEC0322B11A51005D77DC /* Punycode.framework */; };
+		3E2EEC2422B11C18005D77DC /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2EEBCC22B119ED005D77DC /* Antlr4.framework */; };
 		3E6400E222AFDEF70041260D /* MODL_Interpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6400D922AFDEF70041260D /* MODL_Interpreter.framework */; };
 		3E6400E922AFDEF70041260D /* InterpreterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400E822AFDEF70041260D /* InterpreterTests.swift */; };
 		3E6400EB22AFDEF70041260D /* Interpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6400DB22AFDEF70041260D /* Interpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -193,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E2EEC2422B11C18005D77DC /* Antlr4.framework in Frameworks */,
 				3E2EEC0E22B11A6E005D77DC /* Punycode.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

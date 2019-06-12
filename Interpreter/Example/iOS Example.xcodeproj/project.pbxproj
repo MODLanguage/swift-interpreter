@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E2EEC1C22B11BC3005D77DC /* MODL_Interpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2EEC1922B11B92005D77DC /* MODL_Interpreter.framework */; };
+		3E2EEC1D22B11BC3005D77DC /* MODL_Interpreter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2EEC1922B11B92005D77DC /* MODL_Interpreter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3E6400A322AFBE240041260D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400A222AFBE240041260D /* AppDelegate.swift */; };
 		3E6400A822AFBE240041260D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400A622AFBE240041260D /* Main.storyboard */; };
 		3E6400AD22AFBE260041260D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400AB22AFBE260041260D /* LaunchScreen.storyboard */; };
@@ -16,52 +18,36 @@
 		3E6400CE22AFC2020041260D /* DNSTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400C522AFC2010041260D /* DNSTestViewController.swift */; };
 		3E6400D122AFC2020041260D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400CB22AFC2020041260D /* Assets.xcassets */; };
 		3E723A7722B108DC00FACCAA /* DNSTxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E723A7122B108B600FACCAA /* DNSTxtRecord.swift */; };
-		3E723A8B22B1137000FACCAA /* Interpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E723A7E22B109E400FACCAA /* Interpreter.framework */; };
-		3E723A8C22B1137000FACCAA /* Interpreter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3E723A7E22B109E400FACCAA /* Interpreter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3E2EEC1822B11B92005D77DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E2EEC1322B11B92005D77DC /* MODL-Interpreter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E6400D922AFDEF70041260D;
+			remoteInfo = "MODL-Interpreter";
+		};
+		3E2EEC1A22B11B92005D77DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E2EEC1322B11B92005D77DC /* MODL-Interpreter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E6400E122AFDEF70041260D;
+			remoteInfo = "MODL-InterpreterTests";
+		};
+		3E2EEC1E22B11BC3005D77DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E2EEC1322B11B92005D77DC /* MODL-Interpreter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
+			remoteInfo = "MODL-Interpreter";
+		};
 		3E6400B422AFBE260041260D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3E64009722AFBE240041260D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3E64009E22AFBE240041260D;
 			remoteInfo = "MODL-Interpreter";
-		};
-		3E723A7D22B109E400FACCAA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E6400D922AFDEF70041260D;
-			remoteInfo = Interpreter;
-		};
-		3E723A7F22B109E400FACCAA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E6400E122AFDEF70041260D;
-			remoteInfo = InterpreterTests;
-		};
-		3E723A8122B10A5A00FACCAA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
-			remoteInfo = Interpreter;
-		};
-		3E723A8822B1117600FACCAA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
-			remoteInfo = Interpreter;
-		};
-		3E723A8D22B1137000FACCAA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
-			remoteInfo = Interpreter;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -72,7 +58,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3E723A8C22B1137000FACCAA /* Interpreter.framework in Embed Frameworks */,
+				3E2EEC1D22B11BC3005D77DC /* MODL_Interpreter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,6 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E2EEC1322B11B92005D77DC /* MODL-Interpreter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "MODL-Interpreter.xcodeproj"; path = "../MODL-Interpreter.xcodeproj"; sourceTree = "<group>"; };
 		3E64009F22AFBE240041260D /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6400A222AFBE240041260D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E6400A722AFBE240041260D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -96,7 +83,6 @@
 		3E6400CA22AFC2020041260D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		3E6400CB22AFC2020041260D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E723A7122B108B600FACCAA /* DNSTxtRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSTxtRecord.swift; sourceTree = "<group>"; };
-		3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "MODL-Swift.xcodeproj"; path = "../MODL-Swift.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E723A8B22B1137000FACCAA /* Interpreter.framework in Frameworks */,
+				3E2EEC1C22B11BC3005D77DC /* MODL_Interpreter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,10 +104,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E2EEC1422B11B92005D77DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E2EEC1922B11B92005D77DC /* MODL_Interpreter.framework */,
+				3E2EEC1B22B11B92005D77DC /* MODL-InterpreterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3E64009622AFBE240041260D = {
 			isa = PBXGroup;
 			children = (
-				3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */,
+				3E2EEC1322B11B92005D77DC /* MODL-Interpreter.xcodeproj */,
 				3E6400A122AFBE240041260D /* Source */,
 				3E6400B622AFBE260041260D /* Tests */,
 				3E6400A022AFBE240041260D /* Products */,
@@ -190,15 +185,6 @@
 			path = DNS;
 			sourceTree = "<group>";
 		};
-		3E723A7922B109E400FACCAA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3E723A7E22B109E400FACCAA /* Interpreter.framework */,
-				3E723A8022B109E400FACCAA /* InterpreterTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3E723A8322B10A6200FACCAA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,9 +207,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				3E723A8222B10A5A00FACCAA /* PBXTargetDependency */,
-				3E723A8922B1117600FACCAA /* PBXTargetDependency */,
-				3E723A8E22B1137000FACCAA /* PBXTargetDependency */,
+				3E2EEC1F22B11BC3005D77DC /* PBXTargetDependency */,
 			);
 			name = "iOS Example";
 			productName = "MODL-Interpreter";
@@ -280,8 +264,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3E723A7922B109E400FACCAA /* Products */;
-					ProjectRef = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
+					ProductGroup = 3E2EEC1422B11B92005D77DC /* Products */;
+					ProjectRef = 3E2EEC1322B11B92005D77DC /* MODL-Interpreter.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -293,18 +277,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3E723A7E22B109E400FACCAA /* Interpreter.framework */ = {
+		3E2EEC1922B11B92005D77DC /* MODL_Interpreter.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = Interpreter.framework;
-			remoteRef = 3E723A7D22B109E400FACCAA /* PBXContainerItemProxy */;
+			path = MODL_Interpreter.framework;
+			remoteRef = 3E2EEC1822B11B92005D77DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3E723A8022B109E400FACCAA /* InterpreterTests.xctest */ = {
+		3E2EEC1B22B11B92005D77DC /* MODL-InterpreterTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = InterpreterTests.xctest;
-			remoteRef = 3E723A7F22B109E400FACCAA /* PBXContainerItemProxy */;
+			path = "MODL-InterpreterTests.xctest";
+			remoteRef = 3E2EEC1A22B11B92005D77DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -353,25 +337,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3E2EEC1F22B11BC3005D77DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "MODL-Interpreter";
+			targetProxy = 3E2EEC1E22B11BC3005D77DC /* PBXContainerItemProxy */;
+		};
 		3E6400B522AFBE260041260D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3E64009E22AFBE240041260D /* iOS Example */;
 			targetProxy = 3E6400B422AFBE260041260D /* PBXContainerItemProxy */;
-		};
-		3E723A8222B10A5A00FACCAA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Interpreter;
-			targetProxy = 3E723A8122B10A5A00FACCAA /* PBXContainerItemProxy */;
-		};
-		3E723A8922B1117600FACCAA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Interpreter;
-			targetProxy = 3E723A8822B1117600FACCAA /* PBXContainerItemProxy */;
-		};
-		3E723A8E22B1137000FACCAA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Interpreter;
-			targetProxy = 3E723A8D22B1137000FACCAA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
