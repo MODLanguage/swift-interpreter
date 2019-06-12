@@ -24,7 +24,7 @@
 //  Created by Nicholas Jones on 08/05/2019.
 
 import XCTest
-@testable import Interpreter
+@testable import MODLInterpreter
 
 class LongInputTests: XCTestCase {
 

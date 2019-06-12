@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3E6400D822AFDEF70041260D"
-               BuildableName = "Interpreter.framework"
-               BlueprintName = "Interpreter"
-               ReferencedContainer = "container:MODL-Swift.xcodeproj">
+               BuildableName = "MODL_Interpreter.framework"
+               BlueprintName = "MODL-Interpreter"
+               ReferencedContainer = "container:MODL-Interpreter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3E6400E022AFDEF70041260D"
-               BuildableName = "InterpreterTests.xctest"
-               BlueprintName = "InterpreterTests"
-               ReferencedContainer = "container:MODL-Swift.xcodeproj">
+               BuildableName = "MODL-InterpreterTests.xctest"
+               BlueprintName = "MODL-InterpreterTests"
+               ReferencedContainer = "container:MODL-Interpreter.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E6400D822AFDEF70041260D"
-            BuildableName = "Interpreter.framework"
-            BlueprintName = "Interpreter"
-            ReferencedContainer = "container:MODL-Swift.xcodeproj">
+            BuildableName = "MODL_Interpreter.framework"
+            BlueprintName = "MODL-Interpreter"
+            ReferencedContainer = "container:MODL-Interpreter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E6400D822AFDEF70041260D"
-            BuildableName = "Interpreter.framework"
-            BlueprintName = "Interpreter"
-            ReferencedContainer = "container:MODL-Swift.xcodeproj">
+            BuildableName = "MODL_Interpreter.framework"
+            BlueprintName = "MODL-Interpreter"
+            ReferencedContainer = "container:MODL-Interpreter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -83,9 +83,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E6400D822AFDEF70041260D"
-            BuildableName = "Interpreter.framework"
-            BlueprintName = "Interpreter"
-            ReferencedContainer = "container:MODL-Swift.xcodeproj">
+            BuildableName = "MODL_Interpreter.framework"
+            BlueprintName = "MODL-Interpreter"
+            ReferencedContainer = "container:MODL-Interpreter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

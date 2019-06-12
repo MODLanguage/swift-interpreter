@@ -24,7 +24,7 @@
 //
 
 import XCTest
-@testable import Interpreter
+@testable import MODLInterpreter
 
 class LoadTests: XCTestCase {
     var jsonTests: [MODLTest]?

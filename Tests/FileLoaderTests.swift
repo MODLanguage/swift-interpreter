@@ -24,7 +24,7 @@
 //
 
 import XCTest
-@testable import Interpreter
+@testable import MODLInterpreter
 
 class FileLoaderTests: XCTestCase {
         var sut: FileLoader? = nil

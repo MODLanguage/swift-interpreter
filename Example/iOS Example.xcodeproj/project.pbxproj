@@ -16,7 +16,8 @@
 		3E6400CE22AFC2020041260D /* DNSTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400C522AFC2010041260D /* DNSTestViewController.swift */; };
 		3E6400D122AFC2020041260D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E6400CB22AFC2020041260D /* Assets.xcassets */; };
 		3E723A7722B108DC00FACCAA /* DNSTxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E723A7122B108B600FACCAA /* DNSTxtRecord.swift */; };
-		3E723A8722B1117600FACCAA /* Interpreter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3E723A7E22B109E400FACCAA /* Interpreter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3E723A8B22B1137000FACCAA /* Interpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E723A7E22B109E400FACCAA /* Interpreter.framework */; };
+		3E723A8C22B1137000FACCAA /* Interpreter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3E723A7E22B109E400FACCAA /* Interpreter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,13 @@
 			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
 			remoteInfo = Interpreter;
 		};
+		3E723A8D22B1137000FACCAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E723A7822B109E400FACCAA /* MODL-Swift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E6400D822AFDEF70041260D;
+			remoteInfo = Interpreter;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -64,7 +72,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3E723A8722B1117600FACCAA /* Interpreter.framework in Embed Frameworks */,
+				3E723A8C22B1137000FACCAA /* Interpreter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E723A8B22B1137000FACCAA /* Interpreter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +223,7 @@
 			dependencies = (
 				3E723A8222B10A5A00FACCAA /* PBXTargetDependency */,
 				3E723A8922B1117600FACCAA /* PBXTargetDependency */,
+				3E723A8E22B1137000FACCAA /* PBXTargetDependency */,
 			);
 			name = "iOS Example";
 			productName = "MODL-Interpreter";
@@ -357,6 +367,11 @@
 			isa = PBXTargetDependency;
 			name = Interpreter;
 			targetProxy = 3E723A8822B1117600FACCAA /* PBXContainerItemProxy */;
+		};
+		3E723A8E22B1137000FACCAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Interpreter;
+			targetProxy = 3E723A8D22B1137000FACCAA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

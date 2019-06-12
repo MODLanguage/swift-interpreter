@@ -33,6 +33,9 @@ enum InterpreterError: Error {
 }
 
 public struct Interpreter {
+    
+    public init() {}
+    
     public func parseToJson(_ input: String) throws -> String {
         let intermediate = try parseToRawModl(input)
         let output = ModlObjectCreator().createOutput(intermediate)
