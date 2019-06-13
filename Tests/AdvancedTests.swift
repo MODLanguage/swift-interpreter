@@ -38,103 +38,96 @@ class AdvancedTests: XCTestCase {
         jsonTests = nil
     }
 
-    func testJustClass() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let simpleClassTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.classes.rawValue) ?? false) && modl.testedFeatures?.count == 1
-        }
-        MODLTestManager.performTests(simpleClassTests)
-    }
+    // Uncomment to test just class feature
+//    func testJustClass() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let simpleClassTests = json.filter { (modl) -> Bool in
+//            return (modl.testedFeatures?.contains(FeatureTestTypes.classes.rawValue) ?? false) && modl.testedFeatures?.count == 1
+//        }
+//        MODLTestManager.performTests(simpleClassTests)
+//    }
     
-    func testAssignClass() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let assignClassTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.classes.rawValue) ?? false) && modl.testedFeatures?.count == 2 && (modl.testedFeatures?.contains(FeatureTestTypes.assign.rawValue) ?? false)
-        }
-        MODLTestManager.performTests(assignClassTests)
-    }
+    // Uncomment to test just class with assignment features
+//    func testAssignClass() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let assignClassTests = json.filter { (modl) -> Bool in
+//            return (modl.testedFeatures?.contains(FeatureTestTypes.classes.rawValue) ?? false) && modl.testedFeatures?.count == 2 && (modl.testedFeatures?.contains(FeatureTestTypes.assign.rawValue) ?? false)
+//        }
+//        MODLTestManager.performTests(assignClassTests)
+//    }
     
-    func testObjRef() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let objRefClassTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.objectReference.rawValue) ?? false) && modl.testedFeatures?.count == 1
-        }
-        MODLTestManager.performTests(objRefClassTests)
-    }
+    // Uncomment to test just most basic object reference
+//    func testObjRef() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let objRefClassTests = json.filter { (modl) -> Bool in
+//            return (modl.testedFeatures?.contains(FeatureTestTypes.objectReference.rawValue) ?? false) && modl.testedFeatures?.count == 1
+//        }
+//        MODLTestManager.performTests(objRefClassTests)
+//    }
     
-    func testConditional() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let objRefClassTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.conditional.rawValue) ?? false) && modl.testedFeatures?.count == 1
-        }
-        MODLTestManager.performTests(objRefClassTests)
-    }
+    // Uncomment to test just most basic conditionals
+//    func testConditional() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let objRefClassTests = json.filter { (modl) -> Bool in
+//            return (modl.testedFeatures?.contains(FeatureTestTypes.conditional.rawValue) ?? false) && modl.testedFeatures?.count == 1
+//        }
+//        MODLTestManager.performTests(objRefClassTests)
+//    }
     
-    func testAllButMostAdvanced() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let allButTests = json.filter { (modl) -> Bool in
-            guard let modlFeature = modl.testedFeatures else {
-                return false
-            }
-            return !modlFeature.contains(FeatureTestTypes.load.rawValue) && !modlFeature.contains(FeatureTestTypes.method.rawValue)
-        }
-        MODLTestManager.performTests(allButTests)
-    }
-    
-    func testProblemCases() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let allButTests = json.filter { (modl) -> Bool in
-            guard let modlFeature = modl.testedFeatures else {
-                return false
-            }
-            return modlFeature.contains("problem") && !modlFeature.contains(FeatureTestTypes.load.rawValue)
-        }
-        MODLTestManager.performTests(allButTests)
-    }
+    // Uncomment to test just tests tagged with "problem" feature
+//    func testProblemCases() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let allButTests = json.filter { (modl) -> Bool in
+//            guard let modlFeature = modl.testedFeatures else {
+//                return false
+//            }
+//            return modlFeature.contains("problem") && !modlFeature.contains(FeatureTestTypes.load.rawValue)
+//        }
+//        MODLTestManager.performTests(allButTests)
+//    }
 
-    func testSuperclassInferenceCases() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let allButTests = json.filter { (modl) -> Bool in
-            guard let modlFeature = modl.testedFeatures else {
-                return false
-            }
-            return modlFeature.contains(FeatureTestTypes.superclassInference.rawValue)
-        }
-        MODLTestManager.performTests(allButTests)
-    }
+    // Uncomment to test just superclass inference feature
+//    func testSuperclassInferenceCases() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let allButTests = json.filter { (modl) -> Bool in
+//            guard let modlFeature = modl.testedFeatures else {
+//                return false
+//            }
+//            return modlFeature.contains(FeatureTestTypes.superclassInference.rawValue)
+//        }
+//        MODLTestManager.performTests(allButTests)
+//    }
     
-    func testMethods() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let methodTests = json.filter { (modl) -> Bool in
-            guard let modlFeature = modl.testedFeatures else {
-                return false
-            }
-            return modlFeature.contains(FeatureTestTypes.method.rawValue)
-        }
-        MODLTestManager.performTests(methodTests)
-    }
+    // Uncomment to test just custom methods feature
+//    func testMethods() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let methodTests = json.filter { (modl) -> Bool in
+//            guard let modlFeature = modl.testedFeatures else {
+//                return false
+//            }
+//            return modlFeature.contains(FeatureTestTypes.method.rawValue)
+//        }
+//        MODLTestManager.performTests(methodTests)
+//    }
 }

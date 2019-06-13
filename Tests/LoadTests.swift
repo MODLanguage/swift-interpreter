@@ -41,36 +41,39 @@ class LoadTests: XCTestCase {
         TestFileLoader().removeTestFiles()
     }
 
-    func testJustLoad() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let loadTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && modl.testedFeatures?.count == 1
-        }
-        MODLTestManager.performTests(loadTests)
-    }
+    // Uncomment to test just most basic load tests
+//    func testJustLoad() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let loadTests = json.filter { (modl) -> Bool in
+//            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && modl.testedFeatures?.count == 1
+//        }
+//        MODLTestManager.performTests(loadTests)
+//    }
     
-    func testAllLoad() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let loadTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false) && !(modl.testedFeatures?.contains(FeatureTestTypes.method.rawValue) ?? true)
-        }
-        MODLTestManager.performTests(loadTests)
-    }
+    // Uncomment to test all load tests
+//    func testAllLoad() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let loadTests = json.filter { (modl) -> Bool in
+//            return (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? false)
+//        }
+//        MODLTestManager.performTests(loadTests)
+//    }
     
-    func testLoadProblem() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let loadTests = json.filter { (modl) -> Bool in
-            return (modl.testedFeatures?.contains("problem") ?? false) && (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? true)
-        }
-        MODLTestManager.performTests(loadTests)
-    }
+    // Uncomment to test just load tests tagged with "problem"
+//    func testLoadProblem() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let loadTests = json.filter { (modl) -> Bool in
+//            return (modl.testedFeatures?.contains("problem") ?? false) && (modl.testedFeatures?.contains(FeatureTestTypes.load.rawValue) ?? true)
+//        }
+//        MODLTestManager.performTests(loadTests)
+//    }
 }

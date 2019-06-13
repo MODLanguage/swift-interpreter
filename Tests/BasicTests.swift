@@ -38,15 +38,16 @@ class BasicTests: XCTestCase {
     override func tearDown() {
         jsonTests = nil
     }
-    
-    func testAllBasicExamples() {
-        guard let json = jsonTests else {
-            XCTFail("Fail creating tests from json input")
-            return
-        }
-        let basic = json.filter { (modl) -> Bool in
-            modl.isBasicTest()
-        }
-        MODLTestManager.performTests(basic)
-    }
+
+// Uncomment to test just the simplest parsing
+//    func testAllBasicExamples() {
+//        guard let json = jsonTests else {
+//            XCTFail("Fail creating tests from json input")
+//            return
+//        }
+//        let basic = json.filter { (modl) -> Bool in
+//            modl.isBasicTest()
+//        }
+//        MODLTestManager.performTests(basic)
+//    }
 }
