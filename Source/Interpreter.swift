@@ -29,6 +29,7 @@ import Antlr4
 
 public enum InterpreterError: Error {
     case invalidVersion
+    case mismatchedVersion
     case invalidClass
     case missingFile
 }
@@ -47,18 +48,13 @@ public struct Interpreter {
     
     internal func parseToRawModl(_ input: String) throws -> ModlListenerObject? {
         let lexer = MODLLexer(ANTLRInputStream(input))
-        do {
-            let parser = try MODLParser(CommonTokenStream(lexer))
-            //            parser.removeErrorListeners()
-            let base = ModlListener()
-            try parser.modl().enterRule(base)
-            if let error = base.parseError {
-                throw error
-            }
-            return base.object
-        } catch {
-            print("Parser fail : \(error)")
-            return nil
+        let parser = try MODLParser(CommonTokenStream(lexer))
+        //            parser.removeErrorListeners()
+        let base = ModlListener()
+        try parser.modl().enterRule(base)
+        if let error = base.parseError {
+            throw error
         }
+        return base.object
     }
 }

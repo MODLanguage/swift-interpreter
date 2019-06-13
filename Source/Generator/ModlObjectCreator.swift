@@ -197,9 +197,13 @@ internal struct ModlObjectCreator {
         switch uwReserved {
         case .version, .versionSH:
             //Could raise an error here for non-matching version.... although json test implies it just continues
-            if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber(), Double(decVersion as NSNumber) != ModlListener.ModlVersion {
-                //Could raise an error here for non-matching version.... although json test implies it just continues
-//                throw InterpreterError.invalidVersion
+            if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber() {
+                if Double(truncating: decVersion as NSNumber) != ModlListener.ModlVersion {
+                    //Could raise an error here for non-matching version.... although json test implies it just continues
+                                    throw InterpreterError.invalidVersion
+                }
+            } else {
+                throw InterpreterError.invalidVersion
             }
             return uwReserved
         case .mClass, .mClassSH:
