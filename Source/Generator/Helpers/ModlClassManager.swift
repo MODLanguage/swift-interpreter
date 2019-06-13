@@ -51,18 +51,12 @@ internal class ModlClassManager {
     private var storedClasses: [String: ModlClass] = [:]
     private var classOrder: [String] = []
     
-    func addClass(_ classMap: ModlValue?) {
+    func addClass(_ classMap: ModlValue?) throws {
         guard let input = classMap as? ModlMap, let mClass = ModlClass(input) else {
-            //either not a map, or has no id so ignore ...
-            //TODO: raise bad class error?
-            return
+            throw InterpreterError.invalidClass
         }
-        if let superclassName = mClass.superclass {
-            if superclassName.uppercased() == superclassName {
-                //cannot inherit from immutable class
-                //TODO: throw an error?
-                return
-            }
+        if let superclassName = mClass.superclass, superclassName.uppercased() == superclassName {
+            throw InterpreterError.invalidClass
         }
         storedClasses[mClass.id] = mClass
         classOrder.append(mClass.id)

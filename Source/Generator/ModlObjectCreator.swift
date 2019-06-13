@@ -203,7 +203,7 @@ internal struct ModlObjectCreator {
             }
             return uwReserved
         case .mClass, .mClassSH:
-            classManager.addClass(value)
+            try classManager.addClass(value)
             return .mClass
         case .objectIndex:
             let processed = try processModlElement(value)
