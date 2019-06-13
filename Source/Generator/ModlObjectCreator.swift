@@ -51,13 +51,13 @@ internal struct ModlObjectCreator {
         self.stringTransformer = StringTransformer(objectManager: self.objectRefManager, methodManager: self.methodManager)
     }
     
-    func createOutput(_ input: ModlListenerObject?) -> ModlOutputObject? {
+    func createOutput(_ input: ModlListenerObject?) throws -> ModlOutputObject? {
         guard let uwInput = input else {
             return nil
         }
         let output = ModlOutputObject()
         for structure in uwInput.structures {
-            if let outStructures = processModlElement(structure) as? [ModlStructure] {
+            if let outStructures = try processModlElement(structure) as? [ModlStructure] {
                 for singleStruct in outStructures {
                     output.addStructure(singleStruct)
                 }
@@ -66,7 +66,7 @@ internal struct ModlObjectCreator {
         return output
     }
     
-    private func processModlElement(_ element: ModlValue?, classIdsProcessedInBranch: [String] = []) -> [ModlValue]? {
+    private func processModlElement(_ element: ModlValue?, classIdsProcessedInBranch: [String] = []) throws -> [ModlValue]? {
         guard let uwElement = element else {
             return nil
         }
@@ -74,9 +74,9 @@ internal struct ModlObjectCreator {
         case let iPair as ModlPair:
             var pair = ModlOutputObject.Pair()
            
-            if  let reservedPair = processReservedPair(key: iPair.key, value: iPair.value) {
+            if  let reservedPair = try processReservedPair(key: iPair.key, value: iPair.value) {
                 if case ReservedKey.load = reservedPair {
-                    return processLoad(iPair.value)
+                    return try processLoad(iPair.value)
                 }
                 return nil
             }
@@ -85,17 +85,17 @@ internal struct ModlObjectCreator {
                 newProcessedClasses.append(iPair.key ?? "")
                 newProcessedClasses.append(classReference.key ?? "")
                 pair.key = classReference.key
-                pair.value = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)?.first
+                pair.value = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)?.first
                 return [pair]
             }
             pair.key = stringTransformer.transformKeyString(iPair.key)
-            pair.value = processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
+            pair.value = try processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
             objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
             return [pair]
         case let iArray as ModlArray:
             var array = ModlOutputObject.Array()
-            array.values = iArray.values.compactMap({ (value) -> ModlValue? in
-                return processModlElement(value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
+            array.values = try iArray.values.compactMap({ (value) -> ModlValue? in
+                return try processModlElement(value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
             })
             return [array]
         case let iMap as ModlMap:
@@ -103,24 +103,24 @@ internal struct ModlObjectCreator {
             for key in iMap.orderedKeys {
                 let originalValue = iMap.value(forKey: key)
                 
-                if let reservedPair = processReservedPair(key: key, value: originalValue) {
+                if let reservedPair = try processReservedPair(key: key, value: originalValue) {
                     if case ReservedKey.load = reservedPair {
-                        return processLoad(originalValue)
+                        return try processLoad(originalValue)
                     }
                     continue
                 }
                 var newProcessedClasses = classIdsProcessedInBranch
                 var mapKey = key
                 var mapValue = originalValue
-                if let conditional = originalValue as? ModlMapConditional, let returnedPair = processConditional(conditional)?.first as? ModlPair, let newKey = returnedPair.key {
+                if let conditional = originalValue as? ModlMapConditional, let returnedPair = try processConditional(conditional)?.first as? ModlPair, let newKey = returnedPair.key {
                     mapKey = newKey
                     mapValue = returnedPair.value
-                } else if  let classReference = classManager.processFromClass(key: key, value: originalValue), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses), let mValue = processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses) {
+                } else if  let classReference = classManager.processFromClass(key: key, value: originalValue), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses), let mValue = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses) {
                     newProcessedClasses.append(uwKey)
                     newProcessedClasses.append(key)
                     mapKey = uwKey
                     mapValue = mValue.first
-                } else if let mValue = processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
+                } else if let mValue = try processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
                     mapKey = stringTransformer.transformKeyString(key) ?? key
                     mapValue = mValue.first
                 }
@@ -140,7 +140,7 @@ internal struct ModlObjectCreator {
                 if (transformed as? ModlPrimitive)?.asString() == strValue {
                     //nothing has or will change so stop transforming
                 } else {
-                    return processModlElement(transformed, classIdsProcessedInBranch: classIdsProcessedInBranch)
+                    return try processModlElement(transformed, classIdsProcessedInBranch: classIdsProcessedInBranch)
                 }
             }
             var prim = ModlOutputObject.Primitive()
@@ -152,13 +152,13 @@ internal struct ModlObjectCreator {
             }
             return [prim]
         case let topLevelConditional as ModlTopLevelConditional:
-            return processConditional(topLevelConditional)
+            return try processConditional(topLevelConditional)
         case let valueConditional as ModlValueConditional:
-            return processConditional(valueConditional)
+            return try processConditional(valueConditional)
         case let arrayConditional as ModlArrayConditional:
-            return processConditional(arrayConditional)
+            return try processConditional(arrayConditional)
         case let mapConditional as ModlMapConditional:
-            return processConditional(mapConditional)
+            return try processConditional(mapConditional)
         default:
             return nil
         }
@@ -183,7 +183,7 @@ internal struct ModlObjectCreator {
     }
     
     
-    private func processReservedPair(key: String?, value: ModlValue?) -> ReservedKey? {
+    private func processReservedPair(key: String?, value: ModlValue?) throws -> ReservedKey? {
         guard let uwKey = key else {
             return nil
         }
@@ -197,18 +197,22 @@ internal struct ModlObjectCreator {
         switch uwReserved {
         case .version, .versionSH:
             //Could raise an error here for non-matching version.... although json test implies it just continues
+            if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber(), Double(decVersion as NSNumber) != ModlListener.ModlVersion {
+                //Could raise an error here for non-matching version.... although json test implies it just continues
+//                throw InterpreterError.invalidVersion
+            }
             return uwReserved
         case .mClass, .mClassSH:
             classManager.addClass(value)
             return .mClass
         case .objectIndex:
-            let processed = processModlElement(value)
+            let processed = try processModlElement(value)
             objectRefManager.addIndexedVariables(processed?.first)
             return uwReserved
         case .objectReference:
             var objPair = ModlOutputObject.Pair()
             objPair.key = uwKey
-            objPair.value = processModlElement(value)?.first
+            objPair.value = try processModlElement(value)?.first
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
             return uwReserved
         case .load, .loadSH:
@@ -243,14 +247,14 @@ internal struct ModlObjectCreator {
         return outputValue
     }
     
-    private func processLoad(_ value: ModlValue?) -> [ModlValue]? {
-        if let processedPath = processModlElement(value)?.first {
+    private func processLoad(_ value: ModlValue?) throws -> [ModlValue]? {
+        if let processedPath = try processModlElement(value)?.first {
             switch processedPath {
             case let primPath as ModlPrimitive:
                 if let path = primPath.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
                     var outputModl: [ModlValue] = []
                     for structure in obj.structures {
-                        for processed in processModlElement(structure) ?? [] {
+                        for processed in try processModlElement(structure) ?? [] {
                             outputModl.append(processed)
                         }
                     }
@@ -261,7 +265,7 @@ internal struct ModlObjectCreator {
                 for case let path as ModlPrimitive in arrPath.values {
                     if let path = path.asString(), let obj = try? fileLoader.loadFileObject(path) { //TODO: how to fail?
                         for structure in obj.structures {
-                            for processed in processModlElement(structure) ?? [] {
+                            for processed in try processModlElement(structure) ?? [] {
                                 outputModl.append(processed)
                             }
                         }
@@ -275,7 +279,7 @@ internal struct ModlObjectCreator {
         return nil
     }
 
-    func processConditional(_ conditional: ModlConditional) -> [ModlValue]? {
+    func processConditional(_ conditional: ModlConditional) throws -> [ModlValue]? {
         var returnStructures: [ModlValue] = []
         var passedTest: Bool = false
         //nothing to return so return test value
@@ -287,7 +291,7 @@ internal struct ModlObjectCreator {
             } else if evaluateTest(test) {
                 passedTest = true
                 for structure in conditional.conditionReturns[index].structures {
-                    if let value = processModlElement(structure)?.first {
+                    if let value = try processModlElement(structure)?.first {
                         returnStructures.append(value)
                     }
                 }
@@ -295,7 +299,7 @@ internal struct ModlObjectCreator {
          }
         if !passedTest {
             for structure in conditional.defaultReturn?.structures ?? [] {
-                if let value = processModlElement(structure)?.first {
+                if let value = try processModlElement(structure)?.first {
                     returnStructures.append(value)
                 }
             }

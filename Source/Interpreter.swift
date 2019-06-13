@@ -27,9 +27,10 @@
 import Foundation
 import Antlr4
 
-enum InterpreterError: Error {
+public enum InterpreterError: Error {
     case invalidVersion
     case invalidClass
+    case missingFile
 }
 
 public struct Interpreter {
@@ -40,7 +41,7 @@ public struct Interpreter {
     public func parseToJson(_ input: String) throws -> String {
         let intermediate = try parseToRawModl(input)
         let outputGenerator = ModlObjectCreator(fileLoader)
-        let output = outputGenerator.createOutput(intermediate)
+        let output = try outputGenerator.createOutput(intermediate)
         return output?.asJson() ?? ""
     }
     
