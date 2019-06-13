@@ -58,6 +58,14 @@ internal class ModlClassManager {
         if let superclassName = mClass.superclass, superclassName.uppercased() == superclassName {
             throw InterpreterError.invalidClass
         }
+        var assignCount = 0
+        for case let assign as ModlArray in mClass.assignMap?.values ?? [] {
+            let newCount = assign.values.count
+            if assign.values.count < assignCount {
+                throw InterpreterError.classAssignOrder
+            }
+            assignCount = newCount
+        }
         storedClasses[mClass.id] = mClass
         classOrder.append(mClass.id)
      }
