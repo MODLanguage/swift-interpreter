@@ -39,13 +39,13 @@ internal struct StringTransformer {
         self.methodManager = methodManager
     }
     
-    func transformKeyString(_ inputString: String?) -> String? {
-        let prim = transformString(inputString) as? ModlPrimitive
+    func transformKeyString(_ inputString: String?) throws -> String? {
+        let prim = try transformString(inputString) as? ModlPrimitive
         let output = prim?.value as? String ?? inputString
         return methodManager.processStringForMethods(output)
     }
     
-    func transformString(_ inputString: String?) -> ModlValue? {
+    func transformString(_ inputString: String?) throws -> ModlValue? {
         guard var uwInput = inputString else {
             //TODO: Return ModlNull?
             return nil
@@ -78,7 +78,7 @@ internal struct StringTransformer {
         while !finished {
             if let ref = getObjectRangesMatch(uwInput, start: startIndex) {
                 let refKey = String(uwInput[ref])
-                let mValue = checkObjectReferencing(keyToCheck: refKey, objectMgr: objectManager)
+                let mValue = try checkObjectReferencing(keyToCheck: refKey, objectMgr: objectManager)
                 if refKey == uwInput {
                     //the entire key matches the grave key so just return referenced object
                     return mValue
@@ -123,7 +123,7 @@ internal struct StringTransformer {
         return nil
     }
     
-    private func checkObjectReferencing(keyToCheck: String, objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
+    private func checkObjectReferencing(keyToCheck: String, objectMgr: ModlObjectReferenceManager?) throws -> ModlValue? {
         guard let uwObjMgr = objectMgr, let mKey = refContinueQuickProcess(keyToCheck) else {
             return nil
         }
@@ -152,7 +152,7 @@ internal struct StringTransformer {
         }
         var returnObject = refObject
         if methods.count != 0 {
-            returnObject = handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
+            returnObject = try handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
         }
         if var primObj = returnObject as? ModlPrimitive, var strValue = primObj.value as? String {
             strValue = methodManager.processStringForMethods(strValue) ?? ""
@@ -163,14 +163,14 @@ internal struct StringTransformer {
     }
 
     
-    private func handleNestedObject(_ refObject: ModlValue?, methods: [String], objectMgr: ModlObjectReferenceManager?) -> ModlValue? {
+    private func handleNestedObject(_ refObject: ModlValue?, methods: [String], objectMgr: ModlObjectReferenceManager?) throws -> ModlValue? {
         var newRef = refObject
         var index = 0
         var isFinished = index >= methods.count
         
         while !isFinished {
             var method = String(methods[index]).stripGraves()
-            if let transformed = transformString(method) as? ModlPrimitive {
+            if let transformed = try transformString(method) as? ModlPrimitive {
                 method = transformed.asString() ?? method
             }
             if let numMethod = Int(method), let refArray = newRef as? ModlArray {
@@ -188,6 +188,8 @@ internal struct StringTransformer {
                 newRef = refPrim
                 isFinished = true
                 continue
+            } else {
+                throw InterpreterError.invalidObjectReference
             }
             
             index += 1

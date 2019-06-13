@@ -58,6 +58,7 @@ class InterpreterTests: XCTestCase {
             return
         }
         for test in tests {
+            print(test)
             let p = Interpreter()
             XCTAssertThrowsError(try p.parseToJson(test), "Test should throw error: \(test)") { (error) in
             

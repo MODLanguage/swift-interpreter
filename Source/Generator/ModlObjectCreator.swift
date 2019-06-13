@@ -91,7 +91,7 @@ internal struct ModlObjectCreator {
                 pair.value = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)?.first
                 return [pair]
             }
-            pair.key = stringTransformer.transformKeyString(iPair.key)
+            pair.key = try stringTransformer.transformKeyString(iPair.key)
             pair.value = try processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
             objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
             return [pair]
@@ -128,7 +128,7 @@ internal struct ModlObjectCreator {
                     mapKey = uwKey
                     mapValue = mValue.first
                 } else if let mValue = try processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
-                    mapKey = stringTransformer.transformKeyString(key) ?? key
+                    mapKey = try stringTransformer.transformKeyString(key) ?? key
                     mapValue = mValue.first
                 }
                 if let uwValue = mapValue {
@@ -143,7 +143,7 @@ internal struct ModlObjectCreator {
             if let iPrimStr = iPrim.asString(), iPrimStr.hasPrefix("%*"), let value = processReferenceInstruction(key: iPrimStr, classIdsProcessedInBranch: classIdsProcessedInBranch){
                 return [value]
             }
-            if let strValue = iPrim.value as? String, let transformed = stringTransformer.transformString(strValue) {
+            if let strValue = iPrim.value as? String, let transformed = try stringTransformer.transformString(strValue) {
                 if (transformed as? ModlPrimitive)?.asString() == strValue {
                     //nothing has or will change so stop transforming
                 } else {
@@ -297,9 +297,9 @@ internal struct ModlObjectCreator {
         for (index, test) in conditional.conditionTests.enumerated() {
             if conditional.conditionReturns.count == 0 {
                 var returnStruct = ModlOutputObject.Primitive()
-                returnStruct.value = evaluateTest(test)
+                returnStruct.value = try evaluateTest(test)
                 returnStructures.append(returnStruct)
-            } else if evaluateTest(test) {
+            } else if try evaluateTest(test) {
                 passedTest = true
                 for structure in conditional.conditionReturns[index].structures {
                     if let value = try processModlElement(structure)?.first {
@@ -318,15 +318,15 @@ internal struct ModlObjectCreator {
         return returnStructures
     }
     
-    func evaluateTest(_ testCondition: ModlConditionTest) -> Bool {
+    func evaluateTest(_ testCondition: ModlConditionTest) throws -> Bool {
         var returnResult = true
         for subCondition in testCondition.subConditionList {
             var subConditionResult = true
             switch subCondition {
             case let condition as ModlCondition:
-                subConditionResult = evaluateTest(condition)
+                subConditionResult = try evaluateTest(condition)
             case let group as ModlConditionGroup:
-                subConditionResult = evaluateTest(group)
+                subConditionResult = try evaluateTest(group)
             default:
                 print("Error: Cannot find condition to evaluate")
                 break
@@ -346,7 +346,7 @@ internal struct ModlObjectCreator {
         return returnResult
     }
     
-    func evaluateTest(_ condition: ModlCondition) -> Bool {
+    func evaluateTest(_ condition: ModlCondition) throws -> Bool {
         guard let values = condition.values else {
             return false
         }
@@ -360,7 +360,7 @@ internal struct ModlObjectCreator {
             //Check if can be represented as a string
             if let primString = values.first as? ModlPrimitive, let stringValue = primString.asString() {
                 //Check if can transform string to different Bool value
-                if let transformed = stringTransformer.transformString(stringValue), let primBool = evaluatePrimitive(transformed) {
+                if let transformed = try stringTransformer.transformString(stringValue), let primBool = evaluatePrimitive(transformed) {
                     return primBool
                 }
                 //Check if there is a object reference for this value, and if it has a bool value
@@ -376,7 +376,7 @@ internal struct ModlObjectCreator {
         }
 
         //have a key, so LHS to check against RHS
-        if let key = condition.key, let newKey = transformConditionalArguments(key), let operatorValue = condition.operatorType {
+        if let key = condition.key, let newKey = try transformConditionalArguments(key), let operatorValue = condition.operatorType {
             //more than one value to check against, must be =, check if LHS = RHS for any value
             if values.count > 1 {
                 for value in values {
@@ -385,7 +385,7 @@ internal struct ModlObjectCreator {
                         if checkConditionalEquals(key: newKey, valueToCheck: escaped) {
                             return true
                         }
-                        if let newValue = transformConditionalArguments(pValue) {
+                        if let newValue = try transformConditionalArguments(pValue) {
                             if checkConditionalEquals(key: newKey, valueToCheck: newValue) {
                                 return true
                             }
@@ -401,7 +401,7 @@ internal struct ModlObjectCreator {
                 }
                 //Can it convert to a bool?
                 if let originalStringValue = (firstValue as? ModlPrimitive)?.asString() {
-                    let transformedStringValue = transformConditionalArguments(originalStringValue) ?? originalStringValue
+                    let transformedStringValue = try transformConditionalArguments(originalStringValue) ?? originalStringValue
                     if operatorValue == "=" {
                         if checkConditionalEquals(key: newKey, valueToCheck: transformedStringValue) {
                             return true
@@ -409,10 +409,10 @@ internal struct ModlObjectCreator {
                         if checkConditionalEquals(key: newKey, valueToCheck: originalStringValue) {
                             return true
                         }
-                        if let newStringValue = (stringTransformer.transformString(transformedStringValue) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
+                        if let newStringValue = (try stringTransformer.transformString(transformedStringValue) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
                             return true
                         }
-                        if let newStringValue = (stringTransformer.transformString(originalStringValue) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
+                        if let newStringValue = (try stringTransformer.transformString(originalStringValue) as? ModlPrimitive)?.asString(), checkConditionalEquals(key: newKey, valueToCheck: newStringValue) {
                             return true
                         }
                         return false
@@ -429,10 +429,10 @@ internal struct ModlObjectCreator {
         return false
     }
     
-    func evaluateTest(_ conditionGroup: ModlConditionGroup) -> Bool {
+    func evaluateTest(_ conditionGroup: ModlConditionGroup) throws -> Bool {
         var result = true
         for test in conditionGroup.conditionTests {
-            let ctReturn = evaluateTest(test)
+            let ctReturn = try evaluateTest(test)
             switch test.lastOperator {
             case "&":
                 result = ctReturn && result
@@ -476,12 +476,12 @@ internal struct ModlObjectCreator {
         return key.range(of: regex, options: .regularExpression) != nil
     }
 
-    func transformConditionalArguments(_ originalKey: String) -> String? {
+    func transformConditionalArguments(_ originalKey: String) throws -> String? {
         var keyToCheck = originalKey
         if !keyToCheck.hasPrefix("%") {
             keyToCheck = "%"+keyToCheck
         }
-        let transString = stringTransformer.transformString(keyToCheck)
+        let transString = try stringTransformer.transformString(keyToCheck)
         if let prim = transString as? ModlPrimitive, "%\(originalKey)" != prim.asString() {
             return prim.asString()
         }
