@@ -33,12 +33,14 @@ enum InterpreterError: Error {
 }
 
 public struct Interpreter {
-    
+    //keep reference to this so cache stays whilst interpreter exists
+    private let fileLoader = FileLoader()
     public init() {}
     
     public func parseToJson(_ input: String) throws -> String {
         let intermediate = try parseToRawModl(input)
-        let output = ModlObjectCreator().createOutput(intermediate)
+        let outputGenerator = ModlObjectCreator(fileLoader)
+        let output = outputGenerator.createOutput(intermediate)
         return output?.asJson() ?? ""
     }
     

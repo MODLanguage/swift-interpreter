@@ -44,9 +44,10 @@ internal struct ModlObjectCreator {
     var objectRefManager = ModlObjectReferenceManager()
     var methodManager = MethodManager()
     var stringTransformer: StringTransformer
-    var fileLoader = FileLoader()
-
-    init() {
+    var fileLoader: FileLoader
+    
+    init(_ fileLoader: FileLoader) {
+        self.fileLoader = fileLoader
         self.stringTransformer = StringTransformer(objectManager: self.objectRefManager, methodManager: self.methodManager)
     }
     
