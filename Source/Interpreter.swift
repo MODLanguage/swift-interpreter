@@ -37,6 +37,7 @@ public enum InterpreterError: Error {
     case methodAlreadyDefined
     case invalidMethod
     case classAssignOrder
+    case classNoMatchingAssign
 }
 
 public struct Interpreter {

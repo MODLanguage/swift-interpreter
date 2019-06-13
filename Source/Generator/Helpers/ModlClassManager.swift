@@ -83,7 +83,7 @@ internal class ModlClassManager {
         })?.value
     }
     
-    func processFromClass(key: String?, value: ModlValue?) -> ModlPair? {
+    func processFromClass(key: String?, value: ModlValue?) throws -> ModlPair? {
         guard let uwValue = value, let classObj = getClass(key) else {
             return nil
         }
@@ -108,6 +108,9 @@ internal class ModlClassManager {
                     }) ?? assignList.sorted(by: { (first, second) -> Bool in
                         return first.values.count > second.values.count
                     }).first {
+                        if matching.values.count != pairValue.values.count {
+                            throw InterpreterError.classNoMatchingAssign
+                        }
                         for (index, matchingKey) in matching.values.enumerated() {
                             if let keyStr = (matchingKey as? ModlPrimitive)?.asString() {
                                 let value = pairValue.values[index]

@@ -83,7 +83,7 @@ internal struct ModlObjectCreator {
                 }
                 return nil
             }
-            if let classReference = classManager.processFromClass(key: iPair.key, value: iPair.value), !haveAlreadyProcessedClassInBranch(identifier: iPair.key, processedList: classIdsProcessedInBranch) {
+            if let classReference = try classManager.processFromClass(key: iPair.key, value: iPair.value), !haveAlreadyProcessedClassInBranch(identifier: iPair.key, processedList: classIdsProcessedInBranch) {
                 var newProcessedClasses = classIdsProcessedInBranch
                 newProcessedClasses.append(iPair.key ?? "")
                 newProcessedClasses.append(classReference.key ?? "")
@@ -122,7 +122,7 @@ internal struct ModlObjectCreator {
                 if let conditional = originalValue as? ModlMapConditional, let returnedPair = try processConditional(conditional)?.first as? ModlPair, let newKey = returnedPair.key {
                     mapKey = newKey
                     mapValue = returnedPair.value
-                } else if  let classReference = classManager.processFromClass(key: key, value: originalValue), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses), let mValue = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses) {
+                } else if  let classReference = try classManager.processFromClass(key: key, value: originalValue), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses), let mValue = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses) {
                     newProcessedClasses.append(uwKey)
                     newProcessedClasses.append(key)
                     mapKey = uwKey
