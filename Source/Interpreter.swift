@@ -34,6 +34,8 @@ public enum InterpreterError: Error {
     case missingFile
     case invalidKey
     case invalidObjectReference
+    case methodAlreadyDefined
+    case invalidMethod
 }
 
 public struct Interpreter {

@@ -229,7 +229,7 @@ internal struct ModlObjectCreator {
         case .load, .loadSH:
             return .load
         case .methodSH, .method:
-            methodManager.addMethod(value)
+            try methodManager.addMethod(value)
             return .method
         }
     }

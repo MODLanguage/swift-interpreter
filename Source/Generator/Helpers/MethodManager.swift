@@ -86,11 +86,15 @@ internal class MethodManager {
     private let methodPattern = #"(^|[0-9a-zA-Z])"#
     private let subjectPattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)"#
 
-    func addMethod(_ method: ModlValue?) {
-        if let mMethod = Method(method) {
-            storedMethods[mMethod.id] = mMethod
-            methodOrder.append(mMethod.id)
+    func addMethod(_ method: ModlValue?) throws {
+        guard let mMethod = Method(method) else {
+            throw InterpreterError.invalidMethod
         }
+        guard getMethod(mMethod.name) == nil, getMethod(mMethod.id) == nil else {
+            throw InterpreterError.methodAlreadyDefined
+        }
+        storedMethods[mMethod.id] = mMethod
+        methodOrder.append(mMethod.id)
     }
     
     private func getMethod(_ identifier: String?) -> Method? {
