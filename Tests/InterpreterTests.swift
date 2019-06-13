@@ -28,13 +28,15 @@ import XCTest
 
 class InterpreterTests: XCTestCase {
     var jsonTests: [MODLTest]?
-    
+    var errorTests: [String]?
+
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         let testFileLoader = TestFileLoader()
         testFileLoader.removeTestFiles()
         testFileLoader.copyFiles(self)
         jsonTests = MODLTestManager.getAllTests(self)
+        errorTests = MODLTestManager.getErrorTests(self)
     }
     
     override func tearDown() {
@@ -48,6 +50,20 @@ class InterpreterTests: XCTestCase {
             return
         }
         MODLTestManager.performTests(json)
+    }
+    
+    func testErrorExamples() {
+        guard let tests = errorTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        for test in tests {
+            let p = Interpreter()
+            XCTAssertThrowsError(try p.parseToJson(test), "Test should throw error: \(test)") { (error) in
+            
+            }
+        }
+        print("Total tests: \(tests.count)")
     }
 
 }

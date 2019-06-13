@@ -111,6 +111,19 @@ struct MODLTestManager {
             return nil
         }
     }
+    
+    static func getErrorTests(_ testObject: XCTestCase) -> [String]? {
+        let bundle = Bundle(for: type(of: testObject))
+        guard let fileUrl = bundle.url(forResource: "error_tests", withExtension: "json") else {
+            return nil
+        }
+        do {
+            let data = try Data(contentsOf: fileUrl)
+            return try JSONDecoder().decode([String].self, from: data)
+        } catch {
+            return nil
+        }
+    }
 
     
     static func performTests(_ tests: [MODLTest]) {
