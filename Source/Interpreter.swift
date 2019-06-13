@@ -32,6 +32,7 @@ public enum InterpreterError: Error {
     case mismatchedVersion
     case invalidClass
     case missingFile
+    case invalidKey
 }
 
 public struct Interpreter {

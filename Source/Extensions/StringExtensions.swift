@@ -46,5 +46,9 @@ internal extension String {
                 options: .regularExpression
         )
     }
+    
+    func isOnlyNumbers() -> Bool {
+        return self.range(of: #"^\d*$"#, options: .regularExpression) != nil
+    }
 
 }

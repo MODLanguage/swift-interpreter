@@ -72,6 +72,9 @@ internal struct ModlObjectCreator {
         }
         switch uwElement {
         case let iPair as ModlPair:
+            guard let key = iPair.key, !key.isOnlyNumbers() else {
+                throw InterpreterError.invalidKey
+            }
             var pair = ModlOutputObject.Pair()
            
             if  let reservedPair = try processReservedPair(key: iPair.key, value: iPair.value) {
@@ -101,6 +104,10 @@ internal struct ModlObjectCreator {
         case let iMap as ModlMap:
             var map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
+                guard !key.isOnlyNumbers() else {
+                    throw InterpreterError.invalidKey
+                }
+
                 let originalValue = iMap.value(forKey: key)
                 
                 if let reservedPair = try processReservedPair(key: key, value: originalValue) {
@@ -200,7 +207,7 @@ internal struct ModlObjectCreator {
             if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber() {
                 if Double(truncating: decVersion as NSNumber) != ModlListener.ModlVersion {
                     //Could raise an error here for non-matching version.... although json test implies it just continues
-                                    throw InterpreterError.invalidVersion
+//                    throw InterpreterError.invalidVersion
                 }
             } else {
                 throw InterpreterError.invalidVersion
