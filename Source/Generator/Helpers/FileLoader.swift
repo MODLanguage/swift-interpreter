@@ -44,15 +44,19 @@ internal class FileLoader {
                 }
             }
         }
-        cache.removeValue(forKey: filePath)
         if let fileText = try loadFileText(filePath) {
             let parser = Interpreter()
             if let output = try? parser.parseToRawModl(fileText) {
+                //only remove from cache if there is something to replace it with
+                cache.removeValue(forKey: filePath)
                 let fileItem = FileCacheItem(expiryTime: Date().addingTimeInterval(60 * 60 * 60), fileData: output)
                 cache[filePath] = fileItem
                 cacheKeyOrder.append(filePath)
                 return output
             }
+        } else {
+            //if fails return whatever is in the cache
+            return cache[filePath]?.fileData
         }
         return nil
     }
