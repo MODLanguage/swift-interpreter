@@ -35,9 +35,41 @@ public enum InterpreterError: Error {
     case invalidKey
     case invalidObjectReference
     case methodAlreadyDefined
+    case classAlreadyDefined
     case invalidMethod
     case classAssignOrder
     case classNoMatchingAssign
+}
+
+extension InterpreterError: LocalizedError {
+    public var errorDescription: String? {
+        let header = "Interpreter Error:"
+        switch self {
+        case .mismatchedVersion:
+            return "Interpreter Warning: version number does not match current MODL version"
+        case .invalidVersion:
+            return "\(header)  Invalid MODL version"
+        case .invalidKey:
+            return "\(header)  Invalid key"
+        case .invalidObjectReference:
+            return "\(header)  Cannot resolve reference"
+        case .methodAlreadyDefined:
+            return "\(header)  Duplicate method id or name"
+        case .classAlreadyDefined:
+            return "\(header)  Class name or id already defined - cannot redefine"
+        case .classAssignOrder:
+            return "\(header)  Key lists in *assign are not in ascending order of list length"
+        case .classNoMatchingAssign:
+            return "\(header)  No key list of the correct length in class"
+        case .invalidClass:
+            return "\(header)  Invalid class definition"
+        case .invalidMethod:
+            return "\(header)  Invalid method definition"
+        //        case missingFile
+        default:
+            return "\(header) Unknown error"
+        }
+    }
 }
 
 public struct Interpreter {
@@ -49,6 +81,9 @@ public struct Interpreter {
         let intermediate = try parseToRawModl(input)
         let outputGenerator = ModlObjectCreator(fileLoader)
         let output = try outputGenerator.createOutput(intermediate)
+        for warning in outputGenerator.warnings {
+            print("Interpreter Warning: \(warning.localizedDescription)")
+        }
         return output?.asJson() ?? ""
     }
     
