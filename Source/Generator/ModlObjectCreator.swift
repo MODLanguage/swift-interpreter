@@ -58,8 +58,8 @@ internal class ModlObjectCreator {
             return nil
         }
         let output = ModlOutputObject()
-        for structure in uwInput.structures {
-            if let outStructures = try processModlElement(structure) as? [ModlStructure] {
+        for (index, structure) in uwInput.structures.enumerated() {
+            if let outStructures = try processModlElement(structure, atStart: index == 0) as? [ModlStructure] {
                 for singleStruct in outStructures {
                     output.addStructure(singleStruct)
                 }
@@ -68,7 +68,7 @@ internal class ModlObjectCreator {
         return output
     }
     
-    private func processModlElement(_ element: ModlValue?, classIdsProcessedInBranch: [String] = []) throws -> [ModlValue]? {
+    private func processModlElement(_ element: ModlValue?, classIdsProcessedInBranch: [String] = [], atStart: Bool = false) throws -> [ModlValue]? {
         guard let uwElement = element else {
             return nil
         }
@@ -79,6 +79,9 @@ internal class ModlObjectCreator {
             if  let reservedPair = try processReservedPair(key: iPair.key, value: iPair.value) {
                 if case ReservedKey.load = reservedPair {
                     return try processLoad(iPair.value)
+                }
+                if case ReservedKey.version = reservedPair, atStart != true {
+                    throw InterpreterError.versionNotFirst
                 }
                 return nil
             }

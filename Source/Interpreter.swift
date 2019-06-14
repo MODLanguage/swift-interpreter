@@ -33,6 +33,7 @@ public enum InterpreterError: Error {
     
     case invalidVersion
     case mismatchedVersion
+    case versionNotFirst
 
     case invalidKey
     case immutableKey
@@ -65,6 +66,9 @@ extension InterpreterError: LocalizedError {
             return "Interpreter Warning: version number does not match current MODL version"
         case .invalidVersion:
             return "\(header)  Invalid MODL version"
+        case .versionNotFirst:
+            return "\(header)  MODL version should be on the first line if specified."
+            
         case .invalidKey:
             return "\(header)  Invalid key"
         case .immutableKey:
