@@ -173,8 +173,12 @@ internal struct StringTransformer {
             if let transformed = try transformString(method) as? ModlPrimitive {
                 method = transformed.asString() ?? method
             }
-            if let numMethod = Int(method), let refArray = newRef as? ModlArray {
-                newRef = refArray.values[numMethod]
+            if let numMethod = Int(method) {
+                if let refArray = newRef as? ModlArray {
+                    newRef = refArray.values[numMethod]
+                } else {
+                    throw InterpreterError.invalidObjectReference
+                }
             } else if let refMap = newRef as? ModlMap {
                 newRef = refMap.value(forKey: method)
             } else if let refPair = newRef as? ModlPair, refPair.key == method {
