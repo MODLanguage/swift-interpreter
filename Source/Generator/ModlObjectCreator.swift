@@ -180,11 +180,12 @@ internal class ModlObjectCreator {
         guard let key = keyValue else {
             throw InterpreterError.invalidKey
         }
-        guard !key.isOnlyNumbers() else {
-            throw InterpreterError.invalidKey
-        }
         guard key.range(of: #"^[_*A-Za-z0-9\p{L}][_a-zA-Z0-9\p{L} ]*"#, options: .regularExpression)?.upperBound == key.endIndex else {
             //invalid first character
+            throw InterpreterError.invalidKey
+        }
+        var trimmedKey = key.hasPrefix("_") ? String(key.dropFirst()) : key
+        guard !trimmedKey.isOnlyNumbers() else {
             throw InterpreterError.invalidKey
         }
 //        guard key.range(of: #"[^_*A-Za-z0-9]+"#, options: .regularExpression) != nil else {
@@ -247,7 +248,9 @@ internal class ModlObjectCreator {
             return uwReserved
         case .objectReference:
             var objPair = ModlOutputObject.Pair()
-            objPair.key = uwKey
+            let key = try stringTransformer.transformKeyString(uwKey)
+            try checkValidKey(key)
+            objPair.key = key
             objPair.value = try processModlElement(value)?.first
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
             return uwReserved
