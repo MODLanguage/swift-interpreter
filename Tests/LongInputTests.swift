@@ -37,869 +37,890 @@ class LongInputTests: XCTestCase {
     }
 
     func testlongInput() {
-        let modl = LongTest.text
-        let p = Interpreter()
-        do {
-            let result = try p.parseToJson(modl)
-            print(result)
-        } catch {
-            XCTFail("Parse error: \(error.localizedDescription)")
+        self.measure {
+            let modl = LongTest.text
+            let p = Interpreter()
+            do {
+                let result = try p.parseToJson(modl)
+                print(result)
+            } catch {
+                XCTFail("Parse error: \(error.localizedDescription)")
+            }
         }
-    }
+    }    
 }
 
 fileprivate struct LongTest {
     static let text = """
+{
+!L?
+_L=en
+};
+{
+!C?
+_C=gb
+};
+
+_locale_file = `%L`-`%C`;
+{
+locale_file=en-gb/en-us/es-es?
+_locale_file_uri = "http://modules.num.uk/1/locales/`%locale_file`.txt"
+/?
+_locale_file_uri = "http://modules.num.uk/1/locales/en-us.txt"
+};
+
+*LOAD=%locale_file_uri;
+
 ## Only an entity or an array of entities can be at the root
 ## of a NUM MODL object.
 *class(
-  *id=root
-  *name=root
-  *superclass=arr
-  *allow=[entity]
-)
+*id=root;
+*name=root;
+*superclass=arr;
+*expect=[entity]
+);
 
 ## All maps that are allowed in NUM are an object of some kind
 *class(
-  *id=object
-  *name=object
-  *superclass=map
-  *allow=[i;h;q;c_;r_;tz]
-)
+*id=object;
+*name=object;
+*superclass=map;
+*expect=[i;h;q;c_;r_;tz]
+);
 
 ## ENTITY: Someone or something to make contact with
 *class(
-  *id=entity
-  *name=entity
-  *superclass=object
-  *assign=[
-    [n]
-    [n;q]
+*id=entity;
+*name=entity;
+*superclass=object;
+*assign=[
+[n];
+[n;q]
 ##    [n;q;d]
 ##    [n;q;d;h;tz]
-  ]
-  *allow=[n;+]
-)
+];
+*expect=[n;c]
+);
 
 ## MEDIUM: A way to make contact with an entity
 
 *class(
-  *id=medium
-  *name=medium
-  *superclass=object
-  *assign=[
-    ## value, e.g. '441270123456'
-    [v]
-    ## description and value, e.g. 'Sales:441270123456'
-    [d;v]
-    ## description, value and available hours, e.g. 'Sales:441270123456:wd@9-17'
-    [d;v;h]
-  ]
-  *allow=[v;ac]
-)
+*id=media;
+*name=media;
+*superclass=object;
+*assign=[
+## value, e.g. '441270123456'
+[v];
+## description and value, e.g. 'Sales:441270123456'
+[d;v];
+## description, value and available hours, e.g. 'Sales:441270123456:wd@9-17'
+[d;v;h]
+];
+*expect=[v;ac]
+);
 
 *class(
-  ## EXTENSION: A way to offer DNS/Web-based services, e.g. store locator
-  *id=x
-  *name=extension
-  *superclass=map
-  *allow=[url;pa]
-)
+## EXTENSION: A way to offer DNS/Web-based services, e.g. store locator
+*id=x;
+*name=extension;
+*superclass=map;
+*expect=[url;pa]
+);
 
 ## ALL OBJECTS CAN BE DESCRIBED WITH THESE KEYS:
 *class(
-  ## INTRODUCTION: Introductory text for a NUM record
-  *id=i
-  *name=introduction
-  *superclass=str
-)
+## INTRODUCTION: Introductory text for a NUM record
+*id=i;
+*name=introduction;
+*superclass=str
+);
 
 *class(
-  ## HOURS: The hours that an entity or medium is available
-  *id=h
-  *name=hours
-  *superclass=arr
-  *allow=[str]
-)
+## HOURS: The hours that an entity or medium is available
+*id=h;
+*name=hours;
+*superclass=arr;
+*expect=[str]
+);
 
 *class(
-  ## TIME_ZONE_CITY: The default time zone city for an object
-  *id=tz
-  *name=time_zone_city
-  *superclass=str
-)
+## TIME_ZONE_CITY: The default time zone city for an object
+*id=tz;
+*name=time_zone_city;
+*superclass=str
+);
 
 *class(
-  ## QUERY: Instructs the NUM client to make another query
-  *id=q
-  *name=query
-  *superclass=str
-)
+## QUERY: Instructs the NUM client to make another query
+*id=q;
+*name=query;
+*superclass=str
+);
 
 *class(
-  ## CONTINUATION: The record continues at another DNS location
-  *id=c_
-  *name=continuation_
-  *superclass=str
-)
+## CONTINUATION: The record continues at another DNS location
+*id=c_;
+*name=continuation_;
+*superclass=str
+);
 
 *class(
-  ## REDIRECT: The client should be redirected to a branch record
-  *id=r_
-  *name=redirect_
-  *superclass=str
-)
+## REDIRECT: The client should be redirected to a branch record
+*id=r_;
+*name=redirect_;
+*superclass=str
+);
 
 *class(
-  ## PERSON: A person to contact
-  *id=p
-  *name=person
-  *superclass=entity
-  *allow=[b]
-  object_type=entity
-  object_display_name=Person
-)
+## PERSON: A person to contact
+*id=p;
+*name=person;
+*superclass=entity;
+*expect=[b];
+object_type=entity;
+object_display_name=%locale.p.name;
+description_default=%locale.p.default
+);
 
 *class(
-  ## ORGANISATION: An organisation to make contact with
-  *id=o
-  *name=organisation
-  *superclass=entity
-  *assign=[
-    ## name, 'Tesco'
-    [n]
-    ## name and objects 'Tesco:[t=44800 50 5555]'
-    [n;+]
-    ## name, slogan and objects 'Tesco:Every Little Helps:[t=44800 50 5555]'
-    [n;s;+]
-    ## object index, name, slogan and objects 'tesco:%1.s:Every Little Helps:[t=44800 50 5555;fb=%1]'
-    [?;n;s;+]
-    ## ojbect index, name, slogan, available hours and objects 'tesco:%1.s:Every Little Helps:d@6-24:[t=44800 50 5555;fb=%1]'
-    [?;n;s;h;+]
-  ]
-  *allow=[s]
-  object_type=entity
-  object_display_name=Organisation
-  description_default=View Organisation
-)
+## ORGANISATION: An organisation to make contact with
+*id=o;
+*name=organisation;
+*superclass=entity;
+*assign=[
+## name, 'Tesco'
+[n];
+## name and objects 'Tesco:[t=44800 50 5555]'
+[n;c];
+## name, slogan and objects 'Tesco:Every Little Helps:[t=44800 50 5555]'
+[n;s;c];
+## object index, name, slogan and objects 'tesco:%1.s:Every Little Helps:[t=44800 50 5555;fb=%1]'
+[?;n;s;c];
+## ojbect index, name, slogan, available hours and objects 'tesco:%1.s:Every Little Helps:d@6-24:[t=44800 50 5555;fb=%1]'
+[?;n;s;h;c]
+];
+*expect=[s];
+object_type=entity;
+object_display_name=%locale.o.name;
+description_default=%locale.o.default
+);
 
 *class(
-  ## DEPARTMENT: A department within an organisation
-  *id=dp
-  *superclass=entity
-  *name=department
-  *allow=[d]
-  object_type=entity
-  object_display_name=Department
-  description_default=View Department
-)
+## DEPARTMENT: A department within an organisation
+*id=dp;
+*superclass=entity;
+*name=department;
+*expect=[d];
+object_type=entity;
+object_display_name=%locale.d.name;
+description_default=%locale.d.default
+);
 
 *class(
-  ## EMPLOYEE: An employee of an organisation to contact
-  *id=e
-  *superclass=entity
-  *name=employee
-  ## An employee object can be instantiated with keyless
-  ## pairs by submitting values in this order:
-  ## Name:Role, e.g:
-  ## John Smith:Managing Director
-  *assign=[
-    ## name, e.g. John Smith
-    [n]
-    ## name and role, e.g. John Smith:Managing Director
-    [n;r]
-  ]
-  *allow=[r]
-  object_type=entity
-  object_display_name=Employee
-  description_default=View Employee
-)
+## EMPLOYEE: An employee of an organisation to contact
+*id=e;
+*superclass=entity;
+*name=employee;
+## An employee object can be instantiated with keyless
+## pairs by submitting values in this order:
+## Name:Role, e.g:
+## John Smith:Managing Director
+*assign=[
+## name, e.g. John Smith
+[n];
+## name and role, e.g. John Smith:Managing Director
+[n;r]
+];
+*expect=[r];
+object_type=entity;
+object_display_name=%locale.e.name;
+description_default=%locale.e.default
+);
 
 *class(
-  ## LOCATION: e.g. a company store
-  *id=l
-  *superclass=entity
-  *name=location
-  *allow=[d]
-  object_type=entity
-  object_display_name=Location
-)
+## LOCATION: e.g. a company store
+*id=l;
+*superclass=entity;
+*name=location;
+*expect=[d];
+object_type=entity;
+object_display_name=%locale.l.name;
+description_default=%locale.l.default
+);
 
 *class(
-  ## FOLDER: A folder containing more contact information
-  *id=f
-  *superclass=entity
-  *name=folder
-  *allow=[d]
-  object_type=entity
-  object_display_name=Folder
-)
+## FOLDER: A folder containing more contact information
+*id=f;
+*superclass=entity;
+*name=folder;
+*expect=[d];
+object_type=entity;
+object_display_name=%locale.f.name;
+description_default=%locale.f.default
+);
 
 ## These keys are used for all entities
 *class(
-  ## ENTITY NAME: e.g. 'Tesco' or 'John Smith'
-  *id=n
-  *name=name
-  *superclass=str
-)
+## ENTITY NAME: e.g. 'Tesco' or 'John Smith'
+*id=n;
+*name=name;
+*superclass=str
+);
 
 *class(
-  ## OBJECTS: A list of objects
-  *id=+
-  *name=objects
-  *superclass=arr
-  *name=objects
-  *allow=[object]
-)
+## Contacts: A list of contacts
+*id=c;
+*name=contacts;
+*superclass=arr;
+*name=contacts;
+*expect=[object]
+);
 
 ## Biography is just for person
 *class(
-  ## BIOGRPAHY: Brief info about a person
-  *id=b
-  *name=bio
-  *superclass=str
-)
+## BIOGRPAHY: Brief info about a person
+*id=b;
+*name=bio;
+*superclass=str
+);
 
 ## Slogan is just for organisations
 *class(
-  ## SLOGAN: The organisation slogan, e.g. 'Every Little Helps'
-  *id=s
-  *name=slogan
-  *superclass=str
-)
+## SLOGAN: The organisation slogan, e.g. 'Every Little Helps'
+*id=s;
+*name=slogan;
+*superclass=str
+);
 
 ## Description is for departments, locations and folders
 *class(
-  ## DESCRIPTION: A description of a medium, e.g 'Customer Service'
-  *id=d
-  *name=description
-  *superclass=str
-)
+## DESCRIPTION: A description of a medium, e.g 'Customer Service'
+*id=d;
+*name=description;
+*superclass=str
+);
 
 ## Role is just for employees
 *class(
-  ## ROLE: An employee's role at an organisation
-  *id=r
-  *name=role
-  *superclass=str
-)
+## ROLE: An employee's role at an organisation
+*id=r;
+*name=role;
+*superclass=str
+);
 
 ## These are just for media
 *class(
-  ## VALUE: A medium value, e.g. a telephone number
-  *id=v
-  *name=value
-  *superclass=str
-)
+## VALUE: A medium value, e.g. a telephone number
+*id=v;
+*name=value;
+*superclass=str
+);
 
 *class(
-  ## ACCESSIBILITY: Provides accessibility information for media
-  *id=a
-  *name=access
-  *superclass=arr
-  *allow=[str]
-)
+## ACCESSIBILITY: Provides accessibility information for media
+*id=ac;
+*name=access;
+*superclass=arr;
+*expect=[str]
+);
 
 *class(
-  ## TELEPHONE: A telephone number in E.164 (https://en.wikipedia.org/wiki/E.164) format
-  *id=t
-  *name=telephone
-  *superclass=medium
-  object_type=medium
-  object_display_name=Telephone
-  description_default=Call
-  prefix="tel://"
-  media_type=core
-)
+## TELEPHONE: A telephone number in E.164 (https://en.wikipedia.org/wiki/E.164) format
+*id=t;
+*name=telephone;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.t.name;
+description_default=%locale.t.default;
+prefix="tel://";
+media_type=core
+);
 
 *class(
-  ## SMS: An SMS number for enquiries in E.164 (https://en.wikipedia.org/wiki/E.164) format
-  *id=sm
-  *name=sms
-  *superclass=medium
-  object_type=medium
-  object_display_name=SMS
-  description_default=Text
-  prefix="sms://"
-  media_type=core
-)
+## SMS: An SMS number for enquiries in E.164 (https://en.wikipedia.org/wiki/E.164) format
+*id=sm;
+*name=sms;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.sm.name;
+description_default=%locale.sm.default;
+prefix="sms://";
+media_type=core
+);
 
 *class(
-  ## URL: The organisation's webpage or a webpage about a particular topic or product.
-  *id=u
-  *name=url
-  *superclass=medium
-  object_type=medium
-  object_display_name=URL
-  description_default=Click
-  prefix="https://"
-  media_type=core
-)
+## URL: The organisation's webpage or a webpage about a particular topic or product.
+*id=u;
+*name=url;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.u.name;
+description_default=%locale.u.default;
+prefix="https://";
+media_type=core
+);
 
 *class(
-  ## UNSECURE_URL: The organisation's webpage or a webpage about a particular topic or product.
-  *id=uu
-  *name=unsecure_url
-  *superclass=medium
-  object_type=medium
-  object_display_name=URL
-  description_default=Click
-  prefix="http://"
-  media_type=core
-)
+## UNSECURE_URL: The organisation's webpage or a webpage about a particular topic or product.
+*id=uu;
+*name=unsecure_url;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.u.name;
+description_default=%locale.u.default;
+prefix="http://";
+media_type=core
+);
 
 *class(
-  ## GPS: GPS co-ordinates in WGS84 (https://en.wikipedia.org/wiki/World_Geodetic_System) format
-  ## e.g. the location of a store or office. It's also possible to optionally show how a GPS location
-  ## can be accessed (e.g. on foot / bicycle / wheelchair / car), for more information see accessibility
-  *id=g
-  *name=gps
-  *superclass=medium
-  object_type=medium
-  object_display_name=GPS
-  description_default=View Address
-  prefix=Based on user preferences set in client.
-  media_type=core
-)
+## GPS: GPS co-ordinates in WGS84 (https://en.wikipedia.org/wiki/World_Geodetic_System) format
+## e.g. the location of a store or office. It's also possible to optionally show how a GPS location
+## can be accessed (e.g. on foot / bicycle / wheelchair / car), for more information see accessibility
+*id=g;
+*name=gps;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.g.name;
+description_default=%locale.g.default;
+prefix=null;
+media_type=core
+);
 
 *class(
-  ## ADDRESS: A land / postal address.
-  *id=a
-  *name=address
-  *superclass=medium
-  object_type=medium
-  object_display_name=Address
-  description_default=View Address
-  prefix=Based on user preferences set in client.
-  media_type=core
-)
+## ADDRESS: A land / postal address.
+*id=a;
+*name=address;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.a.name;
+description_default=%locale.a.default;
+prefix=Based on user preferences set in client.;
+media_type=core
+);
 
 *class(
-  ## FAX: A number for fax transmission in E.164 (https://en.wikipedia.org/wiki/E.164) format
-  *id=fx
-  *name=fax
-  *superclass=medium
-  object_type=medium
-  object_display_name=Fax
-  description_default=Send a fax
-  prefix=Based on user preferences set in client.
-  media_type=core
-)
+## FAX: A number for fax transmission in E.164 (https://en.wikipedia.org/wiki/E.164) format
+*id=fx;
+*name=fax;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.fx.name;
+description_default=%locale.fx.default;
+prefix=Based on user preferences set in client.;
+media_type=core
+);
 
 *class(
-  ## EMAIL: An email address for enquiries. We do not recommend listing an email in the DNS.
-  *id=em
-  *name=email
-  *superclass=medium
-  object_type=medium
-  object_display_name=Email
-  description_default=Send an email
-  prefix="mailto://"
-  media_type=core
-)
+## EMAIL: An email address for enquiries. We do not recommend listing an email in the DNS.
+*id=em;
+*name=email;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.em.name;
+description_default=%locale.em.default;
+prefix="mailto://";
+media_type=core
+);
 
 *class(
-  ## ANDROID APP: A download link for an app on the Google Play store.
-  *id=aa
-  *name=android-app
-  *superclass=medium
-  object_type=medium
-  object_display_name=Android App
-  description_default=Download the app
-  prefix="https://play.google.com/store/apps/details?id="
-  media_type=3p
-)
+## ANDROID APP: A download link for an app on the Google Play store.
+*id=aa;
+*name=android-app;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.aa.name;
+description_default=%locale.aa.default;
+prefix="https://play.google.com/store/apps/details?id=";
+media_type=3p
+);
 
 *class(
-  ## IOS APP: A download link for an app on the Apple App Store.
-  *id=as
-  *name=ios-app
-  *superclass=medium
-  object_type=medium
-  object_display_name=iOS App
-  description_default=Download the app
-  prefix="https://itunes.apple.com/app/"
-  media_type=3p
-)
+## IOS APP: A download link for an app on the Apple App Store.
+*id=as;
+*name=ios-app;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.as.name;
+description_default=%locale.as.default;
+prefix="https://itunes.apple.com/app/";
+media_type=3p
+);
 
 *class(
-  ## BAIDU TIEBA
-  *id=bt
-  *name=baidu_tieba
-  *superclass=medium
-  object_type=medium
-  object_display_name=Baidu Tieba
-  description_default=View Baidu profile
-  prefix="https://tieba.baidu.com/"
-  media_type=3p
-)
+## BAIDU TIEBA
+*id=bt;
+*name=baidu_tieba;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.bt.name;
+description_default=%locale.bt.default;
+prefix="https://tieba.baidu.com/";
+media_type=3p
+);
 
 *class(
-  ## FACEBOOK
-  *id=fb
-  *name=facebook
-  *superclass=medium
-  object_type=medium
-  object_display_name=Facebook
-  description_default=View Facebook profile
-  prefix="https://www.facebook.com/"
-  media_type=3p
-)
+## FACEBOOK
+*id=fb;
+*name=facebook;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.fb.name;
+description_default=%locale.fb.default;
+prefix="https://www.facebook.com/";
+media_type=3p
+);
 
 *class(
-  ## FLIKR
-  *id=fk
-  *name=flikr
-  *superclass=medium
-  object_type=medium
-  object_display_name=Flikr
-  description_default=View Flikr profile
-  prefix="https://www.flikr.com/"
-  media_type=3p
-)
+## FLIKR
+*id=fk;
+*name=flikr;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.fk.name;
+description_default=%locale.fk.default;
+prefix="https://www.flikr.com/";
+media_type=3p
+);
 
 *class(
-  ## FOURSQUARE
-  *id=fs
-  *name=foursquare
-  *superclass=medium
-  object_type=medium
-  object_display_name=FourSquare
-  description_default=View FourSquare page
-  prefix="https://www.foursquare.com/"
-  media_type=3p
-)
+## FOURSQUARE
+*id=fs;
+*name=foursquare;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.fs.name;
+description_default=%locale.fs.default;
+prefix="https://www.foursquare.com/";
+media_type=3p
+);
 
 *class(
-  ## FACETIME
-  *id=ft
-  *name=facetime
-  *superclass=medium
-  object_type=medium
-  object_display_name=FaceTime
-  description_default=Call with FaceTime
-  prefix="facetime://"
-  media_type=3p
-)
+## FACETIME
+*id=ft;
+*name=facetime;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.ft.name;
+description_default=%locale.ft.default;
+prefix="facetime://";
+media_type=3p
+);
 
 *class(
-  ## GOOGLE PLUS
-  *id=gp
-  *name=google-plus
-  *superclass=medium
-  object_type=medium
-  object_display_name=Google Plus
-  description_default=View Google Plus profile
-  prefix="https://plus.google.com/"
-  media_type=3p
-  value_prefix=+
-)
+## GOOGLE PLUS
+*id=gp;
+*name=google-plus;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.gp.name;
+description_default=%locale.gp.default;
+prefix="https://plus.google.com/";
+media_type=3p;
+value_prefix=+
+);
 
 *class(
-  ## IMESSAGE
-  *id=im
-  *name=imessage
-  *superclass=medium
-  object_type=medium
-  object_display_name=iMessage
-  description_default=Send iMessage
-  prefix="imessage://"
-  media_type=3p
-)
+## IMESSAGE
+*id=im;
+*name=imessage;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.im.name;
+description_default=%locale.im.default;
+prefix="imessage://";
+media_type=3p
+);
 
 *class(
-  ## INSTAGRAM
-  *id=in
-  *name=instagram
-  *superclass=medium
-  object_type=medium
-  object_display_name=Instagram
-  description_default=View Instagram profile
-  prefix="https://www.instagram.com/"
-  media_type=3p
-)
+## INSTAGRAM
+*id=in;
+*name=instagram;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.in.name;
+description_default=%locale.in.default;
+prefix="https://www.instagram.com/";
+media_type=3p
+);
 
 *class(
-  ## KIK
-  *id=kk
-  *name=kik
-  *superclass=medium
-  object_type=medium
-  object_display_name=Kik
-  description_default=Connect with Kik
-  prefix="https://www.kik.com/u/"
-  media_type=3p
-)
+## KIK
+*id=kk;
+*name=kik;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.kk.name;
+description_default=%locale.kk.default;
+prefix="https://www.kik.com/u/";
+media_type=3p
+);
 
 *class(
-  ## LINKEDIN
-  *id=li
-  *name=linkedin
-  *superclass=medium
-  object_type=medium
-  object_display_name=LinkedIn
-  description_default=View LinkedIn page
-  prefix="https://www.linkedin.com/"
-  media_type=3p
-)
+## LINKEDIN
+*id=li;
+*name=linkedin;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.li.name;
+description_default=%locale.li.default;
+prefix="https://www.linkedin.com/";
+media_type=3p
+);
 
 *class(
-  ## LINE
-  *id=ln
-  *name=line
-  *superclass=medium
-  object_type=medium
-  object_display_name=LINE
-  description_default=Connect with Line
-  prefix="line://"
-  media_type=3p
-)
+## LINE
+*id=ln;
+*name=line;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.ln.name;
+description_default=%locale.ln.default;
+prefix="line://";
+media_type=3p
+);
 
 *class(
-  ## MEDIUM
-  *id=md
-  *name=medium
-  *superclass=medium
-  object_type=medium
-  object_display_name=Medium
-  description_default=View Medium blog
-  prefix="https://www.medium.com/"
-  media_type=3p
-)
+## MEDIUM
+*id=md;
+*name=medium;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.md.name;
+description_default=%locale.md.default;
+prefix="https://www.medium.com/";
+media_type=3p
+);
 
 *class(
-  ## PERISCOPE
-  *id=pr
-  *name=periscope
-  *superclass=medium
-  object_type=medium
-  object_display_name=Periscope
-  description_default=View Periscope profile
-  prefix="https://www.periscope.tv/"
-  media_type=3p
-)
+## PERISCOPE
+*id=pr;
+*name=periscope;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.pr.name;
+description_default=%locale.pr.default;
+prefix="https://www.periscope.tv/";
+media_type=3p/
+);
 
 *class(
-  ## PINTEREST
-  *id=pi
-  *name=pinterest
-  *superclass=medium
-  object_type=medium
-  object_display_name=Pinterest
-  description_default=View Pinterest board
-  prefix="https://www.pinterest.com/"
-  media_type=3p
-)
+## PINTEREST
+*id=pi;
+*name=pinterest;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.pi.name;
+description_default=%locale.pi.default;
+prefix="https://www.pinterest.com/";
+media_type=3p
+);
 
 *class(
-  ## QQ
-  *id=qq
-  *name=qq
-  *superclass=medium
-  object_type=medium
-  object_display_name=QQ
-  description_default=View QQ Page
-  prefix="https://www.qq.com/"
-  media_type=3p
-)
+## QQ
+*id=qq;
+*name=qq;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.qq.name;
+description_default=%locale.qq.default;
+prefix="https://www.qq.com/";
+media_type=3p
+);
 
 *class(
-  ## QZONE
-  *id=qz
-  *name=qzone
-  *superclass=medium
-  object_type=medium
-  object_display_name=Qzone
-  description_default=View Qzone page
-  prefix="https://www.qzone.com/"
-  media_type=3p
-)
+## QZONE
+*id=qz;
+*name=qzone;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.qz.name;
+description_default=%locale.qz.default;
+prefix="https://www.qzone.com/";
+media_type=3p
+);
 
 *class(
-  ## REDDIT
-  *id=rd
-  *name=reddit
-  *superclass=medium
-  object_type=medium
-  object_display_name=Reddit
-  description_default=View subreddit
-  prefix="https://www.reddit.com/r/"
-  media_type=3p
-)
+## REDDIT
+*id=rd;
+*name=reddit;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.rd.name;
+description_default=%locale.rd.default;
+prefix="https://www.reddit.com/r/";
+media_type=3p
+);
 
 *class(
-  ## RENREN
-  *id=rn
-  *name=renren
-  *superclass=medium
-  object_type=medium
-  object_display_name=Renren
-  description_default=View Renren profile
-  prefix="https://www.renren.com/"
-  media_type=3p
-)
+## RENREN
+*id=rn;
+*name=renren;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.rn.name;
+description_default=%locale.rn.default;
+prefix="https://www.renren.com/";
+media_type=3p
+);
 
 *class(
-  ## SOUNDCLOUD
-  *id=sc
-  *name=soundcloud
-  *superclass=medium
-  object_type=medium
-  object_display_name=SoundCloud
-  description_default=View SoundCloud page
-  prefix="https://www.soundcloud.com/"
-  media_type=3p
-)
+## SOUNDCLOUD
+*id=sc;
+*name=soundcloud;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.sc.name;
+description_default=%locale.sc.default;
+prefix="https://www.soundcloud.com/";
+media_type=3p
+);
 
 *class(
-  ## SKYPE
-  *id=sk
-  *name=skype
-  *superclass=medium
-  object_type=medium
-  object_display_name=Skype
-  description_default=Call with Skype
-  prefix="skype://"
-  media_type=3p
-)
+## SKYPE
+*id=sk;
+*name=skype;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.sk.name;
+description_default=%locale.sk.default;
+prefix="skype://";
+media_type=3p
+);
 
 *class(
-  ## SWARM
-  *id=sr
-  *name=swarm
-  *superclass=medium
-  object_type=medium
-  object_display_name=Swarm
-  description_default=Connect with Swarm
-  prefix="https://www.swarmapp.com/"
-  media_type=3p
-)
+## SWARM
+*id=sr;
+*name=swarm;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.sr.name;
+description_default=%locale.sr.default;
+prefix="https://www.swarmapp.com/";
+media_type=3p
+);
 
 *class(
-  ## SNAPCHAT
-  *id=sn
-  *name=snapchat
-  *superclass=medium
-  object_type=medium
-  object_display_name=Snapchat
-  description_default=Connect with Snapchat
-  prefix="snapchat://add/"
-  media_type=3p
-)
+## SNAPCHAT
+*id=sn;
+*name=snapchat;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.sn.name;
+description_default=%locale.sn.default;
+prefix="snapchat://add/";
+media_type=3p
+);
 
 *class(
-  ## SINA WEIBO
-  *id=sw
-  *name=sina-weibo
-  *superclass=medium
-  object_type=medium
-  object_display_name=Sina Weibo
-  description_default=View Weibo page
-  prefix="https://www.weibo.com/"
-  media_type=3p
-)
+## SINA WEIBO
+*id=sw;
+*name=sina-weibo;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.sw.name;
+description_default=%locale.sw.default;
+prefix="https://www.weibo.com/";
+media_type=3p
+);
 
 *class(
-  ## TUMBLR
-  *id=tb
-  *name=tumblr
-  *superclass=medium
-  object_type=medium
-  object_display_name=Tumblr
-  description_default=View Tumblr blog
-  prefix="https://<val>.tumblr.com/"
-  media_type=3p
-)
+## TUMBLR
+*id=tb;
+*name=tumblr;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.tb.name;
+description_default=%locale.tb.default;
+prefix="https://<val>.tumblr.com/";
+media_type=3p
+);
 
 *class(
-  ## TELEGRAM
-  *id=tl
-  *name=telegram
-  *superclass=medium
-  object_type=medium
-  object_display_name=Telegram
-  description_default=Connect with Telegram
-  prefix="https://www.telegram.me/"
-  media_type=3p
-)
+## TELEGRAM
+*id=tl;
+*name=telegram;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.tl.name;
+description_default=%locale.tl.default;
+prefix="https://www.telegram.me/";
+media_type=3p
+);
 
 *class(
-  ## TWITTER
-  *id=tw
-  *name=twitter
-  *superclass=medium
-  object_type=medium
-  object_display_name=Twitter
-  description_default=View Twitter profile
-  prefix="https://www.twitter.com/"
-  media_type=3p
-  value_prefix=@
-)
+## TWITTER
+*id=tw;
+*name=twitter;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.tw.name;
+description_default=%locale.tw.default;
+prefix="https://www.twitter.com/";
+media_type=3p;
+value_prefix=@
+);
 
 *class(
-  ## TWOO
-  *id=to
-  *name=twoo
-  *superclass=medium
-  object_type=medium
-  object_display_name=Twoo
-  description_default=View Twoo page
-  prefix="https://www.twoo.com/"
-  media_type=3p
-)
+## TWOO
+*id=to;
+*name=twoo;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.to.name;
+description_default=%locale.to.default;
+prefix="https://www.twoo.com/";
+media_type=3p
+);
 
 *class(
-  ## VIBER
-  *id=vb
-  *name=viber
-  *superclass=medium
-  object_type=medium
-  object_display_name=Viber
-  description_default=Call with Viber
-  prefix="https://www.viber.com/"
-  media_type=3p
-)
+## VIBER
+*id=vb;
+*name=viber;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.vb.name;
+description_default=%locale.vb.default;
+prefix="https://www.viber.com/";
+media_type=3p
+);
 
 *class(
-  ## VKONTAKTE
-  *id=vk
-  *name=vkontakte
-  *superclass=medium
-  object_type=medium
-  object_display_name=Vkontakte
-  description_default=View VK page
-  prefix="https://www.vk.com/"
-  media_type=3p
-)
+## VKONTAKTE
+*id=vk;
+*name=vkontakte;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.vk.name;
+description_default=%locale.vk.default;
+prefix="https://www.vk.com/";
+media_type=3p
+);
 
 *class(
-  ## VIMEO
-  *id=vm
-  *name=vimeo
-  *superclass=medium
-  object_type=medium
-  object_display_name=Vimeo
-  description_default=View Vimeo profile
-  prefix="https://www.vimeo.com/"
-  media_type=3p
-)
+## VIMEO
+*id=vm;
+*name=vimeo;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.vm.name;
+description_default=%locale.vm.default;
+prefix="https://www.vimeo.com/";
+media_type=3p
+);
 
 *class(
-  ## WHATSAPP
-  *id=wa
-  *name=whatsapp
-  *superclass=medium
-  object_type=medium
-  object_display_name=Whatsapp
-  description_default=Message on Whatsapp
-  prefix="whatsapp://"
-  media_type=3p
-)
+## WHATSAPP
+*id=wa;
+*name=whatsapp;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.wa.name;
+description_default=%locale.wa.default;
+prefix="whatsapp://";
+media_type=3p
+);
 
 *class(
-  ## WECHAT
-  *id=wc
-  *name=wechat
-  *superclass=medium
-  object_type=medium
-  object_display_name=WeChat
-  description_default=Connect with WeChat
-  prefix="https://www.wechat.com/"
-  media_type=3p
-)
+## WECHAT
+*id=wc;
+*name=wechat;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.wc.name;
+description_default=%locale.wc.default;
+prefix="https://www.wechat.com/";
+media_type=3p
+);
 
 *class(
-  ## XING
-  *id=xi
-  *name=xing
-  *superclass=medium
-  object_type=medium
-  object_display_name=Xing
-  description_default=View Xing page
-  prefix="https://www.xing.com/"
-  media_type=3p
-)
+## XING
+*id=xi;
+*name=xing;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.xi.name;
+description_default=%locale.xi.default;
+prefix="https://www.xing.com/";
+media_type=3p
+);
 
 *class(
-  ## YOUTUBE
-  *id=yt
-  *name=youtube
-  *superclass=medium
-  object_type=medium
-  object_display_name=YouTube
-  description_default=View YouTube channel
-  prefix="https://www.youtube.com/"
-  media_type=3p
-)
+## YOUTUBE
+*id=yt;
+*name=youtube;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.yt.name;
+description_default=%locale.yt.default;
+prefix="https://www.youtube.com/";
+media_type=3p
+);
 
 *class(
-  ## YY
-  *id=yy
-  *name=yy
-  *superclass=medium
-  object_type=medium
-  object_display_name=YY
-  description_default=View YY page
-  prefix="https://www.yy.com/"
-  media_type=3p
-)
+## YY
+*id=yy;
+*name=yy;
+*superclass=media;
+object_type=media;
+object_display_name=%locale.yy.name;
+description_default=%locale.yy.default;
+prefix="https://www.yy.com/";
+media_type=3p
+);
+
+## DEFINE METHODS
 
 *method(
-  *id=rs
-  *name=remove_spaces
-  *transform=`replace( ,)`
-)
+*id=rs;
+*name=remove_spaces;
+*transform=`replace( ,)`
+);
 
 *method(
-  *id=rh
-  *name=remove_hyphens
-  *transform=`replace(-,)`
-)
+*id=rh;
+*name=remove_hyphens;
+*transform=`replace(-,)`
+);
 
 *method(
-  *id=ru
-  *name=remove_underscores
-  *transform=`replace(_,)`
-)
+*id=ru;
+*name=remove_underscores;
+*transform=`replace(_,)`
+);
 
 *method(
-  *id=sh
-  *name=replace_spaces_with_hyphens
-  *transform=`replace( ,-)`
-)
+*id=sh;
+*name=replace_spaces_with_hyphens;
+*transform=`replace( ,-)`
+);
 
 *method(
-  *id=su
-  *name=replace_spaces_with_underscores
-  *transform=`replace( ,_)`
-)
+*id=su;
+*name=replace_spaces_with_underscores;
+*transform=`replace( ,_)`
+);
 
 *method(
-  *id=hs
-  *name=replace_hyphens_with_spaces
-  *transform=`replace(-, )`
-)
+*id=hs;
+*name=replace_hyphens_with_spaces;
+*transform=`replace(-, )`
+);
 
 *method(
-  *id=hu
-  *name=replace_hyphens_with_underscores
-  *transform=`replace(-,_)`
-)
+*id=hu;
+*name=replace_hyphens_with_underscores;
+*transform=`replace(-,_)`
+);
 
 *method(
-  *id=us
-  *name=replace_underscores_with_spaces
-  *transform=`replace(_, )`
-)
+*id=us;
+*name=replace_underscores_with_spaces;
+*transform=`replace(_, )`
+);
 
 *method(
-  *id=uh
-  *name=replace_underscores_with_hyphens
-  *transform=`replace(_,-)`
-)
-
-## These are predefined variables
-_AC="Accounts"
-_CS="Customer Service"
-"""
-}
+*id=uh;
+*name=replace_underscores_with_hyphens;
+*transform=`replace(_,-)`
+);
+"""}

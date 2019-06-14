@@ -37,6 +37,17 @@
                BlueprintName = "MODL-InterpreterTests"
                ReferencedContainer = "container:MODL-Interpreter.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AdvancedTests">
+               </Test>
+               <Test
+                  Identifier = "BasicTests">
+               </Test>
+               <Test
+                  Identifier = "LoadTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
