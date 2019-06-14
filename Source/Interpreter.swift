@@ -31,7 +31,6 @@ public enum InterpreterError: Error {
     case invalidVersion
     case mismatchedVersion
     case invalidClass
-    case missingFile
     case invalidKey
     case invalidObjectReference
     case methodAlreadyDefined
@@ -39,6 +38,8 @@ public enum InterpreterError: Error {
     case invalidMethod
     case classAssignOrder
     case classNoMatchingAssign
+    case immutableLoad
+    case missingFile
 }
 
 extension InterpreterError: LocalizedError {
@@ -65,9 +66,12 @@ extension InterpreterError: LocalizedError {
             return "\(header)  Invalid class definition"
         case .invalidMethod:
             return "\(header)  Invalid method definition"
-        //        case missingFile
-        default:
-            return "\(header) Unknown error"
+        case .missingFile:
+            return "\(header) File not found"
+        case .immutableLoad:
+            return "\(header) Cannot load multiple files after *LOAD instruction"
+//        default:
+//            return "\(header) Unknown error"
         }
     }
 }

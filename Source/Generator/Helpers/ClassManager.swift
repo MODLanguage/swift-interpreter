@@ -55,8 +55,11 @@ internal class ClassManager {
         guard let input = classMap as? ModlMap, let mClass = ModlClass(input) else {
             throw InterpreterError.invalidClass
         }
+        guard getClass(mClass.name) == nil, getClass(mClass.id) == nil else {
+            throw InterpreterError.classAlreadyDefined
+        }
         if let superclassName = mClass.superclass, superclassName.uppercased() == superclassName {
-            throw InterpreterError.invalidClass
+//            throw InterpreterError.invalidClass
         }
         var assignCount = 0
         for case let assign as ModlArray in mClass.assignMap?.values ?? [] {
