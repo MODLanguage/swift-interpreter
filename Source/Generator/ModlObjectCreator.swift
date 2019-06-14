@@ -38,13 +38,14 @@ fileprivate enum ReservedKey: String, CaseIterable {
     case objectReference = "_"
 }
 
-internal struct ModlObjectCreator {
+internal class ModlObjectCreator {
     
-    var classManager = ModlClassManager()
-    var objectRefManager = ModlObjectReferenceManager()
+    var classManager = ClassManager()
+    var objectRefManager = ObjectReferenceManager()
     var methodManager = MethodManager()
     var stringTransformer: StringTransformer
     var fileLoader: FileLoader
+    var warnings: [Error] = []
     
     init(_ fileLoader: FileLoader) {
         self.fileLoader = fileLoader
@@ -207,6 +208,7 @@ internal struct ModlObjectCreator {
             if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber() {
                 if Double(truncating: decVersion as NSNumber) != ModlListener.ModlVersion {
                     //Could raise an error here for non-matching version.... although json test implies it just continues
+                    warnings.append(InterpreterError.invalidVersion)
 //                    throw InterpreterError.invalidVersion
                 }
             } else {

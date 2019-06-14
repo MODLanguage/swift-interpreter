@@ -31,10 +31,10 @@ internal struct StringTransformer {
     
     private let objectReferencePattern = #"((?<![\\~])`?)%(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*((?<![\\~])`?)"#
     
-    private let objectManager: ModlObjectReferenceManager
+    private let objectManager: ObjectReferenceManager
     private let methodManager: MethodManager
 
-    init(objectManager: ModlObjectReferenceManager, methodManager: MethodManager) {
+    init(objectManager: ObjectReferenceManager, methodManager: MethodManager) {
         self.objectManager = objectManager
         self.methodManager = methodManager
     }
@@ -123,7 +123,7 @@ internal struct StringTransformer {
         return nil
     }
     
-    private func checkObjectReferencing(keyToCheck: String, objectMgr: ModlObjectReferenceManager?) throws -> ModlValue? {
+    private func checkObjectReferencing(keyToCheck: String, objectMgr: ObjectReferenceManager?) throws -> ModlValue? {
         guard let uwObjMgr = objectMgr, let mKey = refContinueQuickProcess(keyToCheck) else {
             return nil
         }
@@ -163,7 +163,7 @@ internal struct StringTransformer {
     }
 
     
-    private func handleNestedObject(_ refObject: ModlValue?, methods: [String], objectMgr: ModlObjectReferenceManager?) throws -> ModlValue? {
+    private func handleNestedObject(_ refObject: ModlValue?, methods: [String], objectMgr: ObjectReferenceManager?) throws -> ModlValue? {
         var newRef = refObject
         var index = 0
         var isFinished = index >= methods.count
