@@ -38,8 +38,10 @@ public enum InterpreterError: Error {
     case invalidMethod
     case classAssignOrder
     case classNoMatchingAssign
-    case immutableLoad
     case missingFile
+
+    case immutableLoad
+    case immutableClass
 }
 
 extension InterpreterError: LocalizedError {
@@ -70,6 +72,8 @@ extension InterpreterError: LocalizedError {
             return "\(header) File not found"
         case .immutableLoad:
             return "\(header) Cannot load multiple files after *LOAD instruction"
+        case .immutableClass:
+            return "\(header) Already defined *class as final"
 //        default:
 //            return "\(header) Unknown error"
         }

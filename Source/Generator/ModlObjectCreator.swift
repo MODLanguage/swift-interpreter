@@ -46,7 +46,8 @@ internal class ModlObjectCreator {
     var stringTransformer: StringTransformer
     var fileLoader: FileLoader
     var warnings: [Error] = []
-    
+    fileprivate var immutableInstructions: [String] = []
+
     init(_ fileLoader: FileLoader) {
         self.fileLoader = fileLoader
         self.stringTransformer = StringTransformer(objectManager: self.objectRefManager, methodManager: self.methodManager)
@@ -205,7 +206,7 @@ internal class ModlObjectCreator {
         switch uwReserved {
         case .version, .versionSH:
             //Could raise an error here for non-matching version.... although json test implies it just continues
-            if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber() {
+            if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber(), key == key?.uppercased() {
                 if Double(truncating: decVersion as NSNumber) != ModlListener.ModlVersion {
                     //Could raise an error here for non-matching version.... although json test implies it just continues
                     warnings.append(InterpreterError.invalidVersion)
@@ -216,6 +217,12 @@ internal class ModlObjectCreator {
             }
             return uwReserved
         case .mClass, .mClassSH:
+            if immutableInstructions.contains(ReservedKey.mClass.rawValue) {
+                throw InterpreterError.immutableClass
+            }
+            if key == key?.uppercased() {
+                immutableInstructions.append(ReservedKey.mClass.rawValue)
+            }
             try classManager.addClass(value)
             return .mClass
         case .objectIndex:
@@ -229,6 +236,12 @@ internal class ModlObjectCreator {
             objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
             return uwReserved
         case .load, .loadSH:
+            if immutableInstructions.contains(ReservedKey.load.rawValue) {
+                throw InterpreterError.immutableLoad
+            }
+            if key == key?.uppercased() {
+                immutableInstructions.append(ReservedKey.load.rawValue)
+            }
             return .load
         case .methodSH, .method:
             try methodManager.addMethod(value)
