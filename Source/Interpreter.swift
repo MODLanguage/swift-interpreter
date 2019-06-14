@@ -49,7 +49,8 @@ public enum InterpreterError: Error {
     case immutableClass
     case invalidSuperclass
     case mismatchedSuperclass
-
+    case reservedClassId
+    
     case missingFile
     case immutableLoad
 }
@@ -91,6 +92,8 @@ extension InterpreterError: LocalizedError {
             return "\(header) Superclass type does not match value"
         case .parserError:
             return "\(header) Cannot parse file"
+        case .reservedClassId:
+            return "\(header) Reserved class id - cannot redefine"
         case .invalidKeyword:
             return "\(header) Invalid keyword"
 //        default:

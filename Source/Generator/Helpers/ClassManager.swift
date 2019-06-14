@@ -61,6 +61,9 @@ internal class ClassManager {
         if let superclassName = mClass.superclass, getClass(superclassName) == nil, PrimitiveSuperclassType(rawValue: superclassName) == nil {
             throw InterpreterError.invalidSuperclass
         }
+        if PrimitiveSuperclassType(rawValue: mClass.id) != nil {
+            throw InterpreterError.reservedClassId
+        }
         var assignCount = 0
         for case let assign as ModlArray in mClass.assignMap?.values ?? [] {
             let newCount = assign.values.count

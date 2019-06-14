@@ -179,8 +179,8 @@ internal struct StringTransformer {
                 } else {
                     throw InterpreterError.invalidObjectReference
                 }
-            } else if let refMap = newRef as? ModlMap {
-                newRef = refMap.value(forKey: method)
+            } else if let refMap = newRef as? ModlMap, let nestedValue = refMap.value(forKey: method) {
+                newRef = nestedValue
             } else if let refPair = newRef as? ModlPair, refPair.key == method {
                 newRef = refPair.value
             } else if var refPrim = newRef as? ModlPrimitive, var primValue = refPrim.asString() {
