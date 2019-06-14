@@ -146,7 +146,7 @@ struct MODLTestManager {
                     XCTAssert(result == test.expectedJson, "\nTest: \(test.modl)\nExpected: \(test.expectedJson)\nGot: \(result)")
                 }
             } catch {
-                XCTFail("Caught error: test did not \(test.modl)")
+                XCTFail("Caught error for test \(test.modl). \n\(error.localizedDescription)")
             }
 //            print("******TEST END********\n************")
         }

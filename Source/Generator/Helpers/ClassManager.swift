@@ -58,8 +58,8 @@ internal class ClassManager {
         guard getClass(mClass.name) == nil, getClass(mClass.id) == nil else {
             throw InterpreterError.classAlreadyDefined
         }
-        if let superclassName = mClass.superclass, superclassName.uppercased() == superclassName {
-//            throw InterpreterError.invalidClass
+        if let superclassName = mClass.superclass, getClass(superclassName) == nil, PrimitiveSuperclassType(rawValue: superclassName) == nil {
+            throw InterpreterError.invalidSuperclass
         }
         var assignCount = 0
         for case let assign as ModlArray in mClass.assignMap?.values ?? [] {

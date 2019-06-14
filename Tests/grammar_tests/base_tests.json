@@ -2,12 +2,12 @@
   { "input": "*l=grammar_tests/test_import_dir/nested_import1.txt;\nfiles=%*load",
     "minimised_modl": "*l=grammar_tests/test_import_dir/nested_import1.txt;files=%*load",
     "expected_output": "{\"files\":[\"grammar_tests/test_import_dir/nested_import1.txt\",\"grammar_tests/test_import_dir/nested_import2.txt\",\"grammar_tests/test_import_dir/nested_import3.txt\",\"grammar_tests/test_import_dir/test_import.txt\"]}",
-    "tested_features":["load"]
+    "tested_features":["load", "problem"]
   },
   { "input": "*l=grammar_tests/1:grammar_tests/2:grammar_tests/3:grammar_tests/1;\nfiles=%*load",
     "minimised_modl": "*l=grammar_tests/1:grammar_tests/2:grammar_tests/3:grammar_tests/1;files=%*load",
     "expected_output": "{\"files\":[\"grammar_tests/1.modl\",\"grammar_tests/2.modl\",\"grammar_tests/3.modl\",\"grammar_tests/1.modl\"]}",
-    "tested_features":["load"]
+    "tested_features":["load", "problem"]
   },
   { "input": "*L=\"https://www.modl.uk/tests/message-thread.txt\";\n\nclasses=*class",
     "minimised_modl": "*L=\"https://www.modl.uk/demo/message-thread.txt\";classes=*class",

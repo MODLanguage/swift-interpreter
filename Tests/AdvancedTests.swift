@@ -87,19 +87,19 @@ class AdvancedTests: XCTestCase {
 //    }
     
     // Uncomment to test just tests tagged with "problem" feature
-//    func testProblemCases() {
-//        guard let json = jsonTests else {
-//            XCTFail("Fail creating tests from json input")
-//            return
-//        }
-//        let allButTests = json.filter { (modl) -> Bool in
-//            guard let modlFeature = modl.testedFeatures else {
-//                return false
-//            }
-//            return modlFeature.contains("problem") && !modlFeature.contains(FeatureTestTypes.load.rawValue)
-//        }
-//        MODLTestManager.performTests(allButTests)
-//    }
+    func testProblemCases() {
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let allButTests = json.filter { (modl) -> Bool in
+            guard let modlFeature = modl.testedFeatures else {
+                return false
+            }
+            return modlFeature.contains("problem") && !modlFeature.contains(FeatureTestTypes.load.rawValue)
+        }
+        MODLTestManager.performTests(allButTests)
+    }
 
     // Uncomment to test just superclass inference feature
 //    func testSuperclassInferenceCases() {

@@ -30,19 +30,25 @@ import Antlr4
 public enum InterpreterError: Error {
     case invalidVersion
     case mismatchedVersion
-    case invalidClass
+
     case invalidKey
+
     case invalidObjectReference
+
     case methodAlreadyDefined
-    case classAlreadyDefined
     case invalidMethod
+    
+    case invalidClass
     case classAssignOrder
     case classNoMatchingAssign
-    case missingFile
-
-    case immutableLoad
+    case classAlreadyDefined
     case immutableClass
+    case invalidSuperclass
+    
+    case missingFile
+    case immutableLoad
 }
+
 
 extension InterpreterError: LocalizedError {
     public var errorDescription: String? {
@@ -66,6 +72,8 @@ extension InterpreterError: LocalizedError {
             return "\(header)  No key list of the correct length in class"
         case .invalidClass:
             return "\(header)  Invalid class definition"
+        case .invalidSuperclass:
+            return "\(header)  Invalid superclass"
         case .invalidMethod:
             return "\(header)  Invalid method definition"
         case .missingFile:
