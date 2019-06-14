@@ -44,7 +44,8 @@ public enum InterpreterError: Error {
     case classAlreadyDefined
     case immutableClass
     case invalidSuperclass
-    
+    case mismatchedSuperclass
+
     case missingFile
     case immutableLoad
 }
@@ -82,6 +83,8 @@ extension InterpreterError: LocalizedError {
             return "\(header) Cannot load multiple files after *LOAD instruction"
         case .immutableClass:
             return "\(header) Already defined *class as final"
+        case .mismatchedSuperclass:
+            return "\(header) Superclass type does not match value"
 //        default:
 //            return "\(header) Unknown error"
         }

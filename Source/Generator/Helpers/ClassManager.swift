@@ -92,7 +92,6 @@ internal class ClassManager {
         }
         var outputPair = ModlOutputObject.Pair()
         outputPair.key = classObj.name
-        //TODO: work out prim from pair value if superclass doesn't have one....
         if let prim = findPrimitiveType(classObj) {
             switch prim {
             case .str:
@@ -156,9 +155,12 @@ internal class ClassManager {
             case .num:
                 if let pairValue = uwValue as? ModlPrimitive {
                     var replacement = ModlListenerObject.Primitive()
-                    replacement.value = pairValue.asNumber()
-                    outputPair.value = replacement
-                    return outputPair
+                    if let validNum = pairValue.asNumber() {
+                        replacement.value = validNum
+                        outputPair.value = replacement
+                        return outputPair
+                    }
+                    throw InterpreterError.mismatchedSuperclass
                 }
             case .arr:
                 if let prim = uwValue as? ModlPrimitive {

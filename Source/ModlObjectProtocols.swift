@@ -174,7 +174,10 @@ internal extension ModlPrimitive {
         case let dec as Decimal:
             return dec
         case let str as String:
-            return Decimal(string: str)
+            if let doubleVersion = Double(str) {
+                return Decimal(doubleVersion)
+            }
+            return nil
         case let bool as Bool:
             if bool {
                 return 1

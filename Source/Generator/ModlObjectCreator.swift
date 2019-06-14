@@ -209,8 +209,7 @@ internal class ModlObjectCreator {
             if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber(), key == key?.uppercased() {
                 if Double(truncating: decVersion as NSNumber) != ModlListener.ModlVersion {
                     //Could raise an error here for non-matching version.... although json test implies it just continues
-                    warnings.append(InterpreterError.invalidVersion)
-//                    throw InterpreterError.invalidVersion
+                    warnings.append(InterpreterError.mismatchedVersion)
                 }
             } else {
                 throw InterpreterError.invalidVersion
