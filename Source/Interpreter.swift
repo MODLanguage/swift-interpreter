@@ -35,7 +35,8 @@ public enum InterpreterError: Error {
     case mismatchedVersion
 
     case invalidKey
-
+    case immutableKey
+    
     case invalidObjectReference
     case invalidKeyword
 
@@ -66,6 +67,8 @@ extension InterpreterError: LocalizedError {
             return "\(header)  Invalid MODL version"
         case .invalidKey:
             return "\(header)  Invalid key"
+        case .immutableKey:
+            return "\(header)  Already defined key as immutable"
         case .invalidObjectReference:
             return "\(header)  Cannot resolve reference"
         case .methodAlreadyDefined:

@@ -94,7 +94,7 @@ internal class ModlObjectCreator {
             try checkValidKey(transformedKey)
             pair.key = transformedKey
             pair.value = try processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
-            objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
+            try objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
             return [pair]
         case let iArray as ModlArray:
             var array = ModlOutputObject.Array()
@@ -131,7 +131,7 @@ internal class ModlObjectCreator {
                 if let uwValue = mapValue {
                     try checkValidKey(mapKey)
                     map.addValue(key: mapKey, value: uwValue)
-                    objectRefManager.addKeyedVariable(key: mapKey, value: mapValue)
+                    try objectRefManager.addKeyedVariable(key: mapKey, value: mapValue)
                 }
             }
             return [map]
@@ -252,7 +252,7 @@ internal class ModlObjectCreator {
             try checkValidKey(key)
             objPair.key = key
             objPair.value = try processModlElement(value)?.first
-            objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
+            try objectRefManager.addKeyedVariable(key: objPair.key, value: objPair.value)
             return uwReserved
         case .load, .loadSH:
             if immutableInstructions.contains(ReservedKey.load.rawValue) {

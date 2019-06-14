@@ -43,12 +43,15 @@ internal class ObjectReferenceManager {
         }
     }
     
-    func addKeyedVariable(key: String?, value: ModlValue?) {
+    func addKeyedVariable(key: String?, value: ModlValue?) throws {
         guard var uwKey = key?.stripGraves(), let uwValue = value else {
             return
         }
         if uwKey.hasPrefix("_") {
             uwKey.removeFirst()
+        }
+        if key == key?.uppercased(), getKeyedVariable(key) != nil {
+            throw InterpreterError.immutableKey
         }
         keyedVariables[uwKey] = uwValue
     }
