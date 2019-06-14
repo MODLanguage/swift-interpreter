@@ -74,9 +74,6 @@ internal class ModlObjectCreator {
         }
         switch uwElement {
         case let iPair as ModlPair:
-            guard let key = iPair.key, !key.isOnlyNumbers() else {
-                throw InterpreterError.invalidKey
-            }
             var pair = ModlOutputObject.Pair()
            
             if  let reservedPair = try processReservedPair(key: iPair.key, value: iPair.value) {
@@ -93,7 +90,9 @@ internal class ModlObjectCreator {
                 pair.value = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)?.first
                 return [pair]
             }
-            pair.key = try stringTransformer.transformKeyString(iPair.key)
+            let transformedKey = try stringTransformer.transformKeyString(iPair.key)
+            try checkValidKey(transformedKey)
+            pair.key = transformedKey
             pair.value = try processModlElement(iPair.value, classIdsProcessedInBranch: classIdsProcessedInBranch)?.first
             objectRefManager.addKeyedVariable(key: pair.key, value: pair.value)
             return [pair]
@@ -106,10 +105,6 @@ internal class ModlObjectCreator {
         case let iMap as ModlMap:
             var map = ModlOutputObject.Map()
             for key in iMap.orderedKeys {
-                guard !key.isOnlyNumbers() else {
-                    throw InterpreterError.invalidKey
-                }
-
                 let originalValue = iMap.value(forKey: key)
                 
                 if let reservedPair = try processReservedPair(key: key, value: originalValue) {
@@ -134,6 +129,7 @@ internal class ModlObjectCreator {
                     mapValue = mValue.first
                 }
                 if let uwValue = mapValue {
+                    try checkValidKey(mapKey)
                     map.addValue(key: mapKey, value: uwValue)
                     objectRefManager.addKeyedVariable(key: mapKey, value: mapValue)
                 }
@@ -179,6 +175,24 @@ internal class ModlObjectCreator {
         }
         return processedList.contains(uwId)
     }
+    
+    private func checkValidKey(_ keyValue: String?) throws {
+        guard let key = keyValue else {
+            throw InterpreterError.invalidKey
+        }
+        guard !key.isOnlyNumbers() else {
+            throw InterpreterError.invalidKey
+        }
+        guard key.range(of: #"^[_*A-Za-z0-9\p{L}][_a-zA-Z0-9\p{L} ]*"#, options: .regularExpression)?.upperBound == key.endIndex else {
+            //invalid first character
+            throw InterpreterError.invalidKey
+        }
+//        guard key.range(of: #"[^_*A-Za-z0-9]+"#, options: .regularExpression) != nil else {
+//            //invalid character in key
+//            throw InterpreterError.invalidKey
+//        }
+    }
+
     
     //    //returns bool for existence of special reserved key
     private func hasReservedPairKey(_ pair: ModlPair) -> ReservedKey? {
