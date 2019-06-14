@@ -37,6 +37,7 @@ public enum InterpreterError: Error {
     case invalidKey
 
     case invalidObjectReference
+    case invalidKeyword
 
     case methodAlreadyDefined
     case invalidMethod
@@ -90,6 +91,8 @@ extension InterpreterError: LocalizedError {
             return "\(header) Superclass type does not match value"
         case .parserError:
             return "\(header) Cannot parse file"
+        case .invalidKeyword:
+            return "\(header) Invalid keyword"
 //        default:
 //            return "\(header) Unknown error"
         }

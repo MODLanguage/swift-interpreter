@@ -215,6 +215,9 @@ internal class ModlObjectCreator {
             reserved = .objectReference
         }
         guard let uwReserved = reserved else {
+            if key?.hasPrefix("*") ?? false {
+                throw InterpreterError.invalidKeyword
+            }
             return nil
         }
         switch uwReserved {
