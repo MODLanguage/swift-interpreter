@@ -104,6 +104,7 @@ internal class ClassManager {
                     outputPair.value = replacement
                     return outputPair
                 }
+                throw InterpreterError.mismatchedSuperclass
             case .map:
                 var replacement = ModlListenerObject.Map()
                 let assignList = constructAssignList(classObj.name)
@@ -153,6 +154,9 @@ internal class ClassManager {
                         replacement.addValue(key: detailKey, value: value)
                     }
                 }
+                if replacement.values.count == 0 {
+                    throw InterpreterError.mismatchedSuperclass
+                }
                 outputPair.value = replacement
                 return outputPair
             case .num:
@@ -163,14 +167,16 @@ internal class ClassManager {
                         outputPair.value = replacement
                         return outputPair
                     }
-                    throw InterpreterError.mismatchedSuperclass
                 }
+                throw InterpreterError.mismatchedSuperclass
             case .arr:
                 if let prim = uwValue as? ModlPrimitive {
                     var replacement = ModlListenerObject.Array()
                     replacement.addValue(prim)
                     outputPair.value = replacement
                     return outputPair
+                } else if (uwValue as? ModlMap) != nil {
+                    throw InterpreterError.mismatchedSuperclass
                 }
             }
         }
