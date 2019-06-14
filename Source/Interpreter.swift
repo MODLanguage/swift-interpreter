@@ -28,6 +28,9 @@ import Foundation
 import Antlr4
 
 public enum InterpreterError: Error {
+    
+    case parserError
+    
     case invalidVersion
     case mismatchedVersion
 
@@ -85,15 +88,19 @@ extension InterpreterError: LocalizedError {
             return "\(header) Already defined *class as final"
         case .mismatchedSuperclass:
             return "\(header) Superclass type does not match value"
+        case .parserError:
+            return "\(header) Cannot parse file"
 //        default:
 //            return "\(header) Unknown error"
         }
     }
 }
 
-public struct Interpreter {
+public class Interpreter {
     //keep reference to this so cache stays whilst interpreter exists
     private let fileLoader = FileLoader()
+    private var parserError: Error? = nil
+    
     public init() {}
     
     public func parseToJson(_ input: String) throws -> String {
@@ -109,10 +116,17 @@ public struct Interpreter {
     internal func parseToRawModl(_ input: String) throws -> ModlListenerObject? {
         let lexer = MODLLexer(ANTLRInputStream(input))
         let parser = try MODLParser(CommonTokenStream(lexer))
-        //            parser.removeErrorListeners()
+        parser.removeErrorListeners()
+        let errorListener = ClosureErrorListener()
+        errorListener.errorHandler = { (line, char, msg) in
+            self.parserError = InterpreterError.parserError
+        }
+        parser.addErrorListener(errorListener)
         let base = ModlListener()
         try parser.modl().enterRule(base)
         if let error = base.parseError {
+            throw error
+        } else if let error = parserError {
             throw error
         }
         return base.object
