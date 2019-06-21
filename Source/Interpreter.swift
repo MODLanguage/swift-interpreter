@@ -117,7 +117,7 @@ public class Interpreter {
     public init() {}
     
     public func parseToJson(_ input: String) throws -> String {
-        let intermediate = try parseToRawModl(input)
+        let intermediate = try parseToModlObject(input)
         let outputGenerator = ModlObjectCreator(fileLoader)
         let output = try outputGenerator.createOutput(intermediate)
         for warning in outputGenerator.warnings {
@@ -126,7 +126,7 @@ public class Interpreter {
         return output?.asJson() ?? ""
     }
     
-    internal func parseToRawModl(_ input: String) throws -> ModlListenerObject? {
+    public func parseToModlObject(_ input: String) throws -> ModlListenerObject? {
         let lexer = MODLLexer(ANTLRInputStream(input))
         let parser = try MODLParser(CommonTokenStream(lexer))
         parser.removeErrorListeners()

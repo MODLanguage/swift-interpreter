@@ -26,7 +26,7 @@
 
 import Foundation
 
-internal class ModlListenerObject: ModlObject {
+public class ModlListenerObject: ModlObject {
     var structures: [ModlStructure] = []
     
     struct Pair: ModlPair {

@@ -46,7 +46,7 @@ internal class FileLoader {
         }
         if let fileText = try loadFileText(filePath) {
             let parser = Interpreter()
-            if let output = try? parser.parseToRawModl(fileText) {
+            if let output = try? parser.parseToModlObject(fileText) {
                 //only remove from cache if there is something to replace it with
                 cache.removeValue(forKey: filePath)
                 let fileItem = FileCacheItem(expiryTime: Date().addingTimeInterval(60 * 60 * 60), fileData: output)
