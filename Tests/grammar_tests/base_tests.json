@@ -2,12 +2,12 @@
   { "input": "*l=grammar_tests/test_import_dir/nested_import1.txt;\nfiles=%*load",
     "minimised_modl": "*l=grammar_tests/test_import_dir/nested_import1.txt;files=%*load",
     "expected_output": "{\"files\":[\"grammar_tests/test_import_dir/nested_import1.txt\",\"grammar_tests/test_import_dir/nested_import2.txt\",\"grammar_tests/test_import_dir/nested_import3.txt\",\"grammar_tests/test_import_dir/test_import.txt\"]}",
-    "tested_features":["load", "problem"]
+    "tested_features":["load"]
   },
   { "input": "*l=grammar_tests/1:grammar_tests/2:grammar_tests/3:grammar_tests/1;\nfiles=%*load",
     "minimised_modl": "*l=grammar_tests/1:grammar_tests/2:grammar_tests/3:grammar_tests/1;files=%*load",
     "expected_output": "{\"files\":[\"grammar_tests/1.modl\",\"grammar_tests/2.modl\",\"grammar_tests/3.modl\",\"grammar_tests/1.modl\"]}",
-    "tested_features":["load", "problem"]
+    "tested_features":["load"]
   },
   { "input": "*L=\"https://www.modl.uk/tests/message-thread.txt\";\n\nclasses=*class",
     "minimised_modl": "*L=\"https://www.modl.uk/demo/message-thread.txt\";classes=*class",
@@ -812,7 +812,7 @@
   { "input": "*method(\n ## The method can be called by it's ID or name;\n *id=cn;\n *name=company_name;\n ## The value of the object that the method is called on is transformed using the following methods:\n *transform=`replace(-, ).trim(.).initcap`\n);\n\n_domain = smiths-limited.com;\nfriendly_name = %domain.cn ## The value \"Smiths Limited\" is assigned to the key \"friendly_name\"",
     "minimised_modl": "*m(*i=cn;*n=company_name;*transform=`replace(-, ).trim(.).initcap`);_domain=smiths-limited.com;friendly_name=%domain.cn",
     "expected_output": "{\n \"friendly_name\" : \"Smiths Limited\"\n}\n",
-    "tested_features":["method","problem"]
+    "tested_features":["method"]
   },
   { "input": "*method(\n *id=rt;\n *name=remove_two;\n *transform=`replace(two,)`\n);\n\n_numbers = one two three;\nname = %numbers.rt",
     "minimised_modl": "*m(*i=rt;*n=remove_two;*transform=`replace(two,)`);_numbers=one two three;name=%numbers.rt",
