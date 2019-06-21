@@ -126,7 +126,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04D4DD2FDF4AF497503C6E33 /* Pods_MODL_SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MODL_SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E2BECCB22A92AC500FC1303 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		3E2BECCD22A9321B00FC1303 /* FileLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoaderTests.swift; sourceTree = "<group>"; };
 		3E2BECCF22A95BDC00FC1303 /* TestFileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFileLoader.swift; sourceTree = "<group>"; };
@@ -186,9 +185,6 @@
 		3E7743C922674865006AA9AF /* MODLParserParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserParserATN.swift; sourceTree = "<group>"; };
 		3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEscapeReplacer.swift; sourceTree = "<group>"; };
 		3EF9718922AA78C70000B220 /* MethodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodManager.swift; sourceTree = "<group>"; };
-		AC5979BDEDCEC6CD9B68F409 /* Pods_InterpreterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InterpreterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFE9756048106A33F1DBDA8C /* Pods_MODL_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MODL_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C0341B1F51315FDB3DB6021F /* Pods_Interpreter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Interpreter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,17 +208,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E00995E226746EC0042D518 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BFE9756048106A33F1DBDA8C /* Pods_MODL_Swift.framework */,
-				04D4DD2FDF4AF497503C6E33 /* Pods_MODL_SwiftTests.framework */,
-				C0341B1F51315FDB3DB6021F /* Pods_Interpreter.framework */,
-				AC5979BDEDCEC6CD9B68F409 /* Pods_InterpreterTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		3E2EEBC422B119ED005D77DC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,7 +395,6 @@
 				3E6400DA22AFDEF70041260D /* Source */,
 				3E6400E722AFDEF70041260D /* Tests */,
 				3EFABA43226737760029EACC /* Products */,
-				3E00995E226746EC0042D518 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
