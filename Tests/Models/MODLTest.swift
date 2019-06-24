@@ -105,6 +105,8 @@ struct MODLTestManager {
                 regex?.replaceMatches(in: value, options: .reportProgress, range: NSRange(location: 0,length: value.length), withTemplate: "")
                 let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: value as String, comment: test.comment, testedFeatures: test.testedFeatures)
                 return newTest
+                }.filter { (test) -> Bool in
+                    test.modl != "DELETED"
             }
             return testCleared
         } catch {

@@ -62,13 +62,13 @@ fileprivate enum StringMethod {
         case "p":
             self = .puny
         case "r":
-            guard let find = rawValue.slice(from: "(", to: ","),
-                let replace = rawValue.slice(from: ",", to: ")") else {
+            guard let find = rawValue.slice(from: "<", to: ","),
+                let replace = rawValue.slice(from: ",", to: ">") else {
                     return nil
             }
             self = .replace(find, replace)
         case "t":
-            guard let reference = rawValue.slice(from: "(", to: ")") else {
+            guard let reference = rawValue.slice(from: "<", to: ">") else {
                 return nil
             }
             self = .trim(reference)
@@ -82,7 +82,7 @@ fileprivate enum StringMethod {
 internal class MethodManager {
     private var storedMethods: [String: Method] = [:]
     private var methodOrder: [String] = []
-    private let subjectMethodInclusivePattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(\([a-zA-Z,]*\))*)*"#
+    private let subjectMethodInclusivePattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(<[a-zA-Z,]*>)*)*"#
     private let methodPattern = #"(^|[0-9a-zA-Z])"#
     private let subjectPattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)"#
 
@@ -181,9 +181,9 @@ internal class MethodManager {
                     output = ""
                 }
                 continue
-            }else if char == "(" {
+            }else if char == "<" {
                 inBrackets = true
-            } else if char == ")" {
+            } else if char == ">" {
                 inBrackets = false
             }
             output.append(char)
@@ -318,7 +318,7 @@ fileprivate struct Method {
         var pair = ModlOutputObject.Pair()
         var map = ModlOutputObject.Map()
         map.addValue(key: "name", value: ModlOutputObject.Primitive(name))
-        map.addValue(key: "transform", value: ModlOutputObject.Primitive(transformChain.replacingOccurrences(of: ", )", with: ",)")))
+        map.addValue(key: "transform", value: ModlOutputObject.Primitive(transformChain.replacingOccurrences(of: ", >", with: ",>")))
         pair.key = id
         pair.value = map
         return pair

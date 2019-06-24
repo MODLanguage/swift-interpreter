@@ -150,6 +150,10 @@ internal struct StringTransformer {
         } else {
             refObject = objectMgr?.getKeyedVariable(subject)
         }
+        //TODO: check this
+        //        if refObject == nil {
+//            refObject = ModlListenerObject.Primitive(value: subject)
+//        }
         var returnObject = refObject
         if methods.count != 0 {
             returnObject = try handleNestedObject(refObject, methods: methods, objectMgr: objectMgr)
