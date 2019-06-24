@@ -64,9 +64,11 @@ struct MODLTest: Codable {
     let expectedJson: String
     let comment: String?
     let testedFeatures: [String]?
+    let id: String?
     
     enum CodingKeys: String, CodingKey {
         case comment
+        case id = "id"
         case modl = "input"
         case minModl = "minimised_modl"
         case expectedJson = "expected_output"
@@ -103,7 +105,7 @@ struct MODLTestManager {
                 let pattern = "\\s(?=(\"[^\"]*\"|[^\"])*$)"
                 let regex = try? NSRegularExpression(pattern: pattern)
                 regex?.replaceMatches(in: value, options: .reportProgress, range: NSRange(location: 0,length: value.length), withTemplate: "")
-                let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: value as String, comment: test.comment, testedFeatures: test.testedFeatures)
+                let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: value as String, comment: test.comment, testedFeatures: test.testedFeatures,id: test.id)
                 return newTest
                 }.filter { (test) -> Bool in
                     test.modl != "DELETED"

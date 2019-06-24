@@ -66,5 +66,20 @@ class InterpreterTests: XCTestCase {
         }
         print("Total tests: \(tests.count)")
     }
+    
+    func testSpecificID() {
+        let testingIds = [87]
+        guard let json = jsonTests else {
+            XCTFail("Fail creating tests from json input")
+            return
+        }
+        let allButTests = json.filter { (modl) -> Bool in
+            guard let modlId = modl.id, let iMId = Int(modlId) else {
+                return false
+            }
+            return testingIds.contains(iMId)
+        }
+        MODLTestManager.performTests(allButTests)
+    }
 
 }
