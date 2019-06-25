@@ -53,7 +53,7 @@ public enum InterpreterError: Error {
     case mismatchedSuperclass
     case reservedClassId
     
-    case missingFile
+    case missingFile(_ fileName: String?)
     case immutableLoad
 }
 
@@ -89,8 +89,8 @@ extension InterpreterError: LocalizedError {
             return "\(header)  Invalid superclass"
         case .invalidMethod:
             return "\(header)  Invalid method definition"
-        case .missingFile:
-            return "\(header) File not found"
+        case .missingFile(let fileName):
+            return "\(header) File not found - \(fileName ?? "")"
         case .immutableLoad:
             return "\(header) Cannot load multiple files after *LOAD instruction"
         case .immutableClass:

@@ -10,6 +10,7 @@
 		3E2EEC0E22B11A6E005D77DC /* Punycode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2EEC0322B11A51005D77DC /* Punycode.framework */; };
 		3E2EEC2422B11C18005D77DC /* Antlr4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2EEBCC22B119ED005D77DC /* Antlr4.framework */; };
 		3E2EEC3C22B3C434005D77DC /* ClosureErrorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2EEC3B22B3C434005D77DC /* ClosureErrorListener.swift */; };
+		3E5B200C22C2478500ECC0B6 /* c-d.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E5B200A22C2477D00ECC0B6 /* c-d.txt */; };
 		3E6400E222AFDEF70041260D /* MODL_Interpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6400D922AFDEF70041260D /* MODL_Interpreter.framework */; };
 		3E6400E922AFDEF70041260D /* InterpreterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6400E822AFDEF70041260D /* InterpreterTests.swift */; };
 		3E6400EB22AFDEF70041260D /* Interpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6400DB22AFDEF70041260D /* Interpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -148,6 +149,7 @@
 		3E5ABB6622674541007419CC /* Antlr4.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Antlr4.xcodeproj; path = ../../antlr/Antlr4.xcodeproj; sourceTree = "<group>"; };
 		3E5ABB712267459E007419CC /* Interpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interpreter.swift; sourceTree = "<group>"; };
 		3E5ABB7D226745FB007419CC /* ModlListenerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModlListenerObject.swift; sourceTree = "<group>"; };
+		3E5B200A22C2477D00ECC0B6 /* c-d.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "c-d.txt"; sourceTree = "<group>"; };
 		3E63153222816FCD008BDC14 /* 3.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3.modl; sourceTree = "<group>"; };
 		3E63153322816FCD008BDC14 /* 2.modl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2.modl; sourceTree = "<group>"; };
 		3E63153522816FCD008BDC14 /* test_import.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_import.txt; sourceTree = "<group>"; };
@@ -260,6 +262,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		3E5B200922C2477D00ECC0B6 /* files */ = {
+			isa = PBXGroup;
+			children = (
+				3E5B200A22C2477D00ECC0B6 /* c-d.txt */,
+			);
+			path = files;
+			sourceTree = "<group>";
+		};
 		3E63153122816FCD008BDC14 /* grammar_tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +284,7 @@
 				3E63153A22816FCD008BDC14 /* demo_config.modl */,
 				3E63153B22816FCD008BDC14 /* base_tests.json */,
 				3E63153C22816FCD008BDC14 /* error_tests.json */,
+				3E5B200922C2477D00ECC0B6 /* files */,
 				3E63153D22816FCD008BDC14 /* 1.modl */,
 			);
 			path = grammar_tests;
@@ -585,6 +596,7 @@
 				3E64012922AFE2FF0041260D /* demo_config.modl in Resources */,
 				3E64012A22AFE2FF0041260D /* base_tests.json in Resources */,
 				3E64012F22AFE3030041260D /* nested_import3.txt in Resources */,
+				3E5B200C22C2478500ECC0B6 /* c-d.txt in Resources */,
 				3E64012C22AFE2FF0041260D /* 1.modl in Resources */,
 				3E64012322AFE2FF0041260D /* 3.modl in Resources */,
 				3E64012622AFE2FF0041260D /* c.modl in Resources */,

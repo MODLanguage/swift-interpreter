@@ -308,6 +308,7 @@ internal class ModlObjectCreator {
                     }
                     return [primPath]
                 }
+                throw InterpreterError.missingFile(primPath.asString())
             case let arrPath as ModlArray:
                 var outputModl: [ModlValue] = []
                 for case let path as ModlPrimitive in arrPath.values {
@@ -317,6 +318,8 @@ internal class ModlObjectCreator {
                                 outputModl.append(processed)
                             }
                         }
+                    } else {
+                        throw InterpreterError.missingFile(path.asString())
                     }
                 }
                 return outputModl
