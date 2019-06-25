@@ -29,8 +29,9 @@ import Punycode
 
 internal struct StringTransformer {
     
-    private let objectReferencePattern = #"((?<![\\~])`?)%(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.[a-zA-Z0-9_%]+(\<[a-zA-Z,]*\>)*)*((?<![\\~])`?)"#
-    
+//    private let objectReferencePattern = #"%[^`]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
+    private let objectReferencePattern = #"%[^`.]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.%?[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
+
     private let objectManager: ObjectReferenceManager
     private let methodManager: MethodManager
 
@@ -134,12 +135,15 @@ internal struct StringTransformer {
             return nil
         }
 
-        var subject = String(methods.remove(at: 0)).stripGraves() //take off the subject and leave the methods
+        var subject = String(methods.remove(at: 0)) //take off the subject and leave the methods
 
         if subject.hasPrefix("%") {
             subject.removeFirst()
         }
-        
+        if subject.hasSuffix("%") {
+            subject.removeLast()
+        }
+
         guard subject.count > 0 else {
             return nil
         }
@@ -173,7 +177,10 @@ internal struct StringTransformer {
         var isFinished = index >= methods.count
         
         while !isFinished {
-            var method = String(methods[index]).stripGraves()
+            var method = String(methods[index])
+            if method.hasSuffix("%") {
+                method.removeLast()
+            }
             if let transformed = try transformString(method) as? ModlPrimitive {
                 method = transformed.asString() ?? method
             }
@@ -190,7 +197,7 @@ internal struct StringTransformer {
             } else if var refPrim = newRef as? ModlPrimitive, var primValue = refPrim.asString() {
                 let methodChain = methods[index...].joined(separator: ".")
                 if methodChain.count > 0 {
-                    primValue = "`\(primValue)`.\(methodChain.stripGraves())"
+                    primValue = "%`\(primValue.stripGraves())`.\(methodChain.stripGraves())"
                 }
                 refPrim.setValue(value: primValue)
                 newRef = refPrim

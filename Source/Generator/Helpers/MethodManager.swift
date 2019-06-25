@@ -82,7 +82,7 @@ fileprivate enum StringMethod {
 internal class MethodManager {
     private var storedMethods: [String: Method] = [:]
     private var methodOrder: [String] = []
-    private let subjectMethodInclusivePattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(<[a-zA-Z,]*>)*)*"#
+    private let subjectMethodInclusivePattern = #"%((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(<[a-zA-Z,]*>)*)*"#
     private let methodPattern = #"(^|[0-9a-zA-Z])"#
     private let subjectPattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)"#
 

@@ -68,7 +68,7 @@ class InterpreterTests: XCTestCase {
     }
     
     func testSpecificID() {
-        let testingIds = [87]
+        let testingIds = [274]
         guard let json = jsonTests else {
             XCTFail("Fail creating tests from json input")
             return
