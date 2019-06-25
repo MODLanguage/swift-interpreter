@@ -2705,7 +2705,7 @@
     {
         "id": "284",
         "input": "_x=abc;\ny=\"%x\"",
-        "expected_output": "{\n    \"y\": \"%x\"\n}",
+        "expected_output": "{\n    \"y\": \"abc\"\n}",
         "tested_features": [
             "quotes"
         ],

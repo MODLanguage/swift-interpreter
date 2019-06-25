@@ -147,7 +147,7 @@ struct MODLTestManager {
 //                    let json = try JSONSerialization.jsonObject(with: data, options: [])
 //                    let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
 //                    let stringOutput = String(data: dataOutput, encoding: .utf8)
-                    XCTAssert(result == test.expectedJson, "\nTest: \(test.modl)\nExpected: \(test.expectedJson)\nGot: \(result)")
+                    XCTAssert(result == test.expectedJson, "\nTest: \(test.id)\n \(test.modl)\nExpected: \(test.expectedJson)\nGot: \(result)")
                 }
             } catch {
                 XCTFail("Caught error for test \(test.modl). \n\(error.localizedDescription)")
