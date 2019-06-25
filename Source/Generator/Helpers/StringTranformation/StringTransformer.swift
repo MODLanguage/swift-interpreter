@@ -31,7 +31,7 @@ internal struct StringTransformer {
     
 //    private let objectReferencePattern = #"%[^`]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
 //    private let objectReferencePattern = #"%[^`.]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.%?[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
-    private let objectReferencePattern = #"((?<!"))%[^`.]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.%?[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
+    private let objectReferencePattern = #"%[^`.]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.%?[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
 
     private let objectManager: ObjectReferenceManager
     private let methodManager: MethodManager
