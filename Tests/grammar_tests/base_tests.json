@@ -2714,7 +2714,7 @@
     {
         "id": "285",
         "input": "_replace_me=new value;\n\none=%replace_me.u;\n\ntwo=`replace_me`.u;\n\nthree=`replace_me.u`;\n\nfour=`%replace_me.u`;\n\nfive=`%replace_me`.u;\n\nsix=%replace_me.u%_added;\n\nseven=replace_me.u;\n\neight=%`replace_me`.u;\n\nnine=%`replace_me`.u%;",
-        "expected_output": "[\n    {\n        \"one\": \"NEW VALUE\"\n    },\n    {\n        \"two\": \"`replace_me`.u\"\n    },\n    {\n        \"three\": \"replace_me.u\"\n    },\n    {\n        \"four\": \"NEW VALUE\"\n    },\n    {\n        \"five\": \"`new value`.u\"\n    },\n    {\n        \"six\": \"NEW VALUE_added\"\n    },\n    {\n        \"seven\": \"replace_me.u\"\n    },\n    {\n        \"eight\": \"REPLACE_ME\n    },\n    {\n        \"nine\": \"REPLACE_ME\"\n    }\n]",
+        "expected_output": "[\n{\n\"one\": \"NEW VALUE\"\n},\n{\n\"two\": \"`replace_me`.u\"\n},\n{\n\"three\": \"replace_me.u\"\n},\n{\n\"four\": \"NEW VALUE\"\n},\n{\n\"five\": \"`new value`.u\"\n},\n{\n\"six\": \"NEW VALUE_added\"\n},\n{\n\"seven\": \"replace_me.u\"\n},\n{\n\"eight\": \"REPLACE_ME\"\n},\n{\n\"nine\": \"REPLACE_ME\"\n}\n]",
         "tested_features": [
             "object_ref"
         ],
@@ -2977,7 +2977,7 @@
     {
         "id": "312",
         "input": "_vat=20;\nkey=\"vat rate is %vat`%`\"",
-        "expected_output": "{\n  \"key\": \"vat is 20`%`\"\n}",
+        "expected_output": "{\n  \"key\": \"vat rate is 20`%`\"\n}",
         "tested_features": [
             "object_ref",
             "graves"

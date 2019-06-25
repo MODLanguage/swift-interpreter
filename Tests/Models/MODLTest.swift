@@ -101,11 +101,17 @@ struct MODLTestManager {
             let data = try Data(contentsOf: fileUrl)
             let tests = try JSONDecoder().decode([MODLTest].self, from: data)
             let testCleared = tests.map { (test) -> MODLTest in
-                let value = NSMutableString(string: test.expectedJson.replacingOccurrences(of: "\n", with: ""))
-                let pattern = "\\s(?=(\"[^\"]*\"|[^\"])*$)"
-                let regex = try? NSRegularExpression(pattern: pattern)
-                regex?.replaceMatches(in: value, options: .reportProgress, range: NSRange(location: 0,length: value.length), withTemplate: "")
-                let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: value as String, comment: test.comment, testedFeatures: test.testedFeatures,id: test.id)
+                let split = test.expectedJson.replacingOccurrences(of: "\n", with: "").split(separator: "\"")
+                var outputJson = ""
+                for (index, value) in split.enumerated() {
+                    let prefix = index == 0 ? "" : "\""
+                    if index % 2 == 0 {
+                        outputJson += prefix + value.replacingOccurrences(of: " ", with: "")
+                    } else {
+                        outputJson += prefix + value
+                    }
+                }
+                let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: outputJson as String, comment: test.comment, testedFeatures: test.testedFeatures,id: test.id)
                 return newTest
                 }.filter { (test) -> Bool in
                     test.modl != "DELETED"
@@ -147,6 +153,8 @@ struct MODLTestManager {
 //                    let json = try JSONSerialization.jsonObject(with: data, options: [])
 //                    let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
 //                    let stringOutput = String(data: dataOutput, encoding: .utf8)
+                    print(result)
+                    print(test.expectedJson)
                     XCTAssert(result == test.expectedJson, "\nTest: \(test.id)\n \(test.modl)\nExpected: \(test.expectedJson)\nGot: \(result)")
                 }
             } catch {

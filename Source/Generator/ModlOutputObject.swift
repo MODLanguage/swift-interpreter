@@ -128,9 +128,15 @@ internal class ModlOutputObject: ModlObject, ModlJSON {
             if var uwString = value as? String {
 //                let escaped = StringEscapeReplacer().replaceGraves(uwString)
                 if uwString.hasSuffix("\"") && uwString.hasPrefix("\""){
-                    return uwString.stripGraves()
+                    return uwString
                 }
-                return "\"\(uwString.stripGraves())\""
+                if uwString.hasSuffix("`") && uwString.hasPrefix("`"){
+                    let indexStartOfText = uwString.index(uwString.startIndex, offsetBy: 1)
+                    let indexEndOfText = uwString.index(uwString.endIndex, offsetBy: -1)
+                    uwString = String(uwString[indexStartOfText..<indexEndOfText])
+                }
+
+                return "\"\(uwString)\""
             } else if let uwBool = value as? Bool {
                 return uwBool ? "true" : "false"
             } else if let uwNumber = value as? Decimal {
