@@ -68,7 +68,7 @@ class InterpreterTests: XCTestCase {
     }
     
     func testSpecificID() {
-        let testingIds = [164, 295]
+        let testingIds = [295]
         guard let json = jsonTests else {
             XCTFail("Fail creating tests from json input")
             return
@@ -81,5 +81,82 @@ class InterpreterTests: XCTestCase {
         }
         MODLTestManager.performTests(allButTests)
     }
-
+    
+    func testNum() {
+        let modl = """
+            _C=gb;
+            _L=en;
+            _Q=numexample.com;
+            _D=numexample.com;
+            _DV=iPhone 7;
+            _TZ=GMT;
+            _GPS=53.473997,-2.237334;
+            *load="http://modules.num.uk/1/rcf.txt";
+            o=NUM Example Co:Example Strapline:[t=Call us:441270123456;fb=examplefacebook;tw=exampletwitter;in=exampleinstagram]
+"""
+        let p = Interpreter()
+        do {
+            let result = try p.parseToJson(modl)
+            let expected = testNumResult.replacingOccurrences(of: "\n", with: "")
+            XCTAssert(result == expected)
+        } catch {
+            XCTFail("Parse error: \(error.localizedDescription)")
+        }
+    }
 }
+
+let testNumResult = """
+{
+"organisation": {
+"name": "NUM Example Co",
+"slogan": "Example Strapline",
+"contacts": [
+{
+"telephone": {
+"description": "Call us",
+"value": "441270123456",
+"object_type": "media",
+"object_display_name": "Telephone",
+"description_default": "Call",
+"prefix": "tel://",
+"media_type": "core"
+}
+},
+{
+"facebook": {
+"value": "examplefacebook",
+"object_type": "media",
+"object_display_name": "Facebook",
+"description_default": "View Facebook profile",
+"prefix": "https://www.facebook.com/",
+"media_type": "3p"
+}
+},
+{
+"twitter": {
+"value": "exampletwitter",
+"object_type": "media",
+"object_display_name": "Twitter",
+"description_default": "View Twitter profile",
+"prefix": "https://www.twitter.com/",
+"media_type": "3p",
+"value_prefix": "@"
+}
+},
+{
+"instagram": {
+"value": "exampleinstagram",
+"object_type": "media",
+"object_display_name": "Instagram",
+"description_default": "View Instagram profile",
+"prefix": "https://www.instagram.com/",
+"media_type": "3p"
+}
+}
+],
+"object_type": "entity",
+"object_display_name": "Organization",
+"description_default": "View Organization"
+}
+}
+"""

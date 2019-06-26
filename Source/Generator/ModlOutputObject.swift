@@ -126,7 +126,7 @@ internal class ModlOutputObject: ModlObject, ModlJSON {
         
         func asJson() -> String? {
             if var uwString = value as? String {
-//                let escaped = StringEscapeReplacer().replaceGraves(uwString)
+                uwString = uwString.replacingOccurrences(of: "\"", with: "\\\"")
                 if uwString.hasSuffix("\"") && uwString.hasPrefix("\""){
                     return uwString
                 }
