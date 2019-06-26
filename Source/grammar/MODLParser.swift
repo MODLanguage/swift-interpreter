@@ -18,10 +18,10 @@ open class MODLParser: Parser {
 	enum Tokens: Int {
 		case EOF = -1, WS = 1, NULL = 2, TRUE = 3, FALSE = 4, COLON = 5, EQUALS = 6, 
                  STRUCT_SEP = 7, ARR_SEP = 8, LBRAC = 9, RBRAC = 10, LSBRAC = 11, 
-                 RSBRAC = 12, NUMBER = 13, COMMENT = 14, STRING = 15, HASH_PREFIX = 16, 
-                 QUOTED = 17, GRAVED = 18, LCBRAC = 19, CWS = 20, QMARK = 21, 
-                 FSLASH = 22, GTHAN = 23, LTHAN = 24, ASTERISK = 25, AMP = 26, 
-                 PIPE = 27, EXCLAM = 28, CCOMMENT = 29, RCBRAC = 30
+                 RSBRAC = 12, NUMBER = 13, COMMENT = 14, QUOTED = 15, STRING = 16, 
+                 HASH_PREFIX = 17, LCBRAC = 18, CWS = 19, QMARK = 20, FSLASH = 21, 
+                 GTHAN = 22, LTHAN = 23, ASTERISK = 24, AMP = 25, PIPE = 26, 
+                 EXCLAM = 27, CCOMMENT = 28, RCBRAC = 29
 	}
 
 	public
@@ -48,14 +48,14 @@ open class MODLParser: Parser {
 
 	private static let _LITERAL_NAMES: [String?] = [
 		nil, nil, nil, nil, nil, nil, nil, nil, "','", nil, nil, nil, nil, nil, 
-		nil, nil, nil, nil, nil, "'{'", nil, "'?'", "'/'", "'>'", "'<'", "'*'", 
-		"'&'", "'|'", "'!'", nil, "'}'"
+		nil, nil, nil, nil, "'{'", nil, "'?'", "'/'", "'>'", "'<'", "'*'", "'&'", 
+		"'|'", "'!'", nil, "'}'"
 	]
 	private static let _SYMBOLIC_NAMES: [String?] = [
 		nil, "WS", "NULL", "TRUE", "FALSE", "COLON", "EQUALS", "STRUCT_SEP", "ARR_SEP", 
-		"LBRAC", "RBRAC", "LSBRAC", "RSBRAC", "NUMBER", "COMMENT", "STRING", "HASH_PREFIX", 
-		"QUOTED", "GRAVED", "LCBRAC", "CWS", "QMARK", "FSLASH", "GTHAN", "LTHAN", 
-		"ASTERISK", "AMP", "PIPE", "EXCLAM", "CCOMMENT", "RCBRAC"
+		"LBRAC", "RBRAC", "LSBRAC", "RSBRAC", "NUMBER", "COMMENT", "QUOTED", "STRING", 
+		"HASH_PREFIX", "LCBRAC", "CWS", "QMARK", "FSLASH", "GTHAN", "LTHAN", "ASTERISK", 
+		"AMP", "PIPE", "EXCLAM", "CCOMMENT", "RCBRAC"
 	]
 	public
 	static let VOCABULARY = Vocabulary(_LITERAL_NAMES, _SYMBOLIC_NAMES)
@@ -88,16 +88,16 @@ open class MODLParser: Parser {
 
 	public class ModlContext: ParserRuleContext {
 			open
+			func EOF() -> TerminalNode? {
+				return getToken(MODLParser.Tokens.EOF.rawValue, 0)
+			}
+			open
 			func modl_structure() -> [Modl_structureContext] {
 				return getRuleContexts(Modl_structureContext.self)
 			}
 			open
 			func modl_structure(_ i: Int) -> Modl_structureContext? {
 				return getRuleContext(Modl_structureContext.self, i)
-			}
-			open
-			func EOF() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.EOF.rawValue, 0)
 			}
 			open
 			func STRUCT_SEP() -> [TerminalNode] {
@@ -134,18 +134,18 @@ open class MODLParser: Parser {
 	    }
 		do {
 			var _alt:Int
-		 	setState(64)
+		 	try enterOuterAlt(_localctx, 1)
+		 	setState(62)
 		 	try _errHandler.sync(self)
 		 	switch(try getInterpreter().adaptivePredict(_input,3, _ctx)) {
 		 	case 1:
-		 		try enterOuterAlt(_localctx, 1)
 		 		setState(49)
 		 		try _errHandler.sync(self)
 		 		_la = try _input.LA(1)
 		 		if (//closure
 		 		 { () -> Bool in
 		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 		}()
 		 		      return testSet
@@ -159,7 +159,6 @@ open class MODLParser: Parser {
 
 		 		break
 		 	case 2:
-		 		try enterOuterAlt(_localctx, 2)
 		 		setState(51)
 		 		try modl_structure()
 		 		setState(56)
@@ -192,12 +191,13 @@ open class MODLParser: Parser {
 
 		 		}
 
-		 		setState(62)
-		 		try match(MODLParser.Tokens.EOF.rawValue)
 
 		 		break
 		 	default: break
 		 	}
+		 	setState(64)
+		 	try match(MODLParser.Tokens.EOF.rawValue)
+
 		}
 		catch ANTLRException.recognition(let re) {
 			_localctx.exception = re
@@ -273,12 +273,8 @@ open class MODLParser: Parser {
 		 		try modl_top_level_conditional()
 
 		 		break
-		 	case .NULL:fallthrough
-		 	case .TRUE:fallthrough
-		 	case .FALSE:fallthrough
-		 	case .NUMBER:fallthrough
-		 	case .STRING:fallthrough
-		 	case .QUOTED:
+		 	case .QUOTED:fallthrough
+		 	case .STRING:
 		 		try enterOuterAlt(_localctx, 4)
 		 		setState(69)
 		 		try modl_pair()
@@ -357,7 +353,7 @@ open class MODLParser: Parser {
 		 	if (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
@@ -467,7 +463,7 @@ open class MODLParser: Parser {
 		 	if (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
@@ -695,22 +691,6 @@ open class MODLParser: Parser {
 				return getToken(MODLParser.Tokens.QUOTED.rawValue, 0)
 			}
 			open
-			func NUMBER() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NUMBER.rawValue, 0)
-			}
-			open
-			func NULL() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.NULL.rawValue, 0)
-			}
-			open
-			func TRUE() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.TRUE.rawValue, 0)
-			}
-			open
-			func FALSE() -> TerminalNode? {
-				return getToken(MODLParser.Tokens.FALSE.rawValue, 0)
-			}
-			open
 			func modl_map() -> Modl_mapContext? {
 				return getRuleContext(Modl_mapContext.self, 0)
 			}
@@ -753,10 +733,7 @@ open class MODLParser: Parser {
 		 		_la = try _input.LA(1)
 		 		if (!(//closure
 		 		 { () -> Bool in
-		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue]
-		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
-		 		}()
+		 		      let testSet: Bool = _la == MODLParser.Tokens.QUOTED.rawValue || _la == MODLParser.Tokens.STRING.rawValue
 		 		      return testSet
 		 		 }())) {
 		 		try _errHandler.recoverInline(self)
@@ -952,7 +929,7 @@ open class MODLParser: Parser {
 		 		if (//closure
 		 		 { () -> Bool in
 		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
 		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 		}()
 		 		      return testSet
@@ -1027,7 +1004,7 @@ open class MODLParser: Parser {
 		 	while (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
@@ -1143,7 +1120,7 @@ open class MODLParser: Parser {
 		 		if (//closure
 		 		 { () -> Bool in
 		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
 		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 		}()
 		 		      return testSet
@@ -1226,7 +1203,7 @@ open class MODLParser: Parser {
 		 	} while (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
@@ -1279,12 +1256,8 @@ open class MODLParser: Parser {
 		 	setState(193)
 		 	try _errHandler.sync(self)
 		 	switch (MODLParser.Tokens(rawValue: try _input.LA(1))!) {
-		 	case .NULL:fallthrough
-		 	case .TRUE:fallthrough
-		 	case .FALSE:fallthrough
-		 	case .NUMBER:fallthrough
-		 	case .STRING:fallthrough
-		 	case .QUOTED:
+		 	case .QUOTED:fallthrough
+		 	case .STRING:
 		 		try enterOuterAlt(_localctx, 1)
 		 		setState(191)
 		 		try modl_pair()
@@ -1402,7 +1375,7 @@ open class MODLParser: Parser {
 		 		if (//closure
 		 		 { () -> Bool in
 		 		      let testSet: Bool = {  () -> Bool in
-		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
+		 		   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.EQUALS.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue,MODLParser.Tokens.GTHAN.rawValue,MODLParser.Tokens.LTHAN.rawValue,MODLParser.Tokens.EXCLAM.rawValue]
 		 		    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 		}()
 		 		      return testSet
@@ -1485,7 +1458,7 @@ open class MODLParser: Parser {
 		 	} while (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
@@ -1544,8 +1517,8 @@ open class MODLParser: Parser {
 		 	case .LBRAC:fallthrough
 		 	case .LSBRAC:fallthrough
 		 	case .NUMBER:fallthrough
-		 	case .STRING:fallthrough
-		 	case .QUOTED:
+		 	case .QUOTED:fallthrough
+		 	case .STRING:
 		 		try enterOuterAlt(_localctx, 1)
 		 		setState(217)
 		 		try modl_array_value_item()
@@ -1652,7 +1625,7 @@ open class MODLParser: Parser {
 		 	if (//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.LBRAC.rawValue,MODLParser.Tokens.LSBRAC.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.LCBRAC.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
@@ -2476,7 +2449,7 @@ open class MODLParser: Parser {
 		 	if (!(//closure
 		 	 { () -> Bool in
 		 	      let testSet: Bool = {  () -> Bool in
-		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.STRING.rawValue,MODLParser.Tokens.QUOTED.rawValue]
+		 	   let testArray: [Int] = [_la, MODLParser.Tokens.NULL.rawValue,MODLParser.Tokens.TRUE.rawValue,MODLParser.Tokens.FALSE.rawValue,MODLParser.Tokens.NUMBER.rawValue,MODLParser.Tokens.QUOTED.rawValue,MODLParser.Tokens.STRING.rawValue]
 		 	    return  Utils.testBitLeftShiftArray(testArray, 0)
 		 	}()
 		 	      return testSet
