@@ -34,6 +34,8 @@ fileprivate enum ReservedKey: String, CaseIterable {
     case method = "*METHOD"
     case load = "*LOAD"
     case loadSH = "*L"
+    case expect = "*EXPECT"
+    case expectSH = "*E"
     case objectIndex = "?"
     case objectReference = "_"
 }
@@ -181,15 +183,15 @@ internal class ModlObjectCreator {
     
     private func checkValidKey(_ keyValue: String?) throws {
         guard let key = keyValue else {
-            throw InterpreterError.invalidKey
+            throw InterpreterError.invalidKey(keyValue)
         }
         guard key.range(of: #"^[_*A-Za-z0-9\p{L}][_a-zA-Z0-9\p{L} ]*"#, options: .regularExpression)?.upperBound == key.endIndex else {
             //invalid first character
-            throw InterpreterError.invalidKey
+            throw InterpreterError.invalidKey(key)
         }
-        var trimmedKey = key.hasPrefix("_") ? String(key.dropFirst()) : key
+        let trimmedKey = key.hasPrefix("_") ? String(key.dropFirst()) : key
         guard !trimmedKey.isOnlyNumbers() else {
-            throw InterpreterError.invalidKey
+            throw InterpreterError.invalidKey(key)
         }
 //        guard key.range(of: #"[^_*A-Za-z0-9]+"#, options: .regularExpression) != nil else {
 //            //invalid character in key
@@ -220,11 +222,13 @@ internal class ModlObjectCreator {
         }
         guard let uwReserved = reserved else {
             if key?.hasPrefix("*") ?? false {
-                throw InterpreterError.invalidKeyword
+                throw InterpreterError.invalidKeyword(key)
             }
             return nil
         }
         switch uwReserved {
+        case .expect, .expectSH:
+            return .expect //ignore as not used
         case .version, .versionSH:
             //Could raise an error here for non-matching version.... although json test implies it just continues
             if let mPrim = value as? ModlPrimitive, let decVersion = mPrim.asNumber(), key == key?.uppercased(), decVersion >= 1 {

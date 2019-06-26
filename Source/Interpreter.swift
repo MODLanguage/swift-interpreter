@@ -35,11 +35,11 @@ public enum InterpreterError: Error {
     case mismatchedVersion
     case versionNotFirst
 
-    case invalidKey
-    case immutableKey
+    case invalidKey(_ key: String?)
+    case immutableKey(_ key: String?)
     
     case invalidObjectReference
-    case invalidKeyword
+    case invalidKeyword(_ keyword: String?)
 
     case methodAlreadyDefined
     case invalidMethod
@@ -69,10 +69,10 @@ extension InterpreterError: LocalizedError {
         case .versionNotFirst:
             return "\(header)  MODL version should be on the first line if specified."
             
-        case .invalidKey:
-            return "\(header)  Invalid key"
-        case .immutableKey:
-            return "\(header)  Already defined key as immutable"
+        case .invalidKey(let key):
+            return "\(header)  Invalid key - \(key ?? "")"
+        case .immutableKey(let key):
+            return "\(header)  Already defined key as immutable - \(key ?? "")"
         case .invalidObjectReference:
             return "\(header)  Cannot resolve reference"
         case .methodAlreadyDefined:
@@ -101,8 +101,8 @@ extension InterpreterError: LocalizedError {
             return "\(header) Cannot parse file"
         case .reservedClassId:
             return "\(header) Reserved class id - cannot redefine"
-        case .invalidKeyword:
-            return "\(header) Invalid keyword"
+        case .invalidKeyword(let kWord):
+            return "\(header) Invalid keyword - \(kWord ?? "")"
 //        default:
 //            return "\(header) Unknown error"
         }

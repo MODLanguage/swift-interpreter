@@ -36,9 +36,9 @@ class LongInputTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testlongInput() {
+    func testLongInput() {
         self.measure {
-            let modl = LongTest.text
+            let modl = LongTest.modl
             let p = Interpreter()
             do {
                 let result = try p.parseToJson(modl)
@@ -47,11 +47,96 @@ class LongInputTests: XCTestCase {
                 XCTFail("Parse error: \(error.localizedDescription)")
             }
         }
-    }    
+    }
+    
+    func testConfigTest() {
+        let modl = ConfigTest.modl
+        let p = Interpreter()
+        do {
+            let result = try p.parseToJson(modl)
+            let expected = ConfigTest.expected.replacingOccurrences(of: "\n", with: "")
+            print("RESULT:\n\(result)")
+            print("EXPECTED:\n\(expected)")
+            XCTAssert(result == expected)
+        } catch {
+            XCTFail("Parse error: \(error.localizedDescription)")
+        }
+    }
+}
+
+
+fileprivate struct ConfigTest {
+    static let modl = """
+            _C=gb;
+            _L=en;
+            _Q=numexample.com;
+            _D=numexample.com;
+            _DV=iPhone 7;
+            _TZ=GMT;
+            _GPS=53.473997,-2.237334;
+            *load="https://s3.eu-west-2.amazonaws.com/modules.num.uk/1/rcf.txt";
+            o=NUM Example Co:Example Strapline:[t=Call us:441270123456;fb=examplefacebook;tw=exampletwitter;in=exampleinstagram]
+"""
+
+    static let expected = """
+{
+"organisation": {
+"name": "NUM Example Co",
+"slogan": "Example Strapline",
+"contacts": [
+{
+"telephone": {
+"description": "Call us",
+"value": "441270123456",
+"object_type": "media",
+"object_display_name": "Telephone",
+"description_default": "Call",
+"prefix": "tel://",
+"media_type": "core"
+}
+},
+{
+"facebook": {
+"value": "examplefacebook",
+"object_type": "media",
+"object_display_name": "Facebook",
+"description_default": "View Facebook profile",
+"prefix": "https://www.facebook.com/",
+"media_type": "3p"
+}
+},
+{
+"twitter": {
+"value": "exampletwitter",
+"object_type": "media",
+"object_display_name": "Twitter",
+"description_default": "View Twitter profile",
+"prefix": "https://www.twitter.com/",
+"media_type": "3p",
+"value_prefix": "@"
+}
+},
+{
+"instagram": {
+"value": "exampleinstagram",
+"object_type": "media",
+"object_display_name": "Instagram",
+"description_default": "View Instagram profile",
+"prefix": "https://www.instagram.com/",
+"media_type": "3p"
+}
+}
+],
+"object_type": "entity",
+"object_display_name": "Organization",
+"description_default": "View Organization"
+}
+}
+"""
 }
 
 fileprivate struct LongTest {
-    static let text = """
+    static let modl = """
 {
 !L?
 _L=en

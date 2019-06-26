@@ -51,7 +51,7 @@ internal class ObjectReferenceManager {
             uwKey.removeFirst()
         }
         if key == key?.uppercased(), getKeyedVariable(key) != nil {
-            throw InterpreterError.immutableKey
+            throw InterpreterError.immutableKey(key)
         }
         keyedVariables[uwKey] = uwValue
     }

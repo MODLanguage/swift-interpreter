@@ -80,14 +80,12 @@ internal struct StringTransformer {
                 let refKey = String(uwInput[ref])
                 let mValue = try checkObjectReferencing(keyToCheck: refKey, objectMgr: objectManager)
                 if refKey == uwInput {
-                    //the entire key matches the grave key so just return referenced object
+                    //the entire key matches the reference so just return referenced object
                     return mValue
                 } else if let primitive = mValue as? ModlPrimitive, let replacement = primitive.asString() {
-                    //need to get prim value of returned item and replace grave parts with it
                     uwInput = uwInput.replacingCharacters(in: ref, with: replacement)
                     startIndex = uwInput.index(ref.lowerBound, offsetBy: replacement.distance(from: replacement.startIndex, to: replacement.endIndex))
                 } else {
-                    
                     //TODO: is there anything else that can happen? Can part of a string in graves become an array?
                 }
                 if startIndex == ref.lowerBound {
