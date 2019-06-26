@@ -82,9 +82,8 @@ fileprivate enum StringMethod {
 internal class MethodManager {
     private var storedMethods: [String: Method] = [:]
     private var methodOrder: [String] = []
-    private let subjectMethodInclusivePattern = #"%((?<![\\~])`)([^`].+)((?<![\\~])`)(\.[a-zA-Z0-9_%]+(<[a-zA-Z,]*>)*)*"#
-    private let methodPattern = #"(^|[0-9a-zA-Z])"#
-    private let subjectPattern = #"((?<![\\~])`)([^`].+)((?<![\\~])`)"#
+    private let subjectMethodInclusivePattern = RegularExpressions.subjectMethodInclusivePattern
+    private let subjectPattern = RegularExpressions.methodSubjectPattern
 
     func addMethod(_ method: ModlValue?) throws {
         guard let mMethod = Method(method) else {
@@ -164,7 +163,10 @@ internal class MethodManager {
         }
         
         var subject = String(inputString[subjectRange.lowerBound..<subjectRange.upperBound])
-
+        if subject.hasPrefix("%`") {
+            subject.removeFirst(2)
+        }
+        subject = subject.stripGraves()
         guard subject.count > 0 else {
             return inputString
         }
@@ -220,7 +222,7 @@ internal class MethodManager {
         guard let method = getMethod(methodIdent) else {
             return nil
         }
-        let newInput = "\(inputStr).\(method.transformChain)"
+        let newInput = "%`\(inputStr)`.\(method.transformChain)"
         return processStringMethods(inputString: newInput)
     }
 

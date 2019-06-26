@@ -29,9 +29,7 @@ import Punycode
 
 internal struct StringTransformer {
     
-//    private let objectReferencePattern = #"%[^`]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
-//    private let objectReferencePattern = #"%[^`.]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.%?[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
-    private let objectReferencePattern = #"%[^`.]?(([0-9]+)|[a-zA-Z_]+[a-zA-Z0-9_]*)(\.%?[a-zA-Z0-9_]+(\<[a-zA-Z,]*\>)*)*%?"#
+    private let objectReferencePattern = RegularExpressions.objectReferencePattern
 
     private let objectManager: ObjectReferenceManager
     private let methodManager: MethodManager
@@ -115,7 +113,6 @@ internal struct StringTransformer {
     }
     
     private func getObjectRangesMatch(_ stringToTransform: String, start: String.Index) -> Range<String.Index>? {
-        // Find all parts of the sting that are enclosed in graves, e.g `test` where neither of the graves is prefixed with an escape character ~ (tilde) or \ (backslash). Or that have a %
         let completePattern = objectReferencePattern
         let regex = try? NSRegularExpression(pattern: completePattern, options: [])
         let range = NSRange(start..., in: stringToTransform)

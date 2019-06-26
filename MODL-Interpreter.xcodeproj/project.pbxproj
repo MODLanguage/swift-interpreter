@@ -58,6 +58,7 @@
 		3E64012E22AFE3030041260D /* nested_import2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD522A9703C00FC1303 /* nested_import2.txt */; };
 		3E64012F22AFE3030041260D /* nested_import3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BECD322A9703C00FC1303 /* nested_import3.txt */; };
 		3E64013022AFE3030041260D /* test_import.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E63153522816FCD008BDC14 /* test_import.txt */; };
+		3EB2DBB222C379520061807C /* RegularExpressions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2DBB122C379520061807C /* RegularExpressions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,7 @@
 		3E7743C822674865006AA9AF /* MODLParser.tokens */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MODLParser.tokens; sourceTree = "<group>"; };
 		3E7743C922674865006AA9AF /* MODLParserParserATN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MODLParserParserATN.swift; sourceTree = "<group>"; };
 		3E7B4AA9228ADC9900C54CCF /* StringEscapeReplacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEscapeReplacer.swift; sourceTree = "<group>"; };
+		3EB2DBB122C379520061807C /* RegularExpressions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpressions.swift; sourceTree = "<group>"; };
 		3EF9718922AA78C70000B220 /* MethodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -396,6 +398,7 @@
 				3E3896E7228C1B39005533B9 /* ObjectReferenceManager.swift */,
 				3E2BECCB22A92AC500FC1303 /* FileLoader.swift */,
 				3EF9718922AA78C70000B220 /* MethodManager.swift */,
+				3EB2DBB122C379520061807C /* RegularExpressions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				3E64010222AFE0EA0041260D /* ModlListenerObject.swift in Sources */,
 				3E64011A22AFE25F0041260D /* MODLLexerATN.swift in Sources */,
 				3E64010722AFE1090041260D /* ClassManager.swift in Sources */,
+				3EB2DBB222C379520061807C /* RegularExpressions.swift in Sources */,
 				3E64011E22AFE25F0041260D /* MODLParserBaseListener.swift in Sources */,
 				3E64011722AFE25A0041260D /* MODLLexer.swift in Sources */,
 				3E64010322AFE0EC0041260D /* ModlListener.swift in Sources */,
