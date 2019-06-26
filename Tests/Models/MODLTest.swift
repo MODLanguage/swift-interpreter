@@ -101,7 +101,11 @@ struct MODLTestManager {
             let data = try Data(contentsOf: fileUrl)
             let tests = try JSONDecoder().decode([MODLTest].self, from: data)
             let testCleared = tests.map { (test) -> MODLTest in
-                let split = test.expectedJson.replacingOccurrences(of: "\n", with: "").split(separator: "\"")
+                //remove horrible characters
+                let removedNewLines = test.expectedJson.replacingOccurrences(of: "\n", with: "")
+                let escapedEmptyQuotes = removedNewLines.replacingOccurrences(of: "\"\"", with: "~~")
+                let escapedEscapedQuotes = escapedEmptyQuotes.replacingOccurrences(of: "\\\"", with: "~~~~")
+                let split = escapedEscapedQuotes.split(separator: "\"")
                 var outputJson = ""
                 for (index, value) in split.enumerated() {
                     let prefix = index == 0 ? "" : "\""
@@ -111,6 +115,8 @@ struct MODLTestManager {
                         outputJson += prefix + value
                     }
                 }
+                //put back horrible characters
+                outputJson = outputJson.replacingOccurrences(of: "~~~~", with: "\\\"").replacingOccurrences(of: "~~", with: "\"\"")
                 let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: outputJson as String, comment: test.comment, testedFeatures: test.testedFeatures,id: test.id)
                 return newTest
                 }.filter { (test) -> Bool in
@@ -148,13 +154,6 @@ struct MODLTestManager {
                     //empty test
                     XCTAssert(result == expected, "\nExpected: \(expected)\nGot: \(result)")
                 } else {
-                    //import and export JSON so format matches parser
-//                    let data = Data(expected.utf8)
-//                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                    let dataOutput = try JSONSerialization.data(withJSONObject: json, options: [])
-//                    let stringOutput = String(data: dataOutput, encoding: .utf8)
-                    print(result)
-                    print(test.expectedJson)
                     XCTAssert(result == test.expectedJson, "\nTest: \(test.id)\n \(test.modl)\nExpected: \(test.expectedJson)\nGot: \(result)")
                 }
             } catch {
