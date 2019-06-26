@@ -68,6 +68,7 @@ internal class FileLoader {
             filePath = "https:" + filePath[insecurePrefix.endIndex...]
         }
         if filePath.hasPrefix("https:") {
+            print(filePath)
             if let url = URL(string: filePath) {
                 return try String(contentsOf: url)
             }

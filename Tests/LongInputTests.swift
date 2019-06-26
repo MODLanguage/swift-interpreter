@@ -54,7 +54,7 @@ class LongInputTests: XCTestCase {
         let p = Interpreter()
         do {
             let result = try p.parseToJson(modl)
-            let expected = ConfigTest.expected.replacingOccurrences(of: "\n", with: "")
+            let expected = MODLTestManager.processExpectedJSONResult(ConfigTest.expected)
             print("RESULT:\n\(result)")
             print("EXPECTED:\n\(expected)")
             XCTAssert(result == expected)

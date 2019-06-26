@@ -101,22 +101,7 @@ struct MODLTestManager {
             let data = try Data(contentsOf: fileUrl)
             let tests = try JSONDecoder().decode([MODLTest].self, from: data)
             let testCleared = tests.map { (test) -> MODLTest in
-                //remove horrible characters
-                let removedNewLines = test.expectedJson.replacingOccurrences(of: "\n", with: "")
-                let escapedEmptyQuotes = removedNewLines.replacingOccurrences(of: "\"\"", with: "~~")
-                let escapedEscapedQuotes = escapedEmptyQuotes.replacingOccurrences(of: "\\\"", with: "~~~~")
-                let split = escapedEscapedQuotes.split(separator: "\"")
-                var outputJson = ""
-                for (index, value) in split.enumerated() {
-                    let prefix = index == 0 ? "" : "\""
-                    if index % 2 == 0 {
-                        outputJson += prefix + value.replacingOccurrences(of: " ", with: "")
-                    } else {
-                        outputJson += prefix + value
-                    }
-                }
-                //put back horrible characters
-                outputJson = outputJson.replacingOccurrences(of: "~~~~", with: "\\\"").replacingOccurrences(of: "~~", with: "\"\"")
+                let outputJson = MODLTestManager.processExpectedJSONResult(test.expectedJson)
                 let newTest = MODLTest(modl: test.modl, minModl: test.minModl, expectedJson: outputJson as String, comment: test.comment, testedFeatures: test.testedFeatures,id: test.id)
                 return newTest
                 }.filter { (test) -> Bool in
@@ -164,4 +149,22 @@ struct MODLTestManager {
         print("TOTAL TESTS: \(tests.count)")
     }
 
+    static func processExpectedJSONResult(_ test: String) -> String {
+        //remove horrible characters
+        let removedNewLines = test.replacingOccurrences(of: "\n", with: "")
+        let escapedEmptyQuotes = removedNewLines.replacingOccurrences(of: "\"\"", with: "~~")
+        let escapedEscapedQuotes = escapedEmptyQuotes.replacingOccurrences(of: "\\\"", with: "~~~~")
+        let split = escapedEscapedQuotes.split(separator: "\"")
+        var outputJson = ""
+        for (index, value) in split.enumerated() {
+            let prefix = index == 0 ? "" : "\""
+            if index % 2 == 0 {
+                outputJson += prefix + value.replacingOccurrences(of: " ", with: "")
+            } else {
+                outputJson += prefix + value
+            }
+        }
+        //put back horrible characters
+        return outputJson.replacingOccurrences(of: "~~~~", with: "\\\"").replacingOccurrences(of: "~~", with: "\"\"")
+    }
 }

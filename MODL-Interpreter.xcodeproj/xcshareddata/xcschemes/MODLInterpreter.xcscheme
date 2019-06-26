@@ -47,6 +47,9 @@
                <Test
                   Identifier = "LoadTests">
                </Test>
+               <Test
+                  Identifier = "LongInputTests/testLongInput()">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>

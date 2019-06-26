@@ -35,6 +35,8 @@ fileprivate enum ClassSpecialKeys: String, CaseIterable {
     case assignSH = "*a"
     case superclass = "*superclass"
     case superclassSH = "*s"
+    case expect = "*expect"
+    case expectSH = "*e"
 }
 
 
