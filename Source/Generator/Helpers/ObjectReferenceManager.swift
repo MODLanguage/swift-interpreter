@@ -39,7 +39,7 @@ internal class ObjectReferenceManager {
                 numberedVariables.insert(value, at: index)
             }
         } else {
-            numberedVariables[0] = uwMValue
+            numberedVariables = [uwMValue]
         }
     }
     
