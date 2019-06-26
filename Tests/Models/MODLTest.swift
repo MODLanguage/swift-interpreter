@@ -92,9 +92,9 @@ struct MODLTest: Codable {
 }
 
 struct MODLTestManager {
-    static func getAllTests(_ testObject: XCTestCase) -> [MODLTest]? {
+    static func getAllTests(_ testObject: XCTestCase, fileName: String = "base_tests") -> [MODLTest]? {
         let bundle = Bundle(for: type(of: testObject))
-        guard let fileUrl = bundle.url(forResource: "base_tests", withExtension: "json") else {
+        guard let fileUrl = bundle.url(forResource: fileName, withExtension: "json") else {
             return nil
         }
         do {
@@ -112,7 +112,7 @@ struct MODLTestManager {
             return nil
         }
     }
-    
+
     static func getErrorTests(_ testObject: XCTestCase) -> [String]? {
         let bundle = Bundle(for: type(of: testObject))
         guard let fileUrl = bundle.url(forResource: "error_tests", withExtension: "json") else {
