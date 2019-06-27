@@ -139,7 +139,7 @@ struct MODLTestManager {
                     //empty test
                     XCTAssert(result == expected, "\nExpected: \(expected)\nGot: \(result)")
                 } else {
-                    XCTAssert(result == test.expectedJson, "\nTest: \(test.id)\n \(test.modl)\nExpected: \(test.expectedJson)\nGot: \(result)")
+                    XCTAssert(result == test.expectedJson, "\nTest: \(test.id  ?? "NA")\n \(test.modl)\nExpected: \(test.expectedJson)\nGot: \(result)")
                 }
             } catch {
                 XCTFail("Caught error for test \(test.modl). \n\(error.localizedDescription)")

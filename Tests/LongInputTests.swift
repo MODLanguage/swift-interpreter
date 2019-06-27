@@ -55,8 +55,6 @@ class LongInputTests: XCTestCase {
         do {
             let result = try p.parseToJson(modl)
             let expected = MODLTestManager.processExpectedJSONResult(ConfigTest.expected)
-            print("RESULT:\n\(result)")
-            print("EXPECTED:\n\(expected)")
             XCTAssert(result == expected)
         } catch {
             XCTFail("Parse error: \(error.localizedDescription)")
