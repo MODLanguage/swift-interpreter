@@ -186,6 +186,25 @@ internal class ClassManager {
         return outputPair
     }
     
+    func classContainsOwnKey(_ key: String?) -> Bool {
+        guard let uwKey = key, let mClass = getClass(key) else {
+            return false
+        }
+        for case let assign as ModlArray in mClass.assignMap?.values ?? [] {
+            for case let prim as ModlPrimitive in assign.values {
+                if prim.asString() == mClass.id || prim.asString() == mClass.name {
+                    return true
+                }
+            }
+        }
+        for eValue in mClass.extraValues {
+            if eValue.key == mClass.id || eValue.key == mClass.name {
+                return true
+            }
+        }
+        return false
+    }
+    
     private func findPrimitiveType(_ mClass: ModlClass?) -> PrimitiveSuperclassType? {
         guard let currClass = mClass else {
             return nil

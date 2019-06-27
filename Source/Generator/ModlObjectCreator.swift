@@ -89,8 +89,10 @@ internal class ModlObjectCreator {
             }
             if let classReference = try classManager.processFromClass(key: iPair.key, value: iPair.value), !haveAlreadyProcessedClassInBranch(identifier: iPair.key, processedList: classIdsProcessedInBranch) {
                 var newProcessedClasses = classIdsProcessedInBranch
-                newProcessedClasses.append(iPair.key ?? "")
-                newProcessedClasses.append(classReference.key ?? "")
+                if classManager.classContainsOwnKey(iPair.key) {
+                    newProcessedClasses.append(iPair.key ?? "")
+                    newProcessedClasses.append(classReference.key ?? "")
+                }
                 pair.key = classReference.key
                 pair.value = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses)?.first
                 return [pair]
@@ -125,8 +127,10 @@ internal class ModlObjectCreator {
                     mapKey = newKey
                     mapValue = returnedPair.value
                 } else if  let classReference = try classManager.processFromClass(key: key, value: originalValue), let uwKey = classReference.key, !haveAlreadyProcessedClassInBranch(identifier: uwKey, processedList: newProcessedClasses), let mValue = try processModlElement(classReference.value, classIdsProcessedInBranch: newProcessedClasses) {
-                    newProcessedClasses.append(uwKey)
-                    newProcessedClasses.append(key)
+                    if classManager.classContainsOwnKey(key) {
+                        newProcessedClasses.append(uwKey)
+                        newProcessedClasses.append(key)
+                    }
                     mapKey = uwKey
                     mapValue = mValue.first
                 } else if let mValue = try processModlElement(originalValue, classIdsProcessedInBranch: newProcessedClasses){
